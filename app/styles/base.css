@@ -1,0 +1,25 @@
+:root {
+  font-family: var(--font-family-main);
+  line-height: var(--line-height-base);
+  font-weight: var(--font-weight);
+  font-size: 16px;
+
+  background-color: var(--gray-z-1);
+  color: var(--color);
+  color-scheme: dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  @media (--md) {
+    background-color: var(--background);
+  }
+}
+
+html,
+body {
+  overflow-x: hidden;
+}

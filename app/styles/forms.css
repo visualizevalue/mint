@@ -1,0 +1,154 @@
+.form-item,
+.button,
+button,
+input,
+textarea,
+select {
+  --padding-y: var(--size-3);
+  --padding-x: var(--size-5);
+  --background: var(--gray-z-0);
+  --background-light: var(--gray-z-1);
+
+  width: 100%;
+  font-family: var(--font-family-ui);
+  font-weight: var(--font-weight);
+  transition: all var(--speed);
+  text-transform: uppercase;
+  user-select: none;
+  border-radius: 0;
+  background: var(--background);
+
+  &:-internal-autofill-selected {
+    background: inherit;
+    background-image: none !important;
+  }
+
+  &:--highlight {
+    outline: none;
+  }
+}
+
+.button,
+.input,
+.textarea,
+.select {
+  min-height: var(--size-8);
+  line-height: 1;
+}
+
+.input,
+.textarea,
+.select {
+  position: relative;
+  line-height: 0;
+  width: 100%;
+  background: var(--background);
+  padding: var(--padding-y) var(--padding-x);
+  text-transform: none;
+
+  border: var(--border);
+
+  font-weight: var(--font-weight);
+  letter-spacing: var(--letter-spacing-md);
+
+  transition: background var(--speed),
+              padding var(--speed),
+              border var(--speed),
+              color var(--speed);
+
+  &:--highlight {
+    background: var(--background-light);
+    border-color: var(--border-color-light);
+  }
+
+  &::placeholder {
+    color: var(--border-color-light);
+    opacity: 1;
+  }
+  &::-ms-input-placeholder {
+    color: var(--border-color-light);
+  }
+}
+
+.form-item {
+  border: var(--border);
+  display: flex;
+  align-items: center;
+  background: var(--background);
+
+  .input,
+  .textarea,
+  .select {
+    border: none;
+  }
+
+  &:has(.input:hover),
+  &:has(.input:focus) {
+    background: var(--background-light);
+  }
+  &:has(.input:focus) {
+    border-color: var(--border-color-light);
+  }
+
+  .prefix,
+  .suffix {
+    padding: 0 var(--padding-x);
+    color: var(--muted);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .prefix {
+    border-right: var(--border);
+  }
+  .suffix {
+    border-left: var(--border);
+  }
+
+  /* If the prefix/suffix should look as if it's part of the content */
+  &.fluent {
+    .prefix,
+    .suffix {
+      border: none;
+    }
+    .prefix {
+      padding-right: var(--size-0);
+    }
+    .suffix {
+      padding-left: var(--size-0);
+    }
+
+    &:has(.prefix) {
+      .input,
+      .select,
+      .textarea {
+        padding-left: 0;
+      }
+    }
+  }
+}
+
+form {
+  display: grid;
+  gap: var(--spacer);
+
+  label {
+    display: block;
+    font-family: var(--font-family-ui);
+    text-transform: uppercase;
+    margin: var(--size-2) 0;
+    color: var(--gray-z-7);
+    transition: all var(--speed);
+
+    > span:first-child {
+      display: block;
+      margin: 0 0 var(--size-2) 0
+    }
+
+    &:hover {
+      color: var(--color);
+    }
+  }
+}

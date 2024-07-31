@@ -1,0 +1,11 @@
+{
+    "name": "@visualizevalue/mint",
+    "version": "0.0.1",
+    "author": "jalil <jalil@vv.xyz>",
+    "private": true,
+    "workspaces": [
+        "app",
+        "contracts"
+    ],
+    "packageManager": "yarn@4.3.1"
+}

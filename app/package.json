@@ -1,0 +1,38 @@
+{
+    "name": "@visualizevalue/mint-app",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev --port 1618",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icon.svg"
+    },
+    "dependencies": {
+        "@csstools/postcss-global-data": "^2.1.1",
+        "@tanstack/vue-query": "^5.51.15",
+        "@vite-pwa/nuxt": "^0.7.0",
+        "@vueuse/components": "^10.11.0",
+        "@vueuse/core": "^10.10.0",
+        "@vueuse/nuxt": "^10.10.0",
+        "@wagmi/vue": "^0.0.33",
+        "feather-icons": "^4.29.2",
+        "nuxt": "^3.11.2",
+        "postcss-custom-media": "^10.0.6",
+        "postcss-custom-selectors": "^7.1.10",
+        "postcss-nested": "^6.0.1",
+        "postcss-preset-env": "^9.5.13",
+        "viem": "2.x",
+        "vue": "^3.4.27",
+        "vue-feather": "^2.0.0",
+        "vue-router": "^4.3.2",
+        "vue-virtual-scroller": "^2.0.0-beta.8"
+    },
+    "devDependencies": {
+        "@vite-pwa/assets-generator": "^0.2.4",
+        "sharp": "^0.33.4"
+    }
+}

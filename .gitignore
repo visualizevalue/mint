@@ -1,0 +1,14 @@
+node_modules
+.env
+
+.cache
+.DS_Store
+.nitro
+.nuxt
+.output
+.vscode
+*.log*
+build
+coverage
+dist
+tmp
