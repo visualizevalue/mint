@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
+import "./interfaces/IRenderer.sol";
 import "./interfaces/IToken.sol";
 
 contract Mint is ERC1155, Ownable2Step {
@@ -10,13 +11,14 @@ contract Mint is ERC1155, Ownable2Step {
 
     mapping(uint => Token) public tokens;
 
+    address[] public renderers;
     uint public latestTokenId;
     uint public totalSupply;
 
     constructor(
         string memory name,
         string memory description,
-        string memory image,
+        string memory artifact,
         address initialOwner
     )
         ERC1155("")
@@ -26,9 +28,9 @@ contract Mint is ERC1155, Ownable2Step {
     function create(
         string calldata name,
         string calldata description,
-        string calldata image,
-        uint8  calldata imageType,
-        bool   calldata interactive
+        string calldata artifact,
+        uint16 renderer,
+        bool   interactive
     ) public onlyOwner {
         latestTokenId ++;
 
@@ -36,9 +38,9 @@ contract Mint is ERC1155, Ownable2Step {
 
         token.name        = name;
         token.description = description;
-        token.image       = image;
-        token.blockNumber = block.number;
-        token.imageType   = imageType;
+        token.artifact    = artifact;
+        token.blockNumber = uint64(block.number);
+        token.renderer    = renderer;
         token.interactive = interactive;
 
         _mint(msg.sender, latestTokenId, 1, "");
@@ -62,9 +64,10 @@ contract Mint is ERC1155, Ownable2Step {
         emit Withdrawal(address(this).balance);
     }
 
-    function uri(uint tokenId) public view returns (string memory) {
-        Token token = tokens[tokenId];
-        return "";
+    function uri(uint tokenId) public override view returns (string memory) {
+        Token memory token = tokens[tokenId];
+
+        return IRenderer(renderers[token.renderer]).uri(tokenId, token);
     }
 
     // Move
