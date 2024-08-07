@@ -3609,6 +3609,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nomicfoundation/hardhat-chai-matchers@npm:^2.0.7":
+  version: 2.0.7
+  resolution: "@nomicfoundation/hardhat-chai-matchers@npm:2.0.7"
+  dependencies:
+    "@types/chai-as-promised": "npm:^7.1.3"
+    chai-as-promised: "npm:^7.1.1"
+    deep-eql: "npm:^4.0.1"
+    ordinal: "npm:^1.0.3"
+  peerDependencies:
+    "@nomicfoundation/hardhat-ethers": ^3.0.0
+    chai: ^4.2.0
+    ethers: ^6.1.0
+    hardhat: ^2.9.4
+  checksum: 10c0/bf31afae01d82ca59b15d7452ab4a5f3de793c49a0f21b112abb118dc48f7e78fd3b63a3fb4578c796041b5bd9002228807a1f3f499ca2b6655d807793b9d414
+  languageName: node
+  linkType: hard
+
 "@nomicfoundation/hardhat-ignition-viem@npm:^0.15.0":
   version: 0.15.5
   resolution: "@nomicfoundation/hardhat-ignition-viem@npm:0.15.5"
@@ -4968,7 +4985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/chai-as-promised@npm:^7.1.6":
+"@types/chai-as-promised@npm:^7.1.3, @types/chai-as-promised@npm:^7.1.6":
   version: 7.1.8
   resolution: "@types/chai-as-promised@npm:7.1.8"
   dependencies:
@@ -5222,6 +5239,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@visualizevalue/mint-contracts@workspace:contracts"
   dependencies:
+    "@nomicfoundation/hardhat-chai-matchers": "npm:^2.0.7"
     "@nomicfoundation/hardhat-ignition": "npm:^0.15.5"
     "@nomicfoundation/hardhat-ignition-viem": "npm:^0.15.0"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.0"
@@ -7841,7 +7859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deep-eql@npm:^4.1.3":
+"deep-eql@npm:^4.0.1, deep-eql@npm:^4.1.3":
   version: 4.1.4
   resolution: "deep-eql@npm:4.1.4"
   dependencies:
@@ -12398,6 +12416,13 @@ __metadata:
     type-check: "npm:~0.3.2"
     word-wrap: "npm:~1.2.3"
   checksum: 10c0/ad7000ea661792b3ec5f8f86aac28895850988926f483b5f308f59f4607dfbe24c05df2d049532ee227c040081f39401a268cf7bbf3301512f74c4d760dc6dd8
+  languageName: node
+  linkType: hard
+
+"ordinal@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "ordinal@npm:1.0.3"
+  checksum: 10c0/faa276fc1b1660477fd5c8749323c9715ae4f482c21fb8e67e57d1eb57845ba1b902796ecdcf6405325a8c3b042360970f5dc3b7f8cc7d79e0b2a756ab09174d
   languageName: node
   linkType: hard
 

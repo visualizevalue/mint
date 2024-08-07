@@ -2,11 +2,9 @@
 pragma solidity ^0.8.24;
 
 struct Token {
-    string name;
-    string description;
-    string artifact;
-    uint64 blockNumber;
-    uint64 time;
-    uint16 renderer;
-    bool   interactive;
+    string  name;
+    string  description;
+    string  artifact;
+    uint16  renderer;
+    uint240 data; // optional data for renderer
 }

@@ -1,6 +1,7 @@
 {
     "name": "@visualizevalue/mint-contracts",
     "devDependencies": {
+        "@nomicfoundation/hardhat-chai-matchers": "^2.0.7",
         "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
         "hardhat": "^2.22.7"
     },
