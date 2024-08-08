@@ -1,83 +1,118 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-// import "@openzeppelin/contracts/access/Ownable2Step.sol";
-// import "./libraries/ERC1155.sol";
-// import "./interfaces/IRenderer.sol";
-// import "./interfaces/IToken.sol";
+import "@openzeppelin/contracts/access/Ownable2Step.sol";
+import "./libraries/ERC1155.sol";
+import "./interfaces/IRenderer.sol";
+import "./interfaces/IToken.sol";
 
-// /// @description To mint is a human right.
-// contract MintClonable is ERC1155, Ownable2Step {
-//     event Withdrawal(uint amount);
+/// @notice To mint is a human right.
+contract Mint is ERC1155, Ownable2Step {
+    string public name;
+    string public symbol;
+    string public description;
+    string public image;
 
-//     mapping(uint => Token) public tokens;
+    mapping(uint => Token) public tokens;
 
-//     string public name;
-//     string public symbol;
+    address[] public renderers;
+    uint public latestTokenId;
+    uint public initBlock;
 
-//     address[] public renderers;
-//     uint public latestTokenId;
-//     uint public totalSupply;
+    uint constant MINT_BLOCKS = 7200;
 
-//     constructor(
-//         string memory name,
-//         string memory description,
-//         string memory artifact,
-//         address initialOwner
-//     ) Ownable(initialOwner) {}
+    event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
+    event NewRenderer(address indexed renderer, uint indexed index);
+    event Withdrawal(uint amount);
 
-//     function create(
-//         string calldata name,
-//         string calldata description,
-//         string calldata artifact,
-//         uint16 renderer,
-//         bool   interactive
-//     ) public onlyOwner {
-//         latestTokenId ++;
+    error MintClosed();
+    error MintPriceNotMet();
+    error NonExistentToken();
+    error NonExistentRenderer();
 
-//         Token storage token = tokens[latestTokenId];
+    constructor() Ownable(msg.sender) {}
 
-//         token.name        = name;
-//         token.description = description;
-//         token.artifact    = artifact;
-//         token.blockNumber = uint64(block.number);
-//         token.renderer    = renderer;
-//         token.interactive = interactive;
+    function init(
+        string memory contractName,
+        string memory contractSymbol,
+        string memory contractDescription,
+        string memory contractImage,
+        address owner
+    ) external {
+        name        = contractName;
+        symbol      = contractSymbol;
+        description = contractDescription;
+        image       = contractImage;
 
-//         _mint(msg.sender, latestTokenId, 1, "");
-//     }
+        initBlock = block.number;
 
-//     function mint(uint tokenId) public {
-//         totalSupply ++;
+        _transferOwnership(owner);
+    }
 
-//         _mint(msg.sender, tokenId, 1, "");
-//     }
+    function create(
+        string  calldata tokenName,
+        string  calldata tokenDescription,
+        string  calldata tokenArtifact,
+        uint32  tokenRenderer,
+        uint192 tokenData
+    ) public onlyOwner {
+        if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
 
-//     function mintMany(uint tokenId, uint amount) public {
-//         totalSupply += amount;
+        ++ latestTokenId;
 
-//         _mint(msg.sender, tokenId, amount, "");
-//     }
+        Token storage token = tokens[latestTokenId];
 
-//     function withdraw() public onlyOwner {
-//         payable(owner()).transfer(address(this).balance);
+        token.name        = tokenName;
+        token.description = tokenDescription;
+        token.artifact    = tokenArtifact;
+        token.blocks      = uint32(block.number - initBlock);
+        token.renderer    = tokenRenderer;
+        token.data        = tokenData;
 
-//         emit Withdrawal(address(this).balance);
-//     }
+        _mint(msg.sender, latestTokenId, 1, "");
+    }
 
-//     function uri(uint tokenId) public override view returns (string memory) {
-//         Token memory token = tokens[tokenId];
+    function mint(uint tokenId, uint amount) external payable {
+        if (tokenId > latestTokenId) revert NonExistentToken();
 
-//         return IRenderer(renderers[token.renderer]).uri(tokenId, token);
-//     }
+        uint unitPrice = block.basefee * 60_000;
+        uint mintPrice = unitPrice * amount;
+        if (mintPrice > msg.value) revert MintPriceNotMet();
 
-//     function burn(address account, uint256 id, uint256 amount) public {
-//         if (account != _msgSender() && !isApprovedForAll(account, _msgSender())) {
-//             revert ERC1155MissingApprovalForAll(_msgSender(), account);
-//         }
+        uint untilBlock = MINT_BLOCKS + tokens[latestTokenId].blocks + initBlock;
+        if (untilBlock < block.number) revert MintClosed();
 
-//         totalSupply -= amount;
+        _mint(msg.sender, tokenId, amount, "");
 
-//         _burn(account, id, amount);
-//     }
-// }
+        emit NewMint(tokenId, unitPrice, amount);
+    }
+
+    function registerRenderer(address renderer) external onlyOwner returns (uint) {
+        renderers.push(renderer);
+        uint index = renderers.length - 1;
+
+        emit NewRenderer(renderer, index);
+
+        return index;
+    }
+
+    function withdraw() external onlyOwner {
+        payable(owner()).transfer(address(this).balance);
+
+        emit Withdrawal(address(this).balance);
+    }
+
+    function uri(uint tokenId) external override view returns (string memory) {
+        Token memory token = tokens[tokenId];
+
+        return IRenderer(renderers[token.renderer]).uri(tokenId, token);
+    }
+
+    function burn(address account, uint256 tokenId, uint256 amount) external {
+        if (account != msg.sender && !isApprovedForAll(account, msg.sender)) {
+            revert ERC1155MissingApprovalForAll(msg.sender, account);
+        }
+
+        _burn(account, tokenId, amount);
+    }
+}

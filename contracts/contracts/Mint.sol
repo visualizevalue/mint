@@ -19,7 +19,7 @@ contract Mint is ERC1155, Ownable2Step {
     uint public latestTokenId;
     uint public initBlock;
 
-    uint constant MINT_DURATION = 7200; // blocks
+    uint constant MINT_BLOCKS = 7200;
 
     event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
     event NewRenderer(address indexed renderer, uint indexed index);
@@ -61,7 +61,7 @@ contract Mint is ERC1155, Ownable2Step {
         token.name        = tokenName;
         token.description = tokenDescription;
         token.artifact    = tokenArtifact;
-        token.blocks      = uin32(block.number - initialBlock);
+        token.blocks      = uint32(block.number - initBlock);
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
 
@@ -75,7 +75,7 @@ contract Mint is ERC1155, Ownable2Step {
         uint mintPrice = unitPrice * amount;
         if (mintPrice > msg.value) revert MintPriceNotMet();
 
-        uint untilBlock = MINT_DURATION + tokens[latestTokenId].blocks + initialBlock;
+        uint untilBlock = MINT_BLOCKS + tokens[latestTokenId].blocks + initBlock;
         if (untilBlock < block.number) revert MintClosed();
 
         _mint(msg.sender, tokenId, amount, "");
@@ -109,6 +109,6 @@ contract Mint is ERC1155, Ownable2Step {
             revert ERC1155MissingApprovalForAll(msg.sender, account);
         }
 
-        _burn(account, id, amount);
+        _burn(account, tokenId, amount);
     }
 }
