@@ -39,6 +39,8 @@ contract Mint is ERC1155, Ownable2Step {
         string memory contractImage,
         address owner
     ) external {
+        if (initBlock) revert;
+
         name        = contractName;
         symbol      = contractSymbol;
         description = contractDescription;
