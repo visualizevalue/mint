@@ -2,9 +2,10 @@
 pragma solidity ^0.8.24;
 
 struct Token {
-    string  name;
-    string  description;
-    string  artifact;
-    uint16  renderer;
-    uint240 data; // optional data for renderer
+    string  name;         // token name
+    string  description; // token description
+    string  artifact;   // the artifact (image/artwork) data
+    uint32  renderer;  // index of renderer contract address
+    uint32  blocks;   // delta since contract<>token creation
+    uint192 data;    // optional data for the renderer
 }

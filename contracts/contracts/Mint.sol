@@ -6,85 +6,108 @@ import "./libraries/ERC1155.sol";
 import "./interfaces/IRenderer.sol";
 import "./interfaces/IToken.sol";
 
-/// @description To mint is a human right.
+/// @notice To mint is a human right.
 contract Mint is ERC1155, Ownable2Step {
-    event Withdrawal(uint amount);
-
-    mapping(uint => Token) public tokens;
-
     string public name;
     string public symbol;
     string public description;
     string public image;
 
+    mapping(uint => Token) public tokens;
+
     address[] public renderers;
     uint public latestTokenId;
-    uint public totalSupply;
+    uint public initBlock;
 
+    uint constant MINT_DURATION = 7200; // blocks
+
+    event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
+    event NewRenderer(address indexed renderer, uint indexed index);
+    event Withdrawal(uint amount);
+
+    error MintClosed();
     error MintPriceNotMet();
+    error NonExistentToken();
+    error NonExistentRenderer();
 
     constructor(
-        string memory name_,
-        string memory symbol_,
-        string memory description_,
-        string memory image_,
-        address initialOwner
-    ) Ownable(initialOwner) {
-        name = name_;
-        symbol = symbol_;
-        description = description_;
-        image = _image;
+        string memory contractName,
+        string memory contractSymbol,
+        string memory contractDescription,
+        string memory contractImage,
+        address owner
+    ) Ownable(owner) {
+        name        = contractName;
+        symbol      = contractSymbol;
+        description = contractDescription;
+        image       = contractImage;
+
+        initBlock = block.number;
     }
 
     function create(
-        string calldata name,
-        string calldata description,
-        string calldata artifact,
-        uint16 renderer,
-        bool   interactive
+        string  calldata tokenName,
+        string  calldata tokenDescription,
+        string  calldata tokenArtifact,
+        uint32  tokenRenderer,
+        uint192 tokenData
     ) public onlyOwner {
-        latestTokenId ++;
+        if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
+
+        ++ latestTokenId;
 
         Token storage token = tokens[latestTokenId];
 
-        token.name        = name;
-        token.description = description;
-        token.artifact    = artifact;
-        token.blockNumber = uint64(block.number);
-        token.renderer    = renderer;
-        token.interactive = interactive;
+        token.name        = tokenName;
+        token.description = tokenDescription;
+        token.artifact    = tokenArtifact;
+        token.blocks      = uin32(block.number - initialBlock);
+        token.renderer    = tokenRenderer;
+        token.data        = tokenData;
 
         _mint(msg.sender, latestTokenId, 1, "");
     }
 
-    function mint(uint tokenId, uint amount) public {
-        uint256 price = block.basefee * 60_000;
-        if (price > msg.value) revert MintPriceNotMet();
+    function mint(uint tokenId, uint amount) external payable {
+        if (tokenId > latestTokenId) revert NonExistentToken();
 
-        totalSupply += amount;
+        uint unitPrice = block.basefee * 60_000;
+        uint mintPrice = unitPrice * amount;
+        if (mintPrice > msg.value) revert MintPriceNotMet();
+
+        uint untilBlock = MINT_DURATION + tokens[latestTokenId].blocks + initialBlock;
+        if (untilBlock < block.number) revert MintClosed();
 
         _mint(msg.sender, tokenId, amount, "");
+
+        emit NewMint(tokenId, unitPrice, amount);
     }
 
-    function withdraw() public onlyOwner {
+    function registerRenderer(address renderer) external onlyOwner returns (uint) {
+        renderers.push(renderer);
+        uint index = renderers.length - 1;
+
+        emit NewRenderer(renderer, index);
+
+        return index;
+    }
+
+    function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
 
         emit Withdrawal(address(this).balance);
     }
 
-    function uri(uint tokenId) public override view returns (string memory) {
+    function uri(uint tokenId) external override view returns (string memory) {
         Token memory token = tokens[tokenId];
 
         return IRenderer(renderers[token.renderer]).uri(tokenId, token);
     }
 
-    // Move to lib?
-    function burn(address account, uint256 id, uint256 amount) public {
-        if (account != _msgSender() && !isApprovedForAll(account, _msgSender())) {
-            revert ERC1155MissingApprovalForAll(_msgSender(), account);
+    function burn(address account, uint256 tokenId, uint256 amount) external {
+        if (account != msg.sender && !isApprovedForAll(account, msg.sender)) {
+            revert ERC1155MissingApprovalForAll(msg.sender, account);
         }
-
-        totalSupply -= amount;
 
         _burn(account, id, amount);
     }
