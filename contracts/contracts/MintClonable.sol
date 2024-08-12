@@ -2,9 +2,9 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
-import "./libraries/ERC1155.sol";
+import "./ERC1155.sol";
 import "./interfaces/IRenderer.sol";
-import "./interfaces/IToken.sol";
+import "./types/Token.sol";
 
 /// @notice To mint is a human right.
 contract Mint is ERC1155, Ownable2Step {
