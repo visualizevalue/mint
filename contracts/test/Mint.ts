@@ -24,6 +24,18 @@ describe('Mint', () => {
     })
 
     it('create an offchain artifact', async () => {
+      const { mint } = await loadFixture(collectionFixture)
+
+      await expect(mint.write.create([
+        'VVM1',
+        'Lorem Ipsum dolor sit amet.',
+        'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
+        0n,
+        0n,
+      ])).to.emit(mint, 'NewMint').withArgs(1n)
+    })
+
+    it('mints tokens with incremental token IDs', async () => {
       const { mint } = await loadFixture(itemMintedFixture)
 
       await expect(mint.write.create([
@@ -33,6 +45,27 @@ describe('Mint', () => {
         0n,
         0n,
       ])).to.emit(mint, 'NewMint').withArgs(2n)
+    })
+
+    it('mints the first token to the artist', async () => {
+      const { mint, owner } = await loadFixture(itemMintedFixture)
+
+      expect(await mint.read.balanceOf([owner.account.address, 1n])).to.equal(1n)
+    })
+
+    it('prevents anyone but the contract owner to create an artifact', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      await expect(mint.write.create(
+        [
+          'VVM2',
+          'Lorem Ipsum dolor sit amet.',
+          'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
+          0n,
+          0n,
+        ],
+        { account: JALIL }
+      )).to.be.revertedWithCustomError(mint, 'OwnableUnauthorizedAccount')
     })
 
   })
