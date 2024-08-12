@@ -22,7 +22,8 @@ contract MintClonable is ERC1155, Ownable2Step {
 
     uint constant MINT_BLOCKS = 7200;
 
-    event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
+    event NewMint(uint indexed tokenId);
+    event NewMintPurchase(uint indexed tokenId, uint unitPrice, uint amount);
     event NewRenderer(address indexed renderer, uint indexed index);
     event Withdrawal(uint amount);
 
@@ -74,12 +75,14 @@ contract MintClonable is ERC1155, Ownable2Step {
         token.data        = tokenData;
 
         _mint(msg.sender, latestTokenId, 1, "");
+
+        emit NewMint(latestTokenId);
     }
 
     function mint(uint tokenId, uint amount) external payable {
         if (tokenId > latestTokenId) revert NonExistentToken();
 
-        uint unitPrice = block.basefee * 42_000;
+        uint unitPrice = block.basefee * 61_000;
         uint mintPrice = unitPrice * amount;
         if (mintPrice > msg.value) revert MintPriceNotMet();
 
@@ -88,7 +91,7 @@ contract MintClonable is ERC1155, Ownable2Step {
 
         _mint(msg.sender, tokenId, amount, "");
 
-        emit NewMint(tokenId, unitPrice, amount);
+        emit NewMintPurchase(tokenId, unitPrice, amount);
     }
 
     function registerRenderer(address renderer) external onlyOwner returns (uint) {

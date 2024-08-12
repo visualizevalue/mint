@@ -5,14 +5,14 @@ import {
 } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
-import { collectionFixture, itemMintedFixture } from './fixtures'
+import { cloneCollectionFixture, cloneItemMintedFixture } from './fixtures'
 
-describe('Mint', () => {
+describe('MintClonable', () => {
 
   describe('Creating', async () => {
 
     it('create an onchain artifact', async () => {
-      const { mint } = await loadFixture(collectionFixture)
+      const { mint } = await loadFixture(cloneCollectionFixture)
 
       await expect(mint.write.create([
         'VVM1',
@@ -24,7 +24,7 @@ describe('Mint', () => {
     })
 
     it('create an offchain artifact', async () => {
-      const { mint } = await loadFixture(collectionFixture)
+      const { mint } = await loadFixture(cloneCollectionFixture)
 
       await expect(mint.write.create([
         'VVM1',
@@ -36,7 +36,7 @@ describe('Mint', () => {
     })
 
     it('mints tokens with incremental token IDs', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await expect(mint.write.create([
         'VVM2',
@@ -48,13 +48,13 @@ describe('Mint', () => {
     })
 
     it('mints the first token to the artist', async () => {
-      const { mint, owner } = await loadFixture(itemMintedFixture)
+      const { mint, owner } = await loadFixture(cloneItemMintedFixture)
 
       expect(await mint.read.balanceOf([owner.account.address, 1n])).to.equal(1n)
     })
 
     it('prevents anyone but the contract owner to create an artifact', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await expect(mint.write.create(
         [
@@ -73,7 +73,7 @@ describe('Mint', () => {
   describe('Purchasing', async () => {
 
     it('allows buying an artifact at 3 gwei per gaas', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0xB2D05E00', // 3 gwei
@@ -87,7 +87,7 @@ describe('Mint', () => {
     })
 
     it('allows buying an artifact at 10 gwei per gas', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -101,7 +101,7 @@ describe('Mint', () => {
     })
 
     it('allows buying multiple of an artifact', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -115,7 +115,7 @@ describe('Mint', () => {
     })
 
     it('prevents buying an artifact at 10 gwei per gas for less than the set price', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -128,7 +128,7 @@ describe('Mint', () => {
     })
 
     it('prevents buying many of an artifact and not paying for the amount', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -141,7 +141,7 @@ describe('Mint', () => {
     })
 
     it('prevents buying an artifact after the mint has closed', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await mine(7200n)
 
@@ -156,7 +156,7 @@ describe('Mint', () => {
     })
 
     it('lets anyone buy a token', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -184,7 +184,7 @@ describe('Mint', () => {
   describe('Reading', async () => {
 
     it('shows the correct token URI', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint } = await loadFixture(cloneItemMintedFixture)
 
       const dataURI = await mint.read.uri([1n])
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
@@ -196,7 +196,7 @@ describe('Mint', () => {
     })
 
     it('shows the correct token owner / balance', async () => {
-      const { mint, owner } = await loadFixture(itemMintedFixture)
+      const { mint, owner } = await loadFixture(cloneItemMintedFixture)
 
       expect(await mint.read.balanceOf([owner.account.address, 1n])).to.equal(1n)
       expect(await mint.read.balanceOf([JALIL, 1n])).to.equal(0n)

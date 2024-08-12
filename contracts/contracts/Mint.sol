@@ -75,7 +75,7 @@ contract Mint is ERC1155, Ownable2Step {
     function mint(uint tokenId, uint amount) external payable {
         if (tokenId > latestTokenId) revert NonExistentToken();
 
-        uint unitPrice = block.basefee * 42_000;
+        uint unitPrice = block.basefee * 61_000;
         uint mintPrice = unitPrice * amount;
         if (mintPrice > msg.value) revert MintPriceNotMet();
 

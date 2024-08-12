@@ -123,7 +123,7 @@ export async function itemMintedFixture() {
 }
 
 export async function cloneItemMintedFixture() {
-  const { mint, factory, owner, publicClient } = await loadFixture(collectionFixture)
+  const { mint, factory, owner, publicClient } = await loadFixture(cloneCollectionFixture)
 
   await mint.write.create([
     'VVM1',
