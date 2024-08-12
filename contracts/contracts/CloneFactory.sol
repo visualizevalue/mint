@@ -22,7 +22,7 @@ contract MintFactory {
     ) external returns (address) {
         address mint = Clones.clone(implementation);
 
-        Mint(mint).init(
+        MintClonable(mint).init(
             name,
             symbol,
             description,

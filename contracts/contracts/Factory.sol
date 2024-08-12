@@ -5,23 +5,8 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
 import "./Mint.sol";
 
-// contract MyFactory {
-//     address immutable implementation;
-
-//     constructor(address _implementation) {
-//         implementation = _implementation;
-//     }
-
-//     function createClone() external returns (address) {
-//         return Clones.clone(implementation);
-//     }
-// }
-
-
 contract Factory {
     event Created(address contractAddress, address ownerAddress);
-
-    address[] implementations;
 
     function create(
         string memory name,
