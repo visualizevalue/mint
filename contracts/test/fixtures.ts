@@ -1,11 +1,16 @@
+import { parseEther } from 'viem'
 import {
   loadFixture,
 } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import hre from 'hardhat'
-import { ICON } from './constants'
+import { ICON, JALIL, TOKEN_TIME } from './constants'
 
 export async function factoryFixture() {
   const [owner] = await hre.viem.getWalletClients()
+
+  const testClient = await hre.viem.getTestClient()
+  await testClient.impersonateAccount({ address: JALIL })
+  await owner.sendTransaction({ to: JALIL, value: parseEther('1') })
 
   const contractMetadata = await hre.viem.deployContract('ContractMetadata', [])
 
@@ -53,9 +58,9 @@ export async function itemMintedFixture() {
   const { mint, factory, owner, publicClient } = await loadFixture(collectionFixture)
 
   await mint.write.create([
-    'VVM2',
+    'VVM1',
     'Lorem Ipsum dolor sit amet.',
-    'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
+    TOKEN_TIME,
     0n,
     0n,
   ])
