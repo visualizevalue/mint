@@ -5,16 +5,20 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
 import "./MintClonable.sol";
 
-contract MintFactory {
+contract CloneFactory {
     event Created(address contractAddress, address ownerAddress);
 
     address immutable implementation;
 
-    constructor(address _implementation) {
-        implementation = _implementation;
+    constructor() {
+        MintClonable mint = new MintClonable();
+
+        mint.init("", "", "", "", address(this));
+
+        implementation = address(mint);
     }
 
-    function createMint(
+    function create(
         string memory name,
         string memory symbol,
         string memory description,

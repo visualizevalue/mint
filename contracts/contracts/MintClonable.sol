@@ -4,6 +4,7 @@ pragma solidity ^0.8.24;
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
 import "./ERC1155.sol";
 import "./interfaces/IRenderer.sol";
+import "./libraries/ContractMetadata.sol";
 import "./types/Token.sol";
 
 /// @notice To mint is a human right.
@@ -109,6 +110,12 @@ contract MintClonable is ERC1155, Ownable2Step {
         Token memory token = tokens[tokenId];
 
         return IRenderer(renderers[token.renderer]).uri(tokenId, token);
+    }
+
+    function contractURI() public view returns (string memory) {
+        ContractMetadata.Data memory contractData = ContractMetadata.Data(name, symbol, description, image);
+
+        return ContractMetadata.uri(contractData);
     }
 
     function burn(address account, uint256 tokenId, uint256 amount) external {

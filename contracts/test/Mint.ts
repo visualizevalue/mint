@@ -1,10 +1,10 @@
 import { parseGwei } from 'viem'
+import hre from 'hardhat'
 import {
   loadFixture, mine
 } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
-import hre from 'hardhat'
 import { collectionFixture, itemMintedFixture } from './fixtures'
 
 describe('Mint', () => {
