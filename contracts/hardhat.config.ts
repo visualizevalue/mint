@@ -16,7 +16,7 @@ const HARDHAT_NETWORK_CONFIG: HardhatNetworkUserConfig = {
 }
 
 const config: HardhatUserConfig = {
-  solidity: '0.8.26',
+  solidity: '0.8.24',
   networks: {
     mainnet: {
       url: process.env.MAINNET_URL || "",
