@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import { Ownable2Step, Ownable } from "@openzeppelin/contracts/access/Ownable2Step.sol";
 import { ERC1155               } from "./ERC1155.sol";
 import { IRenderer             } from "./interfaces/IRenderer.sol";
 import { ContractMetadata      } from "./libraries/ContractMetadata.sol";
 import { Token                 } from "./types/Token.sol";
 
 /// @notice To mint is a human right.
-contract Mint is ERC1155, Ownable2Step {
+/// @author Visualize Value
+contract Mint is ERC1155 {
+
     string public name;
     string public symbol;
     string public description;
@@ -32,8 +33,6 @@ contract Mint is ERC1155, Ownable2Step {
     error MintPriceNotMet();
     error NonExistentToken();
     error NonExistentRenderer();
-
-    constructor() Ownable(msg.sender) {}
 
     function init(
         string memory contractName,
@@ -128,4 +127,5 @@ contract Mint is ERC1155, Ownable2Step {
 
         _burn(account, tokenId, amount);
     }
+
 }

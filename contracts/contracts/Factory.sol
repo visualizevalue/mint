@@ -4,6 +4,8 @@ pragma solidity ^0.8.24;
 import { Clone } from "./libraries/Clone.sol";
 import { Mint  } from "./Mint.sol";
 
+/// @notice To mint is a human right.
+/// @author Visualize Value
 contract Factory {
 
     /// @dev Emitted when a new Mint contract is deployed.
