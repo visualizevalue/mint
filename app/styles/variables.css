@@ -95,7 +95,9 @@
   /* BORDERS */
   --border-color: var(--gray-z-2);
   --border-color-light: var(--gray-z-4);
+  --border-color-dark: var(--gray-z-1);
   --border: 1px solid var(--border-color);
+  --border-dark: 1px solid var(--border-color-dark);
 
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));

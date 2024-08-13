@@ -1,6 +1,6 @@
 <template>
   <section class="frame">
-    <header>
+    <header v-if="title">
       <h1 v-if="typeof title === 'string'">{{ title }}</h1>
       <Breadcrumbs v-else :items="title" />
       <slot name="header" />

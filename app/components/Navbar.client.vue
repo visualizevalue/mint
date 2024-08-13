@@ -1,10 +1,14 @@
 <template>
   <nav>
-    <NuxtLink to="/">
+    <NuxtLink to="/home">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
-    <NuxtLink to="/">
+    <NuxtLink to="/create">
+      <Icon type="feather" />
+      <span>Create</span>
+    </NuxtLink>
+    <NuxtLink v-if="address" :to="`/profile/${address}`">
       <Icon type="user" />
       <span>Profile</span>
     </NuxtLink>
@@ -12,6 +16,9 @@
 </template>
 
 <script setup>
+import { useAccount } from '@wagmi/vue'
+
+const { address } = useAccount()
 </script>
 
 <style lang="postcss" scoped>

@@ -6,14 +6,15 @@ import { collectionFixture, factoryFixture } from './fixtures'
 
 describe('Factory', function () {
   it('creates a new Mint contract', async function () {
-    const { factory } = await loadFixture(factoryFixture)
+    const { factory, owner } = await loadFixture(factoryFixture)
 
     await expect(factory.write.create([
       'VV Mints',
       'VVM',
       'Lorem Ipsum dolor sit amet.',
       ICON,
-    ])).to.be.fulfilled
+    ])).to.emit(factory, 'Created')
+       .withArgs(getAddress(owner.account.address), '0x5392A33F7F677f59e833FEBF4016cDDD88fF9E67')
   })
 
   it('clones a new Mint contract', async function () {

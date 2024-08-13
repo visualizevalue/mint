@@ -10,7 +10,7 @@ import { Renderer } from "./Renderer.sol";
 contract Factory {
 
     /// @dev Emitted when a new Mint contract is deployed.
-    event Created(address contractAddress, address ownerAddress);
+    event Created(address indexed ownerAddress, address contractAddress);
 
     /// @dev The Mint contract implementation to base clonse off.
     address immutable private baseImplementation;
@@ -39,7 +39,7 @@ contract Factory {
 
         mint.init(name, symbol, description, image, msg.sender);
 
-        emit Created(address(mint), msg.sender);
+        emit Created(msg.sender, address(mint));
 
         return address(mint);
     }
@@ -56,7 +56,7 @@ contract Factory {
 
         Mint(mint).init( name, symbol, description, image, msg.sender);
 
-        emit Created(mint, msg.sender);
+        emit Created(msg.sender, mint);
 
         return mint;
     }

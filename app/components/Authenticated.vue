@@ -1,15 +1,17 @@
 <template>
-  <slot v-if="initiated && session" />
+  <slot v-if="isConnected" />
   <Loading v-else />
 </template>
 
 <script setup>
+import { useAccount } from '@wagmi/vue'
+
+const { isConnected } = useAccount()
+
 const check = () => {
-  if (! initiated.value) return
-  if (! session.value) return navigateTo('/login')
-  if (! onboardingComplete.value) return navigateTo('/home')
+  if (! isConnected.value) return navigateTo('/')
 }
 
 onMounted(() => check())
-watch(initiated, () => check())
+watch(isConnected, () => check())
 </script>

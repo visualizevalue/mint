@@ -5,8 +5,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       title: 'Mint',
-      description: 'Publish work on Ethereum',
+      description: 'To mint is a human right.',
       creatorAddress: '',
+      factoryAddress: '',
     }
   },
 
@@ -75,9 +76,34 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@vueuse/nuxt',
     '@wagmi/vue/nuxt',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
   ],
+
+  vite: {
+    optimizeDeps: {
+      include: ['eventemitter3']
+    }
+  },
+
+  imports: {
+    presets: [
+      {
+        from: '@wagmi/core',
+        imports: ['waitForTransactionReceipt', 'writeContract']
+      },
+      {
+        from: 'viem',
+        imports: ['decodeEventLog']
+      }
+    ]
+  },
+
+  piniaPersistedstate: {
+    storage: 'localStorage'
+  },
 
   compatibilityDate: '2024-07-29'
 })

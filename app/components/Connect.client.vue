@@ -1,21 +1,23 @@
 <template>
-  <button v-if="showConnect" @click="login">
+  <Button v-if="showConnect" @click="login">
     Connect
-  </button>
-  <Account v-else :address="account.address" />
+  </Button>
+  <Account v-else :address="address" />
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { useAccount, useConnect } from '@wagmi/vue'
 import { injected } from '@wagmi/connectors'
 
-const account = useAccount()
 const { connect } = useConnect()
+const emit = defineEmits(['connected', 'disconnected'])
 
-const login = async () => {
-  await connect({ connector: injected() })
-}
+const { address, isConnected } = useAccount()
+const showConnect = computed(() => !isConnected.value)
 
-const showConnect = computed(() => !account.isConnected.value)
+const login = () => connect({ connector: injected() })
+
+const check = () => isConnected.value ? emit('connected') : emit('disconnected')
+watch(isConnected, () => check())
+onMounted(() => check())
 </script>

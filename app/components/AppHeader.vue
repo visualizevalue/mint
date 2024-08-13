@@ -4,7 +4,9 @@
       {{ config.public.title }}
     </h1>
 
-    <GasPrice></GasPrice>
+    <GasPrice v-slot="{ price }">
+      <span class="gas">{{ price.gwei }} GWEI</span>
+    </GasPrice>
 
     <Connect />
   </header>
@@ -26,7 +28,12 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: var(--spacer-lg);
-  padding: var(--size-5);
+  padding: var(--spacer);
+
+  .gas {
+    margin-left: auto;
+    white-space: nowrap;
+  }
 }
 
 /* COLORS */

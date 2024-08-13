@@ -17,6 +17,7 @@ defineProps({
 <style lang="postcss">
 .button {
   min-width: fit-content;
+  width: fit-content;
   padding: var(--size-3) var(--size-4);
   background: var(--border-color);
   position: relative;

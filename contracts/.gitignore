@@ -3,7 +3,7 @@ node_modules
 
 # Hardhat files
 /cache
-/artifacts
+/artifacts/**
 
 # TypeChain files
 /typechain
@@ -14,4 +14,4 @@ node_modules
 /coverage.json
 
 # Hardhat Ignition default folder for deployments against a local node
-ignition/deployments/chain-1337
+/ignition/deployments/chain-1337

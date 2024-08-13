@@ -4362,6 +4362,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pinia-plugin-persistedstate/nuxt@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@pinia-plugin-persistedstate/nuxt@npm:1.2.1"
+  dependencies:
+    "@nuxt/kit": "npm:^3.12.2"
+    defu: "npm:^6.1.4"
+    pinia-plugin-persistedstate: "npm:>=3.2.1"
+  peerDependencies:
+    "@pinia/nuxt": ^0.5.0
+  checksum: 10c0/bd2f33777ff82d842ee28f74fbe5d6a8d4ba13305fa75f953e0ac3f0b914c9a5c4486a39e971537b63cfd21dfb642a2424ea8b63485e1503911599d0bef3624c
+  languageName: node
+  linkType: hard
+
+"@pinia/nuxt@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "@pinia/nuxt@npm:0.5.3"
+  dependencies:
+    "@nuxt/kit": "npm:^3.9.0"
+    pinia: "npm:2.2.1"
+  checksum: 10c0/8001937ebab2ea1191b2bc6118342bd5a63682c0b76e9d4adcbe5c8af9fefefe7d3fc1305623ae033fa1481363b8d572cc445ed12d922967dd747ec046d7e387
+  languageName: node
+  linkType: hard
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -5373,6 +5396,8 @@ __metadata:
   resolution: "@visualizevalue/mint-app@workspace:app"
   dependencies:
     "@csstools/postcss-global-data": "npm:^2.1.1"
+    "@pinia-plugin-persistedstate/nuxt": "npm:^1.2.1"
+    "@pinia/nuxt": "npm:^0.5.3"
     "@tanstack/vue-query": "npm:^5.51.15"
     "@vite-pwa/assets-generator": "npm:^0.2.4"
     "@vite-pwa/nuxt": "npm:^0.7.0"
@@ -5380,6 +5405,7 @@ __metadata:
     "@vueuse/core": "npm:^10.10.0"
     "@vueuse/nuxt": "npm:^10.10.0"
     "@wagmi/vue": "npm:^0.0.33"
+    buffer: "npm:^6.0.3"
     feather-icons: "npm:^4.29.2"
     nuxt: "npm:^3.11.2"
     postcss-custom-media: "npm:^10.0.6"
@@ -5601,7 +5627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/devtools-api@npm:^6.5.1":
+"@vue/devtools-api@npm:^6.5.1, @vue/devtools-api@npm:^6.6.3":
   version: 6.6.3
   resolution: "@vue/devtools-api@npm:6.6.3"
   checksum: 10c0/e9e712f687e901b1ecfcfb958a305db9729d37408677ea8d63189176406196c7c6d4e9580216de590ccbe68037f323c163293e917cfad3834d7f3299cd5a22bb
@@ -13004,6 +13030,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pinia-plugin-persistedstate@npm:>=3.2.1":
+  version: 3.2.1
+  resolution: "pinia-plugin-persistedstate@npm:3.2.1"
+  peerDependencies:
+    pinia: ^2.0.0
+  checksum: 10c0/c01ff96176f71298a4ae42f7814f48c7b4860fe1cf90888e2500b856077e6b2f9272ecde1979324b4489ad5e4e80175d9e125425fa21439ae66871ab1837a5dd
+  languageName: node
+  linkType: hard
+
+"pinia@npm:2.2.1":
+  version: 2.2.1
+  resolution: "pinia@npm:2.2.1"
+  dependencies:
+    "@vue/devtools-api": "npm:^6.6.3"
+    vue-demi: "npm:^0.14.10"
+  peerDependencies:
+    "@vue/composition-api": ^1.4.0
+    typescript: ">=4.4.4"
+    vue: ^2.6.14 || ^3.3.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 10c0/983a96b5a487c07743b8617e3a8cb6e491c0b4b44db4c28891cae00249cc6c51451bea62c26ab14bee910fa38af00cd117663669fe4ad5afeff5ac71cd4ccf42
+  languageName: node
+  linkType: hard
+
 "pino-abstract-transport@npm:v0.5.0":
   version: 0.5.0
   resolution: "pino-abstract-transport@npm:0.5.0"
@@ -16859,7 +16913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:>=0.14.8, vue-demi@npm:^0.14.7":
+"vue-demi@npm:>=0.14.8, vue-demi@npm:^0.14.10, vue-demi@npm:^0.14.7":
   version: 0.14.10
   resolution: "vue-demi@npm:0.14.10"
   peerDependencies:

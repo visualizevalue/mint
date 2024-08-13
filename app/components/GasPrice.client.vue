@@ -1,5 +1,5 @@
 <template>
-  <slot>
+  <slot :price="unitPrice">
     <span>{{ unitPrice.gwei }} GWEI</span>
   </slot>
 </template>
@@ -16,7 +16,9 @@ const price = ref(await getGasPrice(config))
 watch(blockNumber, async () => price.value = await getGasPrice(config))
 
 const unitPrice = computed(() => ({
-  gwei: toFloat(formatGwei(price.value), 1),
+  gwei: price.value > 20000000000n
+    ? roundNumber(formatGwei(price.value))
+    : toFloat(formatGwei(price.value), 1),
   eth: formatEther(price.value),
 }))
 </script>
