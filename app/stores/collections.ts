@@ -49,6 +49,7 @@ export interface Collection {
   symbol: string
   description: string
   address: string
+  owner: `0x${string}`
   initBlock: bigint
   latestTokenId: bigint
   tokens: Token[]

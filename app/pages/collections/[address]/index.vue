@@ -11,11 +11,12 @@
     ]">
       <Loading v-if="loading" />
       <section v-else-if="collection">
-        <img :src="collection.image" :alt="collection.name">
+        <img v-if="collection.image" :src="collection.image" :alt="collection.name">
         <h1>{{ collection.name }} <small>{{ collection.symbol }}</small></h1>
         <p>{{ collection.description }}</p>
         <p>Init Block: {{ collection.initBlock }}</p>
         <p>Latest Token: {{ collection.latestTokenId }}</p>
+        <p>Owner: {{ collection.owner }}</p>
       </section>
     </PageFrame>
   </Authenticated>
@@ -34,7 +35,7 @@ const load = async () => {
   loading.value = true
 
   if (! store.hasCollection(address)) {
-    const [data, initBlock, latestTokenId] = await Promise.all([
+    const [data, initBlock, latestTokenId, owner] = await Promise.all([
       readContract($wagmi, {
         abi: MINT_ABI,
         address,
@@ -50,6 +51,11 @@ const load = async () => {
         address,
         functionName: 'latestTokenId',
       }),
+      readContract($wagmi, {
+        abi: MINT_ABI,
+        address,
+        functionName: 'owner',
+      }),
     ])
 
     const json = Buffer.from(data.substring(29), `base64`).toString()
@@ -63,6 +69,7 @@ const load = async () => {
       address,
       initBlock,
       latestTokenId,
+      owner: owner.toLowerCase(),
     })
   }
 
