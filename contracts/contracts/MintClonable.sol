@@ -2,12 +2,13 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
-import "./libraries/ERC1155.sol";
+import "./ERC1155.sol";
 import "./interfaces/IRenderer.sol";
-import "./interfaces/IToken.sol";
+import "./libraries/ContractMetadata.sol";
+import "./types/Token.sol";
 
 /// @notice To mint is a human right.
-contract Mint is ERC1155, Ownable2Step {
+contract MintClonable is ERC1155, Ownable2Step {
     string public name;
     string public symbol;
     string public description;
@@ -21,10 +22,12 @@ contract Mint is ERC1155, Ownable2Step {
 
     uint constant MINT_BLOCKS = 7200;
 
-    event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
+    event NewMint(uint indexed tokenId);
+    event NewMintPurchase(uint indexed tokenId, uint unitPrice, uint amount);
     event NewRenderer(address indexed renderer, uint indexed index);
     event Withdrawal(uint amount);
 
+    error Initialized();
     error MintClosed();
     error MintPriceNotMet();
     error NonExistentToken();
@@ -39,7 +42,7 @@ contract Mint is ERC1155, Ownable2Step {
         string memory contractImage,
         address owner
     ) external {
-        if (initBlock) revert;
+        if (initBlock > 0) revert Initialized();
 
         name        = contractName;
         symbol      = contractSymbol;
@@ -72,12 +75,14 @@ contract Mint is ERC1155, Ownable2Step {
         token.data        = tokenData;
 
         _mint(msg.sender, latestTokenId, 1, "");
+
+        emit NewMint(latestTokenId);
     }
 
     function mint(uint tokenId, uint amount) external payable {
         if (tokenId > latestTokenId) revert NonExistentToken();
 
-        uint unitPrice = block.basefee * 60_000;
+        uint unitPrice = block.basefee * 61_000;
         uint mintPrice = unitPrice * amount;
         if (mintPrice > msg.value) revert MintPriceNotMet();
 
@@ -86,7 +91,7 @@ contract Mint is ERC1155, Ownable2Step {
 
         _mint(msg.sender, tokenId, amount, "");
 
-        emit NewMint(tokenId, unitPrice, amount);
+        emit NewMintPurchase(tokenId, unitPrice, amount);
     }
 
     function registerRenderer(address renderer) external onlyOwner returns (uint) {
@@ -108,6 +113,12 @@ contract Mint is ERC1155, Ownable2Step {
         Token memory token = tokens[tokenId];
 
         return IRenderer(renderers[token.renderer]).uri(tokenId, token);
+    }
+
+    function contractURI() public view returns (string memory) {
+        ContractMetadata.Data memory contractData = ContractMetadata.Data(name, symbol, description, image);
+
+        return ContractMetadata.uri(contractData);
     }
 
     function burn(address account, uint256 tokenId, uint256 amount) external {

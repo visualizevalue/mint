@@ -5252,7 +5252,9 @@ __metadata:
     "@types/chai-as-promised": "npm:^7.1.6"
     "@types/mocha": "npm:>=9.1.0"
     chai: "npm:^4.2.0"
+    dotenv: "npm:^16.4.5"
     hardhat: "npm:^2.22.7"
+    hardhat-chai-matchers-viem: "npm:^2.0.8"
     hardhat-gas-reporter: "npm:^2.2.0"
     solidity-coverage: "npm:^0.8.1"
     ts-node: "npm:^10.9.2"
@@ -9830,6 +9832,24 @@ __metadata:
   bin:
     handlebars: bin/handlebars
   checksum: 10c0/7aff423ea38a14bb379316f3857fe0df3c5d66119270944247f155ba1f08e07a92b340c58edaa00cfe985c21508870ee5183e0634dcb53dd405f35c93ef7f10d
+  languageName: node
+  linkType: hard
+
+"hardhat-chai-matchers-viem@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "hardhat-chai-matchers-viem@npm:2.0.8"
+  dependencies:
+    "@types/chai-as-promised": "npm:^7.1.3"
+    chai-as-promised: "npm:^7.1.1"
+    deep-eql: "npm:^4.0.1"
+    ordinal: "npm:^1.0.3"
+  peerDependencies:
+    "@nomicfoundation/hardhat-viem": ^2.0.0
+    chai: ^4.2.0
+    ethers: ^6.1.0
+    hardhat: ^2.9.4
+    viem: ^2.7.6
+  checksum: 10c0/e6be4313741ac463158dec5a5d5709d574a1645bc060a1157b260f7714c4a023379da5de6df7dc32135429575f49cdce41b353df1c98b464fc3679c28cbbeb69
   languageName: node
   linkType: hard
 

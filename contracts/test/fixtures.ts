@@ -28,6 +28,7 @@ export async function factoryFixture() {
     publicClient,
   }
 }
+
 export async function libraryFactoryFixture() {
   const [owner] = await hre.viem.getWalletClients()
 
