@@ -33,6 +33,11 @@ const config: HardhatUserConfig = {
       accounts: ACCOUNT_PRVKEYS,
       ledgerAccounts: LEDGER_ACCOUNTS,
     },
+    holesky: {
+      url: process.env.HOLESKY_URL || "",
+      accounts: ACCOUNT_PRVKEYS,
+      ledgerAccounts: LEDGER_ACCOUNTS,
+    },
     localhost: {
       ...HARDHAT_NETWORK_CONFIG,
     },

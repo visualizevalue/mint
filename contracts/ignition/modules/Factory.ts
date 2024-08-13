@@ -6,7 +6,8 @@ const FactoryModule = buildModule('Factory', (m) => {
   const factory = m.contract('Factory', [], {
     libraries: {
       ContractMetadata: contractMetadataRenderer,
-    }
+    },
+    // gasMultiplier: 2,
   })
 
   return { factory }
