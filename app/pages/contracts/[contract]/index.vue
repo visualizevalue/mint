@@ -1,34 +1,73 @@
 <template>
   <Authenticated>
-    <PageFrame title="Home">
+    <PageFrame title="Contract">
       <header>
-        Contract Manage
+        Manage {{ collection?.name || `Contract` }}
       </header>
 
-      <section v-if="isSuccess">
-        <img :src="metadata.image" :alt="metadata.name">
-        <h1>{{ metadata.name }} <small>{{ metadata.symbol }}</small></h1>
-        <p>{{ metadata.description }}</p>
+      <Loading v-if="loading" />
+      <section v-else-if="collection">
+        <img :src="collection.image" :alt="collection.name">
+        <h1>{{ collection.name }} <small>{{ collection.symbol }}</small></h1>
+        <p>{{ collection.description }}</p>
+        <p>Init Block: {{ collection.initBlock }}</p>
+        <p>Latest Token: {{ collection.latestTokenId }}</p>
       </section>
     </PageFrame>
   </Authenticated>
 </template>
 
 <script setup>
-import { useReadContract } from '@wagmi/vue'
-
 const route = useRoute()
+const address = route.params.contract.toLowerCase()
 
-const { isSuccess, data } = useReadContract({
-  abi: MINT_ABI,
-  address: route.params.contract,
-  functionName: 'contractURI',
-})
-// TODO: Handle other kinds of contract URIs
-const metadata = computed(() => {
-  const json = Buffer.from(data.value.substring(29), `base64`).toString()
-  return JSON.parse(json)
-})
+const { $wagmi } = useNuxtApp()
+const store = useCollectionsStore()
+const loading = ref(false)
+const collection = ref(null)
+
+const load = async () => {
+  loading.value = true
+
+  if (! store.hasCollection(address)) {
+    const [data, initBlock, latestTokenId] = await Promise.all([
+      readContract($wagmi, {
+        abi: MINT_ABI,
+        address,
+        functionName: 'contractURI',
+      }),
+      readContract($wagmi, {
+        abi: MINT_ABI,
+        address,
+        functionName: 'initBlock',
+      }),
+      readContract($wagmi, {
+        abi: MINT_ABI,
+        address,
+        functionName: 'latestTokenId',
+      }),
+    ])
+
+    const json = Buffer.from(data.substring(29), `base64`).toString()
+    const metadata = JSON.parse(json)
+
+    await store.addCollection({
+      image: metadata.image,
+      name: metadata.name,
+      symbol: metadata.symbol,
+      description: metadata.description,
+      address,
+      initBlock,
+      latestTokenId,
+    })
+  }
+
+  collection.value = await store.collectionByAddress(address)
+
+  loading.value = false
+}
+
+onMounted(() => load())
 </script>
 
 <style lang="postcss" scoped>

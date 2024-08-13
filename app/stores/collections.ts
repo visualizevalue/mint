@@ -2,22 +2,27 @@ export const useCollectionsStore = defineStore('collectionsStore', {
 
   state: () => ({
     collections: [] as Collection[],
+    collectionIndexes: {} as { [key: string]: number },
   }),
 
   getters: {
+    hasCollection: (state) =>
+      (address: string) => state.collectionIndexes[address] !== undefined,
     collectionIndexByAddress: (state) =>
-      (address: string) => state.collections.findIndex((c) => c.address === address),
+      (address: string) => state.collectionIndexes[address],
     collectionByAddress: (state) =>
-      (address: string) => state.collections.find((c) => c.address === address),
+      (address: string) => state.collections[state.collectionIndexes[address]],
   },
 
   actions: {
     async addCollection(collection: Collection) {
-      const existing = this.collectionByAddress(collection.address)
+      if (this.hasCollection(collection.address)) return
 
-      if (existing) return
-
+      // Add new collection
       this.collections.push(collection)
+
+      // Maintain collection index map
+      this.collectionIndexes[collection.address] = this.collections.length - 1
     },
     async addToken(address: string, token: Token) {
       const index = this.collectionIndexByAddress(address)
@@ -26,21 +31,31 @@ export const useCollectionsStore = defineStore('collectionsStore', {
 
       this.collections[index].tokens.push(token)
     },
-  }
+  },
+
+  persist: {
+    storage: persistedState.localStorage,
+    serializer: {
+      serialize: stringifyJSON,
+      deserialize: parseJSON,
+    },
+  },
 
 })
 
-interface Collection {
+export interface Collection {
   image: string
   name: string
   symbol: string
   description: string
   address: string
   initBlock: bigint
+  latestTokenId: bigint
   tokens: Token[]
 }
 
-interface Token {
+export interface Token {
+  tokenId: bigint
   name: string
   description: string
   artifact: string

@@ -92,7 +92,11 @@ export default defineNuxtConfig({
     presets: [
       {
         from: '@wagmi/core',
-        imports: ['waitForTransactionReceipt', 'writeContract']
+        imports: [
+          'readContract',
+          'waitForTransactionReceipt',
+          'writeContract'
+        ]
       },
       {
         from: 'viem',
