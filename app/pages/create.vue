@@ -1,6 +1,6 @@
 <template>
   <Authenticated>
-    <PageFrame title="Create">
+    <PageFrame title="Create New Collection">
       <form @submit.stop.prevent="deploy">
         <FormInput v-model="image" placeholder="Image" />
         <FormInput v-model="title" placeholder="Title" required />
@@ -51,11 +51,13 @@ const deploy = async () => {
   }))
 
   const createdEvent = logs.find(log => log.eventName === 'Created')
-  const contract = createdEvent.args.contractAddress
 
-  await navigateTo(`/contracts/${contract}`)
+  await navigateTo(`/collections/${createdEvent.args.contractAddress}`)
 }
 </script>
 
 <style lang="postcss" scoped>
+form {
+  width: 100%;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <Authenticated>
-    <PageFrame title="Contracts">
+    <PageFrame title="Collections">
       <section>
         <article
           v-for="collection in store.collections"
@@ -11,7 +11,7 @@
           <p>{{ collection.description }}</p>
           <p>Init Block: {{ collection.initBlock }}</p>
           <p>Latest Token: {{ collection.latestTokenId }}</p>
-          <Button :to="`/contracts/${collection.address}`">View</Button>
+          <Button :to="`/collections/${collection.address}`">View</Button>
         </article>
       </section>
     </PageFrame>

@@ -1,10 +1,14 @@
 <template>
   <Authenticated>
-    <PageFrame title="Contract">
-      <header>
-        Manage {{ collection?.name || `Contract` }}
-      </header>
-
+    <PageFrame :title="[
+      {
+        text: `Collections`,
+        to: `/collections`
+      },
+      {
+        text: `Manage ${ collection?.name || `Collection` }`
+      }
+    ]">
       <Loading v-if="loading" />
       <section v-else-if="collection">
         <img :src="collection.image" :alt="collection.name">
@@ -19,7 +23,7 @@
 
 <script setup>
 const route = useRoute()
-const address = route.params.contract.toLowerCase()
+const address = route.params.address.toLowerCase()
 
 const { $wagmi } = useNuxtApp()
 const store = useCollectionsStore()

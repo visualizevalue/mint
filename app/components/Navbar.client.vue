@@ -8,6 +8,10 @@
       <Icon type="feather" />
       <span>Create</span>
     </NuxtLink>
+    <NuxtLink to="/collections">
+      <Icon type="grid" />
+      <span>Collections</span>
+    </NuxtLink>
     <NuxtLink v-if="address" :to="`/profile/${address}`">
       <Icon type="user" />
       <span>Profile</span>
