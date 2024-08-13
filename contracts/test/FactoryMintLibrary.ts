@@ -2,11 +2,11 @@ import { getAddress } from 'viem'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
 import { ICON } from './constants'
-import { collectionFixture, factoryFixture } from './fixtures'
+import { libraryCollectionFixture, libraryFactoryFixture } from './fixtures'
 
-describe('Factory', function () {
+describe('FactoryMintLibrary', function () {
   it('creates a new collection', async function () {
-    const { factory } = await loadFixture(factoryFixture)
+    const { factory } = await loadFixture(libraryFactoryFixture)
 
     await expect(factory.write.create([
       'VV Mints',
@@ -17,13 +17,13 @@ describe('Factory', function () {
   })
 
   it('sets the correct owner', async function () {
-    const { mint, owner } = await loadFixture(collectionFixture)
+    const { mint, owner } = await loadFixture(libraryCollectionFixture)
 
     expect(await mint.read.owner()).to.equal(getAddress(owner.account.address))
   })
 
   it('sets the correct contract data', async function () {
-    const { mint } = await loadFixture(collectionFixture)
+    const { mint } = await loadFixture(libraryCollectionFixture)
 
     expect(await mint.read.name()).to.equal('VV Mints')
     expect(await mint.read.symbol()).to.equal('VVM')
