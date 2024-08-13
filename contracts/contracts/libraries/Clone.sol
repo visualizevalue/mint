@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v5.0.0) (proxy/Clones.sol)
+// Based on the OpenZeppelin Contracts (last updated v5.0.0) (proxy/Clones.sol)
 
 pragma solidity ^0.8.24;
 
@@ -10,7 +10,7 @@ pragma solidity ^0.8.24;
  * > To simply and cheaply clone contract functionality in an immutable way, this standard specifies
  * > a minimal bytecode implementation that delegates all calls to a known, fixed address.
  */
-library Clones {
+library Clone {
     /**
      * @dev A clone instance deployment failed.
      */

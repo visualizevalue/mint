@@ -5,10 +5,21 @@ import { ICON } from './constants'
 import { collectionFixture, factoryFixture } from './fixtures'
 
 describe('Factory', function () {
-  it('creates a new collection', async function () {
+  it('creates a new Mint contract', async function () {
     const { factory } = await loadFixture(factoryFixture)
 
     await expect(factory.write.create([
+      'VV Mints',
+      'VVM',
+      'Lorem Ipsum dolor sit amet.',
+      ICON,
+    ])).to.be.fulfilled
+  })
+
+  it('clones a new Mint contract', async function () {
+    const { factory } = await loadFixture(factoryFixture)
+
+    await expect(factory.write.clone([
       'VV Mints',
       'VVM',
       'Lorem Ipsum dolor sit amet.',

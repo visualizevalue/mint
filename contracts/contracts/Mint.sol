@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "@openzeppelin/contracts/access/Ownable2Step.sol";
-import "./ERC1155.sol";
-import "./interfaces/IRenderer.sol";
-import "./libraries/ContractMetadata.sol";
-import "./types/Token.sol";
+import { Ownable2Step, Ownable } from "@openzeppelin/contracts/access/Ownable2Step.sol";
+import { ERC1155               } from "./ERC1155.sol";
+import { IRenderer             } from "./interfaces/IRenderer.sol";
+import { ContractMetadata      } from "./libraries/ContractMetadata.sol";
+import { Token                 } from "./types/Token.sol";
 
 /// @notice To mint is a human right.
 contract Mint is ERC1155, Ownable2Step {
@@ -27,24 +27,31 @@ contract Mint is ERC1155, Ownable2Step {
     event NewRenderer(address indexed renderer, uint indexed index);
     event Withdrawal(uint amount);
 
+    error Initialized();
     error MintClosed();
     error MintPriceNotMet();
     error NonExistentToken();
     error NonExistentRenderer();
 
-    constructor(
+    constructor() Ownable(msg.sender) {}
+
+    function init(
         string memory contractName,
         string memory contractSymbol,
         string memory contractDescription,
         string memory contractImage,
         address owner
-    ) Ownable(owner) {
+    ) external {
+        if (initBlock > 0) revert Initialized();
+
         name        = contractName;
         symbol      = contractSymbol;
         description = contractDescription;
         image       = contractImage;
 
         initBlock = block.number;
+
+        _transferOwnership(owner);
     }
 
     function create(

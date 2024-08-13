@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
-import { Base64 } from "@openzeppelin/contracts/utils/Base64.sol";
+import { Base64  } from "@openzeppelin/contracts/utils/Base64.sol";
 
 library ContractMetadata {
 
