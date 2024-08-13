@@ -1,4 +1,4 @@
-import { parseGwei } from 'viem'
+import { getAddress, parseGwei, zeroAddress } from 'viem'
 import hre from 'hardhat'
 import {
   loadFixture, mine
@@ -12,7 +12,9 @@ describe('Mint', () => {
   describe('Creating', async () => {
 
     it('create an onchain artifact', async () => {
-      const { mint } = await loadFixture(collectionFixture)
+      const { mint, owner } = await loadFixture(collectionFixture)
+
+      const address = getAddress(owner.account.address)
 
       await expect(mint.write.create([
         'VVM1',
@@ -20,11 +22,13 @@ describe('Mint', () => {
         TOKEN_TIME,
         0n,
         0n,
-      ])).to.emit(mint, 'NewMint').withArgs(1n)
+      ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
     })
 
     it('create an offchain artifact', async () => {
-      const { mint } = await loadFixture(collectionFixture)
+      const { mint, owner } = await loadFixture(collectionFixture)
+
+      const address = getAddress(owner.account.address)
 
       await expect(mint.write.create([
         'VVM1',
@@ -32,11 +36,13 @@ describe('Mint', () => {
         'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
         0n,
         0n,
-      ])).to.emit(mint, 'NewMint').withArgs(1n)
+      ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
     })
 
     it('mints tokens with incremental token IDs', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint, owner } = await loadFixture(itemMintedFixture)
+
+      const address = getAddress(owner.account.address)
 
       await expect(mint.write.create([
         'VVM2',
@@ -44,7 +50,7 @@ describe('Mint', () => {
         'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
         0n,
         0n,
-      ])).to.emit(mint, 'NewMint').withArgs(2n)
+      ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 2n, 1n)
     })
 
     it('mints the first token to the artist', async () => {
@@ -82,7 +88,7 @@ describe('Mint', () => {
       await expect(mint.write.mint(
         [1n, 1n],
         { value: parseGwei((61000n * 3n).toString()) }
-      )).to.emit(mint, 'NewMintPurchase')
+      )).to.emit(mint, 'NewMint')
         .withArgs(1n, parseGwei((61000n * 3n).toString()), 1n)
     })
 
@@ -96,7 +102,7 @@ describe('Mint', () => {
       await expect(mint.write.mint(
         [1n, 1n],
         { value: parseGwei((61000n * 10n).toString()) }
-      )).to.emit(mint, 'NewMintPurchase')
+      )).to.emit(mint, 'NewMint')
         .withArgs(1n, parseGwei((61000n * 10n).toString()), 1n)
     })
 
@@ -110,7 +116,7 @@ describe('Mint', () => {
       await expect(mint.write.mint(
         [1n, 9n],
         { value: parseGwei((61000n * 10n * 9n).toString()) }
-      )).to.emit(mint, 'NewMintPurchase')
+      )).to.emit(mint, 'NewMint')
         .withArgs(1n, parseGwei((61000n * 10n).toString()), 9n)
     })
 
@@ -162,21 +168,13 @@ describe('Mint', () => {
         '0x2540be400', // 10 gwei
       ])
 
-      await mint.write.mint(
-        [1n, 10n],
-        {
-          value: parseGwei((61000n * 10n * 10n).toString()),
-          account: JALIL,
-        },
-      )
-
       await expect(mint.write.mint(
         [1n, 10n],
         {
           value: parseGwei((61000n * 10n * 10n).toString()),
           account: JALIL,
         },
-      )).to.be.fulfilled
+      )).to.emit(mint, 'TransferSingle').withArgs(JALIL, zeroAddress, JALIL, 1n, 10n)
     })
 
   })

@@ -27,6 +27,14 @@ describe('Factory', function () {
     ])).to.be.fulfilled
   })
 
+  it('prevents reinitialization the correct owner', async function () {
+    const { mint, owner } = await loadFixture(collectionFixture)
+
+    await expect(mint.write.init([
+      'Nope', 'NP', 'Bad intent', '', owner.account.address
+    ])).to.be.revertedWithCustomError(mint, 'Initialized')
+  })
+
   it('sets the correct owner', async function () {
     const { mint, owner } = await loadFixture(collectionFixture)
 
@@ -35,11 +43,6 @@ describe('Factory', function () {
 
   it('sets the correct contract data', async function () {
     const { mint } = await loadFixture(collectionFixture)
-
-    expect(await mint.read.name()).to.equal('VV Mints')
-    expect(await mint.read.symbol()).to.equal('VVM')
-    expect(await mint.read.description()).to.equal('Lorem Ipsum dolor sit amet.')
-    expect(await mint.read.image()).to.equal(ICON)
 
     const dataURI = await mint.read.contractURI()
     const json = Buffer.from(dataURI.substring(29), `base64`).toString()

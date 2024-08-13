@@ -10,30 +10,49 @@ import { Token                 } from "./types/Token.sol";
 /// @author Visualize Value
 contract Mint is ERC1155 {
 
-    string public name;
-    string public symbol;
-    string public description;
-    string public image;
+    /// @notice Holds information about this collection.
+    ContractMetadata.Data public metadata;
 
+    /// @notice Holds the metadata for each token within this collection.
     mapping(uint => Token) public tokens;
 
+    /// @notice The token metadata renderers registered with this collection.
     address[] public renderers;
+
+    /// @notice The most recently minted token id.
     uint public latestTokenId;
+
+    /// @notice Ethereum block height of when this collection was created.
     uint public initBlock;
 
+    /// @notice Each mint is open for 24 hours (7200 ethereum blocks).
     uint constant MINT_BLOCKS = 7200;
 
-    event NewMint(uint indexed tokenId);
-    event NewMintPurchase(uint indexed tokenId, uint unitPrice, uint amount);
+    /// @dev Emitted when a collector mints a token.
+    event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
+
+    /// @dev Emitted when the artist registers a new Renderer contract.
     event NewRenderer(address indexed renderer, uint indexed index);
+
+    /// @dev Emitted when the artist withdraws the contract balance.
     event Withdrawal(uint amount);
 
+    /// @dev Thrown on the attempt to reinitialize the contract.
     error Initialized();
+
+    /// @dev Thrown when trying to mint a piece after the mint window.
     error MintClosed();
+
+    /// @dev Thrown when trying to mint a piece below its current price.
     error MintPriceNotMet();
+
+    /// @dev Thrown when trying to mint a non existent token.
     error NonExistentToken();
+
+    /// @dev Thrown when trying to create a token with a non existent renderer assigned.
     error NonExistentRenderer();
 
+    /// @notice Initializes the collection contract.
     function init(
         string memory contractName,
         string memory contractSymbol,
@@ -43,16 +62,20 @@ contract Mint is ERC1155 {
     ) external {
         if (initBlock > 0) revert Initialized();
 
-        name        = contractName;
-        symbol      = contractSymbol;
-        description = contractDescription;
-        image       = contractImage;
+        // Initialize with metadata.
+        metadata.name        = contractName;
+        metadata.symbol      = contractSymbol;
+        metadata.description = contractDescription;
+        metadata.image       = contractImage;
 
+        // Seting the initialization block height prevents reinitialization
+        // and is used for 24h mint window checks.
         initBlock = block.number;
 
         _transferOwnership(owner);
     }
 
+    /// @notice Let's the artist create a new token.
     function create(
         string  calldata tokenName,
         string  calldata tokenDescription,
@@ -74,10 +97,9 @@ contract Mint is ERC1155 {
         token.data        = tokenData;
 
         _mint(msg.sender, latestTokenId, 1, "");
-
-        emit NewMint(latestTokenId);
     }
 
+    /// @notice Let's collectors purchase a token during its mint window.
     function mint(uint tokenId, uint amount) external payable {
         if (tokenId > latestTokenId) revert NonExistentToken();
 
@@ -90,9 +112,10 @@ contract Mint is ERC1155 {
 
         _mint(msg.sender, tokenId, amount, "");
 
-        emit NewMintPurchase(tokenId, unitPrice, amount);
+        emit NewMint(tokenId, unitPrice, amount);
     }
 
+    /// @notice Let's the artist register a new renderer to use for future mints.
     function registerRenderer(address renderer) external onlyOwner returns (uint) {
         renderers.push(renderer);
         uint index = renderers.length - 1;
@@ -102,24 +125,26 @@ contract Mint is ERC1155 {
         return index;
     }
 
+    /// @notice Let's the artist withdraw the contract balance.
     function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
 
         emit Withdrawal(address(this).balance);
     }
 
+    /// @notice Get the metadata for a given token id.
     function uri(uint tokenId) external override view returns (string memory) {
         Token memory token = tokens[tokenId];
 
         return IRenderer(renderers[token.renderer]).uri(tokenId, token);
     }
 
+    /// @notice Get the metadata for this collection contract.
     function contractURI() public view returns (string memory) {
-        ContractMetadata.Data memory contractData = ContractMetadata.Data(name, symbol, description, image);
-
-        return ContractMetadata.uri(contractData);
+        return ContractMetadata.uri(metadata);
     }
 
+    /// @notice Burn a given token & amount.
     function burn(address account, uint256 tokenId, uint256 amount) external {
         if (account != msg.sender && !isApprovedForAll(account, msg.sender)) {
             revert ERC1155MissingApprovalForAll(msg.sender, account);
