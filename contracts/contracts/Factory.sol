@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.24;
 
-import { Clone } from "./libraries/Clone.sol";
-import { Mint  } from "./Mint.sol";
+import { Clone    } from "./libraries/Clone.sol";
+import { Mint     } from "./Mint.sol";
+import { Renderer } from "./Renderer.sol";
 
 /// @notice To mint is a human right.
 /// @author Visualize Value
@@ -14,11 +15,16 @@ contract Factory {
     /// @dev The Mint contract implementation to base clonse off.
     address immutable private baseImplementation;
 
-    /// @dev Initialize the contract with a base clonable implementation.
+    /// @dev The base Renderer all Mint contracts are initialized with.
+    address immutable private baseRenderer;
+
+    /// @dev Initialize the contract with a base clonable mint contract implementation.
     constructor() {
         Mint mint = new Mint();
         mint.init("", "", "", "", address(this));
         baseImplementation = address(mint);
+
+        baseRenderer = address(new Renderer());
     }
 
     /// @notice Deploy a new Mint contract with the specified metadata.

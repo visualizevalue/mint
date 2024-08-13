@@ -87,9 +87,9 @@ describe('Mint', () => {
 
       await expect(mint.write.mint(
         [1n, 1n],
-        { value: parseGwei((61000n * 3n).toString()) }
+        { value: parseGwei((60000n * 3n).toString()) }
       )).to.emit(mint, 'NewMint')
-        .withArgs(1n, parseGwei((61000n * 3n).toString()), 1n)
+        .withArgs(1n, parseGwei((60000n * 3n).toString()), 1n)
     })
 
     it('allows buying an artifact at 10 gwei per gas', async () => {
@@ -101,9 +101,9 @@ describe('Mint', () => {
 
       await expect(mint.write.mint(
         [1n, 1n],
-        { value: parseGwei((61000n * 10n).toString()) }
+        { value: parseGwei((60000n * 10n).toString()) }
       )).to.emit(mint, 'NewMint')
-        .withArgs(1n, parseGwei((61000n * 10n).toString()), 1n)
+        .withArgs(1n, parseGwei((60000n * 10n).toString()), 1n)
     })
 
     it('allows buying multiple of an artifact', async () => {
@@ -115,9 +115,9 @@ describe('Mint', () => {
 
       await expect(mint.write.mint(
         [1n, 9n],
-        { value: parseGwei((61000n * 10n * 9n).toString()) }
+        { value: parseGwei((60000n * 10n * 9n).toString()) }
       )).to.emit(mint, 'NewMint')
-        .withArgs(1n, parseGwei((61000n * 10n).toString()), 9n)
+        .withArgs(1n, parseGwei((60000n * 10n).toString()), 9n)
     })
 
     it('prevents buying an artifact at 10 gwei per gas for less than the set price', async () => {
@@ -129,7 +129,7 @@ describe('Mint', () => {
 
       await expect(mint.write.mint(
         [1n, 1n],
-        { value: parseGwei((61000n * 9n).toString()) }
+        { value: parseGwei((60000n * 9n).toString()) }
       )).to.be.revertedWithCustomError(mint, 'MintPriceNotMet')
     })
 
@@ -142,7 +142,7 @@ describe('Mint', () => {
 
       await expect(mint.write.mint(
         [1n, 10n],
-        { value: parseGwei((61000n * 10n * 9n).toString()) }
+        { value: parseGwei((60000n * 10n * 9n).toString()) }
       )).to.be.revertedWithCustomError(mint, 'MintPriceNotMet')
     })
 
@@ -157,7 +157,7 @@ describe('Mint', () => {
 
       await expect(mint.write.mint(
         [1n, 1n],
-        { value: parseGwei((61000n * 10n).toString()) }
+        { value: parseGwei((60000n * 10n).toString()) }
       )).to.be.revertedWithCustomError(mint, 'MintClosed')
     })
 
@@ -171,7 +171,7 @@ describe('Mint', () => {
       await expect(mint.write.mint(
         [1n, 10n],
         {
-          value: parseGwei((61000n * 10n * 10n).toString()),
+          value: parseGwei((60000n * 10n * 10n).toString()),
           account: JALIL,
         },
       )).to.emit(mint, 'TransferSingle').withArgs(JALIL, zeroAddress, JALIL, 1n, 10n)
