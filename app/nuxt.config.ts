@@ -111,6 +111,7 @@ export default defineNuxtConfig({
         imports: [
           'decodeEventLog',
           'isAddress',
+          'getAddress',
           'toBytes',
           'toHex',
           'encodeAbiParameters',
