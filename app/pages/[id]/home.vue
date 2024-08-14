@@ -6,10 +6,10 @@
         <p>{{ config.public.description }}</p>
       </header>
 
-      <section v-if="store.collections.length">
+      <section v-if="store.all.length">
         <h1>Your Collections</h1>
         <article
-          v-for="collection in store.collections"
+          v-for="collection in store.all"
           :key="collection.address"
         >
           <img v-if="collection.image" :src="collection.image" :alt="collection.name">
@@ -18,12 +18,12 @@
           <p>Init Block: {{ collection.initBlock }}</p>
           <p>Latest Token: {{ collection.latestTokenId }}</p>
           <p>Owner: {{ collection.owner }}</p>
-          <Button :to="`/collections/${collection.address}`">View</Button>
+          <Button :to="`/${$route.params.id}/collections/${collection.address}`">View</Button>
         </article>
       </section>
       <section v-else>
         <p>It doesn't look like you have deployed Mint collections.</p>
-        <Button to="/create">Deploy your first</Button>
+        <Button to="/collections/create">Deploy your first</Button>
       </section>
     </PageFrame>
   </Authenticated>

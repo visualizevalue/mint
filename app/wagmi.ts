@@ -1,25 +1,39 @@
+import { custom, fallback } from 'viem'
 import { http, cookieStorage, createConfig, createStorage } from '@wagmi/vue'
 import { mainnet, sepolia, holesky, localhost } from '@wagmi/vue/chains'
 import { injected, metaMask } from '@wagmi/vue/connectors'
 
+const title = process.env.NUXT_PUBLIC_TITLE || 'Mint'
+const isBrowser = typeof window !== 'undefined' && window !== null
+const transports = isBrowser && window.ethereum
+  ? fallback([ custom(window.ethereum), http() ])
+  : http()
+
 export const config = createConfig({
   chains: [mainnet, sepolia, holesky, localhost],
+  batch: {
+    multicall: true,
+  },
   connectors: [
     injected(),
     // walletConnect({
     //   projectId: process.env.NUXT_PUBLIC_WC_PROJECT_ID!,
     // }),
-    metaMask(),
+    metaMask({
+      dappMetadata: {
+        name: title,
+      }
+    }),
   ],
   storage: createStorage({
     storage: cookieStorage,
   }),
   ssr: true,
   transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-    [holesky.id]: http(),
-    [localhost.id]: http(),
+    [mainnet.id]: transports,
+    [sepolia.id]: transports,
+    [holesky.id]: transports,
+    [localhost.id]: transports,
   },
 })
 

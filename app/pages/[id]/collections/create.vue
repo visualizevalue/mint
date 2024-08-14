@@ -1,6 +1,14 @@
 <template>
   <Authenticated>
-    <PageFrame title="Create New Collection">
+    <PageFrame :title="[
+      {
+        text: `Collections`,
+        to: `/collections`
+      },
+      {
+        text: `Create New`
+      }
+    ]">
       <form @submit.stop.prevent="deploy">
         <FormInput v-model="image" placeholder="Image" />
         <FormInput v-model="title" placeholder="Title" required />

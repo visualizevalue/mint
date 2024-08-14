@@ -12,8 +12,10 @@ task('accounts', 'Prints the list of accounts', async (_, hre) => {
   }
 })
 
-task('fund-jalil', 'Funds jalil for testing', async (_, hre) => {
-  const [account] = await hre.viem.getWalletClients()
+task('fund-account', 'Funds an account for testing')
+  .addParam('address', 'The wallet address to fund', JALIL)
+  .setAction(async ({ address }, hre) => {
+    const [account] = await hre.viem.getWalletClients()
 
-  await account.sendTransaction({ to: JALIL, value: parseEther('1') })
-})
+    await account.sendTransaction({ to: address, value: parseEther('1') })
+  })

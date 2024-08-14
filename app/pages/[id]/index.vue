@@ -1,10 +1,11 @@
 <template>
   <PageFrame>
     <header>
+      <pre>{{ $route.params.id }}</pre>
       <h1>{{ config.public.title }}</h1>
       <p>{{ config.public.description }}</p>
 
-      <Connect @connected="($event) => navigateTo(`/${$event.address}/home`)" />
+      <pre>FEEED</pre>
     </header>
   </PageFrame>
 </template>

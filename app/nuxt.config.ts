@@ -95,12 +95,15 @@ export default defineNuxtConfig({
         imports: [
           'readContract',
           'waitForTransactionReceipt',
-          'writeContract'
+          'writeContract',
         ]
       },
       {
         from: 'viem',
-        imports: ['decodeEventLog']
+        imports: [
+          'decodeEventLog',
+          'isAddress',
+        ]
       }
     ]
   },

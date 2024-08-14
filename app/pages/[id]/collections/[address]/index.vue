@@ -3,7 +3,7 @@
     <PageFrame :title="[
       {
         text: `Collections`,
-        to: `/collections`
+        to: `/${$route.params.id}/collections`
       },
       {
         text: `Manage ${ collection?.name || `Collection` }`
@@ -73,7 +73,7 @@ const load = async () => {
     })
   }
 
-  collection.value = await store.collectionByAddress(address)
+  collection.value = await store.collection(address)
 
   loading.value = false
 }

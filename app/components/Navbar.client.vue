@@ -1,18 +1,18 @@
 <template>
   <nav>
-    <NuxtLink to="/home">
+    <NuxtLink :to="`/${address}/home`">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
-    <NuxtLink to="/create">
+    <!-- <NuxtLink to="/collections/create">
       <Icon type="feather" />
       <span>Create</span>
-    </NuxtLink>
-    <NuxtLink to="/collections">
+    </NuxtLink> -->
+    <NuxtLink :to="`/${address}/collections`">
       <Icon type="grid" />
       <span>Collections</span>
     </NuxtLink>
-    <NuxtLink v-if="address" :to="`/profile/${address}`">
+    <NuxtLink :to="`/profile/${address}`">
       <Icon type="user" />
       <span>Profile</span>
     </NuxtLink>

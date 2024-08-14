@@ -1,35 +1,28 @@
 export const useCollectionsStore = defineStore('collectionsStore', {
 
   state: () => ({
-    collections: [] as Collection[],
-    collectionIndexes: {} as { [key: string]: number },
+    version: 1,
+    collections: {} as { [key: string]: Collection },
   }),
 
   getters: {
+    all: (state) => Object.values(state.collections),
     hasCollection: (state) =>
-      (address: string) => state.collectionIndexes[address] !== undefined,
-    collectionIndexByAddress: (state) =>
-      (address: string) => state.collectionIndexes[address],
-    collectionByAddress: (state) =>
-      (address: string) => state.collections[state.collectionIndexes[address]],
+      (address: string) => state.collections[address] !== undefined,
+    collection: (state) =>
+      (address: string) => state.collections[address],
   },
 
   actions: {
     async addCollection(collection: Collection) {
-      if (this.hasCollection(collection.address)) return
+      if (this.hasCollection(collection.address)) throw new Error('Collection already exists')
 
-      // Add new collection
-      this.collections.push(collection)
-
-      // Maintain collection index map
-      this.collectionIndexes[collection.address] = this.collections.length - 1
+      this.collections[collection.address] = collection
     },
     async addToken(address: string, token: Token) {
-      const index = this.collectionIndexByAddress(address)
+      if (! this.hasCollection(address)) throw new Error('Unknown collection')
 
-      if (index < 0) throw new Error('Unknown collection')
-
-      this.collections[index].tokens.push(token)
+      this.collections[address].tokens.push(token)
     },
   },
 

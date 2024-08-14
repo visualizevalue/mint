@@ -17,7 +17,7 @@ const showConnect = computed(() => !isConnected.value)
 
 const login = () => connect({ connector: injected() })
 
-const check = () => isConnected.value ? emit('connected') : emit('disconnected')
+const check = () => isConnected.value ? emit('connected', { address: address.value }) : emit('disconnected')
 watch(isConnected, () => check())
 onMounted(() => check())
 </script>
