@@ -1,16 +1,8 @@
 <template>
-  <nav>
-    <NuxtLink :to="`/${address}/home`">
+  <nav v-if="isConnected">
+    <NuxtLink :to="`/${address}`">
       <Icon type="home" />
       <span>Home</span>
-    </NuxtLink>
-    <!-- <NuxtLink to="/collections/create">
-      <Icon type="feather" />
-      <span>Create</span>
-    </NuxtLink> -->
-    <NuxtLink :to="`/${address}/collections`">
-      <Icon type="grid" />
-      <span>Collections</span>
     </NuxtLink>
     <NuxtLink :to="`/profile/${address}`">
       <Icon type="user" />
@@ -22,7 +14,7 @@
 <script setup>
 import { useAccount } from '@wagmi/vue'
 
-const { address } = useAccount()
+const { address, isConnected } = useAccount()
 </script>
 
 <style lang="postcss" scoped>

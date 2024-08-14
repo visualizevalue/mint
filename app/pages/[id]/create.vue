@@ -3,7 +3,7 @@
     <PageFrame :title="[
       {
         text: `Collections`,
-        to: `/collections`
+        to: `/${$route.params.id}`
       },
       {
         text: `Create New`

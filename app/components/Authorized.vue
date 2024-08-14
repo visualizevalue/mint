@@ -9,7 +9,7 @@ const { domain, to, } = defineProps({
   domain: [String, null],
   to: {
     type: String,
-    default: '/home',
+    default: '/',
   }
 })
 const { initiated, session } = useSession()

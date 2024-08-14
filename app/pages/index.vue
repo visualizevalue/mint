@@ -4,7 +4,7 @@
       <h1>{{ config.public.title }}</h1>
       <p>{{ config.public.description }}</p>
 
-      <Connect @connected="($event) => navigateTo(`/${$event.address}/home`)" />
+      <Connect @connected="($event) => navigateTo(`/${$event.address}`)" />
     </header>
   </PageFrame>
 </template>

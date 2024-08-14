@@ -10,7 +10,8 @@ const transports = isBrowser && window.ethereum
   : http()
 
 export const config = createConfig({
-  chains: [mainnet, sepolia, holesky, localhost],
+  // chains: [mainnet, sepolia, holesky, localhost],
+  chains: [localhost],
   batch: {
     multicall: true,
   },

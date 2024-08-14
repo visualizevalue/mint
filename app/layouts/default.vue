@@ -24,7 +24,7 @@ main {
   }
 
   @media (--md) {
-    padding: var(--navbar-height) calc(var(--navbar-width)/2) 0 var(--navbar-width);
+    padding: var(--navbar-height) var(--navbar-width) 0;
   }
 }
 </style>
