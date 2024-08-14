@@ -58,8 +58,9 @@
   --spacer-xl: var(--size-9);
 
   /* FONTS */
-  --font-family-main: 'Space Grotesk', Inter, Avenir, Helvetica, Arial, sans-serif;
-  --font-family-ui: Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-main:  Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-prose: Space Grotesk, Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-ui:    var(--font-family-main);
 
   --font-xs: calc(var(--size-2) + var(--size-1));
   --font-sm: var(--size-3);

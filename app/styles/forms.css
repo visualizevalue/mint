@@ -18,6 +18,10 @@ select {
   border-radius: 0;
   background: var(--background);
 
+  &::placeholder {
+    text-transform: uppercase;
+  }
+
   &:-internal-autofill-selected {
     background: inherit;
     background-image: none !important;

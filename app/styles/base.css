@@ -8,6 +8,7 @@
   color: var(--color);
   color-scheme: dark;
 
+  text-transform: uppercase;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

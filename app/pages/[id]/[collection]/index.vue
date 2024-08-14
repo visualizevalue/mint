@@ -1,6 +1,5 @@
 <template>
-  <Loading v-if="loading" />
-  <PageFrame v-else :title="[
+  <PageFrame :title="[
     {
       text: `Collections`,
       to: `/${id}`
@@ -9,6 +8,12 @@
       text: `${ collection?.name }`
     }
   ]">
+    <header v-if="isMe">
+      <menu>
+        <Button :to="`/${id}/${collection.address}/mint`">Create New</Button>
+      </menu>
+    </header>
+
     <section>
       <img v-if="collection.image" :src="collection.image" :alt="collection.name">
       <h1>{{ collection.name }} <small>{{ collection.symbol }}</small></h1>
@@ -25,23 +30,25 @@
 
 <script setup>
 const id = useArtistId()
-const route = useRoute()
-const address = computed(() => route.params.collection.toLowerCase())
+const isMe = useIsMe()
 
-const store = useOnchainStore()
-const loading = ref(true)
-const collection = ref(null)
+const props = defineProps(['collection'])
+const collection = computed(() => props.collection)
 
-const load = async () => {
-  loading.value = true
+// Encoding example.
+onMounted(() => {
+  const myString = [...new Array(600)].map(() => "Hello, World! This is a long string that might exceed the limit...").join('')
+  const bytesArray = splitIntoChunks(myString)
 
-  collection.value = await store.fetchCollection(address.value)
+  const encodedData = encodeAbiParameters(
+    [
+      { name: 'foo', type: 'bytes[]' },
+    ],
+    [bytesArray]
+  )
 
-  loading.value = false
-}
-
-onMounted(() => load())
-watch(address, () => load())
+  console.log(encodedData, bytesArray, bytesArray.map(h => toBytes(h)))
+})
 </script>
 
 <style lang="postcss" scoped>
