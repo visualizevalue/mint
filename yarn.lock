@@ -5449,6 +5449,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@visualizevalue/mint-utils@workspace:utils":
+  version: 0.0.0-use.local
+  resolution: "@visualizevalue/mint-utils@workspace:utils"
+  dependencies:
+    viem: "npm:2.x"
+  languageName: unknown
+  linkType: soft
+
 "@visualizevalue/mint@workspace:.":
   version: 0.0.0-use.local
   resolution: "@visualizevalue/mint@workspace:."

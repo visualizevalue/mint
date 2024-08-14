@@ -4,6 +4,7 @@ pragma solidity ^0.8.24;
 import { ERC1155               } from "./ERC1155.sol";
 import { IRenderer             } from "./interfaces/IRenderer.sol";
 import { ContractMetadata      } from "./libraries/ContractMetadata.sol";
+import { SSTORE2               } from "./libraries/SSTORE2.sol";
 import { Token                 } from "./types/Token.sol";
 
 /// @notice To mint is a human right.
@@ -49,6 +50,9 @@ contract Mint is ERC1155 {
     /// @dev Thrown when trying to mint a non existent token.
     error NonExistentToken();
 
+    /// @dev Thrown when trying to change an existing token.
+    error TokenAlreadyMinted();
+
     /// @dev Thrown when trying to create a token with a non existent renderer assigned.
     error NonExistentRenderer();
 
@@ -83,7 +87,7 @@ contract Mint is ERC1155 {
     function create(
         string  calldata tokenName,
         string  calldata tokenDescription,
-        string  calldata tokenArtifact,
+        bytes[] calldata tokenArtifact,
         uint32  tokenRenderer,
         uint192 tokenData
     ) public onlyOwner {
@@ -95,12 +99,37 @@ contract Mint is ERC1155 {
 
         token.name        = tokenName;
         token.description = tokenDescription;
-        token.artifact    = tokenArtifact;
         token.blocks      = uint32(block.number - initBlock);
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
 
+        if (tokenArtifact.length > 0) {
+            // Clear previously prepared artifact data.
+            if (token.artifact.length > 0) {
+                delete token.artifact;
+            }
+
+            // Write the token artifact to storage.
+            for (uint8 i = 0; i < tokenArtifact.length; i++) {
+                token.artifact.push(SSTORE2.write(tokenArtifact[i]));
+            }
+        }
+
         _mint(msg.sender, latestTokenId, 1, "");
+    }
+
+    /// @notice Let's the artist prepare artifacts that are too large to store in a single transaction.
+    function prepareArtifact(uint tokenId, bytes[] calldata tokenArtifact, bool clear) public onlyOwner {
+        if (tokenId < latestTokenId) revert TokenAlreadyMinted();
+
+        Token storage token = tokens[tokenId];
+
+        if (token.artifact.length > 0 && clear) { delete token.artifact; }
+
+        // Write the token artifact to storage.
+        for (uint8 i = 0; i < tokenArtifact.length; i++) {
+            token.artifact.push(SSTORE2.write(tokenArtifact[i]));
+        }
     }
 
     /// @notice Let's collectors purchase a token during its mint window.

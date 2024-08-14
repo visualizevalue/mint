@@ -5,7 +5,8 @@
     "private": true,
     "workspaces": [
         "app",
-        "contracts"
+        "contracts",
+        "utils"
     ],
     "packageManager": "yarn@4.3.1"
 }

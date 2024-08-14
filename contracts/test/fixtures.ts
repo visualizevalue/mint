@@ -2,6 +2,7 @@ import { parseEther } from 'viem'
 import {
   loadFixture,
 } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
+import { splitIntoChunks } from '@visualizevalue/mint-utils'
 import hre from 'hardhat'
 import { ICON, JALIL, TOKEN_TIME } from './constants'
 
@@ -56,7 +57,7 @@ export async function itemMintedFixture() {
   await mint.write.create([
     'VVM1',
     'Lorem Ipsum dolor sit amet.',
-    TOKEN_TIME,
+    splitIntoChunks(TOKEN_TIME),
     0n,
     0n,
   ])

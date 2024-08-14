@@ -1,0 +1,8 @@
+{
+    "name": "@visualizevalue/mint-utils",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "viem": "2.x"
+    }
+}

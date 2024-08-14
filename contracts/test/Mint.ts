@@ -3,6 +3,7 @@ import hre from 'hardhat'
 import {
   loadFixture, mine
 } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
+import { splitIntoChunks } from '@visualizevalue/mint-utils'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
 import { collectionFixture, itemMintedFixture } from './fixtures'
@@ -19,7 +20,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'VVM1',
         'Lorem Ipsum dolor sit amet.',
-        TOKEN_TIME,
+        splitIntoChunks(TOKEN_TIME),
         0n,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
@@ -33,7 +34,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'VVM1',
         'Lorem Ipsum dolor sit amet.',
-        'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
+        splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
         0n,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
@@ -47,7 +48,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'VVM2',
         'Lorem Ipsum dolor sit amet.',
-        'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
+        splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
         0n,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 2n, 1n)
@@ -66,7 +67,7 @@ describe('Mint', () => {
         [
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
-          'ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo',
+          splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
           0n,
           0n,
         ],
@@ -160,6 +161,10 @@ describe('Mint', () => {
         { value: parseGwei((60000n * 10n).toString()) }
       )).to.be.revertedWithCustomError(mint, 'MintClosed')
     })
+
+    // it('prevents buying non existent artifacts', async () => {
+    //   expect(false).to.be.true
+    // })
 
     it('lets anyone buy a token', async () => {
       const { mint } = await loadFixture(itemMintedFixture)
