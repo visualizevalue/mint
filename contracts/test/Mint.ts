@@ -153,6 +153,30 @@ describe('Mint', () => {
       )).to.be.revertedWithCustomError(mint, 'TokenAlreadyMinted')
     })
 
+    it('allows registering a new renderer', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      const mockRenderer = await hre.viem.deployContract('MockRenderer', [])
+
+      await expect(mint.write.registerRenderer([mockRenderer.address]))
+        .to.emit(mint, 'NewRenderer')
+        .withArgs(getAddress(mockRenderer.address), 1n)
+
+      await expect(mint.write.create([
+        'mock',
+        '',
+        splitIntoChunks('void'),
+        1n,
+        0n,
+      ])).to.be.fulfilled
+
+      const dataURI = await mint.read.uri([2n])
+      const json = Buffer.from(dataURI.substring(29), `base64`).toString()
+      const data = JSON.parse(json)
+
+      expect(data.foo).to.equal('bar')
+    })
+
   })
 
   describe('Purchasing', async () => {
