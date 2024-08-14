@@ -120,7 +120,7 @@ contract Mint is ERC1155 {
 
     /// @notice Let's the artist prepare artifacts that are too large to store in a single transaction.
     function prepareArtifact(uint tokenId, bytes[] calldata tokenArtifact, bool clear) public onlyOwner {
-        if (tokenId < latestTokenId) revert TokenAlreadyMinted();
+        if (tokenId <= latestTokenId) revert TokenAlreadyMinted();
 
         Token storage token = tokens[tokenId];
 

@@ -1,12 +1,10 @@
 import { getAddress, parseGwei, zeroAddress } from 'viem'
 import hre from 'hardhat'
-import {
-  loadFixture, mine
-} from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
+import { loadFixture, mine } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { splitIntoChunks } from '@visualizevalue/mint-utils'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
-import { collectionFixture, itemMintedFixture } from './fixtures'
+import { collectionFixture, itemMintedFixture, itemPreparedFixture } from './fixtures'
 
 describe('Mint', () => {
 
@@ -73,6 +71,86 @@ describe('Mint', () => {
         ],
         { account: JALIL }
       )).to.be.revertedWithCustomError(mint, 'OwnableUnauthorizedAccount')
+    })
+
+    it('prepare a large artifact across multiple transactions', async () => {
+      const { mint, largeArtifact } = await loadFixture(itemPreparedFixture)
+
+      const dataURI = await mint.read.uri([2n], { gas: 1_000_000_000 })
+      const json = Buffer.from(dataURI.substring(29), `base64`).toString()
+      const data = JSON.parse(json)
+
+      expect(data.image).to.equal(largeArtifact)
+    })
+
+    it('prepare a large artifact across multiple transactions and clear previous artifact', async () => {
+      const { mint } = await loadFixture(itemPreparedFixture)
+
+      await expect(mint.write.prepareArtifact(
+        [
+          2n,
+          splitIntoChunks('Hello world'),
+          true,
+        ],
+      )).to.be.fulfilled
+
+      const dataURI = await mint.read.uri([2n])
+      const json = Buffer.from(dataURI.substring(29), `base64`).toString()
+      const data = JSON.parse(json)
+
+      expect(data.image).to.equal('Hello world')
+    })
+
+    it('creates a token and overrieds previously prepared artifact', async () => {
+      const { mint } = await loadFixture(itemPreparedFixture)
+
+      await expect(mint.write.create(
+        [
+          'VVM2',
+          'Lorem Ipsum dolor sit amet.',
+          splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
+          0n,
+          0n,
+        ]
+      )).to.be.fulfilled
+
+      const dataURI = await mint.read.uri([2n])
+      const json = Buffer.from(dataURI.substring(29), `base64`).toString()
+      const data = JSON.parse(json)
+
+      expect(data.image).to.equal('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo')
+    })
+
+    it('creates a token with a previously prepared artifact', async () => {
+      const { mint, largeArtifact } = await loadFixture(itemPreparedFixture)
+
+      await expect(mint.write.create(
+        [
+          'VVM2',
+          'Lorem Ipsum dolor sit amet.',
+          [],
+          0n,
+          0n,
+        ]
+      )).to.be.fulfilled
+
+      const dataURI = await mint.read.uri([2n], { gas: 1_000_000_000 })
+      const json = Buffer.from(dataURI.substring(29), `base64`).toString()
+      const data = JSON.parse(json)
+
+      expect(data.image).to.equal(largeArtifact)
+    })
+
+    it('prevents adding to artifact after token creation', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      await expect(mint.write.prepareArtifact(
+        [
+          1n,
+          splitIntoChunks('Hello world'),
+          true,
+        ],
+      )).to.be.revertedWithCustomError(mint, 'TokenAlreadyMinted')
     })
 
   })
@@ -162,9 +240,14 @@ describe('Mint', () => {
       )).to.be.revertedWithCustomError(mint, 'MintClosed')
     })
 
-    // it('prevents buying non existent artifacts', async () => {
-    //   expect(false).to.be.true
-    // })
+    it('prevents buying non existent artifacts', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      await expect(mint.write.mint(
+        [9n, 1n],
+        { value: parseGwei((60000n * 10n).toString()) }
+      )).to.be.revertedWithCustomError(mint, 'NonExistentToken')
+    })
 
     it('lets anyone buy a token', async () => {
       const { mint } = await loadFixture(itemMintedFixture)

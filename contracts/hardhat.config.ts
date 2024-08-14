@@ -48,6 +48,9 @@ const config: HardhatUserConfig = {
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     currency: 'USD',
     gasPrice: 10,
+  },
+  mocha: {
+    // timeout: 5_000,
   }
 }
 

@@ -1,8 +1,6 @@
 import { parseEther } from 'viem'
-import {
-  loadFixture,
-} from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
-import { splitIntoChunks } from '@visualizevalue/mint-utils'
+import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
+import { chunkArray, splitIntoChunks } from '@visualizevalue/mint-utils'
 import hre from 'hardhat'
 import { ICON, JALIL, TOKEN_TIME } from './constants'
 
@@ -67,5 +65,32 @@ export async function itemMintedFixture() {
     factory,
     owner,
     publicClient,
+  }
+}
+
+export async function itemPreparedFixture() {
+  const { mint, factory, owner, publicClient } = await loadFixture(itemMintedFixture)
+
+  const largeArtifact = [...new Array(3000)]
+    .map(_ => `Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, maxime iste! Rerum, ipsam facilis aut placeat, laboriosam ex adipisci accusantium debitis corporis eaque voluptatem sequi quod pariatur officiis dignissimos obcaecati!`)
+    .join('')
+  const chunks = chunkArray(splitIntoChunks(largeArtifact), 5)
+
+  for (const chunk of chunks) {
+    await mint.write.prepareArtifact(
+      [
+        2n,
+        chunk,
+        false,
+      ]
+    )
+  }
+
+  return {
+    mint,
+    factory,
+    owner,
+    publicClient,
+    largeArtifact,
   }
 }
