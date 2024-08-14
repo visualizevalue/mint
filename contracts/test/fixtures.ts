@@ -32,8 +32,6 @@ export async function factoryFixture() {
 export async function collectionFixture() {
   const { factory, owner, publicClient } = await loadFixture(factoryFixture)
 
-  const renderer = await hre.viem.deployContract('Renderer', [])
-
   const hash = await factory.write.create([
     'VV Mints',
     'VVM',
@@ -43,8 +41,6 @@ export async function collectionFixture() {
   await publicClient.waitForTransactionReceipt({ hash })
   const createdEvents = await factory.getEvents.Created()
   const mint = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress)
-
-  await mint.write.registerRenderer([renderer.address])
 
   return {
     mint,

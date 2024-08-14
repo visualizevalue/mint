@@ -21,7 +21,7 @@ contract Factory {
     /// @dev Initialize the contract with a base clonable mint contract implementation.
     constructor() {
         Mint mint = new Mint();
-        mint.init("", "", "", "", address(this));
+        mint.init("", "", "", "", baseRenderer, address(this));
         baseImplementation = address(mint);
 
         baseRenderer = address(new Renderer());
@@ -37,7 +37,7 @@ contract Factory {
     ) external returns (address) {
         Mint mint = new Mint();
 
-        mint.init(name, symbol, description, image, msg.sender);
+        mint.init(name, symbol, description, image, baseRenderer, msg.sender);
 
         emit Created(msg.sender, address(mint));
 
@@ -54,7 +54,7 @@ contract Factory {
     ) external returns (address) {
         address mint = Clone.clone(baseImplementation);
 
-        Mint(mint).init( name, symbol, description, image, msg.sender);
+        Mint(mint).init( name, symbol, description, image, baseRenderer, msg.sender);
 
         emit Created(msg.sender, mint);
 

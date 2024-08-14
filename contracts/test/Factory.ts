@@ -1,4 +1,4 @@
-import { getAddress } from 'viem'
+import { getAddress, zeroAddress } from 'viem'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
 import { ICON } from './constants'
@@ -28,11 +28,11 @@ describe('Factory', function () {
     ])).to.be.fulfilled
   })
 
-  it('prevents reinitialization the correct owner', async function () {
+  it('prevents reinitialization', async function () {
     const { mint, owner } = await loadFixture(collectionFixture)
 
     await expect(mint.write.init([
-      'Nope', 'NP', 'Bad intent', '', owner.account.address
+      'Nope', 'NP', 'Bad intent', '', zeroAddress, owner.account.address
     ])).to.be.revertedWithCustomError(mint, 'Initialized')
   })
 

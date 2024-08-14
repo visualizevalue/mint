@@ -58,6 +58,7 @@ contract Mint is ERC1155 {
         string memory contractSymbol,
         string memory contractDescription,
         string memory contractImage,
+        address renderer,
         address owner
     ) external {
         if (initBlock > 0) revert Initialized();
@@ -67,6 +68,9 @@ contract Mint is ERC1155 {
         metadata.symbol      = contractSymbol;
         metadata.description = contractDescription;
         metadata.image       = contractImage;
+
+        // Set the inial renderer
+        renderers.push(renderer);
 
         // Seting the initialization block height prevents reinitialization
         // and is used for 24h mint window checks.
