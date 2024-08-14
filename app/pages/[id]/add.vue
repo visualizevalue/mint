@@ -29,7 +29,7 @@ const add = async () => {
     return
   }
 
-  await navigateTo(`${id.value}/${address.value}`)
+  await navigateTo(`/${id.value}/${address.value}`)
 }
 </script>
 

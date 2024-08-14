@@ -26,7 +26,7 @@
     <section v-else>
       <template v-if="isMe">
         <p>It looks like you haven't deployed any collections.</p>
-        <Button :to="`${id}/create`">Create your first</Button>
+        <Button :to="`/${id}/create`">Create your first</Button>
       </template>
       <template v-else>
         <p>It looks like this account hasn't deployed any collections.</p>
