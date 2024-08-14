@@ -3,7 +3,7 @@
   <PageFrame v-else :title="[
     {
       text: `Collections`,
-      to: `/${$route.params.id}`
+      to: `/${id}`
     },
     {
       text: `${ collection?.name }`
@@ -24,24 +24,24 @@
 </template>
 
 <script setup>
+const id = useArtistId()
 const route = useRoute()
-const address = route.params.collection.toLowerCase()
+const address = computed(() => route.params.collection.toLowerCase())
 
-const store = useCollectionsStore()
+const store = useOnchainStore()
 const loading = ref(true)
 const collection = ref(null)
 
 const load = async () => {
   loading.value = true
 
-  await store.fetchCollection(address)
-
-  collection.value = await store.collection(address)
+  collection.value = await store.fetchCollection(address.value)
 
   loading.value = false
 }
 
 onMounted(() => load())
+watch(address, () => load())
 </script>
 
 <style lang="postcss" scoped>

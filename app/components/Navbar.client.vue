@@ -1,10 +1,10 @@
 <template>
   <nav v-if="isConnected">
-    <NuxtLink :to="`/${address}`">
+    <NuxtLink :to="`/${account}`">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
-    <NuxtLink :to="`/profile/${address}`">
+    <NuxtLink :to="`/profile/${account}`">
       <Icon type="user" />
       <span>Profile</span>
     </NuxtLink>
@@ -15,6 +15,8 @@
 import { useAccount } from '@wagmi/vue'
 
 const { address, isConnected } = useAccount()
+
+const account = computed(() => address.value.toLowerCase())
 </script>
 
 <style lang="postcss" scoped>

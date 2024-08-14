@@ -84,7 +84,15 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ['eventemitter3']
+      include: ['eventemitter3'],
+    },
+  },
+
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext'
+      }
     }
   },
 

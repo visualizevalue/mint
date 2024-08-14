@@ -4,14 +4,14 @@
     <header v-if="isMe">
       <h1>Your Collections</h1>
       <menu>
-        <Button :to="`/${$route.params.id}/create`">Create New</Button>
-        <Button :to="`/${$route.params.id}/add`">Add Existing</Button>
+        <Button :to="`/${id}/create`">Create New</Button>
+        <Button :to="`/${id}/add`">Add Existing</Button>
       </menu>
     </header>
 
-    <section v-if="store.all.length">
+    <section v-if="collections.length">
       <article
-        v-for="collection in store.all"
+        v-for="collection in collections"
         :key="collection.address"
       >
         <img v-if="collection.image" :src="collection.image" :alt="collection.name">
@@ -20,13 +20,13 @@
         <p>Init Block: {{ collection.initBlock }}</p>
         <p>Latest Token: {{ collection.latestTokenId }}</p>
         <p>Owner: {{ collection.owner }}</p>
-        <Button :to="`/${$route.params.id}/${collection.address}`">View</Button>
+        <Button :to="`/${id}/${collection.address}`">View</Button>
       </article>
     </section>
     <section v-else>
       <template v-if="isMe">
         <p>It looks like you haven't deployed any collections.</p>
-        <Button :to="`${$route.params.id}/create`">Create your first</Button>
+        <Button :to="`${id}/create`">Create your first</Button>
       </template>
       <template v-else>
         <p>It looks like this account hasn't deployed any collections.</p>
@@ -36,19 +36,13 @@
 </template>
 
 <script setup>
-const config = useRuntimeConfig()
-const store = useCollectionsStore()
-const route = useRoute()
+const store = useOnchainStore()
+const id = useArtistId()
 
-const loading = ref(true)
-const load = async () => {
-  loading.value = true
-  await store.fetchCollections(route.params.id, config.public.factoryAddress)
-  loading.value = false
-}
+const { loading } = useScopedOnchainData()
+const collections = computed(() => store.forArtist(id.value))
 
 const isMe = useIsMe()
-onMounted(() => load())
 </script>
 
 <style lang="postcss" scoped>

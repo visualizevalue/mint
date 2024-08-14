@@ -3,7 +3,7 @@
     <PageFrame :title="[
       {
         text: `Collections`,
-        to: `/${$route.params.id}`
+        to: `/${id}`
       },
       {
         text: `Add existing`
@@ -19,6 +19,8 @@
 </template>
 
 <script setup>
+const id = useArtistId()
+
 const address = ref('')
 
 const add = async () => {
@@ -27,7 +29,7 @@ const add = async () => {
     return
   }
 
-  await navigateTo(`/collections/${address.value}`)
+  await navigateTo(`${id.value}/${address.value}`)
 }
 </script>
 

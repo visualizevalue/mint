@@ -7,8 +7,10 @@ export const useIsMeCheck = (checkAddress: `0x${string}`) => {
 }
 
 export const useIsMe = () => {
-  const route = useRoute()
+  const id = useArtistId()
 
-  return useIsMeCheck(route.params.id as `0x${string}`)
+  if (! id.value) return computed(() => false)
+
+  return useIsMeCheck(id.value)
 }
 

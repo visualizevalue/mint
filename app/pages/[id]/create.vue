@@ -3,7 +3,7 @@
     <PageFrame :title="[
       {
         text: `Collections`,
-        to: `/${$route.params.id}`
+        to: `/${id}`
       },
       {
         text: `Create New`
@@ -23,6 +23,7 @@
 
 <script setup>
 const config = useRuntimeConfig()
+const store = useOnchainStore()
 
 const image = ref('')
 const title = ref('')
@@ -30,6 +31,7 @@ const symbol = ref('')
 const description = ref('')
 
 const { $wagmi } = useNuxtApp()
+const id = useArtistId()
 
 const deploy = async () => {
   const hash = await writeContract($wagmi, {
@@ -43,7 +45,7 @@ const deploy = async () => {
       description.value,
       image.value,
     ],
-    gasMultiplier: 2,
+    gasMultiplier: 2, // TODO: Disable
   })
 
   const receipt = await waitForTransactionReceipt($wagmi, {
@@ -60,7 +62,13 @@ const deploy = async () => {
 
   const createdEvent = logs.find(log => log.eventName === 'Created')
 
-  await navigateTo(`/collections/${createdEvent.args.contractAddress}`)
+  await store.fetchCollections(
+    id.value,
+    config.public.factoryAddress,
+    store.artist(id.value).updatedAt,
+    true
+  )
+  await navigateTo(`/${id.value}/${createdEvent.args.contractAddress}`)
 }
 </script>
 
