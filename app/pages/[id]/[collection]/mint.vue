@@ -29,16 +29,40 @@ const { $wagmi } = useNuxtApp()
 const id = useArtistId()
 
 const props = defineProps(['collection'])
-const collection = computed(() => props.collection)
-
-const config = useRuntimeConfig()
 const store = useOnchainStore()
+const collection = computed(() => props.collection)
 
 const image = ref('')
 const name = ref('')
 const description = ref('')
 
 const mint = async () => {
+  const artifact = toByteArray(image.value)
+  const artifactChunks = chunkArray(artifact, 4)
+  const multiTransactionPrepare = artifactChunks.length > 1
+
+  if (multiTransactionPrepare) {
+    if (! confirm(`Due to the large artifact size, we have to split it into ${artifactChunks.length} chunks and store them in separate transactions. You will be prompted with multiple transaction requests before minting the final token.`)) {
+      return
+    }
+
+    for (const chunk of artifactChunks) {
+      const hash = await writeContract($wagmi, {
+        abi: MINT_ABI,
+        chainId: 1337,
+        address: collection.value.address,
+        functionName: 'prepareArtifact',
+        args: [
+          collection.value.latestTokenId + 1n,
+          chunk,
+          false
+        ],
+      })
+
+      await waitForTransactionReceipt($wagmi, { chainId: 1337, hash })
+    }
+  }
+
   const hash = await writeContract($wagmi, {
     abi: MINT_ABI,
     chainId: 1337,
@@ -47,7 +71,7 @@ const mint = async () => {
     args: [
       name.value,
       description.value,
-      splitIntoChunks(image.value),
+      multiTransactionPrepare ? [] : artifact,
       0,
       0n,
     ],
@@ -67,16 +91,8 @@ const mint = async () => {
 
   const mintedEvent = logs.find(log => log.eventName === 'TransferSingle')
 
-  console.log(mintedEvent)
-  console.log(mintedEvent.args, mintedEvent.args.id)
-
-  // await store.fetchCollections(
-  //   id.value,
-  //   config.public.factoryAddress,
-  //   store.artist(id.value).updatedAt,
-  //   true
-  // )
-  // await navigateTo(`/${id.value}/${createdEvent.args.contractAddress}`)
+  await store.fetchToken(collection.value.address, mintedEvent.args.id)
+  await navigateTo(`/${id.value}/${collection.value.address}`)
 }
 </script>
 

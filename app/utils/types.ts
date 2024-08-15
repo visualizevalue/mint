@@ -16,7 +16,7 @@ export interface Collection {
   description: string
   initBlock: bigint
   latestTokenId: bigint
-  tokens: Token[]
+  tokens: { [key: string]: Token }
 }
 
 export interface Token {
@@ -25,7 +25,5 @@ export interface Token {
   name: string
   description: string
   artifact: string
-  renderer: bigint
-  blocks: bigint
-  data: bigint
+  untilBlock: bigint
 }

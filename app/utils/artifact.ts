@@ -1,1 +1,1 @@
-export { splitIntoChunks } from '@visualizevalue/mint-utils'
+export { toByteArray } from '@visualizevalue/mint-utils'

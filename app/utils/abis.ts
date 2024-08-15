@@ -44,6 +44,7 @@ export const MINT_ABI = parseAbi([
   'function latestTokenId() view returns (uint256)',
   'function metadata() view returns (string name, string symbol, string description, string image)',
   'function mint(uint256 tokenId, uint256 amount) payable',
+  'function mintOpenUntil(uint256 tokenId) view returns (uint256)',
   'function owner() view returns (address)',
   'function pendingOwner() view returns (address)',
   'function prepareArtifact(uint256 tokenId, bytes[] tokenArtifact, bool clear)',

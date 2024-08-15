@@ -1,7 +1,7 @@
 import { getAddress, parseGwei, zeroAddress } from 'viem'
 import hre from 'hardhat'
 import { loadFixture, mine } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
-import { splitIntoChunks } from '@visualizevalue/mint-utils'
+import { toByteArray } from '@visualizevalue/mint-utils'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
 import { collectionFixture, itemMintedFixture, itemPreparedFixture } from './fixtures'
@@ -18,7 +18,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'VVM1',
         'Lorem Ipsum dolor sit amet.',
-        splitIntoChunks(TOKEN_TIME),
+        toByteArray(TOKEN_TIME),
         0n,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
@@ -32,7 +32,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'VVM1',
         'Lorem Ipsum dolor sit amet.',
-        splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
+        toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
         0n,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
@@ -46,7 +46,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'VVM2',
         'Lorem Ipsum dolor sit amet.',
-        splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
+        toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
         0n,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 2n, 1n)
@@ -65,7 +65,7 @@ describe('Mint', () => {
         [
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
-          splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
+          toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
           0n,
           0n,
         ],
@@ -89,7 +89,7 @@ describe('Mint', () => {
       await expect(mint.write.prepareArtifact(
         [
           2n,
-          splitIntoChunks('Hello world'),
+          toByteArray('Hello world'),
           true,
         ],
       )).to.be.fulfilled
@@ -108,7 +108,7 @@ describe('Mint', () => {
         [
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
-          splitIntoChunks('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
+          toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
           0n,
           0n,
         ]
@@ -147,7 +147,7 @@ describe('Mint', () => {
       await expect(mint.write.prepareArtifact(
         [
           1n,
-          splitIntoChunks('Hello world'),
+          toByteArray('Hello world'),
           true,
         ],
       )).to.be.revertedWithCustomError(mint, 'TokenAlreadyMinted')
@@ -165,7 +165,7 @@ describe('Mint', () => {
       await expect(mint.write.create([
         'mock',
         '',
-        splitIntoChunks('void'),
+        toByteArray('void'),
         1n,
         19n,
       ])).to.be.fulfilled
@@ -254,6 +254,17 @@ describe('Mint', () => {
       const { mint } = await loadFixture(itemMintedFixture)
 
       await mine(7200n)
+
+      // We mint another token in the meantime to make sure we're checking against the actual token creation
+      await mint.write.create(
+        [
+          'VVM2',
+          'Lorem Ipsum dolor sit amet.',
+          [],
+          0n,
+          0n,
+        ]
+      )
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei

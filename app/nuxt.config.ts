@@ -114,6 +114,7 @@ export default defineNuxtConfig({
           'getAddress',
           'toBytes',
           'toHex',
+          'getContract',
           'encodeAbiParameters',
           'parseAbiParameters',
           'parseAbiParameter',

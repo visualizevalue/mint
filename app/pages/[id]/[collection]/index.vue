@@ -22,8 +22,17 @@
       <p>Latest Token: {{ collection.latestTokenId }}</p>
       <p>Owner: {{ collection.owner }}</p>
     </section>
+
     <section>
-      No tokens yet
+      <article v-for="token of tokens" :key="token.tokenId">
+        <h1>{{ token.name }} #{{ token.tokenId }}</h1>
+        <img :src="token.artifact" :alt="token.name">
+        <p>{{ token.description }}</p>
+      </article>
+
+      <div v-if="! tokens.length">
+        No tokens yet
+      </div>
     </section>
   </PageFrame>
 </template>
@@ -34,22 +43,25 @@ const isMe = useIsMe()
 
 const props = defineProps(['collection'])
 const collection = computed(() => props.collection)
+const store = useOnchainStore()
 
-// Encoding example.
+const tokens = computed(() => store.tokens(collection.value.address))
+
 onMounted(() => {
-  const myString = [...new Array(600)].map(() => "Hello, World! This is a long string that might exceed the limit...").join('')
-  const bytesArray = splitIntoChunks(myString)
-
-  const encodedData = encodeAbiParameters(
-    [
-      { name: 'foo', type: 'bytes[]' },
-    ],
-    [bytesArray]
-  )
-
-  console.log(encodedData, bytesArray, bytesArray.map(h => toBytes(h)))
+  store.fetchCollectionTokens(collection.value.address)
 })
 </script>
 
 <style lang="postcss" scoped>
+  article {
+    padding: 1rem;
+
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    p {
+      color: gray;
+    }
+  }
 </style>

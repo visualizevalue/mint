@@ -1,6 +1,6 @@
 import { parseEther } from 'viem'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
-import { chunkArray, splitIntoChunks } from '@visualizevalue/mint-utils'
+import { chunkArray, toByteArray } from '@visualizevalue/mint-utils'
 import hre from 'hardhat'
 import { ICON, JALIL, TOKEN_TIME } from './constants'
 
@@ -55,7 +55,7 @@ export async function itemMintedFixture() {
   await mint.write.create([
     'VVM1',
     'Lorem Ipsum dolor sit amet.',
-    splitIntoChunks(TOKEN_TIME),
+    toByteArray(TOKEN_TIME),
     0n,
     0n,
   ])
@@ -74,7 +74,7 @@ export async function itemPreparedFixture() {
   const largeArtifact = [...new Array(3000)]
     .map(_ => `Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, maxime iste! Rerum, ipsam facilis aut placeat, laboriosam ex adipisci accusantium debitis corporis eaque voluptatem sequi quod pariatur officiis dignissimos obcaecati!`)
     .join('')
-  const chunks = chunkArray(splitIntoChunks(largeArtifact), 5)
+  const chunks = chunkArray(toByteArray(largeArtifact), 5)
 
   for (const chunk of chunks) {
     await mint.write.prepareArtifact(

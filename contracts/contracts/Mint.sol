@@ -119,7 +119,7 @@ contract Mint is ERC1155 {
     }
 
     /// @notice Let's the artist prepare artifacts that are too large to store in a single transaction.
-    function prepareArtifact(uint tokenId, bytes[] calldata tokenArtifact, bool clear) public onlyOwner {
+    function prepareArtifact(uint tokenId, bytes[] calldata tokenArtifact, bool clear) external onlyOwner {
         if (tokenId <= latestTokenId) revert TokenAlreadyMinted();
 
         Token storage token = tokens[tokenId];
@@ -140,12 +140,16 @@ contract Mint is ERC1155 {
         uint mintPrice = unitPrice * amount;
         if (mintPrice > msg.value) revert MintPriceNotMet();
 
-        uint untilBlock = MINT_BLOCKS + tokens[latestTokenId].blocks + initBlock;
-        if (untilBlock < block.number) revert MintClosed();
+        if (mintOpenUntil(tokenId) < block.number) revert MintClosed();
 
         _mint(msg.sender, tokenId, amount, "");
 
         emit NewMint(tokenId, unitPrice, amount);
+    }
+
+    /// @notice Check until which block a mint is open.
+    function mintOpenUntil(uint tokenId) public view returns (uint) {
+        return initBlock + tokens[tokenId].blocks + MINT_BLOCKS;
     }
 
     /// @notice Let's the artist register a new renderer to use for future mints.

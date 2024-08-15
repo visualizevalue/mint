@@ -1,14 +1,13 @@
 import { toBytes, toHex } from 'viem'
 
-// const MAX_BYTES = 24575
-const MAX_BYTES = 24000
+const MAX_BYTES = 24575
 
-export function splitIntoChunks (input: string, maxChunkSize: number = MAX_BYTES): `0x${string}`[] {
+export function toByteArray (input: string, maxItemSize: number = MAX_BYTES): `0x${string}`[] {
   const inputBytes = toBytes(input)
   const chunks: `0x${string}`[] = []
 
-  for (let i = 0; i < inputBytes.length; i += maxChunkSize) {
-    chunks.push(toHex(inputBytes.slice(i, i + maxChunkSize)))
+  for (let i = 0; i < inputBytes.length; i += maxItemSize) {
+    chunks.push(toHex(inputBytes.slice(i, i + maxItemSize)))
   }
 
   return chunks

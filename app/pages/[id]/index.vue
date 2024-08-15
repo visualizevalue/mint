@@ -4,8 +4,7 @@
     <header v-if="isMe">
       <h1>Your Collections</h1>
       <menu>
-        <Button :to="`/${id}/create`">Create New</Button>
-        <Button :to="`/${id}/add`">Add Existing</Button>
+        <Button :to="`/${id}/create`">New Collection</Button>
       </menu>
     </header>
 

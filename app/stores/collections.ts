@@ -18,6 +18,9 @@ export const useOnchainStore = defineStore('onchainStore', {
       .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1),
     hasCollection: (state) => (address: `0x${string}`) => state.collections[address] !== undefined,
     collection: (state) => (address: `0x${string}`) => state.collections[address],
+    tokens: (state) => (address: `0x${string}`) =>
+        Object.values(state.collections[address].tokens)
+        .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
   },
 
   actions: {
@@ -151,12 +154,69 @@ export const useOnchainStore = defineStore('onchainStore', {
         initBlock,
         latestTokenId,
         owner: artist,
-        tokens: [],
+        tokens: {},
       })
     },
 
-    async fetchToken (address: `0x${string}`, id: bigint) {
+    async fetchCollectionTokens (address: `0x${string}`): Promise<Token[]> {
+      this.collections[address].latestTokenId = await readContract(config, {
+        abi: MINT_ABI,
+        address,
+        functionName: 'latestTokenId',
+      })
 
+      const collection = this.collection(address)
+
+      const existingTokenIds = new Set(Object.keys(collection.tokens).map(id => BigInt(id)))
+
+      // If we have all tokens we don't need to do anything
+      if (BigInt(existingTokenIds.size) === collection.latestTokenId) return this.tokens(address)
+
+      // Go over each token
+      let id = collection.latestTokenId
+      while (id > 0n) {
+        if (! existingTokenIds.has(id)) {
+          await this.fetchToken(address, id)
+        } else {
+          console.info(`Skipping token #${id} since we already have it.`)
+        }
+
+        id --
+      }
+
+      return this.tokens(address)
+    },
+
+    async fetchToken (address: `0x${string}`, id: bigint) {
+      const client = getPublicClient(config)
+      const mintContract = getContract({
+        address,
+        abi: MINT_ABI,
+        client
+      })
+
+      try {
+        console.info(`Fetching token #${id}`)
+
+        const [data, untilBlock] = await Promise.all([
+          mintContract.read.uri([id], { gas: 10_000_000_000 }) as Promise<string>,
+          mintContract.read.mintOpenUntil([id]) as Promise<bigint>,
+        ])
+
+        const json = Buffer.from(data.substring(29), `base64`).toString()
+        const metadata = JSON.parse(json)
+
+        const token: Token = {
+          tokenId: id,
+          collection: address,
+          name: metadata.name,
+          description: metadata.description,
+          artifact: metadata.image,
+          untilBlock,
+        }
+
+        this.collections[address].tokens[token.tokenId.toString()] = token
+      } catch (e) {}
     },
 
     async addCollection (collection: Collection) {
@@ -172,12 +232,6 @@ export const useOnchainStore = defineStore('onchainStore', {
       ]))
 
       return collection
-    },
-
-    async addToken (address: `0x${string}`, token: Token) {
-      if (! this.hasCollection(address)) throw new Error('Unknown collection')
-
-      this.collections[address].tokens.push(token)
     },
   },
 
