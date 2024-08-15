@@ -17,7 +17,7 @@
 
 <script setup>
 const props = defineProps({
-  modelValue: String,
+  modelValue: [String, Number],
   type: {
     type: String,
     default: 'text',
@@ -28,6 +28,8 @@ const props = defineProps({
   disabled: Boolean,
   required: Boolean,
   name: String,
+  min: String,
+  max: String,
   autocomplete: String,
 })
 const emit = defineEmits(['update:modelValue'])
@@ -41,5 +43,7 @@ const inputAttributes = computed(() => ({
   required: props.required || false,
   name: props.name || '',
   autocomplete: props.autocomplete || 'on',
+  min: props.min,
+  max: props.max,
 }))
 </script>

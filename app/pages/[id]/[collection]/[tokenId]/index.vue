@@ -24,6 +24,8 @@
         <p v-if="isConnected">Owned: {{ ownedBalance }}</p>
       </div>
     </article>
+
+    <MintToken v-if="mintOpen" :token="token" />
   </PageFrame>
 </template>
 

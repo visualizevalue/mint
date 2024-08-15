@@ -67,7 +67,7 @@ const mint = async () => {
     abi: MINT_ABI,
     chainId: 1337,
     address: collection.value.address,
-    functionName: 'create', // function create(string tokenName, string tokenDescription, string tokenArtifact, uint32 tokenRenderer, uint192 tokenData)
+    functionName: 'create',
     args: [
       name.value,
       description.value,
