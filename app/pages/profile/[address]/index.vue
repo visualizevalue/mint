@@ -1,29 +1,38 @@
 <template>
-  <Authenticated>
-    <PageFrame title="Profile">
-      <header>
-        <h1>Profile {{ address }}</h1>
-      </header>
+  <Loading v-if="! artist" />
+  <PageFrame v-else title="Profile">
+    <header>
+      <ClientOnly>
+        <img v-if="artist?.avatar" :src="artist.avatar" :alt="artist.ens">
+        <h1 v-if="artist?.ens">{{ artist.ens }} <small>{{ artist.address }}</small></h1>
+        <p v-else>{{ artist.address }}</p>
+        <p v-if="artist?.description">{{ artist.description }}</p>
+      </ClientOnly>
+    </header>
 
-      <section>
-        <div v-if="isMe">
-          <Button>Edit Profile</Button>
-        </div>
-        <div v-else>Cool Profile innit?</div>
-      </section>
-    </PageFrame>
-  </Authenticated>
+    <section v-if="isMe">
+      <Button>Edit Profile</Button>
+    </section>
+
+    <CollectionsOverview :id="address" />
+  </PageFrame>
 </template>
 
 <script setup>
-import { useAccount } from '@wagmi/vue'
-
-const { address: authAddress, isConnected } = useAccount()
-
+const config = useRuntimeConfig()
 const route = useRoute()
-const address = route.params.address
+const address = computed(() => route.params.address)
+const store = useOnchainStore()
+const isMe = useIsMeCheck(address.value)
 
-const isMe = computed(() => address.toLowerCase() === authAddress.value.toLowerCase())
+const artist = ref(null)
+
+const load = async () => {
+  await store.fetchArtist(address.value, config.public.factoryAddress)
+
+  artist.value = store.artist(address.value)
+}
+onMounted(() => load())
 </script>
 
 <style lang="postcss" scoped>

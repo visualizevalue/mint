@@ -45,7 +45,7 @@ export const useOnchainStore = defineStore('onchainStore', {
     },
 
     async fetchArtist (address: `0x${string}`, factory: `0x${string}`) {
-      const client = getPublicClient(config)
+      const client = getPublicClient(config, { chainId: 1 })
       const block = await client.getBlockNumber()
 
       // Only update once per hour
@@ -88,7 +88,7 @@ export const useOnchainStore = defineStore('onchainStore', {
       fromBlock: bigint = 0n,
       force: boolean = false
     ) {
-      const client = getPublicClient(config)
+      const client = getPublicClient(config, { chainId: 1337 })
 
       if (this.artists[artist].updatedAtBlock > fromBlock && ! force) {
         console.warn(`Collections fetched already (${this.artists[artist].updatedAtBlock})`)
@@ -96,24 +96,28 @@ export const useOnchainStore = defineStore('onchainStore', {
       }
       console.info(`Fetching collections for ${artist}`)
 
-      const logs = await client.getContractEvents({
-        abi: FACTORY_ABI,
-        address: factory,
-        eventName: 'Created',
-        args: { ownerAddress: artist },
-        strict: true,
-        fromBlock,
-      })
+      try {
+        const logs = await client.getContractEvents({
+          abi: FACTORY_ABI,
+          address: factory,
+          eventName: 'Created',
+          args: { ownerAddress: artist },
+          strict: true,
+          fromBlock,
+        })
 
-      const promises = logs.map(l => this.fetchCollection(l.args.contractAddress.toLowerCase() as `0x${string}`))
+        const promises = logs.map(l => this.fetchCollection(l.args.contractAddress.toLowerCase() as `0x${string}`))
 
-      const collections = await Promise.all(promises)
+        const collections = await Promise.all(promises)
 
-      this.artists[artist].updatedAtBlock = await client.getBlockNumber()
-      this.artists[artist].collections = Array.from(new Set([
-        ...this.artists[artist].collections,
-        ...collections.map(c => c.address)
-      ]))
+        this.artists[artist].updatedAtBlock = await client.getBlockNumber()
+        this.artists[artist].collections = Array.from(new Set([
+          ...this.artists[artist].collections,
+          ...collections.map(c => c.address)
+        ]))
+      } catch (e) {
+        console.error(e)
+      }
     },
 
     async fetchCollection (address: `0x${string}`): Promise<Collection> {
@@ -127,21 +131,25 @@ export const useOnchainStore = defineStore('onchainStore', {
           abi: MINT_ABI,
           address,
           functionName: 'contractURI',
+          chainId: 1337,
         }) as Promise<string>,
         readContract(config, {
           abi: MINT_ABI,
           address,
           functionName: 'initBlock',
+          chainId: 1337,
         }) as Promise<bigint>,
         readContract(config, {
           abi: MINT_ABI,
           address,
           functionName: 'latestTokenId',
+          chainId: 1337,
         }) as Promise<bigint>,
         readContract(config, {
           abi: MINT_ABI,
           address,
           functionName: 'owner',
+          chainId: 1337,
         }) as Promise<`0x${string}`>,
       ])
 
@@ -168,6 +176,7 @@ export const useOnchainStore = defineStore('onchainStore', {
         abi: MINT_ABI,
         address,
         functionName: 'latestTokenId',
+        chainId: 1337,
       })
 
       const collection = this.collection(address)
@@ -193,11 +202,11 @@ export const useOnchainStore = defineStore('onchainStore', {
     },
 
     async fetchToken (address: `0x${string}`, id: bigint) {
-      const client = getPublicClient(config)
+      const client = getPublicClient(config, { chainId: 1337 })
       const mintContract = getContract({
         address,
         abi: MINT_ABI,
-        client
+        client,
       })
 
       try {
@@ -245,7 +254,9 @@ export const useOnchainStore = defineStore('onchainStore', {
     },
 
     async addCollection (collection: Collection) {
-      if (this.hasCollection(collection.address)) throw new Error('Collection already exists')
+      if (this.hasCollection(collection.address)) {
+        console.warn(`Replacing existing collection`)
+      }
 
       this.collections[collection.address] = collection
 

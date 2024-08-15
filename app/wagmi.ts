@@ -6,12 +6,11 @@ import { injected, metaMask } from '@wagmi/vue/connectors'
 const title = process.env.NUXT_PUBLIC_TITLE || 'Mint'
 const isBrowser = typeof window !== 'undefined' && window !== null
 const transports = isBrowser && window.ethereum
-  ? fallback([ custom(window.ethereum), http() ])
+  ? fallback([ custom(window.ethereum!), http() ])
   : http()
 
 export const config = createConfig({
-  // chains: [mainnet, sepolia, holesky, localhost],
-  chains: [localhost],
+  chains: [mainnet, sepolia, holesky, localhost],
   batch: {
     multicall: true,
   },

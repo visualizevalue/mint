@@ -9,8 +9,11 @@ export const useArtistId = () => {
   const route = useRoute()
 
   const updateId = () => {
-    id.value = (route.params.id as string).toLowerCase() as `0x${string}`
+    id.value = route.params.id
+      ? (route.params.id as string).toLowerCase() as `0x${string}`
+      : null
   }
+
   if (! idWatcher) {
     updateId()
     idWatcher = watch(() => route.params.id, () => updateId())
@@ -19,17 +22,16 @@ export const useArtistId = () => {
   return id
 }
 
-export const useScopedOnchainData = () => {
+export const useLoadArtistData = (id: `0x${string}`) => {
   const config = useRuntimeConfig()
   const store = useOnchainStore()
-  const id = useArtistId()
 
   const loading = ref(true)
 
   const load = async () => {
     loading.value = true
-    if (! id.value) return
-    await store.fetchArtist(id.value, config.public.factoryAddress as `0x${string}`)
+    if (! id) return
+    await store.fetchArtist(id, config.public.factoryAddress as `0x${string}`)
     loading.value = false
   }
 
