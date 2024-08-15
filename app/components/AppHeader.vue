@@ -1,19 +1,32 @@
 <template>
-  <header>
+  <header :style="{ borderColor: y > 10 ? 'var(--border-color)' : 'transparent' }">
     <h1>
-      {{ config.public.title }}
+      <NuxtLink to="/">
+        {{ config.public.title }}
+      </NuxtLink>
     </h1>
 
-    <GasPrice v-slot="{ price }">
-      <span class="gas">{{ price.gwei }} GWEI</span>
-    </GasPrice>
+    <ClientOnly>
+      <GasPrice v-slot="{ price }">
+        <span class="gas">{{ price.gwei }} GWEI</span>
+      </GasPrice>
 
-    <Connect />
+      <Connect v-if="! isConnected" />
+      <NuxtLink v-else :to="`/profile/${address}`">
+        <Account :address="address" />
+      </NuxtLink>
+    </ClientOnly>
   </header>
 </template>
 
 <script setup>
+import { useAccount } from '@wagmi/vue'
+import { useWindowScroll } from '@vueuse/core'
+
 const config = useRuntimeConfig()
+const { isConnected, address } = useAccount()
+
+const { y } = useWindowScroll()
 </script>
 
 <style lang="postcss" scoped>
@@ -40,6 +53,7 @@ header {
 header {
   background: var(--black-semi);
   backdrop-filter: blur(var(--size-1));
-  border-top: var(--border);
+  border-bottom: var(--border);
+  border-color: transparent;
 }
 </style>

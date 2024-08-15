@@ -13,6 +13,7 @@ const address = computed(() => props.address?.value || props.address)
 
 const { data: ens } = await useEnsName({
   address: address.value,
+  chainId: 1,
 })
 
 const display = computed(() => ens.value || shortAddress(address.value))

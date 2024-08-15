@@ -1,11 +1,13 @@
 <template>
   <PageFrame>
-    <header v-if="isMe">
-      <h1>Your Collections</h1>
-      <menu>
-        <Button :to="`/${id}/create`">New Collection</Button>
-      </menu>
-    </header>
+    <ClientOnly>
+      <header v-if="isMe">
+        <h1>Your Collections</h1>
+        <menu>
+          <Button :to="`/${id}/create`">New Collection</Button>
+        </menu>
+      </header>
+    </ClientOnly>
 
     <CollectionsOverview :id="id" />
   </PageFrame>
