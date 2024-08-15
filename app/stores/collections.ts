@@ -6,7 +6,8 @@ export const useOnchainStore = defineStore('onchainStore', {
   state: () => ({
     version: 1,
     artists: {} as { [key: `0x${string}`]: Artist },
-    collections: {} as { [key: string]: Collection },
+    collections: {} as { [key: `0x${string}`]: Collection },
+    tokenBalances: {} as { [key: `0x${string}`]: { [key: string]: bigint } }, // Collection -> Balance
   }),
 
   getters: {
@@ -21,6 +22,10 @@ export const useOnchainStore = defineStore('onchainStore', {
     tokens: (state) => (address: `0x${string}`) =>
         Object.values(state.collections[address].tokens)
         .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
+    tokenBalance: (state) => (address: `0x${string}`, tokenId: bigint): bigint|null =>
+        (state.tokenBalances[address] && (state.tokenBalances[address][`${tokenId}`] !== undefined))
+          ? state.tokenBalances[address][`${tokenId}`]
+          : null,
   },
 
   actions: {
@@ -215,8 +220,28 @@ export const useOnchainStore = defineStore('onchainStore', {
           untilBlock,
         }
 
-        this.collections[address].tokens[token.tokenId.toString()] = token
+        this.collections[address].tokens[`${token.tokenId}`] = token
       } catch (e) {}
+    },
+
+    async fetchTokenBalance (token: Token, address: `0x${string}`) {
+      const client = getPublicClient(config)
+      const mintContract = getContract({
+        address: token.collection,
+        abi: MINT_ABI,
+        client
+      })
+
+      if (! this.tokenBalances[token.collection]) {
+        this.tokenBalances[token.collection] = {}
+      }
+
+      console.log('fetch token balance')
+
+      this.tokenBalances[token.collection][`${token.tokenId}`] =
+        await mintContract.read.balanceOf([address, token.tokenId])
+
+      console.log('fetched token balance', this.tokenBalances[token.collection][`${token.tokenId}`])
     },
 
     async addCollection (collection: Collection) {

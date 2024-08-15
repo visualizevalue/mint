@@ -28,6 +28,7 @@
         <h1>{{ token.name }} #{{ token.tokenId }}</h1>
         <img :src="token.artifact" :alt="token.name">
         <p>{{ token.description }}</p>
+        <Button :to="`/${id}/${collection.address}/${token.tokenId}`">View {{ token.name }}</Button>
       </article>
 
       <div v-if="! tokens.length">

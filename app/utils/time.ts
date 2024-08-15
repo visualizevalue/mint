@@ -4,6 +4,8 @@ export const BLOCKS_PER_DAY = 7200n // 300n * 24n (300 blocks per hour * 24 hour
 
 export const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
 
+export const blocksToSeconds = (blocks: bigint): number => Number(blocks * 12n)
+
 export const nowInSeconds = (): number => Math.floor(Date.now() / 1000)
 
 const now = ref(nowInSeconds())
