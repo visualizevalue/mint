@@ -6,6 +6,7 @@ import '@nomicfoundation/hardhat-ledger'
 import 'hardhat-chai-matchers-viem'
 
 import './tasks/accounts'
+import './tasks/export-abis'
 
 dotenv.config()
 

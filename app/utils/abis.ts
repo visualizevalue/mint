@@ -1,9 +1,10 @@
 import { parseAbi } from 'viem'
 
 export const FACTORY_ABI = parseAbi([
-  `event Created(address indexed ownerAddress, address contractAddress)`,
-  `function create(string memory name, string memory symbol, string memory description, string memory image) external returns (address)`,
-  `function clone(string memory name, string memory symbol, string memory description, string memory image) external returns (address)`,
+  'error ERC1167FailedCreateClone()',
+  'event Created(address indexed ownerAddress, address contractAddress)',
+  'function clone(string name, string symbol, string description, string image) returns (address)',
+  'function create(string name, string symbol, string description, string image) returns (address)'
 ])
 
 export const MINT_ABI = parseAbi([
@@ -37,8 +38,7 @@ export const MINT_ABI = parseAbi([
   'function burn(address account, uint256 tokenId, uint256 amount)',
   'function contractURI() view returns (string)',
   'function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)',
-  'function prepareArtifact(uint tokenId, bytes[] tokenArtifact, bool clear)',
-  'function init(string contractName, string contractSymbol, string contractDescription, string contractImage, address owner)',
+  'function init(string contractName, string contractSymbol, string contractDescription, string contractImage, address renderer, address owner)',
   'function initBlock() view returns (uint256)',
   'function isApprovedForAll(address account, address operator) view returns (bool)',
   'function latestTokenId() view returns (uint256)',
@@ -46,6 +46,7 @@ export const MINT_ABI = parseAbi([
   'function mint(uint256 tokenId, uint256 amount) payable',
   'function owner() view returns (address)',
   'function pendingOwner() view returns (address)',
+  'function prepareArtifact(uint256 tokenId, bytes[] tokenArtifact, bool clear)',
   'function registerRenderer(address renderer) returns (uint256)',
   'function renderers(uint256) view returns (address)',
   'function renounceOwnership()',
@@ -53,8 +54,8 @@ export const MINT_ABI = parseAbi([
   'function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)',
   'function setApprovalForAll(address operator, bool approved)',
   'function supportsInterface(bytes4 interfaceId) view returns (bool)',
-  'function tokens(uint256) view returns (string name, string description, string artifact, uint32 renderer, uint32 blocks, uint192 data)',
+  'function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)',
   'function transferOwnership(address newOwner)',
   'function uri(uint256 tokenId) view returns (string)',
-  'function withdraw()',
+  'function withdraw()'
 ])
