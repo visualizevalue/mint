@@ -26,12 +26,7 @@ const store = useOnchainStore()
 const isMe = useIsMeCheck(address.value)
 const subdomain = useSubdomain()
 
-const showCollections = computed(() => {
-  console.log('subdomain.value', subdomain.value)
-  console.log('address.value', address.value)
-  console.log('subdomain.value !== address.value', subdomain.value === address.value)
-  return !subdomain.value || subdomain.value === address.value
-})
+const showCollections = computed(() => !subdomain.value || subdomain.value === address.value)
 
 const artist = ref(null)
 
