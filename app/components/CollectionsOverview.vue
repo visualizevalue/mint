@@ -11,13 +11,13 @@
       <p>Init Block: {{ collection.initBlock }}</p>
       <p>Latest Token: {{ collection.latestTokenId }}</p>
       <p>Owner: {{ collection.owner }}</p>
-      <Button :to="`/${id}/${collection.address}`">View</Button>
+      <Button :to="{ name: 'id-collection', params: { id, collection: collection.address } }">View</Button>
     </article>
   </section>
   <section v-else>
     <template v-if="isMe">
       <p>It looks like you haven't deployed any collections.</p>
-      <Button :to="`/${id}/create`">Create your first</Button>
+      <Button :to="{ name: `id-create`, params: { id } }">Create your first</Button>
     </template>
     <template v-else>
       <p>It looks like this account hasn't deployed any collections.</p>

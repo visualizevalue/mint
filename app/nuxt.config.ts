@@ -82,6 +82,11 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
   ],
 
+  devServer: {
+    port: 1618,
+    host: `mint.test`,
+  },
+
   vite: {
     optimizeDeps: {
       include: ['eventemitter3'],

@@ -19,11 +19,11 @@ export const config = createConfig({
     // walletConnect({
     //   projectId: process.env.NUXT_PUBLIC_WC_PROJECT_ID!,
     // }),
-    metaMask({
-      dappMetadata: {
-        name: title,
-      }
-    }),
+    // metaMask({
+    //   dappMetadata: {
+    //     name: title,
+    //   }
+    // }),
   ],
   storage: createStorage({
     storage: cookieStorage,

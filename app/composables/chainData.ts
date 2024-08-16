@@ -3,25 +3,6 @@ import { formatEther, formatGwei } from 'viem'
 import { getGasPrice } from '@wagmi/core'
 import { useConfig, useBlockNumber } from '@wagmi/vue'
 
-let idWatcher: WatchStopHandle|null = null
-const id: Ref<`0x${string}`|null> = ref(null)
-export const useArtistId = () => {
-  const route = useRoute()
-
-  const updateId = () => {
-    id.value = route.params.id
-      ? (route.params.id as string).toLowerCase() as `0x${string}`
-      : null
-  }
-
-  if (! idWatcher) {
-    updateId()
-    idWatcher = watch(() => route.params.id, () => updateId())
-  }
-
-  return id
-}
-
 export const useLoadArtistData = (id: `0x${string}`) => {
   const config = useRuntimeConfig()
   const store = useOnchainStore()

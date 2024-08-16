@@ -12,7 +12,7 @@
       </GasPrice>
 
       <Connect v-if="! isConnected" />
-      <NuxtLink v-else :to="`/profile/${address}`">
+      <NuxtLink v-else :to="{ name: 'profile-address', params: { address: address?.toLowerCase() } }">
         <Account :address="address" />
       </NuxtLink>
     </ClientOnly>

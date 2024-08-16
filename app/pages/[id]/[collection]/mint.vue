@@ -3,11 +3,11 @@
     <PageFrame :title="[
       {
         text: `Collections`,
-        to: `/${id}`
+        to: { name: 'id', params: { id } }
       },
       {
         text: collection.name,
-        to: `/${id}/${collection.address}`
+        to: { name: 'id-collection', params: { id, address: collection.address } }
       },
       {
         text: `New Mint`

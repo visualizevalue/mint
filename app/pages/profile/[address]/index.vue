@@ -14,7 +14,7 @@
       <Button>Edit Profile</Button>
     </section>
 
-    <CollectionsOverview :id="address" />
+    <CollectionsOverview v-if="showCollections" :id="address" />
   </PageFrame>
 </template>
 
@@ -24,6 +24,14 @@ const route = useRoute()
 const address = computed(() => route.params.address)
 const store = useOnchainStore()
 const isMe = useIsMeCheck(address.value)
+const subdomain = useSubdomain()
+
+const showCollections = computed(() => {
+  console.log('subdomain.value', subdomain.value)
+  console.log('address.value', address.value)
+  console.log('subdomain.value !== address.value', subdomain.value === address.value)
+  return !subdomain.value || subdomain.value === address.value
+})
 
 const artist = ref(null)
 

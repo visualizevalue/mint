@@ -2,15 +2,15 @@
   <PageFrame :title="[
     {
       text: `Collections`,
-      to: `/${id}`
+      to: { name: 'id', params: { id } }
     },
     {
       text: `${ collection?.name }`
     }
   ]">
-    <header v-if="isMe">
+    <header v-if="ownedByMe">
       <menu>
-        <Button :to="`/${id}/${collection.address}/mint`">Create New</Button>
+        <Button :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }">Create New</Button>
       </menu>
     </header>
 
@@ -28,7 +28,12 @@
         <h1>{{ token.name }} #{{ token.tokenId }}</h1>
         <img :src="token.artifact" :alt="token.name">
         <p>{{ token.description }}</p>
-        <Button :to="`/${id}/${collection.address}/${token.tokenId}`">View {{ token.name }}</Button>
+        <Button
+          :to="{
+            name: 'id-collection-tokenId',
+            params: { id, collection: collection.address, tokenId: token.tokenId }
+          }"
+        >View {{ token.name }}</Button>
       </article>
 
       <div v-if="! tokens.length">
@@ -40,11 +45,11 @@
 
 <script setup>
 const id = useArtistId()
-const isMe = useIsMe()
 
 const props = defineProps(['collection'])
 const collection = computed(() => props.collection)
 const store = useOnchainStore()
+const ownedByMe = useIsMeCheck(collection.value.owner)
 
 const tokens = computed(() => store.tokens(collection.value.address))
 

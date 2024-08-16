@@ -1,10 +1,10 @@
 <template>
   <nav v-if="isConnected">
-    <NuxtLink :to="`/${account}`">
+    <NuxtLink :to="{ name: 'id', params: { id: account } }">
       <Icon type="home" />
       <span>Home</span>
     </NuxtLink>
-    <NuxtLink :to="`/profile/${account}`">
+    <NuxtLink :to="{ name: 'profile-address', params: { address: account } }">
       <Icon type="user" />
       <span>Profile</span>
     </NuxtLink>

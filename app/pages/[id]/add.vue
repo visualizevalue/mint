@@ -3,7 +3,7 @@
     <PageFrame :title="[
       {
         text: `Collections`,
-        to: `/${id}`
+        to: { name: 'id', params: { id } }
       },
       {
         text: `Add existing`

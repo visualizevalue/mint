@@ -17,14 +17,20 @@ main {
   display: grid;
   gap: var(--spacer);
   min-height: 100dvh;
-  padding: var(--navbar-height) 0;
+  padding: var(--navbar-height) 0 0;
 
   &:not(:has(> .frame-sm)) {
     grid-auto-rows: min-content;
   }
+}
 
-  @media (--md) {
-    padding: var(--navbar-height) var(--navbar-width) 0;
+nav {
+  + main {
+    padding: var(--navbar-height) 0;
+
+    @media (--md) {
+      padding: var(--navbar-height) var(--navbar-width) 0;
+    }
   }
 }
 </style>

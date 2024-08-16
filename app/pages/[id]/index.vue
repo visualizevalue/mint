@@ -4,7 +4,7 @@
       <header v-if="isMe">
         <h1>Your Collections</h1>
         <menu>
-          <Button :to="`/${id}/create`">New Collection</Button>
+          <Button :to="{ name: `id-create`, params: { id } }">New Collection</Button>
         </menu>
       </header>
     </ClientOnly>
