@@ -36,7 +36,8 @@ export const useOnchainStore = defineStore('onchainStore', {
         avatar: '',
         description: '',
         collections: [],
-        updatedAtBlock: 0n,
+        profileUpdatedAtBlock: 0n,
+        collectionsFetchedUntilBlock: 0n,
       }
 
       this.artists[artist.address] = artist
@@ -44,16 +45,24 @@ export const useOnchainStore = defineStore('onchainStore', {
       return artist
     },
 
-    async fetchArtist (address: `0x${string}`, factory: `0x${string}`) {
+    async fetchArtistScope (address: `0x${string}`, factory: `0x${string}`) {
+      if (! this.hasArtist(address)) this.initializeArtist(address)
+
+      const artist = await this.fetchArtistProfile(address)
+
+      await this.fetchCollections(address, factory, artist.collectionsFetchedUntilBlock)
+    },
+
+    async fetchArtistProfile (address: `0x${string}`): Promise<Artist> {
       const client = getPublicClient(config, { chainId: 1 })
       const block = await client.getBlockNumber()
 
       // Only update once per hour
       if (
         this.hasArtist(address) &&
-        this.artist(address).updatedAtBlock > 0n &&
-        (block - this.artist(address).updatedAtBlock) < BLOCKS_PER_CACHE
-      ) return
+        this.artist(address).profileUpdatedAtBlock > 0n &&
+        (block - this.artist(address).profileUpdatedAtBlock) < BLOCKS_PER_CACHE
+      ) return this.artist(address)
 
       let ens, avatar, description
 
@@ -68,35 +77,27 @@ export const useOnchainStore = defineStore('onchainStore', {
         }
       } catch (e) {}
 
-      const artist: Artist = {
-        address,
-        ens,
-        avatar,
-        description,
-        collections: [],
-        updatedAtBlock: 0n,
-      }
+      this.artists[address].ens = ens
+      this.artists[address].avatar = avatar
+      this.artists[address].description = description
+      this.artists[address].profileUpdatedAtBlock = block
 
-      this.artists[artist.address] = artist
-
-      await this.fetchCollections(artist.address, factory, artist.updatedAtBlock)
+      return this.artist(address)
     },
 
     async fetchCollections (
       artist: `0x${string}`,
       factory: `0x${string}`,
-      fromBlock: bigint = 0n,
-      force: boolean = false
+      fromBlock: bigint = 0n
     ) {
-      const client = getPublicClient(config, { chainId: 1337 })
-
-      if (this.artists[artist].updatedAtBlock > fromBlock && ! force) {
-        console.warn(`Collections fetched already (${this.artists[artist].updatedAtBlock})`)
+      if ((this.artists[artist].collectionsFetchedUntilBlock > 0 || this.artists[artist].collectionsFetchedUntilBlock > fromBlock)) {
+        console.info(`Collections fetched already (${this.artists[artist].collectionsFetchedUntilBlock})`)
         return
       }
-      console.info(`Fetching collections for ${artist}`)
 
       try {
+        const client = getPublicClient(config, { chainId: 1337 })
+
         const logs = await client.getContractEvents({
           abi: FACTORY_ABI,
           address: factory,
@@ -110,7 +111,7 @@ export const useOnchainStore = defineStore('onchainStore', {
 
         const collections = await Promise.all(promises)
 
-        this.artists[artist].updatedAtBlock = await client.getBlockNumber()
+        this.artists[artist].collectionsFetchedUntilBlock = await client.getBlockNumber()
         this.artists[artist].collections = Array.from(new Set([
           ...this.artists[artist].collections,
           ...collections.map(c => c.address)

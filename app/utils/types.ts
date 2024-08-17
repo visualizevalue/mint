@@ -4,7 +4,8 @@ export interface Artist {
   avatar?: string|null
   description?: string|null
   collections: `0x${string}`[]
-  updatedAtBlock: bigint,
+  profileUpdatedAtBlock: bigint,
+  collectionsFetchedUntilBlock: bigint,
 }
 
 export interface Collection {

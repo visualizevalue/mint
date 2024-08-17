@@ -12,7 +12,7 @@ export const useLoadArtistData = (id: `0x${string}`) => {
   const load = async () => {
     loading.value = true
     if (! id) return
-    await store.fetchArtist(id, config.public.factoryAddress as `0x${string}`)
+    await store.fetchArtistScope(id, config.public.factoryAddress as `0x${string}`)
     loading.value = false
   }
 

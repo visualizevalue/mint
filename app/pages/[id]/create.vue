@@ -62,12 +62,8 @@ const deploy = async () => {
 
   const createdEvent = logs.find(log => log.eventName === 'Created')
 
-  await store.fetchCollections(
-    id.value,
-    config.public.factoryAddress,
-    store.artist(id.value).updatedAt,
-    true
-  )
+  const artist = store.artist(id.value)
+  await store.fetchCollections(id.value, config.public.factoryAddress, artist.collectionsFetchedUntilBlock)
   await navigateTo(`/${id.value}/${createdEvent.args.contractAddress}`)
 }
 </script>
