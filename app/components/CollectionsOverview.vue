@@ -39,3 +39,10 @@ const isMe = useIsMeCheck(id)
 const { loading } = useLoadArtistData(id)
 const collections = computed(() => store.forArtist(id))
 </script>
+
+<style lang="postcss">
+section {
+  display: grid;
+  gap: var(--spacer-lg);
+}
+</style>

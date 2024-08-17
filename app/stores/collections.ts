@@ -14,9 +14,11 @@ export const useOnchainStore = defineStore('onchainStore', {
     all: (state) => Object.values(state.collections),
     hasArtist: (state) => (address: `0x${string}`) => state.artists[address] !== undefined,
     artist: (state) => (address: `0x${string}`) => state.artists[address],
-    forArtist: (state) => (address: `0x${string}`) => state.artists[address].collections
-      .map(c => state.collections[c])
-      .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1),
+    forArtist: (state) => (address: `0x${string}`) => state.artists[address]
+      ? state.artists[address].collections
+        .map(c => state.collections[c])
+        .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1)
+      : [],
     hasCollection: (state) => (address: `0x${string}`) => state.collections[address] !== undefined,
     collection: (state) => (address: `0x${string}`) => state.collections[address],
     tokens: (state) => (address: `0x${string}`) =>

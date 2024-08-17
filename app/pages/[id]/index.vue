@@ -15,8 +15,18 @@
 
 <script setup>
 const id = useArtistId()
-
 const isMe = useIsMe()
+const store = useOnchainStore()
+
+const collections = computed(() => store.forArtist(id.value))
+
+const autoNavigateToCollection = () => {
+  if (collections.value?.length === 1) {
+    navigateTo({ name: 'id-collection', params: { id: id.value, collection: collections.value[0].address } })
+  }
+}
+watch(() => collections.value?.length, () => autoNavigateToCollection())
+onMounted(() => autoNavigateToCollection())
 </script>
 
 <style lang="postcss" scoped>
