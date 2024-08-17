@@ -1,20 +1,18 @@
 <template>
   <Loading v-if="loading" />
+  <template v-else-if="unwrapMainCollection">
+    <CollectionOverviewCard :collection="mainCollection" />
+
+    <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
+  </template>
   <section v-else-if="collections.length">
     <slot name="before" />
 
-    <article
+    <CollectionOverviewCard
       v-for="collection in collections"
       :key="collection.address"
-    >
-      <img v-if="collection.image" :src="collection.image" :alt="collection.name">
-      <h1>{{ collection.name }} <small>{{ collection.symbol }}</small></h1>
-      <p>{{ collection.description }}</p>
-      <p>Init Block: {{ collection.initBlock }}</p>
-      <p>Latest Token: {{ collection.latestTokenId }}</p>
-      <p>Owner: {{ collection.owner }}</p>
-      <Button :to="{ name: 'id-collection', params: { id, collection: collection.address } }">View</Button>
-    </article>
+      :collection="collection"
+    />
   </section>
   <section v-else>
     <template v-if="isMe">
@@ -37,10 +35,20 @@ const { id } = defineProps({
 const isMe = useIsMeCheck(id)
 
 const { loading } = useLoadArtistData(id)
-const collections = computed(() => store.forArtist(id))
+const collections = computed(() => isMe.value
+  ? store.forArtist(id)
+  : store.forArtistOnlyMinted(id)
+)
+
+const unwrapMainCollection = computed(() => collections.value.length === 1)
+const mainCollection = computed(() => collections.value[0])
+const mainCollectionTokens = computed(() => store.tokens(mainCollection.value.address))
+const maybeLoadMainCollectionTokens = () => unwrapMainCollection.value && store.fetchCollectionTokens(mainCollection.value.address)
+onMounted(() => maybeLoadMainCollectionTokens())
+watch(unwrapMainCollection, () => maybeLoadMainCollectionTokens())
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 section {
   display: grid;
   gap: var(--spacer-lg);

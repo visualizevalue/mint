@@ -7,7 +7,7 @@
       },
       {
         text: collection.name,
-        to: { name: 'id-collection', params: { id, address: collection.address } }
+        to: { name: 'id-collection', params: { id, collection: collection.address } }
       },
       {
         text: `New Mint`

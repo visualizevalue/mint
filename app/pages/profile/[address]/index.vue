@@ -1,18 +1,11 @@
 <template>
   <Loading v-if="! artist" />
   <PageFrame v-else title="Profile">
-    <header>
-      <ClientOnly>
-        <img v-if="artist?.avatar" :src="artist.avatar" :alt="artist.ens">
-        <h1 v-if="artist?.ens">{{ artist.ens }} <small>{{ artist.address }}</small></h1>
-        <p v-else>{{ artist.address }}</p>
-        <p v-if="artist?.description">{{ artist.description }}</p>
-      </ClientOnly>
-    </header>
-
-    <section v-if="isMe && false">
-      <Button>Edit Profile</Button>
+    <section v-if="isMe">
+      <Button :to="`https://app.ens.domains/${address}`">Edit Profile</Button>
     </section>
+
+    <ProfileHeader :address="address" />
 
     <CollectionsOverview v-if="showCollections" :id="address">
       <template #before>

@@ -14,32 +14,13 @@
       </menu>
     </header>
 
-    <section>
-      <img v-if="collection.image" :src="collection.image" :alt="collection.name">
-      <h1>{{ collection.name }} <small>{{ collection.symbol }}</small></h1>
-      <p>{{ collection.description }}</p>
-      <p>Init Block: {{ collection.initBlock }}</p>
-      <p>Latest Token: {{ collection.latestTokenId }}</p>
-      <p>Owner: {{ collection.owner }}</p>
-    </section>
+    <CollectionIntro :collection="collection" />
 
-    <section>
-      <article v-for="token of tokens" :key="token.tokenId">
-        <h1>{{ token.name }} #{{ token.tokenId }}</h1>
-        <img :src="token.artifact" :alt="token.name">
-        <p>{{ token.description }}</p>
-        <Button
-          :to="{
-            name: 'id-collection-tokenId',
-            params: { id, collection: collection.address, tokenId: token.tokenId }
-          }"
-        >View {{ token.name }}</Button>
-      </article>
+    <TokenOverviewCard v-for="token of tokens" :key="token.tokenId" :token="token" />
 
-      <div v-if="! tokens.length">
-        No tokens yet
-      </div>
-    </section>
+    <div v-if="! tokens.length">
+      No tokens yet
+    </div>
   </PageFrame>
 </template>
 

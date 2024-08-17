@@ -11,14 +11,27 @@ export const useOnchainStore = defineStore('onchainStore', {
   }),
 
   getters: {
-    all: (state) => Object.values(state.collections),
-    hasArtist: (state) => (address: `0x${string}`) => state.artists[address] !== undefined,
-    artist: (state) => (address: `0x${string}`) => state.artists[address],
-    forArtist: (state) => (address: `0x${string}`) => state.artists[address]
-      ? state.artists[address].collections
-        .map(c => state.collections[c])
-        .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1)
-      : [],
+    all (state) {
+      return Object.values(state.collections)
+    },
+    hasArtist (state) {
+      return (address: `0x${string}`) => state.artists[address] !== undefined
+    },
+    artist (state) {
+      return (address: `0x${string}`) => state.artists[address]
+    },
+    forArtist (state) {
+      return (address: `0x${string}`) => {
+        if (! this.hasArtist(address)) return []
+
+        return this.artist(address).collections
+          .map(c => state.collections[c])
+          .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1)
+      }
+    },
+    forArtistOnlyMinted () {
+      return (address: `0x${string}`) => this.forArtist(address).filter(c => c.latestTokenId > 0n)
+    },
     hasCollection: (state) => (address: `0x${string}`) => state.collections[address] !== undefined,
     collection: (state) => (address: `0x${string}`) => state.collections[address],
     tokens: (state) => (address: `0x${string}`) =>
@@ -64,7 +77,12 @@ export const useOnchainStore = defineStore('onchainStore', {
         this.hasArtist(address) &&
         this.artist(address).profileUpdatedAtBlock > 0n &&
         (block - this.artist(address).profileUpdatedAtBlock) < BLOCKS_PER_CACHE
-      ) return this.artist(address)
+      ) {
+        console.info(`Artist profile already fetched...`)
+        return this.artist(address)
+      }
+
+      console.info(`Updating artist profile...`)
 
       let ens, avatar, description
 

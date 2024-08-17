@@ -2,7 +2,8 @@
   <header :style="{ borderColor: y > 10 ? 'var(--border-color)' : 'transparent' }">
     <h1>
       <NuxtLink to="/">
-        {{ config.public.title }}
+        <Account v-if="subdomain" :address="subdomain" />
+        <span v-else>{{ config.public.title }}</span>
       </NuxtLink>
     </h1>
 
@@ -22,6 +23,8 @@
 <script setup>
 import { useAccount } from '@wagmi/vue'
 import { useWindowScroll } from '@vueuse/core'
+
+const subdomain = useSubdomain()
 
 const config = useRuntimeConfig()
 const { isConnected, address } = useAccount()
