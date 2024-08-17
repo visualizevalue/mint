@@ -1,11 +1,12 @@
 <template>
   <header :style="{ borderColor: y > 10 ? 'var(--border-color)' : 'transparent' }">
-    <h1>
-      <NuxtLink to="/">
-        <Account v-if="subdomain" :address="subdomain" />
-        <span v-else>{{ config.public.title }}</span>
-      </NuxtLink>
-    </h1>
+    <Breadcrumbs :items="[
+      {
+        to: '/',
+        text: title,
+      },
+      ...breadcrumbs,
+    ]" />
 
     <ClientOnly>
       <GasPrice #default="{ price }">
@@ -24,9 +25,9 @@
 import { useAccount } from '@wagmi/vue'
 import { useWindowScroll } from '@vueuse/core'
 
-const subdomain = useSubdomain()
+const breadcrumbs = useAppBreadcrumb()
+const title = useAppTitle()
 
-const config = useRuntimeConfig()
 const { isConnected, address } = useAccount()
 
 const { y } = useWindowScroll()

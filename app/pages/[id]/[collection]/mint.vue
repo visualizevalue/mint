@@ -18,7 +18,7 @@
         <FormInput v-model="name" placeholder="Title" required />
         <FormInput v-model="description" placeholder="Description" />
 
-        <Button>Deploy</Button>
+        <Button>Mint</Button>
       </form>
     </PageFrame>
   </Authenticated>

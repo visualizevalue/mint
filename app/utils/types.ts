@@ -1,3 +1,17 @@
+import type { RouteLocationRaw } from 'vue-router'
+
+// =====================================================================
+// APP-LOGIC
+// =====================================================================
+export type BreadcrumbItem = string|{
+  to: RouteLocationRaw
+  text: string
+}
+export type Breadcrumbs = BreadcrumbItem[]
+
+// =====================================================================
+// DATA
+// =====================================================================
 export interface Artist {
   address: `0x${string}`
   ens?: string|null

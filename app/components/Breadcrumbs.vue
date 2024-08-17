@@ -24,6 +24,7 @@ defineProps({
     color: var(--gray-z-5);
     transition: all var(--speed);
 
+    &.router-link-active,
     &:--highlight {
       color: var(--color);
     }
