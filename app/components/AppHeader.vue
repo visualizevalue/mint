@@ -7,8 +7,8 @@
     </h1>
 
     <ClientOnly>
-      <GasPrice v-slot="{ price }">
-        <span class="gas">{{ price.gwei }} GWEI</span>
+      <GasPrice #default="{ price }">
+        <span class="gas">{{ price.formatted.gwei }} GWEI</span>
       </GasPrice>
 
       <Connect v-if="! isConnected" />
