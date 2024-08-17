@@ -65,6 +65,9 @@ nav {
     flex-direction: column;
     height: 100dvh;
     width: var(--navbar-width);
+
+    /* FOR NOW */
+    display: none;
   }
 }
 
