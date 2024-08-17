@@ -10,11 +10,15 @@
       </ClientOnly>
     </header>
 
-    <section v-if="isMe">
+    <section v-if="isMe && false">
       <Button>Edit Profile</Button>
     </section>
 
-    <CollectionsOverview v-if="showCollections" :id="address" />
+    <CollectionsOverview v-if="showCollections" :id="address">
+      <template #before>
+        <h1>Collections</h1>
+      </template>
+    </CollectionsOverview>
   </PageFrame>
 </template>
 
@@ -31,7 +35,7 @@ const showCollections = computed(() => !subdomain.value || subdomain.value === a
 const artist = ref(null)
 
 const load = async () => {
-  await store.fetchArtist(address.value, config.public.factoryAddress)
+  await store.fetchArtistScope(address.value, config.public.factoryAddress)
 
   artist.value = store.artist(address.value)
 }

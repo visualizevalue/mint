@@ -1,6 +1,8 @@
 <template>
   <Loading v-if="loading" />
   <section v-else-if="collections.length">
+    <slot name="before" />
+
     <article
       v-for="collection in collections"
       :key="collection.address"
