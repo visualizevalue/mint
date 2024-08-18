@@ -19,8 +19,11 @@
       <p>{{ token.description }}</p>
 
       <div>
+        <p v-if="mintOpen">Current Block: {{ currentBlock }}</p>
+
         <p v-if="mintOpen">Mint open ({{ blocksRemaining }} blocks; <CountDown :until="until" minimal class="inline" />)</p>
-        <p>Current Block: {{ currentBlock }}</p>
+        <p v-else>Mint closed at block {{ token.untilBlock }}</p>
+
         <p v-if="isConnected">Owned: {{ ownedBalance }}</p>
       </div>
     </article>

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <GasPrice ref="gas" />
+    <span>{{ displayPrice.value }} {{ displayPrice.format }}</span>
 
     <FormGroup>
       <FormInput type="number" v-model="mintCount" min="1" required />
@@ -22,12 +22,12 @@ const store = useOnchainStore()
 
 const mintCount = ref('1')
 const gasPrice = await useGasPrice()
+const price = computed(() => {
+  return gasPrice.value.wei * 60_000n * BigInt(mintCount.value)
+})
+const displayPrice = computed(() => customFormatEther(price.value))
 
 const mint = async () => {
-  const amount = BigInt(mintCount.value)
-
-  const price = gasPrice.value.wei * 60_000n * amount
-
   const hash = await writeContract($wagmi, {
     abi: MINT_ABI,
     chainId: 1337,
@@ -35,9 +35,9 @@ const mint = async () => {
     functionName: 'mint',
     args: [
       props.token.tokenId,
-      amount,
+      BigInt(mintCount.value),
     ],
-    value: price,
+    value: price.value,
   })
 
   await waitForTransactionReceipt($wagmi, { chainId: 1337, hash })
