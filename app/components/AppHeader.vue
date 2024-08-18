@@ -1,12 +1,6 @@
 <template>
   <header :style="{ borderColor: y > 10 ? 'var(--border-color)' : 'transparent' }">
-    <Breadcrumbs :items="[
-      {
-        to: '/',
-        text: title,
-      },
-      ...breadcrumbs,
-    ]" />
+    <Breadcrumbs :items="breadcrumbs" />
 
     <ClientOnly>
       <GasPrice #default="{ price }">
@@ -25,10 +19,25 @@
 import { useAccount } from '@wagmi/vue'
 import { useWindowScroll } from '@vueuse/core'
 
-const breadcrumbs = useAppBreadcrumb()
 const title = useAppTitle()
-
+const subdomain = useSubdomain()
+const appBreadcumbs = useAppBreadcrumb()
 const { isConnected, address } = useAccount()
+const id = useArtistId()
+const breadcrumbs = computed(() => {
+  // FIXME: Fix this...
+  const all = [
+    {
+      to: id.value
+        ? { name: 'id', params: { id: id.value } }
+        : `/`,
+      text: title.value
+    },
+    ...appBreadcumbs.value.filter(i => id.value ? i.to?.name !== 'id' : true),
+  ]
+
+  return all
+})
 
 const { y } = useWindowScroll()
 </script>
@@ -46,6 +55,14 @@ header {
   justify-content: space-between;
   gap: var(--spacer-lg);
   padding: var(--spacer);
+
+  :deep(> .breadcrumb) {
+    > *:first-child {
+      a {
+        color: var(--color);
+      }
+    }
+  }
 
   .gas {
     margin-left: auto;

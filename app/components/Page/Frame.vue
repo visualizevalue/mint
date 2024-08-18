@@ -1,13 +1,5 @@
 <template>
   <section class="frame">
-    <header v-if="title">
-      <h1 v-if="typeof title === 'string'">{{ title }}</h1>
-      <Breadcrumbs v-else :items="title" />
-      <slot name="header" />
-    </header>
-
-    <slot name="floating-top" />
-
     <div>
       <slot />
     </div>
@@ -15,8 +7,18 @@
 </template>
 
 <script setup>
-defineProps({
+
+const props = defineProps({
   title: [String, Array],
+})
+
+const breadcrumbs = useAppBreadcrumb()
+onMounted(() => {
+  if (Array.isArray(props.title)) {
+    breadcrumbs.value = props.title
+  } else {
+    breadcrumbs.value = []
+  }
 })
 </script>
 
