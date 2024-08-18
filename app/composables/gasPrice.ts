@@ -3,27 +3,6 @@ import { formatEther, formatGwei } from 'viem'
 import { getGasPrice } from '@wagmi/core'
 import { useConfig, useBlockNumber } from '@wagmi/vue'
 
-export const useLoadArtistData = (id: `0x${string}`) => {
-  const config = useRuntimeConfig()
-  const store = useOnchainStore()
-
-  const loading = ref(true)
-
-  const load = async () => {
-    loading.value = true
-    if (! id) return
-    await store.fetchArtistScope(id, config.public.factoryAddress as `0x${string}`)
-    loading.value = false
-  }
-
-  onMounted(() => load())
-
-  return {
-    load,
-    loading,
-  }
-}
-
 let priceWatcher: WatchStopHandle|null = null
 const price: Ref<bigint|null> = ref(null)
 export const useGasPrice = async () => {
