@@ -6,6 +6,8 @@
     <main>
       <slot />
     </main>
+
+    <ToggleDarkMode />
   </div>
 </template>
 

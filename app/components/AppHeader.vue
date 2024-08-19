@@ -70,7 +70,7 @@ header {
 
 /* COLORS */
 header {
-  background: var(--black-semi);
+  background: var(--background-semi);
   backdrop-filter: blur(var(--size-1));
   border-bottom: var(--border);
   border-color: transparent;
