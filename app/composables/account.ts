@@ -12,3 +12,13 @@ export const useIsMe = () => {
   return useIsMeCheck(id.value)
 }
 
+export const useAccountName = (id: `0x${string}`) => {
+  const store = useOnchainStore()
+  if (! store.hasArtist) store.fetchArtistProfile(id)
+
+  return computed(() => {
+    const artist = store.artist(id)
+
+    return artist?.ens || shortAddress(id)
+  })
+}

@@ -1,18 +1,12 @@
 <template>
-  <PageFrame :title="[
-    {
-      text: `Collections`,
-      to: { name: 'id', params: { id } }
-    },
-    {
-      text: `${ collection?.name }`
-    }
-  ]">
-    <header v-if="ownedByMe">
-      <menu>
-        <Button :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }">Create New</Button>
-      </menu>
-    </header>
+  <PageFrame :title="breadcrumb">
+    <ClientOnly>
+      <header v-if="ownedByMe">
+        <menu>
+          <Button :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }">Create New</Button>
+        </menu>
+      </header>
+    </ClientOnly>
 
     <CollectionIntro :collection="collection" />
 
@@ -25,12 +19,30 @@
 </template>
 
 <script setup>
-const id = useArtistId()
-
 const props = defineProps(['collection'])
 const collection = computed(() => props.collection)
+const id = useArtistId()
 const store = useOnchainStore()
+const isMe = useIsMe()
+const artistName = useAccountName(id.value)
 const ownedByMe = useIsMeCheck(collection.value.owner)
+
+const subdomain = useSubdomain()
+const breadcrumb = computed(() => {
+  const path = subdomain.value || isMe.value ? [] : [
+    {
+      text: artistName,
+      to: { name: 'id', params: { id } }
+    }
+  ]
+
+  return [
+    ...path,
+    {
+      text: collection.value.name
+    }
+  ]
+})
 
 const tokens = computed(() => store.tokens(collection.value.address))
 

@@ -1,18 +1,6 @@
 <template>
   <Authenticated>
-    <PageFrame :title="[
-      {
-        text: `Collections`,
-        to: { name: 'id', params: { id } }
-      },
-      {
-        text: collection.name,
-        to: { name: 'id-collection', params: { id, collection: collection.address } }
-      },
-      {
-        text: `New Mint`
-      }
-    ]">
+    <PageFrame :title="breadcrumb">
       <form @submit.stop.prevent="mint">
         <FormInput v-model="image" placeholder="Image" required />
         <FormInput v-model="name" placeholder="Title" required />
@@ -94,6 +82,31 @@ const mint = async () => {
   await store.fetchToken(collection.value.address, mintedEvent.args.id)
   await navigateTo(`/${id.value}/${collection.value.address}`)
 }
+
+
+const subdomain = useSubdomain()
+const isMe = useIsMe()
+const artistName = useAccountName(id.value)
+
+const breadcrumb = computed(() => {
+  const path = subdomain.value || isMe.value ? [] : [
+    {
+      text: artistName,
+      to: { name: 'id', params: { id: id.value } }
+    }
+  ]
+
+  return [
+    ...path,
+    {
+      text: `${ collection.value.name }`,
+      to: { name: 'id-collection', params: { id: id.value, collection: collection.value.address } }
+    },
+    {
+      text: `New Mint`
+    },
+  ]
+})
 </script>
 
 <style lang="postcss" scoped>

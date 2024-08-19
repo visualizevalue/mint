@@ -20,6 +20,10 @@ defineProps({
   justify-content: center;
   gap: var(--spacer-sm);
 
+  > span {
+    white-space: nowrap;
+  }
+
   > span > a {
     color: var(--gray-z-5);
     transition: all var(--speed);

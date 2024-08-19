@@ -1,18 +1,6 @@
 <template>
   <Loading v-if="! token" />
-  <PageFrame v-else :title="[
-    {
-      text: `Collections`,
-      to: { name: 'id', params: { id } }
-    },
-    {
-      text: `${ collection.name }`,
-      to: { name: 'id-collection', params: { id, collection: collection.address } }
-    },
-    {
-      text: `${ token.name } #${ $route.params.tokenId }`
-    }
-  ]">
+  <PageFrame v-else :title="breadcrumb">
     <article>
       <h1>{{ token.name }} #{{ token.tokenId }}</h1>
       <img :src="token.artifact" :alt="token.name">
@@ -37,6 +25,9 @@ import { useAccount, useBlockNumber } from '@wagmi/vue'
 
 const id = useArtistId()
 const route = useRoute()
+const isMe = useIsMe()
+const subdomain = useSubdomain()
+const artistName = useAccountName(id.value)
 const { address, isConnected } = useAccount()
 const props = defineProps(['collection'])
 const collection = computed(() => props.collection)
@@ -62,12 +53,32 @@ watch(isConnected, () => maybeCheckBalance(true))
 // Navigation guards
 onMounted(async () => {
   if (collection.value.latestTokenId < tokenId.value) {
-    return navigateTo(`/${id.value}/${collection.value.address}`)
+    return navigateTo({ name: 'id-collection', params: { id: id.value, collection: collection.value.address }})
   }
 
   if (! token.value) await store.fetchToken(collection.value.address, tokenId.value)
 
   await maybeCheckBalance()
+})
+
+const breadcrumb = computed(() => {
+  const path = subdomain.value || isMe.value ? [] : [
+    {
+      text: artistName,
+      to: { name: 'id', params: { id: id.value } }
+    }
+  ]
+
+  return [
+    ...path,
+    {
+      text: `${ collection.value.name }`,
+      to: { name: 'id-collection', params: { id: id.value, collection: collection.value.address } }
+    },
+    {
+      text: `${ token.value.name } #${ tokenId.value }`
+    },
+  ]
 })
 </script>
 

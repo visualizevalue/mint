@@ -2,10 +2,6 @@
   <Authenticated>
     <PageFrame :title="[
       {
-        text: `Collections`,
-        to: { name: 'id', params: { id } }
-      },
-      {
         text: `Create New`
       }
     ]">

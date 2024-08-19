@@ -4,7 +4,7 @@ export const useAppTitle = () => {
   const state = useOnchainStore()
 
   return computed(() => subdomain.value
-    ? state.artist(subdomain.value as `0x${string}`)?.ens || subdomain.value
+    ? state.artist(subdomain.value as `0x${string}`)?.ens || shortAddress(subdomain.value)
     : config.public.title
   )
 }
