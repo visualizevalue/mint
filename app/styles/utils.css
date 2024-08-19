@@ -1,0 +1,7 @@
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: centered;
+  justify-content: centered;
+  gap: var(--spacer);
+}

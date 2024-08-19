@@ -17,6 +17,10 @@ export interface Artist {
   ens?: string|null
   avatar?: string|null
   description?: string|null
+  url?: string|null
+  email?: string|null
+  twitter?: string|null
+  github?: string|null
   collections: `0x${string}`[]
   profileUpdatedAtBlock: bigint,
   collectionsFetchedUntilBlock: bigint,

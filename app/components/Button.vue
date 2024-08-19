@@ -19,7 +19,8 @@ defineProps({
   min-width: fit-content;
   width: fit-content;
   padding: var(--size-3) var(--size-4);
-  background: var(--border-color);
+  background: var(--background);
+  border: var(--border);
   position: relative;
   display: inline-flex;
   gap: var(--size-2);
@@ -32,7 +33,7 @@ defineProps({
   }
 
   &:--highlight {
-    background: var(--border-color-light);
+    background: var(--border-color);
   }
 
   > span {
@@ -53,6 +54,19 @@ defineProps({
   &.left {
     justify-content: flex-start;
     text-align: left;
+  }
+
+  &.small {
+    padding: calc(var(--size-1) + var(--size-0)) var(--size-3);
+    font-size: var(--font-sm);
+    min-height: 0;
+
+    > span {
+      .icon {
+        width: var(--size-3);
+        height: var(--size-3);
+      }
+    }
   }
 }
 </style>

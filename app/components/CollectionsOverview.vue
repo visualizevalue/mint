@@ -14,7 +14,7 @@
       :collection="collection"
     />
   </section>
-  <section v-else>
+  <section v-else class="centered">
     <template v-if="isMe">
       <p>It looks like you haven't deployed any collections.</p>
       <Button :to="{ name: `id-create`, params: { id } }">Create your first</Button>

@@ -86,15 +86,20 @@ export const useOnchainStore = () => {
 
         console.info(`Updating artist profile...`)
 
-        let ens, avatar, description
+        let ens, avatar, description,
+            url, email, twitter, github
 
         try {
           ens = await client.getEnsName({ address })
 
           if (ens) {
-            [avatar, description] = await Promise.all([
+            [avatar, description, url, email, twitter, github] = await Promise.all([
               client.getEnsAvatar({ name: ens }),
               client.getEnsText({ name: ens, key: 'description' }),
+              client.getEnsText({ name: ens, key: 'url' }),
+              client.getEnsText({ name: ens, key: 'email' }),
+              client.getEnsText({ name: ens, key: 'com.twitter' }),
+              client.getEnsText({ name: ens, key: 'com.github' }),
             ])
           }
         } catch (e) {}
@@ -102,6 +107,10 @@ export const useOnchainStore = () => {
         this.artists[address].ens = ens
         this.artists[address].avatar = avatar
         this.artists[address].description = description
+        this.artists[address].url = url
+        this.artists[address].email = email
+        this.artists[address].twitter = twitter
+        this.artists[address].github = github
         this.artists[address].profileUpdatedAtBlock = block
 
         return this.artist(address)

@@ -1,11 +1,17 @@
 <template>
   <Loading v-if="! artist" />
   <PageFrame v-else title="Profile">
-    <section v-if="isMe">
-      <Button :to="`https://app.ens.domains/${address}`">Edit Profile</Button>
-    </section>
 
-    <ProfileHeader :address="address" />
+    <ProfileHeader :address="address">
+      <template  v-if="isMe" #before>
+        <Actions>
+          <Button :to="`https://app.ens.domains/${address}`" class="small">
+            <Icon type="edit-2" />
+            <span>Edit Profile</span>
+          </Button>
+        </Actions>
+      </template>
+    </ProfileHeader>
 
     <CollectionsOverview v-if="showCollections" :id="address">
       <template #before>

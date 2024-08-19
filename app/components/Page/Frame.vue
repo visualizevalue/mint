@@ -42,7 +42,7 @@ onMounted(() => {
     }
 
     @media (--md) {
-      padding: var(--spacer-lg);
+      padding: var(--spacer-lg) 0;
     }
   }
 

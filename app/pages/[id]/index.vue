@@ -1,14 +1,17 @@
 <template>
   <PageFrame :title="breadcrumb">
-    <ProfileHeader :address="id" />
-
     <ClientOnly>
-      <header v-if="isMe">
+      <ProfileHeader v-if="! isMe" :address="id" />
+
+      <Header v-else>
         <h1>Your Collections</h1>
-        <menu>
-          <Button :to="{ name: `id-create`, params: { id } }">New Collection</Button>
-        </menu>
-      </header>
+        <Actions>
+          <Button :to="{ name: `id-create`, params: { id } }" class="small">
+            <Icon type="plus" />
+          <span>New Collection</span>
+          </Button>
+        </Actions>
+      </Header>
     </ClientOnly>
 
     <CollectionsOverview :id="id" />
@@ -39,11 +42,4 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
-menu {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: flex-end;
-  gap: var(--spacer);
-}
 </style>
