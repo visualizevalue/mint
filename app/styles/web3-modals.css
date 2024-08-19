@@ -1,0 +1,26 @@
+wcm-modal {
+  --wcm-z-index: 9999;
+  --wcm-overlay-background-color: var(--gray-z-1-semi);
+  --wcm-overlay-backdrop-filter: var(--blur);
+}
+
+#walletconnect-wrapper {
+  .walletconnect-modal__base,
+  .walletconnect-modal__base * {
+    color: black;
+  }
+}
+
+/* Metamask */
+.select-modal {
+  > div:first-child {
+    opacity: 1 !important;
+    background: linear-gradient(
+      45deg,
+      var(--gray-z-0-semi),
+      var(--gray-z-1-semi),
+      var(--gray-z-2-semi)
+    ) !important;
+    backdrop-filter: var(--blur) !important;
+  }
+}

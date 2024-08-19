@@ -1,10 +1,13 @@
 <template>
   <PageFrame>
     <header>
-      <h1>{{ config.public.title }}</h1>
       <p>{{ config.public.description }}</p>
 
-      <Connect />
+      <Connect @connected="$event => navigateTo({ name: 'id', params: { id: $event.address } })">
+        <template #connected>
+          <span></span>
+        </template>
+      </Connect>
     </header>
   </PageFrame>
 </template>
@@ -23,4 +26,21 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacer);
+
+  p {
+    text-align: center;
+    color: var(--muted);
+  }
+}
+
+/* HEIGHT */
+header {
+  height: calc(100dvh - var(--navbar-height) * 3);
+}
 </style>

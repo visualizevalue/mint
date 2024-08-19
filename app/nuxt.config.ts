@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+console.log('nuxt WALLET_CONNECT_PROJECT_ID', process.env.WALLET_CONNECT_PROJECT_ID)
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
@@ -8,6 +11,7 @@ export default defineNuxtConfig({
       description: 'To mint is a human right.',
       creatorAddress: '',
       factoryAddress: '',
+      walletConnectProjectId: '',
     }
   },
 
@@ -84,7 +88,7 @@ export default defineNuxtConfig({
 
   devServer: {
     port: 1618,
-    host: `mint.test`,
+    host: process.env.NUXT_PUBLIC_DOMAIN || 'localhost',
   },
 
   vite: {
