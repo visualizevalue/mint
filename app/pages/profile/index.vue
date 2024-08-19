@@ -16,6 +16,10 @@ const redirect = () => {
 }
 onMounted(() => redirect())
 watch(isConnected, () => redirect())
+
+useMetaData({
+  title: `Profile`,
+})
 </script>
 
 <style lang="postcss" scoped>

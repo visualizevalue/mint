@@ -44,6 +44,10 @@ const breadcrumb = computed(() => {
   ]
 })
 
+useMetaData({
+  title: `${collection.value.name}`,
+})
+
 const tokens = computed(() => store.tokens(collection.value.address))
 
 onMounted(() => {

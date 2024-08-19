@@ -15,6 +15,11 @@ const config = useRuntimeConfig()
 definePageMeta({
   middleware: ['redirect-user-scope']
 })
+
+useMetaData({
+  title: config.public.title,
+  description: config.public.description,
+})
 </script>
 
 <style lang="postcss" scoped>

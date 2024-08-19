@@ -32,6 +32,10 @@ const breadcrumb = computed(() => {
     }
   ]
 })
+
+useMetaData({
+  title: artistName.value,
+})
 </script>
 
 <style lang="postcss" scoped>

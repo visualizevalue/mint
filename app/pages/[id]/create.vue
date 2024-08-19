@@ -62,6 +62,10 @@ const deploy = async () => {
   await store.fetchCollections(id.value, config.public.factoryAddress, artist.collectionsFetchedUntilBlock)
   await navigateTo(`/${id.value}/${createdEvent.args.contractAddress}`)
 }
+
+useMetaData({
+  title: `Create New Collection`,
+})
 </script>
 
 <style lang="postcss" scoped>

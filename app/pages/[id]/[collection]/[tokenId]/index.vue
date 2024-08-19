@@ -76,9 +76,13 @@ const breadcrumb = computed(() => {
       to: { name: 'id-collection', params: { id: id.value, collection: collection.value.address } }
     },
     {
-      text: `${ token.value.name } #${ tokenId.value }`
+      text: `${ token.value?.name } #${ tokenId.value }`
     },
   ]
+})
+
+useMetaData({
+  title: `${ token.value?.name } (#${tokenId.value}) | ${collection.value.name}`,
 })
 </script>
 

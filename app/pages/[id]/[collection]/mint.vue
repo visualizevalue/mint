@@ -107,6 +107,10 @@ const breadcrumb = computed(() => {
     },
   ]
 })
+
+useMetaData({
+  title: `Mint New Token | ${collection.value.name}`,
+})
 </script>
 
 <style lang="postcss" scoped>

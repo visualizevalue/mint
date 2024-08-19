@@ -10,7 +10,7 @@ const makeHead = ({
   title,
   append = '',
   description = '',
-  og = 'https://evverydays.com/og.png',
+  og = '/og.png',
   meta = [],
 }: HeadConfig) => {
   const titleCompleted = `${title}${append}`

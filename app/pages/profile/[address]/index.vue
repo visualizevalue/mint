@@ -33,6 +33,10 @@ const load = async () => {
   artist.value = store.artist(address.value)
 }
 onMounted(() => load())
+
+useMetaData({
+  title: artist.value?.ens || shortAddress(address.value),
+})
 </script>
 
 <style lang="postcss" scoped>

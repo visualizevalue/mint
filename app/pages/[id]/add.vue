@@ -27,6 +27,10 @@ const add = async () => {
 
   await navigateTo(`/${id.value}/${address.value}`)
 }
+
+useMetaData({
+  title: `Add Existing Collection`,
+})
 </script>
 
 <style lang="postcss" scoped>
