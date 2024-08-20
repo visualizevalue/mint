@@ -61,7 +61,7 @@ const imageLoaded = () => {
 <style lang="postcss" scoped>
 article.image {
   overflow: hidden;
-  border: 1px solid var(--gray-z-4);
+  border: 1px solid var(--border-color);
   background-color: var(--gray-z-2);
   border-radius: var(--border-radius);
   overflow: hidden;

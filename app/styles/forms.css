@@ -36,7 +36,7 @@ select {
 .input,
 .textarea,
 .select {
-  min-height: var(--size-8);
+  min-height: calc(var(--size-7) + var(--size-2));
   line-height: 1;
 }
 

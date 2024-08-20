@@ -1,19 +1,37 @@
 <template>
-  <section>
-    <span>{{ displayPrice.value }} {{ displayPrice.format }}</span>
-
-    <FormGroup>
-      <FormInput type="number" v-model="mintCount" min="1" required />
-      <Button @click="mint">Mint</Button>
-    </FormGroup>
-  </section>
+  <FormGroup>
+    <Button
+      v-if="showCheck"
+      class="non-interactive check"
+    >
+      <Icon type="check" />
+    </Button>
+    <Connect v-if="! isConnected">Connect To Mint</Connect>
+    <template v-else>
+      <FormInput
+        type="number"
+        v-model="mintCount"
+        min="1"
+        required
+        class="amount"
+      />
+        <!-- prefix="Amount" -->
+      <Button disabled>{{ displayPrice.value }} {{ displayPrice.format }}</Button>
+      <Button @click="mint">
+        Mint
+      </Button>
+    </template>
+  </FormGroup>
 </template>
 
 <script setup>
 import { useAccount } from '@wagmi/vue'
+const breakpoints = useBreakpoints()
+
+const showCheck = computed(() => breakpoints.greater('xs').value)
 
 const { $wagmi } = useNuxtApp()
-const { address } = await useAccount()
+const { address, isConnected } = await useAccount()
 
 const props = defineProps({
   token: Object,
@@ -47,3 +65,20 @@ const mint = async () => {
   mintCount.value = '1'
 }
 </script>
+
+<style lang="postcss" scoped>
+fieldset {
+  .check {
+    width: min-content;
+  }
+
+  .amount {
+    width: 100%;
+
+    @media (--sm) {
+      min-width: 8rem;
+      width: fit-content;
+    }
+  }
+}
+</style>

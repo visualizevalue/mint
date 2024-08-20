@@ -1,20 +1,11 @@
 <template>
   <PageFrame :title="breadcrumb">
-    <ClientOnly>
-      <Actions v-if="ownedByMe">
-        <Button
-          :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
-          class="small"
-        >Create New</Button>
-      </Actions>
-    </ClientOnly>
-
     <CollectionIntro :collection="collection" />
 
     <TokenOverviewCard v-for="token of tokens" :key="token.tokenId" :token="token" />
 
-    <div v-if="! tokens.length">
-      No tokens yet
+    <div v-if="! tokens.length" class="centered">
+      <p class="muted">No tokens yet</p>
     </div>
   </PageFrame>
 </template>
@@ -26,7 +17,6 @@ const id = useArtistId()
 const store = useOnchainStore()
 const isMe = useIsMe()
 const artistName = useAccountName(id.value)
-const ownedByMe = useIsMeCheck(collection.value.owner)
 
 const subdomain = useSubdomain()
 const breadcrumb = computed(() => {
@@ -57,15 +47,4 @@ onMounted(() => {
 </script>
 
 <style lang="postcss" scoped>
-  article {
-    padding: 1rem;
-
-    h1 {
-      font-size: 1.25rem;
-    }
-
-    p {
-      color: gray;
-    }
-  }
 </style>

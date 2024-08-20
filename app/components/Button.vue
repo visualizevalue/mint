@@ -18,7 +18,7 @@ defineProps({
 .button {
   min-width: fit-content;
   width: fit-content;
-  padding: var(--size-3) var(--size-4);
+  padding: var(--size-2) var(--size-4);
   background: var(--background);
   border: var(--border);
   position: relative;
@@ -27,8 +27,11 @@ defineProps({
   justify-content: center;
   align-items: center;
 
+  &.non-interactive,
   &[disabled]:not([disabled="false"]) {
     pointer-events: none;
+  }
+  &[disabled]:not([disabled="false"]) {
     color: var(--muted);
   }
 

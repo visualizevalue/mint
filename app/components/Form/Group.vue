@@ -9,8 +9,8 @@ fieldset {
   width: 100%;
   max-width: -webkit-fill-available;
 
-  :deep(button),
-  :deep(input) {
+  :deep(> button),
+  :deep(> input) {
     white-space: nowrap;
     width: 100%;
   }
@@ -19,8 +19,8 @@ fieldset {
     display: flex;
   }
 
-  :deep(.form-item),
-  :deep(.button) {
+  :deep(> .form-item),
+  :deep(> .button) {
     + .form-item,
     + .button {
       border-top-color: transparent;
