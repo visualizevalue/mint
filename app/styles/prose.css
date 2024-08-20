@@ -115,3 +115,10 @@
     }
   }
 }
+
+/* GENERAL HINT RULES */
+p {
+  a {
+    text-decoration: underline;
+  }
+}

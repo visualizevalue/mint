@@ -7,5 +7,9 @@
 }
 
 .muted {
-  color: var(--muted);
+  color: var(--muted) !important;
+}
+
+.muted-light {
+  color: var(--muted-light) !important;
 }

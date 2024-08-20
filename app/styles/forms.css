@@ -79,6 +79,8 @@ select {
   display: flex;
   align-items: center;
   background: var(--background);
+  width: 100%;
+  max-width: -webkit-fill-available;
 
   .input,
   .textarea,

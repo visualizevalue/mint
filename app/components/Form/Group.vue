@@ -6,15 +6,8 @@
 
 <style lang="postcss" scoped>
 fieldset {
-  :deep(.form-item) {
-    + .form-item {
-      border-left-color: transparent;
-
-      &:has(.input:focus) {
-        border-left-color: var(--border-color-light);
-      }
-    }
-  }
+  width: 100%;
+  max-width: -webkit-fill-available;
 
   :deep(button),
   :deep(input) {
@@ -24,6 +17,27 @@ fieldset {
 
   @media (--sm) {
     display: flex;
+  }
+
+  :deep(.form-item),
+  :deep(.button) {
+    + .form-item,
+    + .button {
+      border-top-color: transparent;
+
+      &:has(.input:focus) {
+        border-top-color: var(--border-color-light);
+      }
+
+      @media (--sm) {
+        border-top-color: var(--border-color);
+        border-left-color: transparent;
+
+        &:has(.input:focus) {
+          border-left-color: var(--border-color-light);
+        }
+      }
+    }
   }
 }
 </style>

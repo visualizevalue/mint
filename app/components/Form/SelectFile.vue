@@ -1,0 +1,50 @@
+<template>
+  <Button v-if="! file" type="button" @click="() => open()">
+    <Icon type="image" />
+    <span>Choose file</span>
+  </Button>
+  <FormGroup v-else>
+    <Button type="button" disabled>
+      <span>{{ shortString(file.name) }}</span>
+      <span>({{ formatBytes(file.size) }})</span>
+    </Button>
+    <Button type="button" class="open" @click="() => open()">
+      <Icon type="folder" />
+    </Button>
+    <Button type="button" class="reset" @click="() => reset()">
+      <Icon type="trash" />
+    </Button>
+  </FormGroup>
+</template>
+
+<script setup lang="ts">
+import { useFileDialog } from '@vueuse/core'
+
+const emit = defineEmits<{
+  change: [file: File|null]
+}>()
+
+const { files, open, reset, onChange } = useFileDialog({
+  accept: 'image/*',
+  multiple: false,
+})
+
+const file = computed(() => files.value?.length ? files.value[0] : null)
+onChange(() => emit('change', file.value))
+</script>
+
+<style lang="postcss" scoped>
+fieldset {
+  width: fit-content;
+  max-width: -webkit-fill-available;
+}
+
+.button[disabled] {
+  color: var(--color);
+}
+
+.open,
+.reset {
+  width: min-content;
+}
+</style>
