@@ -1,11 +1,12 @@
 <template>
   <PageFrame :title="breadcrumb">
     <ClientOnly>
-      <header v-if="ownedByMe">
-        <menu>
-          <Button :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }">Create New</Button>
-        </menu>
-      </header>
+      <Actions v-if="ownedByMe">
+        <Button
+          :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
+          class="small"
+        >Create New</Button>
+      </Actions>
     </ClientOnly>
 
     <CollectionIntro :collection="collection" />

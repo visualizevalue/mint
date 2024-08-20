@@ -1,15 +1,46 @@
 <template>
   <Authenticated>
-    <PageFrame :title="breadcrumb">
-      <form @submit.stop.prevent="mint">
-        <FormInput v-model="image" placeholder="Image" required />
-        <FormInput v-model="name" placeholder="Title" required />
-        <FormInput v-model="description" placeholder="Description" />
+    <PageFrame :title="breadcrumb" class="inset wide" id="mint-token">
+      <article class="preview">
+        <Image v-if="image" :src="image" alt="Preview" />
+        <VisualImagePreview v-else />
+        <h1 :class="{ 'muted-light': !name }">{{ name || 'Token' }}</h1>
+        <p :class="{ 'muted-light': !description }">
+          {{ description || 'No description' }}
+        </p>
+      </article>
+
+      <form @submit.stop.prevent="mint" class="card">
+        <Actions>
+          <select class="select small choose-mode" v-model="mode">
+            <option value="file" title="Data URI Encoded File Upload">DATA-URI</option>
+            <option value="ipfs" title="Interplanetary File System">IPFS</option>
+            <option value="http" title="Hypertext Transfer Protocol" disabled>HTTP</option>
+            <option value="svg" title="Scalable Vector Graphic" disabled>SVG</option>
+          </select>
+        </Actions>
+
+        <div>
+          <div v-if="mode === 'file'">
+            <FormSelectFile @change="setImage" />
+            <p v-if="! isSmall" class="muted">
+              <small>
+                Note: This should be a small file, prefferably an SVG like <a href="https://presence.art/tokens/perspective.svg" target="_blank">this one (810 bytes)</a>.
+                If it is larger than what we can store within one transaction, the token creation will be split up into multiple transactions.
+              </small>
+            </p>
+          </div>
+          <FormInput v-else-if="mode === 'ipfs'" v-model="ipfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
+
+          <FormInput v-model="name" placeholder="Title" required />
+          <FormInput v-model="description" placeholder="Description" />
+        </div>
 
         <Actions>
           <Button>Mint</Button>
         </Actions>
       </form>
+
     </PageFrame>
   </Authenticated>
 </template>
@@ -22,9 +53,31 @@ const props = defineProps(['collection'])
 const store = useOnchainStore()
 const collection = computed(() => props.collection)
 
+const mode = ref('file')
+const ipfsCid = ref('')
 const image = ref('')
 const name = ref('')
 const description = ref('')
+
+const imageSize = ref(0)
+const isSmall = computed(() => imageSize.value / 1024 < 10)
+const setImage = async (file) => {
+  try {
+    image.value = await imageFileToDataUri(file)
+  } catch (e) {
+    image.value = ''
+  }
+  imageSize.value = file.size
+}
+watch(ipfsCid, () => {
+  const validated = validateCID(ipfsCid.value)
+  if (! validated) {
+    image.value = ''
+  } else {
+    image.value = ipfsToHttpURI(`ipfs://${validated}`)
+  }
+})
+watch(mode, () => image.value = '')
 
 const mint = async () => {
   const artifact = toByteArray(image.value)
@@ -116,7 +169,52 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
+#mint-token {
+  display: grid;
+
+  @media (--md) {
+    grid-template-columns: 40% 60%;
+  }
+
+  @media (--lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.preview {
+  height: 100%;
+  place-content: center;
+
+  .image,
+  svg {
+    border-radius: var(--border-radius);
+    border: var(--border);
+    margin-bottom: var(--spacer-sm);
+    width: 100%;
+  }
+
+  h1 {
+    display: flex;
+    gap: var(--spacer-sm);
+    align-items: baseline;
+    font-size: var(--font-lg);
+  }
+
+  p {
+    color: var(--muted);
+  }
+}
+
 form {
   width: 100%;
+
+  > div {
+    display: grid;
+    gap: var(--spacer);
+  }
+}
+
+select.choose-mode {
+  width: fit-content;
 }
 </style>

@@ -23,6 +23,7 @@
         "@wagmi/vue": "^0.0.33",
         "buffer": "^6.0.3",
         "feather-icons": "^4.29.2",
+        "multiformats": "^13.2.2",
         "nuxt": "^3.11.2",
         "postcss-custom-media": "^10.0.6",
         "postcss-custom-selectors": "^7.1.10",

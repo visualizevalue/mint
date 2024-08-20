@@ -1,6 +1,6 @@
 <template>
   <article>
-    <img v-if="collection.image" :src="collection.image" :alt="collection.name">
+    <Image v-if="collection.image" :src="collection.image" :alt="collection.name" />
     <div class="text">
       <div>
         <h1>{{ collection.name }} <small>({{ collection.symbol }})</small></h1>
@@ -10,7 +10,7 @@
       </div>
 
       <div>
-        <p>{{ collection.latestTokenId }} Tokens · Created at Block {{ collection.initBlock }}</p>
+        <p>{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
       </div>
     </div>
     <CardLink

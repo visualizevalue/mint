@@ -63,8 +63,13 @@ onMounted(() => {
   @media (--sm) {
     min-height: 0;
   }
+
   @media (--md) {
     max-width: var(--content-width);
+
+    &.wide {
+      max-width: var(--content-width-lg);
+    }
   }
 }
 </style>

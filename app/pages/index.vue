@@ -3,21 +3,22 @@
     <header>
       <p>{{ config.public.description }}</p>
 
-      <Connect @connected="$event => navigateTo({ name: 'id', params: { id: $event.address } })">
-        <template #connected>
-          <span></span>
+      <ClientOnly>
+        <Connect @connected="$event => navigateTo({ name: 'id', params: { id: $event.address } })">
+          <template #connected>
+            <span></span>
+          </template>
+        </Connect>
+        <template #fallback>
+          <Button>Connect</Button>
         </template>
-      </Connect>
+      </ClientOnly>
     </header>
   </PageFrame>
 </template>
 
 <script setup>
 const config = useRuntimeConfig()
-
-definePageMeta({
-  middleware: ['redirect-user-scope']
-})
 
 useMetaData({
   title: config.public.title,

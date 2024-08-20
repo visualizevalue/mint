@@ -72,6 +72,12 @@ select {
   &::-ms-input-placeholder {
     color: var(--border-color-light);
   }
+
+  &.small {
+    min-height: 0;
+    font-size: var(--font-sm);
+    padding: calc(var(--size-1) + var(--size-0)) var(--size-3);
+  }
 }
 
 .form-item {
@@ -133,6 +139,23 @@ select {
         padding-left: 0;
       }
     }
+  }
+}
+
+select.select,
+select.select:--highlight {
+  appearance: none;
+  line-height: 1;
+  background:
+    url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM4ODgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWNoZXZyb24tZG93biI+PHBvbHlsaW5lIHBvaW50cz0iNiA5IDEyIDE1IDE4IDkiPjwvcG9seWxpbmU+PC9zdmc+),
+    var(--gray-z-0);
+  background-repeat: no-repeat, no-repeat;
+  background-position: calc(100% - var(--size-4)) 50%, 0% 0%;
+  background-size: var(--size-4), 100% 100%;
+  padding-right: var(--size-7) !important;
+
+  &.small {
+    background-position: calc(100% - var(--size-2)) 50%, 0% 0%;
   }
 }
 

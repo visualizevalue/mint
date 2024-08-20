@@ -3,7 +3,7 @@
 console.log('nuxt WALLET_CONNECT_PROJECT_ID', process.env.WALLET_CONNECT_PROJECT_ID)
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  // devtools: { enabled: true },
 
   runtimeConfig: {
     public: {

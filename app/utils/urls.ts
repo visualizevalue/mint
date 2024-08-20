@@ -1,3 +1,5 @@
+export const ipfsToHttpURI = (url: string, gateway: string = 'https://ipfs.io/ipfs/') => url.replace('ipfs://', gateway)
+
 export const validateURI = (url: string) => {
   if (! url || ! url.length) return false
 

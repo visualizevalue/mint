@@ -1,0 +1,20 @@
+.card {
+  display: grid;
+  gap: var(--spacer);
+  border: var(--border);
+  height: 100%;
+  padding: var(--spacer);
+
+  &.borderless {
+    padding: 0;
+    border: 0;
+  }
+
+  > * {
+    width: 100%;
+
+    place-self: center;
+    &:first-child { place-self: flex-start; }
+    &:last-child { place-self: flex-end; }
+  }
+}

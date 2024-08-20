@@ -1,6 +1,7 @@
 <template>
   <Loading v-if="loading" />
-  <template v-else-if="unwrapMainCollection">
+  <!-- TODO: maybe reenable -->
+  <!-- <section v-else-if="unwrapMainCollection">
     <slot name="before" :collections="collections" />
 
     <section class="collections">
@@ -8,18 +9,16 @@
 
       <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
     </section>
-  </template>
-  <template v-else-if="collections.length">
+  </section> -->
+  <section v-else-if="collections.length" class="collections">
     <slot name="before" :collections="collections" />
 
-    <section class="collections">
-      <CollectionOverviewCard
-        v-for="collection in collections"
-        :key="collection.address"
-        :collection="collection"
-      />
-    </section>
-  </template>
+    <CollectionOverviewCard
+      v-for="collection in collections"
+      :key="collection.address"
+      :collection="collection"
+    />
+  </section>
   <section v-else class="centered">
     <template v-if="isMe">
       <p>It looks like you haven't deployed any collections.</p>
@@ -46,23 +45,25 @@ const { id } = defineProps({
 const isMe = useIsMeCheck(id)
 
 const { loading } = useLoadArtistData(id)
-const collections = computed(() => isMe.value
-  ? store.forArtist(id)
-  : store.forArtistOnlyMinted(id)
+// const collections = computed(() => isMe.value
+//   ? store.forArtist(id)
+//   : store.forArtistOnlyMinted(id)
+// )
+const collections = computed(() => store.forArtist(id)
 )
 
-const unwrapMainCollection = computed(() => collections.value.length === 1)
-const mainCollection = computed(() => collections.value[0])
-const mainCollectionTokens = computed(() => store.tokens(mainCollection.value.address))
-const maybeLoadMainCollectionTokens = () => unwrapMainCollection.value && store.fetchCollectionTokens(mainCollection.value.address)
-onMounted(() => maybeLoadMainCollectionTokens())
-watch(unwrapMainCollection, () => maybeLoadMainCollectionTokens())
+// const unwrapMainCollection = computed(() => collections.value.length === 1)
+// const mainCollection = computed(() => collections.value[0])
+// const mainCollectionTokens = computed(() => store.tokens(mainCollection.value.address))
+// const maybeLoadMainCollectionTokens = () => unwrapMainCollection.value && store.fetchCollectionTokens(mainCollection.value.address)
+// onMounted(() => maybeLoadMainCollectionTokens())
+// watch(unwrapMainCollection, () => maybeLoadMainCollectionTokens())
 </script>
 
 <style lang="postcss" scoped>
 .collections {
   display: grid;
   gap: var(--spacer-lg);
-  padding: var(--spacer-lg) 0;
+  padding: var(--spacer-lg) var(--spacer) !important;
 }
 </style>

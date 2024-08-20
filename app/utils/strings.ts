@@ -1,3 +1,16 @@
+export const pluralize = (word: string, count: number): string => {
+  if (count === 1) return word
+
+  // Basic rules for pluralization
+  if (word.endsWith('y')) {
+    return word.slice(0, -1) + 'ies'
+  } else if (word.endsWith('s') || word.endsWith('ch') || word.endsWith('sh') || word.endsWith('x')) {
+    return word + 'es'
+  } else {
+    return word + 's'
+  }
+}
+
 export const cleanText = (str: string) => str?.replace(/<[^>]*>?/gm, '').trim() || ''
 
 export const shortenedCleanText = (str: string, length: number = 80) => {

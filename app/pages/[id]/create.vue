@@ -10,19 +10,21 @@
     >
 
       <article class="preview">
-        <img v-if="image" :src="image" alt="Preview">
-        <VisualImagePreview v-else />
+        <div class="visual">
+          <Image v-if="image" :src="image" alt="Preview" />
+          <VisualImagePreview v-else />
+        </div>
         <h1>
           <span :class="{ 'muted-light': !title }">{{ title || 'Token' }}</span>
           <small :class="{ 'muted-light': !symbol }">{{ symbol || '$T' }}</small>
         </h1>
-        <p v-if="description" :class="{ 'muted-light': !description }">
-          {{ description || 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.' }}
+        <p :class="{ 'muted-light': !description }">
+          {{ description || 'No description' }}
         </p>
       </article>
 
-      <section>
-        <form @submit.stop.prevent="deploy">
+      <form @submit.stop.prevent="deploy" class="card">
+        <div class="card borderless">
           <div>
             <FormSelectFile @change="setImage" />
             <p v-if="! isSmall" class="muted"><small>Note: This should be a small file, prefferably a simple SVG like <a href="/example-contract-icon.svg" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small></p>
@@ -32,12 +34,13 @@
             <FormInput v-model="symbol" placeholder="Symbol" required />
           </FormGroup>
           <FormInput v-model="description" placeholder="Description" />
-        </form>
-      </section>
+        </div>
 
-      <Actions class="borderless">
-        <Button @click="deploy">Deploy</Button>
-      </Actions>
+        <Actions class="borderless">
+          <Button>Deploy</Button>
+        </Actions>
+      </form>
+
 
     </PageFrame>
   </Authenticated>
@@ -58,7 +61,11 @@ const id = useArtistId()
 const imageSize = ref(0)
 const isSmall = computed(() => imageSize.value / 1024 < 10)
 const setImage = async (file) => {
-  image.value = await imageFileToDataUri(file)
+  try {
+    image.value = await imageFileToDataUri(file)
+  } catch (e) {
+    image.value = ''
+  }
   imageSize.value = file.size
 }
 
@@ -102,22 +109,15 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
-.frame {
-  /* gap: var(--spacer); */
-
-  @media (--md) {
-    /* display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); */
-  }
-}
-
 .preview {
-  img,
-  svg {
+  .visual {
     width: 5rem;
-    border-radius: var(--border-radius);
-    border: var(--border);
     margin-bottom: var(--spacer-sm);
+
+    svg {
+      border-radius: var(--border-radius);
+      border: var(--border);
+    }
   }
 
   h1 {

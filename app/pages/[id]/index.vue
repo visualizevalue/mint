@@ -4,7 +4,7 @@
 
     <CollectionsOverview :id="id">
       <template #before="{ collections }">
-        <Header v-if="collections.length">
+        <HeaderSection v-if="isMe && collections.length">
           <h1>Your Collections</h1>
           <Actions>
             <Button :to="{ name: `id-create`, params: { id } }" class="small">
@@ -12,7 +12,7 @@
               <span>Collection</span>
             </Button>
           </Actions>
-        </Header>
+        </HeaderSection>
       </template>
     </CollectionsOverview>
   </PageFrame>
