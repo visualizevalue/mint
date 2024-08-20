@@ -36,6 +36,7 @@ const { address, isConnected } = await useAccount()
 const props = defineProps({
   token: Object,
 })
+const emit = defineEmits(['minted'])
 const store = useOnchainStore()
 
 const mintCount = ref('1')
@@ -63,6 +64,8 @@ const mint = async () => {
   await store.fetchTokenBalance(props.token, address.value)
 
   mintCount.value = '1'
+
+  emit('minted')
 }
 </script>
 

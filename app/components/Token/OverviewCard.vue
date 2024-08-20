@@ -19,6 +19,7 @@
         }"
       >View {{ token.name }}</Button>
     </footer>
+    <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
   </article>
 </template>
 
@@ -41,6 +42,14 @@ const mintOpen = computed(() => currentBlock.value && token.untilBlock > current
 const blocksRemaining = computed(() => token.untilBlock - (currentBlock.value || 0n))
 const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
 const until = computed(() => nowInSeconds() + secondsRemaining.value)
+
+const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
+// const maybeCheckBalance = async (force = false) => {
+//   if (isConnected.value && (ownedBalance.value === null || force)) {
+//     await store.fetchTokenBalance(token, address.value as `0x${string}`)
+//   }
+// }
+
 </script>
 
 <style lang="postcss" scoped>
@@ -65,6 +74,12 @@ const until = computed(() => nowInSeconds() + secondsRemaining.value)
       @media (--md) {
         min-height: calc(100dvh - var(--navbar-height));
       }
+    }
+
+    > p {
+      color: var(--muted-light);
+      font-size: var(--font-sm);
+      text-align: left;
     }
   }
 

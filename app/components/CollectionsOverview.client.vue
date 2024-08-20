@@ -45,11 +45,9 @@ const { id } = defineProps({
 const isMe = useIsMeCheck(id)
 
 const { loading } = useLoadArtistData(id)
-// const collections = computed(() => isMe.value
-//   ? store.forArtist(id)
-//   : store.forArtistOnlyMinted(id)
-// )
-const collections = computed(() => store.forArtist(id)
+const collections = computed(() => isMe.value
+  ? store.forArtist(id)
+  : store.forArtistOnlyMinted(id)
 )
 
 // const unwrapMainCollection = computed(() => collections.value.length === 1)

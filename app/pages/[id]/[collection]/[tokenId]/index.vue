@@ -1,27 +1,12 @@
 <template>
   <Loading v-if="! token" />
   <PageFrame v-else :title="breadcrumb">
-    <article>
-      <h1>{{ token.name }} #{{ token.tokenId }}</h1>
-      <img :src="token.artifact" :alt="token.name">
-      <p>{{ token.description }}</p>
-
-      <div>
-        <p v-if="mintOpen">Current Block: {{ currentBlock }}</p>
-
-        <p v-if="mintOpen">Mint open ({{ blocksRemaining }} blocks; <CountDown :until="until" minimal class="inline" />)</p>
-        <p v-else>Mint closed at block {{ token.untilBlock }}</p>
-
-        <p v-if="isConnected">Owned: {{ ownedBalance }}</p>
-      </div>
-    </article>
-
-    <MintToken v-if="mintOpen" :token="token" />
+    <TokenOverviewCard :token=token />
   </PageFrame>
 </template>
 
 <script setup>
-import { useAccount, useBlockNumber } from '@wagmi/vue'
+import { useAccount } from '@wagmi/vue'
 
 const id = useArtistId()
 const route = useRoute()
@@ -35,11 +20,6 @@ const tokenId = computed(() => BigInt(route.params.tokenId))
 const store = useOnchainStore()
 
 const token = computed(() => collection.value.tokens[route.params.tokenId])
-const { data: currentBlock } = useBlockNumber()
-const mintOpen = computed(() => token.value.untilBlock > currentBlock.value)
-const blocksRemaining = computed(() => token.value.untilBlock - currentBlock.value)
-const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
-const until = computed(() => nowInSeconds() + secondsRemaining.value)
 
 // Keep track of account token balance
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.value.tokenId))
