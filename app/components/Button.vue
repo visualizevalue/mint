@@ -29,7 +29,7 @@ defineProps({
 
   &[disabled]:not([disabled="false"]) {
     pointer-events: none;
-    opacity: 0.5;
+    color: var(--muted);
   }
 
   &:--highlight {

@@ -32,17 +32,32 @@ onMounted(() => {
   align-items: center;
   width: 100%;
 
-  :deep(> *) {
-    width: 100%;
+  &.inset {
+    gap: var(--spacer);
     padding: var(--spacer);
 
-    &:not(:last-child) {
-      border-bottom: var(--border);
+    > *:not(.borderless) {
+      border: var(--border);
+      padding: var(--spacer);
     }
+  }
 
-    @media (--md) {
-      padding: var(--spacer-lg) var(--spacer);
+  &:not(.inset) {
+    > * {
+      padding: var(--spacer);
+
+      &:not(:last-child) {
+        border-bottom: var(--border);
+      }
+
+      @media (--md) {
+        padding: var(--spacer-lg) var(--spacer);
+      }
     }
+  }
+
+  :deep(> *) {
+    width: 100%;
   }
 
   @media (--sm) {

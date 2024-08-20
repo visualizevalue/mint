@@ -3,14 +3,16 @@
   <template v-else-if="unwrapMainCollection">
     <slot name="before" :collections="collections" />
 
-    <CollectionOverviewCard :collection="mainCollection" />
+    <section class="collections">
+      <CollectionOverviewCard :collection="mainCollection" />
 
-    <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
+      <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
+    </section>
   </template>
   <template v-else-if="collections.length">
     <slot name="before" :collections="collections" />
 
-    <section>
+    <section class="collections">
       <CollectionOverviewCard
         v-for="collection in collections"
         :key="collection.address"
@@ -58,8 +60,9 @@ watch(unwrapMainCollection, () => maybeLoadMainCollectionTokens())
 </script>
 
 <style lang="postcss" scoped>
-section {
+.collections {
   display: grid;
   gap: var(--spacer-lg);
+  padding: var(--spacer-lg) 0;
 }
 </style>
