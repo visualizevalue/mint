@@ -6,7 +6,9 @@
         <FormInput v-model="name" placeholder="Title" required />
         <FormInput v-model="description" placeholder="Description" />
 
-        <Button>Mint</Button>
+        <Actions>
+          <Button>Mint</Button>
+        </Actions>
       </form>
     </PageFrame>
   </Authenticated>

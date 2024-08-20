@@ -6,14 +6,24 @@
 
 <style lang="postcss" scoped>
 fieldset {
-  :deep(button) {
+  :deep(.form-item) {
+    + .form-item {
+      border-left-color: transparent;
+
+      &:has(.input:focus) {
+        border-left-color: var(--border-color-light);
+      }
+    }
+  }
+
+  :deep(button),
+  :deep(input) {
     white-space: nowrap;
     width: 100%;
   }
 
   @media (--sm) {
     display: flex;
-    max-width: 33rem;
   }
 }
 </style>

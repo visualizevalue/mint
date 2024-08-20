@@ -1,20 +1,20 @@
 <template>
   <PageFrame :title="breadcrumb">
-    <ClientOnly>
-      <ProfileHeader v-if="! isMe" :address="id" />
+    <ProfileHeader :address="id" />
 
-      <Header v-else>
-        <h1>Your Collections</h1>
-        <Actions>
-          <Button :to="{ name: `id-create`, params: { id } }" class="small">
-            <Icon type="plus" />
-          <span>New Collection</span>
-          </Button>
-        </Actions>
-      </Header>
-    </ClientOnly>
-
-    <CollectionsOverview :id="id" />
+    <CollectionsOverview :id="id">
+      <template #before="{ collections }">
+        <Header v-if="collections.length">
+          <h1>Your Collections</h1>
+          <Actions>
+            <Button :to="{ name: `id-create`, params: { id } }" class="small">
+              <Icon type="plus" />
+              <span>Collection</span>
+            </Button>
+          </Actions>
+        </Header>
+      </template>
+    </CollectionsOverview>
   </PageFrame>
 </template>
 

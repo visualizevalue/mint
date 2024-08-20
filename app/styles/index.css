@@ -3,6 +3,7 @@
 @import "./normalize.css";
 @import "./base.css";
 @import "./text.css";
+@import "./utils.css";
 @import "./forms.css";
 @import "./scroll.css";
 @import "./animation.css";

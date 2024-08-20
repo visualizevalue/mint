@@ -7,11 +7,15 @@
     ]">
       <form @submit.stop.prevent="deploy">
         <FormInput v-model="image" placeholder="Image" />
-        <FormInput v-model="title" placeholder="Title" required />
-        <FormInput v-model="symbol" placeholder="Symbol" required />
+        <FormGroup>
+          <FormInput v-model="title" placeholder="Title" required />
+          <FormInput v-model="symbol" placeholder="Symbol" required />
+        </FormGroup>
         <FormInput v-model="description" placeholder="Description" />
 
-        <Button>Deploy</Button>
+        <Actions>
+          <Button>Deploy</Button>
+        </Actions>
       </form>
     </PageFrame>
   </Authenticated>

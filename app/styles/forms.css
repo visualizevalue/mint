@@ -6,7 +6,7 @@ textarea,
 select {
   --padding-y: var(--size-3);
   --padding-x: var(--size-5);
-  --background: var(--gray-z-0);
+  --background: var(--background);
   --background-light: var(--gray-z-1);
 
   width: 100%;

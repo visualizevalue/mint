@@ -13,11 +13,9 @@
       </template>
     </ProfileHeader>
 
-    <CollectionsOverview v-if="showCollections" :id="address">
-      <template #before>
-        <h1>Collections</h1>
-      </template>
-    </CollectionsOverview>
+    <section class="centered">
+      <p class="muted">Indexing collected art will come soon...</p>
+    </section>
   </PageFrame>
 </template>
 
@@ -27,9 +25,6 @@ const route = useRoute()
 const address = computed(() => route.params.address)
 const store = useOnchainStore()
 const isMe = useIsMeCheck(address.value)
-const subdomain = useSubdomain()
-
-const showCollections = computed(() => !subdomain.value || subdomain.value === address.value)
 
 const artist = ref(null)
 

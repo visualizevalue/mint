@@ -1,23 +1,32 @@
 <template>
   <Loading v-if="loading" />
   <template v-else-if="unwrapMainCollection">
+    <slot name="before" :collections="collections" />
+
     <CollectionOverviewCard :collection="mainCollection" />
 
     <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
   </template>
-  <section v-else-if="collections.length">
-    <slot name="before" />
+  <template v-else-if="collections.length">
+    <slot name="before" :collections="collections" />
 
-    <CollectionOverviewCard
-      v-for="collection in collections"
-      :key="collection.address"
-      :collection="collection"
-    />
-  </section>
+    <section>
+      <CollectionOverviewCard
+        v-for="collection in collections"
+        :key="collection.address"
+        :collection="collection"
+      />
+    </section>
+  </template>
   <section v-else class="centered">
     <template v-if="isMe">
       <p>It looks like you haven't deployed any collections.</p>
-      <Button :to="{ name: `id-create`, params: { id } }">Create your first</Button>
+      <div>
+        <Button :to="{ name: `id-create`, params: { id } }">
+          <Icon type="plus" />
+          <span>Create your first</span>
+        </Button>
+      </div>
     </template>
     <template v-else>
       <p>It looks like this account hasn't deployed any collections.</p>

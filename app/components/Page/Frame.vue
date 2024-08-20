@@ -30,7 +30,6 @@ onMounted(() => {
   align-self: center;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacer);
   width: 100%;
 
   :deep(> *) {
@@ -42,7 +41,7 @@ onMounted(() => {
     }
 
     @media (--md) {
-      padding: var(--spacer-lg) 0;
+      padding: var(--spacer-lg) var(--spacer);
     }
   }
 
