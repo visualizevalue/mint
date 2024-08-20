@@ -73,7 +73,7 @@ nav {
 
 /* COLORS */
 nav {
-  background: var(--black-semi);
+  background: var(--background-semi);
   backdrop-filter: blur(var(--size-1));
   border-top: var(--border);
 

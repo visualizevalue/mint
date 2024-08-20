@@ -31,13 +31,14 @@ onMounted(() => {
 
 <style lang="postcss" scoped>
   button {
+    display: none;
     position: fixed;
-    bottom: var(--spacer);
+    bottom: calc(var(--navbar-height) + var(--spacer));
     right: var(--spacer);
     height: var(--size-5);
     width: var(--size-5);
     outline: none;
-    z-index: 40;
+    z-index: 200;
 
     .vue-feather {
       height: var(--size-5);
@@ -49,6 +50,11 @@ onMounted(() => {
       .vue-feather {
         color: var(--gray-z-7);
       }
+    }
+
+    @media (--md) {
+      display: block;
+      bottom: var(--spacer);
     }
   }
 </style>
