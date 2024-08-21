@@ -1,5 +1,5 @@
 <template>
-  <Dialog ref="dialog">
+  <DialogFrame ref="dialog">
     <div v-if="dialogId === 'email_verified'" class="inner">
       <button class="close" @click="close"><Icon type="x" /></button>
       <h1>Email verified!</h1>
@@ -8,7 +8,7 @@
         <button @click="close" class="button">Ok</button>
       </div>
     </div>
-  </Dialog>
+  </DialogFrame>
 </template>
 
 <script setup>

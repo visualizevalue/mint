@@ -8,7 +8,21 @@
 const dialog = ref()
 
 const close = () => {
-  dialog.value.close()
+  return new Promise((resolve) => {
+    const keyFrame = new KeyframeEffect(
+      dialog.value,
+      [{ translate: '0 var(--spacer)', opacity: '0' }],
+      { duration: 300, easing: 'ease', direction: 'normal' }
+    )
+
+    const animation = new Animation(keyFrame, document.timeline)
+    animation.play()
+    animation.onfinish = () => {
+      dialog.value.close()
+      resolve()
+    }
+  })
+
 }
 
 const open = () => {
@@ -23,13 +37,22 @@ defineExpose({
 
 <style lang="postcss">
 dialog {
-  position: relative;
+  position: fixed;
   padding: calc(var(--spacer)*2);
   max-width: var(--dialog-width);
   width: 100%;
   background: var(--background);
-  color: vaR(--color);
+  color: var(--color);
   border: var(--border);
+  overscroll-behavior: contain;
+  opacity: 0;
+  pointer-events: none;
+
+  &[open] {
+    animation: fade-in var(--speed);
+    opacity: 1;
+    pointer-events: all;
+  }
 
   &::backdrop {
     background-image: linear-gradient(
@@ -39,9 +62,12 @@ dialog {
       var(--gray-z-2-semi)
     );
     backdrop-filter: var(--blur);
+    pointer-events: none;
   }
 
   .inner {
+    pointer-events: all;
+
     > .close {
       position: absolute;
       top: var(--spacer);
@@ -65,5 +91,10 @@ dialog {
     }
   }
 
+}
+
+html:has(dialog[open]),
+body:has(dialog[open]) {
+  overflow: hidden;
 }
 </style>

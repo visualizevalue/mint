@@ -19,9 +19,35 @@
         {{ displayPrice.value }} {{ displayPrice.format }}
         (${{ priceFeed.weiToUSD(price) }})
       </Button>
-      <Button @click="mint" class="mint">
-        Mint
-      </Button>
+      <TransactionFlow
+        :request="mintRequest"
+        :text="{
+          title: {
+            requesting: 'Confirm In Wallet',
+            waiting: '2. Transaction Submitted',
+            complete: '3. Success!'
+          },
+          lead: {
+            requesting: 'Requesting Signature...',
+            waiting: 'Checking Mint Transaction...',
+            complete: `New token minted...`,
+          },
+          action: {
+            confirm: 'Mint',
+            error: 'Retry',
+            complete: 'OK',
+          },
+        }"
+        @complete="minted"
+        skip-confirmation
+        auto-close-success
+      >
+        <template #start="{ start }">
+          <Button @click="start" class="mint">
+            Mint
+          </Button>
+        </template>
+      </TransactionFlow>
     </template>
   </FormGroup>
 </template>
@@ -49,8 +75,8 @@ const gasPrice = await useGasPrice()
 const price = computed(() => gasPrice.value.wei * 60_000n * BigInt(mintCount.value))
 const displayPrice = computed(() => customFormatEther(price.value))
 
-const mint = async () => {
-  const hash = await writeContract($wagmi, {
+const mintRequest = async () => {
+  return writeContract($wagmi, {
     abi: MINT_ABI,
     chainId: config.public.chainId,
     address: props.token.collection,
@@ -61,9 +87,9 @@ const mint = async () => {
     ],
     value: price.value,
   })
+}
 
-  await waitForTransactionReceipt($wagmi, { chainId: config.public.chainId, hash })
-
+const minted = async () => {
   await store.fetchTokenBalance(props.token, address.value)
 
   mintCount.value = '1'

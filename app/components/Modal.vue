@@ -1,16 +1,18 @@
 <template>
-  <Dialog class="modal" ref="dialog">
-    <div class="inner">
-      <button class="close" @click="$emit('close')"><Icon type="x" /></button>
+  <DialogFrame class="modal" ref="dialog">
+    <button v-if="xClose" class="close" @click="$emit('close')"><Icon type="x" /></button>
 
-      <slot />
-    </div>
-  </Dialog>
+    <slot />
+  </DialogFrame>
 </template>
 
 <script setup>
 const props = defineProps({
   open: Boolean,
+  xClose: {
+    type: Boolean,
+    default: true,
+  },
 })
 const emit = defineEmits(['close'])
 

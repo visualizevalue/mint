@@ -60,6 +60,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     justify-content: center;
     gap: var(--spacer);
     padding: var(--spacer-xl) var(--spacer) !important;
+    border: 0 !important;
 
     h1 {
       span:last-child:not(:first-child) {
