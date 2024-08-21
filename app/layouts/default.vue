@@ -12,6 +12,13 @@
 </template>
 
 <script setup>
+// Fetch and update price feed
+const priceFeed = usePriceFeedStore()
+onMounted(() => {
+  priceFeed.fetchEthUsdPrice()
+
+  setInterval(() => priceFeed.fetchEthUsdPrice(), 60 * 60 * 1000)
+})
 </script>
 
 <style lang="postcss" scoped>

@@ -23,7 +23,7 @@ export const customFormatEther = (value: bigint, digits: number = 2) => {
   const format = value > 100_000_000_000_000_000n ? 'ETH' : 'GWEI'
 
   const formatted = format === 'ETH'
-    ? formatNumber(parseFloat(formatEther(value)), 2)
+    ? formatNumber(parseFloat(formatEther(value)), digits)
     : customGweiFormat(value)
 
   return {

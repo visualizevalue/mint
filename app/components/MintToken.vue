@@ -15,9 +15,11 @@
         required
         class="amount"
       />
-        <!-- prefix="Amount" -->
-      <Button disabled>{{ displayPrice.value }} {{ displayPrice.format }}</Button>
-      <Button @click="mint">
+      <Button disabled>
+        {{ displayPrice.value }} {{ displayPrice.format }}
+        (${{ priceFeed.weiToUSD(price) }})
+      </Button>
+      <Button @click="mint" class="mint">
         Mint
       </Button>
     </template>
@@ -38,12 +40,11 @@ const props = defineProps({
 })
 const emit = defineEmits(['minted'])
 const store = useOnchainStore()
+const priceFeed = usePriceFeedStore()
 
 const mintCount = ref('1')
 const gasPrice = await useGasPrice()
-const price = computed(() => {
-  return gasPrice.value.wei * 60_000n * BigInt(mintCount.value)
-})
+const price = computed(() => gasPrice.value.wei * 60_000n * BigInt(mintCount.value))
 const displayPrice = computed(() => customFormatEther(price.value))
 
 const mint = async () => {
@@ -82,6 +83,11 @@ fieldset {
       min-width: 8rem;
       width: fit-content;
     }
+  }
+
+  .mint {
+    min-width: 8rem;
+    width: fit-content;
   }
 }
 </style>
