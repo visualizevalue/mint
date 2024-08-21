@@ -29,8 +29,10 @@
 </template>
 
 <script setup>
+import { useChainId } from '@wagmi/vue'
 import { waitForTransactionReceipt } from '@wagmi/core'
 const checkChain = useEnsureChainIdCheck()
+const chainId = useChainId()
 
 const { $wagmi } = useNuxtApp()
 const config = useRuntimeConfig()
@@ -63,6 +65,17 @@ const emit = defineEmits(['complete', 'cancel'])
 const open = ref(false)
 
 const switchChain = ref(false)
+watch(chainId, async () => {
+  if (! switchChain.value) return
+
+  if (await checkChain()) {
+    switchChain.value = false
+    initializeRequest()
+  } else {
+    switchChain.value = true
+  }
+})
+
 const requesting = ref(false)
 const waiting = ref(false)
 const complete = ref(false)
