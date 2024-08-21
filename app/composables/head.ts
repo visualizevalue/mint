@@ -10,7 +10,7 @@ const makeHead = ({
   title,
   append = '',
   description = '',
-  og = '/og.png',
+  og = '',
   meta = [],
 }: HeadConfig) => {
   const titleCompleted = `${title}${append}`
