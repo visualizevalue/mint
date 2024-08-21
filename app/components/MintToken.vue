@@ -79,15 +79,17 @@ fieldset {
   .amount {
     width: 100%;
 
-    @media (--sm) {
-      min-width: 8rem;
-      width: fit-content;
+    input {
+      text-align: center;
     }
   }
 
-  .mint {
-    min-width: 8rem;
-    width: fit-content;
+  @media (--sm) {
+    .amount,
+    .mint {
+      min-width: 8rem;
+      width: fit-content;
+    }
   }
 }
 </style>

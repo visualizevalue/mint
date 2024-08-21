@@ -55,6 +55,12 @@ header {
   padding: var(--spacer);
 
   :deep(> .breadcrumb) {
+    max-width: 50vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    justify-content: flex-start;
+    white-space: nowrap;
+
     > *:first-child:last-child {
       a {
         color: var(--color);
@@ -63,8 +69,13 @@ header {
   }
 
   .gas {
+    display: none;
     margin-left: auto;
     white-space: nowrap;
+
+    @media (--md) {
+      display: block;
+    }
   }
 }
 
