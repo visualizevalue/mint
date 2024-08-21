@@ -23,11 +23,13 @@
         :request="mintRequest"
         :text="{
           title: {
+            chain: 'Switch Chain',
             requesting: 'Confirm In Wallet',
             waiting: '2. Transaction Submitted',
             complete: '3. Success!'
           },
           lead: {
+            chain: 'Requesting to switch chain...',
             requesting: 'Requesting Signature...',
             waiting: 'Checking Mint Transaction...',
             complete: `New token minted...`,

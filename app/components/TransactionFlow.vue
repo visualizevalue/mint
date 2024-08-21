@@ -59,6 +59,7 @@ const emit = defineEmits(['complete', 'cancel'])
 
 const open = ref(false)
 
+const switchChain = ref(false)
 const requesting = ref(false)
 const waiting = ref(false)
 const complete = ref(false)
@@ -71,10 +72,15 @@ const step = computed(() => {
   if (
     open.value &&
     !requesting.value &&
+    !switchChain.value &&
     !waiting.value &&
     !complete.value
   ) {
     return 'confirm'
+  }
+
+  if (switchChain.value) {
+    return 'chain'
   }
 
   if (requesting.value) {
@@ -93,7 +99,12 @@ const step = computed(() => {
 })
 
 const initializeRequest = async () => {
-  if (! await checkChain()) return
+  if (! await checkChain()) {
+    switchChain.value = true
+    return
+  } else {
+    switchChain.value = false
+  }
 
   error.value = ''
   tx.value = null
