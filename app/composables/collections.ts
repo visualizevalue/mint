@@ -2,6 +2,8 @@ import { getPublicClient, readContract } from '@wagmi/core'
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
+  const config = useRuntimeConfig()
+  const chainId = useMainChainId()
 
   return defineStore('onchainStore', {
 
@@ -119,16 +121,25 @@ export const useOnchainStore = () => {
       async fetchCollections (
         artist: `0x${string}`,
         factory: `0x${string}`,
-        fromBlock: bigint = 0n
+        queryFromBlock: bigint = 0n
       ) {
-        if ((this.artists[artist].collectionsFetchedUntilBlock > 0 || this.artists[artist].collectionsFetchedUntilBlock > fromBlock)) {
+        const client = getPublicClient($wagmi, { chainId })
+        const startBlock = BigInt(config.public.factoryStartBlock)
+        const fromBlock = queryFromBlock < startBlock ? startBlock : queryFromBlock
+        const currentBlock = await client.getBlockNumber()
+        const toBlock = currentBlock - fromBlock > 5000n ? fromBlock + 5000n : currentBlock
+
+        if (
+          this.artists[artist].collectionsFetchedUntilBlock > 0n &&
+          currentBlock <= this.artists[artist].collectionsFetchedUntilBlock // > 50n // 10 minutes
+        ) {
           console.info(`Collections fetched already (${this.artists[artist].collectionsFetchedUntilBlock})`)
           return
         }
 
-        try {
-          const client = getPublicClient($wagmi, { chainId: 1337 })
+        console.info(`Fetching collections (${fromBlock} - ${toBlock})`)
 
+        try {
           const logs = await client.getContractEvents({
             abi: FACTORY_ABI,
             address: factory,
@@ -136,13 +147,14 @@ export const useOnchainStore = () => {
             args: { ownerAddress: artist },
             strict: true,
             fromBlock,
+            toBlock,
           })
 
           const promises = logs.map(l => this.fetchCollection(l.args.contractAddress.toLowerCase() as `0x${string}`))
 
           const collections = await Promise.all(promises)
 
-          this.artists[artist].collectionsFetchedUntilBlock = await client.getBlockNumber()
+          this.artists[artist].collectionsFetchedUntilBlock = toBlock
           this.artists[artist].collections = Array.from(new Set([
             ...this.artists[artist].collections,
             ...collections.map(c => c.address)
@@ -150,6 +162,8 @@ export const useOnchainStore = () => {
         } catch (e) {
           console.error(e)
         }
+
+        if (toBlock < currentBlock) await this.fetchCollections(artist, factory, toBlock)
       },
 
       async fetchCollection (address: `0x${string}`): Promise<Collection> {
@@ -163,25 +177,25 @@ export const useOnchainStore = () => {
             abi: MINT_ABI,
             address,
             functionName: 'contractURI',
-            chainId: 1337,
+            chainId,
           }) as Promise<string>,
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
             functionName: 'initBlock',
-            chainId: 1337,
+            chainId,
           }) as Promise<bigint>,
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
             functionName: 'latestTokenId',
-            chainId: 1337,
+            chainId,
           }) as Promise<bigint>,
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
             functionName: 'owner',
-            chainId: 1337,
+            chainId,
           }) as Promise<`0x${string}`>,
         ])
 
@@ -208,7 +222,7 @@ export const useOnchainStore = () => {
           abi: MINT_ABI,
           address,
           functionName: 'latestTokenId',
-          chainId: 1337,
+          chainId,
         })
 
         const collection = this.collection(address)
@@ -234,7 +248,7 @@ export const useOnchainStore = () => {
       },
 
       async fetchToken (address: `0x${string}`, id: bigint) {
-        const client = getPublicClient($wagmi, { chainId: 1337 })
+        const client = getPublicClient($wagmi, { chainId })
         const mintContract = getContract({
           address,
           abi: MINT_ABI,

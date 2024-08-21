@@ -9,8 +9,11 @@ export default defineNuxtConfig({
     public: {
       title: 'Mint',
       description: 'To mint is a human right.',
+      blockExplorer: 'https://etherscan.io',
       creatorAddress: '',
       factoryAddress: '',
+      factoryStartBlock: 0,
+      chainId: 1337,
       walletConnectProjectId: '',
     }
   },

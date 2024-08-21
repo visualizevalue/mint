@@ -46,7 +46,7 @@ onMounted(() => {
     > * {
       padding: var(--spacer);
 
-      &:not(:last-child) {
+      &:not(.borderless):not(:last-child) {
         border-bottom: var(--border);
       }
 

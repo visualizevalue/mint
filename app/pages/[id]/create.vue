@@ -49,6 +49,8 @@
 <script setup>
 const config = useRuntimeConfig()
 const store = useOnchainStore()
+const chainId = useMainChainId()
+const checkChain = useEnsureChainIdCheck()
 
 const image = ref('')
 const title = ref('')
@@ -70,9 +72,11 @@ const setImage = async (file) => {
 }
 
 const deploy = async () => {
+  if (! await checkChain()) return
+
   const hash = await writeContract($wagmi, {
     abi: FACTORY_ABI,
-    chainId: 1337,
+    chainId,
     address: config.public.factoryAddress,
     functionName: 'create',
     args: [
@@ -85,7 +89,7 @@ const deploy = async () => {
   })
 
   const receipt = await waitForTransactionReceipt($wagmi, {
-    chainId: 1337,
+    chainId,
     hash,
   })
 

@@ -28,6 +28,8 @@
 
 <script setup>
 import { useAccount } from '@wagmi/vue'
+
+const config = useRuntimeConfig()
 const breakpoints = useBreakpoints()
 
 const showCheck = computed(() => breakpoints.greater('xs').value)
@@ -50,7 +52,7 @@ const displayPrice = computed(() => customFormatEther(price.value))
 const mint = async () => {
   const hash = await writeContract($wagmi, {
     abi: MINT_ABI,
-    chainId: 1337,
+    chainId: config.public.chainId,
     address: props.token.collection,
     functionName: 'mint',
     args: [
@@ -60,7 +62,7 @@ const mint = async () => {
     value: price.value,
   })
 
-  await waitForTransactionReceipt($wagmi, { chainId: 1337, hash })
+  await waitForTransactionReceipt($wagmi, { chainId: config.public.chainId, hash })
 
   await store.fetchTokenBalance(props.token, address.value)
 

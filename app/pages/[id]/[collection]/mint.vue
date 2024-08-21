@@ -48,6 +48,7 @@
 <script setup>
 const { $wagmi } = useNuxtApp()
 const id = useArtistId()
+const chainId = useMainChainId()
 
 const props = defineProps(['collection'])
 const store = useOnchainStore()
@@ -92,7 +93,7 @@ const mint = async () => {
     for (const chunk of artifactChunks) {
       const hash = await writeContract($wagmi, {
         abi: MINT_ABI,
-        chainId: 1337,
+        chainId,
         address: collection.value.address,
         functionName: 'prepareArtifact',
         args: [
@@ -102,13 +103,13 @@ const mint = async () => {
         ],
       })
 
-      await waitForTransactionReceipt($wagmi, { chainId: 1337, hash })
+      await waitForTransactionReceipt($wagmi, { chainId, hash })
     }
   }
 
   const hash = await writeContract($wagmi, {
     abi: MINT_ABI,
-    chainId: 1337,
+    chainId,
     address: collection.value.address,
     functionName: 'create',
     args: [
@@ -121,7 +122,7 @@ const mint = async () => {
   })
 
   const receipt = await waitForTransactionReceipt($wagmi, {
-    chainId: 1337,
+    chainId,
     hash,
   })
 

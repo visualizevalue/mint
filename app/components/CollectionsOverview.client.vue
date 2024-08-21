@@ -1,5 +1,4 @@
 <template>
-  <Loading v-if="loading" />
   <!-- TODO: maybe reenable -->
   <!-- <section v-else-if="unwrapMainCollection">
     <slot name="before" :collections="collections" />
@@ -10,7 +9,7 @@
       <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
     </section>
   </section> -->
-  <section v-else-if="collections.length" class="collections">
+  <section v-if="collections.length" class="collections borderless">
     <slot name="before" :collections="collections" />
 
     <CollectionOverviewCard
@@ -19,7 +18,7 @@
       :collection="collection"
     />
   </section>
-  <section v-else class="centered">
+  <section v-else-if="! loading" class="centered borderless">
     <template v-if="isMe">
       <p>It looks like you haven't deployed any collections.</p>
       <div>
@@ -33,6 +32,7 @@
       <p>It looks like this account hasn't deployed any collections.</p>
     </template>
   </section>
+  <Loading v-if="loading" txt="Querying the blockchain..." />
 </template>
 
 <script setup>

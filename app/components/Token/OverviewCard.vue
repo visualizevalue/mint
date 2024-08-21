@@ -30,6 +30,7 @@ const { token } = defineProps<{
   token: Token
 }>()
 
+const config = useRuntimeConfig()
 const { address, isConnected } = useAccount()
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
@@ -37,7 +38,7 @@ const collection = computed(() => store.collection(token.collection))
 const id = useArtistId()
 const artistName = useAccountName(id.value as `0x${string}`)
 
-const { data: currentBlock } = useBlockNumber({ chainId: 1337 })
+const { data: currentBlock } = useBlockNumber({ chainId: config.public.chainId })
 const mintOpen = computed(() => currentBlock.value && token.untilBlock > currentBlock.value)
 const blocksRemaining = computed(() => token.untilBlock - (currentBlock.value || 0n))
 const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
