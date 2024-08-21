@@ -28,4 +28,10 @@ watch(props, () => {
 </script>
 
 <style lang="postcss">
+button.close {
+  position: absolute;
+  top: var(--spacer);
+  right: var(--spacer);
+  width: min-content;
+}
 </style>
