@@ -18,7 +18,10 @@
 
     <Button v-if="step === 'waiting'" :to="txLink" target="_blank" class="block-explorer">View on Etherscan</Button>
 
-    <Actions v-if="step === 'confirm' || step === 'error'" class="actions">
+    <Actions v-if="step === 'chain'" class="centered">
+      <Button @click="cancel" class="secondary">Cancel</Button>
+    </Actions>
+    <Actions v-if="step === 'confirm' || step === 'error'">
       <Button @click="cancel" class="secondary">Cancel</Button>
       <Button @click="() => initializeRequest()">{{ text.action[step] || 'Execute' }}</Button>
     </Actions>

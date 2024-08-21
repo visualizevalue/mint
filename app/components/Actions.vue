@@ -17,5 +17,9 @@ menu {
   &:empty {
     display: none;
   }
+
+  &.centered {
+    justify-content: center;
+  }
 }
 </style>
