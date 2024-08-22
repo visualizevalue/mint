@@ -90,6 +90,9 @@ const mint = async () => {
       return
     }
 
+    // On the first iteration we want to clear existing artifact data
+    let clearExisting = true
+
     for (const chunk of artifactChunks) {
       const hash = await writeContract($wagmi, {
         abi: MINT_ABI,
@@ -99,9 +102,12 @@ const mint = async () => {
         args: [
           collection.value.latestTokenId + 1n,
           chunk,
-          false
+          clearExisting
         ],
       })
+
+      // On following iterations we want to keep existing artifact data
+      clearExisting = false
 
       await waitForTransactionReceipt($wagmi, { chainId, hash })
     }
