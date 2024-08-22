@@ -39,6 +39,31 @@
         <Actions>
           <Button>Mint</Button>
         </Actions>
+        <TransactionFlow
+          ref="txFlow"
+          :text="{
+            title: {
+              chain: 'Switch Chain',
+              requesting: 'Confirm In Wallet',
+              waiting: 'Transaction Submitted',
+              complete: 'Success!'
+            },
+            lead: {
+              chain: 'Requesting to switch chain...',
+              requesting: 'Requesting Signature...',
+              waiting: 'Checking Deployment Transaction...',
+              complete: `New Collection Created...`,
+            },
+            action: {
+              confirm: 'Mint',
+              error: 'Retry',
+              complete: 'OK',
+            },
+          }"
+          skip-confirmation
+          auto-close-success
+        />
+
       </form>
 
     </PageFrame>
@@ -80,10 +105,15 @@ watch(ipfsCid, () => {
 })
 watch(mode, () => image.value = '')
 
+const txFlow = ref()
+const txFlowKey = ref(0)
+const minting = ref(false)
 const mint = async () => {
   const artifact = toByteArray(image.value)
   const artifactChunks = chunkArray(artifact, 4)
   const multiTransactionPrepare = artifactChunks.length > 1
+
+  minting.value = true
 
   if (multiTransactionPrepare) {
     if (! confirm(`Due to the large artifact size, we have to split it into ${artifactChunks.length} chunks and store them in separate transactions. You will be prompted with multiple transaction requests before minting the final token.`)) {
@@ -94,7 +124,7 @@ const mint = async () => {
     let clearExisting = true
 
     for (const chunk of artifactChunks) {
-      const hash = await writeContract($wagmi, {
+      await txFlow.value.initializeRequest(() => writeContract($wagmi, {
         abi: MINT_ABI,
         chainId,
         address: collection.value.address,
@@ -104,16 +134,17 @@ const mint = async () => {
           chunk,
           clearExisting
         ],
-      })
+      }))
+
+      // Make sure to rerender the tx flow component
+      txFlowKey.value ++
 
       // On following iterations we want to keep existing artifact data
       clearExisting = false
-
-      await waitForTransactionReceipt($wagmi, { chainId, hash })
     }
   }
 
-  const hash = await writeContract($wagmi, {
+  const receipt = await txFlow.value.initializeRequest(() => writeContract($wagmi, {
     abi: MINT_ABI,
     chainId,
     address: collection.value.address,
@@ -125,12 +156,7 @@ const mint = async () => {
       0,
       0n,
     ],
-  })
-
-  const receipt = await waitForTransactionReceipt($wagmi, {
-    chainId,
-    hash,
-  })
+  }))
 
   const logs = receipt.logs.map(log => decodeEventLog({
     abi: MINT_ABI,
@@ -143,8 +169,9 @@ const mint = async () => {
 
   await store.fetchToken(collection.value.address, mintedEvent.args.id)
   await navigateTo(`/${id.value}/${collection.value.address}`)
-}
 
+  minting.value = false
+}
 
 const subdomain = useSubdomain()
 const isMe = useIsMe()
