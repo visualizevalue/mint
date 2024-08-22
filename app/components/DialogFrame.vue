@@ -45,8 +45,10 @@ dialog {
   color: var(--color);
   border: var(--border);
   overscroll-behavior: contain;
+  height: min-content;
   opacity: 0;
   pointer-events: none;
+  align-content: center;
 
   &[open] {
     animation: fade-in var(--speed);
@@ -65,32 +67,27 @@ dialog {
     pointer-events: none;
   }
 
-  .inner {
-    pointer-events: all;
-
-    > .close {
-      position: absolute;
-      top: var(--spacer);
-      right: var(--spacer);
-      width: var(--size-4);
-    }
-
-    > h1 {
-      padding-right: var(--size-6);
-      font-family: var(--font-family-ui);
-      font-size: var(--font-lg);
-      text-transform: uppercase;
-      margin-bottom: var(--size-3);
-    }
-
-    > .actions {
-      margin-top: var(--spacer);
-      display: flex;
-      gap: var(--spacer);
-      justify-content: flex-end;
-    }
+  > .close {
+    position: absolute;
+    top: var(--spacer);
+    right: var(--spacer);
+    width: min-content;
   }
 
+  > h1 {
+    padding-right: var(--size-6);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-lg);
+    text-transform: uppercase;
+    margin-bottom: var(--size-3);
+  }
+
+  > .actions {
+    margin-top: var(--spacer);
+    display: flex;
+    gap: var(--spacer);
+    justify-content: flex-end;
+  }
 }
 
 html:has(dialog[open]),

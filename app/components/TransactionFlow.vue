@@ -187,6 +187,10 @@ const cancel = () => {
     margin: calc(-1 * var(--size-4)) auto var(--size-3);
   }
 
+  .text {
+    height: min-content;
+  }
+
   h1 {
     font-size: var(--font-lg);
     margin-bottom: var(--size-4);
