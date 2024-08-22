@@ -1,7 +1,7 @@
 <template>
   <header>
-    <figure>
-      <Image v-if="collection.image" :src="collection.image" :alt="collection.name" />
+    <figure v-if="collection.image">
+      <Image :src="collection.image" :alt="collection.name" />
     </figure>
     <div class="text">
       <div>
@@ -44,7 +44,10 @@ header {
 
   @media (--sm) {
     max-width: 100%;
-    grid-template-columns: 20% 1fr;
+
+    &:has(> figure) {
+      grid-template-columns: 20% 1fr;
+    }
   }
 
   .text {

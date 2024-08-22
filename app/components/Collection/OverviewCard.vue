@@ -40,7 +40,9 @@ article {
   }
 
   @media (--sm) {
-    grid-template-columns: 20% 80%;
+    &:has(> .image) {
+      grid-template-columns: 20% 1fr;
+    }
   }
 
   img {
