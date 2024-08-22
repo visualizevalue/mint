@@ -111,7 +111,7 @@ const deployRequest = computed(() => async () => {
       description.value,
       image.value,
     ],
-    gasMultiplier: 2, // TODO: Disable
+    // gasMultiplier: 1, // TODO: Disable
   })
 })
 
