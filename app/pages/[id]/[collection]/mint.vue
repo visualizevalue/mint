@@ -51,7 +51,7 @@
             lead: {
               chain: 'Requesting to switch chain...',
               requesting: 'Requesting Signature...',
-              waiting: 'Checking Deployment Transaction...',
+              waiting: 'Checking mint Transaction...',
               complete: `New token minted...`,
             },
             action: {
