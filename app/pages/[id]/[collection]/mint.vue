@@ -52,7 +52,7 @@
               chain: 'Requesting to switch chain...',
               requesting: 'Requesting Signature...',
               waiting: 'Checking Deployment Transaction...',
-              complete: `New Collection Created...`,
+              complete: `New token minted...`,
             },
             action: {
               confirm: 'Mint',
