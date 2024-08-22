@@ -22,7 +22,6 @@ const close = () => {
       resolve()
     }
   })
-
 }
 
 const open = () => {

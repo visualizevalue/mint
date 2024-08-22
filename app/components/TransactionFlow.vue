@@ -114,7 +114,13 @@ const step = computed(() => {
   return 'error'
 })
 
-const initializeRequest = async () => {
+const initializeRequest = async (request = props.request) => {
+  complete.value = false
+  open.value = true
+  error.value = ''
+  tx.value = null
+  receipt.value = null
+
   if (! await checkChain()) {
     switchChain.value = true
     return
@@ -122,24 +128,20 @@ const initializeRequest = async () => {
     switchChain.value = false
   }
 
-  error.value = ''
-  tx.value = null
-  receipt.value = null
-
   if (requesting.value) return
 
   try {
     requesting.value = true
-    tx.value = await props.request()
+    tx.value = await request()
     requesting.value = false
     waiting.value = true
-    const [receipt] = await Promise.all([
+    const [receiptObject] = await Promise.all([
       waitForTransactionReceipt($wagmi, { hash: tx.value }),
       delay(6_000),
     ])
     await delay(props.delayAfter)
-    receipt.value = receipt
-    emit('complete', receipt)
+    receipt.value = receiptObject
+    emit('complete', receiptObject)
     complete.value = true
   } catch (e) {
     if (e?.cause?.code === 4001) {
@@ -148,7 +150,6 @@ const initializeRequest = async () => {
       error.value = 'Error submitting transaction request.'
     }
     console.log(e)
-    await delay(300) // Animations...
   }
 
   requesting.value = false
@@ -157,7 +158,10 @@ const initializeRequest = async () => {
   if (props.autoCloseSuccess) {
     await delay(2_000)
     open.value = false
+    await delay(300) // Animations...
   }
+
+  return receipt.value
 }
 
 const start = () => {
@@ -173,6 +177,10 @@ const cancel = () => {
 
   emit('cancel')
 }
+
+defineExpose({
+  initializeRequest,
+})
 </script>
 
 <style lang="postcss">
