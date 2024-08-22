@@ -77,7 +77,7 @@ const gasPrice = await useGasPrice()
 const price = computed(() => gasPrice.value.wei * 60_000n * BigInt(mintCount.value))
 const displayPrice = computed(() => customFormatEther(price.value))
 
-const mintRequest = async () => {
+const mintRequest = computed(() => async () => {
   return writeContract($wagmi, {
     abi: MINT_ABI,
     chainId: config.public.chainId,
@@ -89,7 +89,7 @@ const mintRequest = async () => {
     ],
     value: price.value,
   })
-}
+})
 
 const minted = async () => {
   await store.fetchTokenBalance(props.token, address.value)

@@ -23,8 +23,8 @@
         </p>
       </article>
 
-      <form @submit.stop.prevent="deploy" class="card">
-        <div class="card borderless">
+      <form @submit.stop.prevent="deploy" class="card borderless">
+        <div class="card">
           <div>
             <FormSelectFile @change="setImage" />
             <p v-if="! isSmall" class="muted"><small>Note: This should be a small file, prefferably a simple SVG like <a href="/example-contract-icon.svg" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small></p>
@@ -37,10 +37,39 @@
         </div>
 
         <Actions class="borderless">
-          <Button>Deploy</Button>
+          <TransactionFlow
+            :request="deployRequest"
+            :text="{
+              title: {
+                chain: 'Switch Chain',
+                requesting: 'Confirm In Wallet',
+                waiting: '2. Transaction Submitted',
+                complete: '3. Success!'
+              },
+              lead: {
+                chain: 'Requesting to switch chain...',
+                requesting: 'Requesting Signature...',
+                waiting: 'Checking Deployment Transaction...',
+                complete: `New Collection Created...`,
+              },
+              action: {
+                confirm: 'Mint',
+                error: 'Retry',
+                complete: 'OK',
+              },
+            }"
+            @complete="deployed"
+            skip-confirmation
+            auto-close-success
+          >
+            <template #start="{ start }">
+              <Button @click="start">
+                Deploy
+              </Button>
+            </template>
+          </TransactionFlow>
         </Actions>
       </form>
-
 
     </PageFrame>
   </Authenticated>
@@ -50,7 +79,6 @@
 const config = useRuntimeConfig()
 const store = useOnchainStore()
 const chainId = useMainChainId()
-const checkChain = useEnsureChainIdCheck()
 
 const image = ref('')
 const title = ref('')
@@ -71,10 +99,8 @@ const setImage = async (file) => {
   imageSize.value = file.size
 }
 
-const deploy = async () => {
-  if (! await checkChain()) return
-
-  const hash = await writeContract($wagmi, {
+const deployRequest = computed(() => async () => {
+  return await writeContract($wagmi, {
     abi: FACTORY_ABI,
     chainId,
     address: config.public.factoryAddress,
@@ -87,12 +113,9 @@ const deploy = async () => {
     ],
     gasMultiplier: 2, // TODO: Disable
   })
+})
 
-  const receipt = await waitForTransactionReceipt($wagmi, {
-    chainId,
-    hash,
-  })
-
+const deployed = async (receipt) => {
   const logs = receipt.logs.map(log => decodeEventLog({
     abi: [...FACTORY_ABI, ...MINT_ABI],
     data: log.data,
