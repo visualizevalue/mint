@@ -110,6 +110,7 @@ export default defineNuxtConfig({
     //   // routes: ["/sitemap.xml", "/robots.txt"],
     // },
     prerender: {
+      routes: ["/"],
       crawlLinks: false,
     },
   },
