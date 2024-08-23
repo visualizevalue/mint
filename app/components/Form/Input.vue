@@ -40,7 +40,6 @@ const inputAttributes = computed(() => ({
   placeholder: props.placeholder || '',
   disabled: props.disabled || false,
   required: props.required || false,
-  required: props.required || false,
   name: props.name || '',
   autocomplete: props.autocomplete || 'on',
   min: props.min,
