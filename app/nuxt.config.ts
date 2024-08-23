@@ -104,10 +104,13 @@ export default defineNuxtConfig({
         target: 'esnext'
       }
     },
+    // prerender: {
+    //   crawlLinks: false,
+    //   routes: ["/"],
+    //   // routes: ["/sitemap.xml", "/robots.txt"],
+    // },
     prerender: {
       crawlLinks: false,
-      routes: ["/"],
-      // routes: ["/sitemap.xml", "/robots.txt"],
     },
   },
 
