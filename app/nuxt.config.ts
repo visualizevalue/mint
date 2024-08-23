@@ -3,7 +3,7 @@
 export default defineNuxtConfig({
   // devtools: { enabled: true },
 
-  ssr: process.env.STATIC_SITE !== 'true',
+  ssr: process.env.NUXT_SSR !== 'false',
 
   runtimeConfig: {
     public: {
