@@ -1,7 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-console.log('nuxt WALLET_CONNECT_PROJECT_ID', process.env.WALLET_CONNECT_PROJECT_ID)
-
 export default defineNuxtConfig({
   // devtools: { enabled: true },
 

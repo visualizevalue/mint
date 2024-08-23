@@ -22,10 +22,10 @@
 const id = useArtistId()
 const isMe = useIsMe()
 const artistName = useAccountName(id.value)
-const subdomain = useSubdomain()
+const scope = useArtistScope()
 
 const breadcrumb = computed(() => {
-  if (subdomain.value || isMe.value) {
+  if (scope || isMe.value) {
     return []
   }
 

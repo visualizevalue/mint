@@ -7,7 +7,9 @@ export default {
 
     if (ssrContext?.event.context.subdomain) subdomain.value = ssrContext?.event.context.subdomain?.toLowerCase()
 
-    if (subdomain.value) {
+    const address = useArtistScope()
+
+    if (address) {
       const normalizedRoutes = _routes
         .map((i) => ({
           ...i,
