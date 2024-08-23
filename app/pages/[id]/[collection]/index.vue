@@ -42,9 +42,9 @@ useMetaData({
 
 const tokens = computed(() => store.tokens(collection.value.address))
 const loading = ref(false)
-onMounted(() => {
+onMounted(async () => {
   loading.value = true
-  store.fetchCollectionTokens(collection.value.address)
+  await store.fetchCollectionTokens(collection.value.address)
   loading.value = false
 })
 </script>
