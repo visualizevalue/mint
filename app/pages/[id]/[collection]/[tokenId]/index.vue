@@ -11,7 +11,7 @@ import { useAccount } from '@wagmi/vue'
 const id = useArtistId()
 const route = useRoute()
 const isMe = useIsMe()
-const subdomain = useSubdomain()
+const scope = useArtistScope()
 const artistName = useAccountName(id.value)
 const { address, isConnected } = useAccount()
 const props = defineProps(['collection'])
@@ -42,7 +42,7 @@ onMounted(async () => {
 })
 
 const breadcrumb = computed(() => {
-  const path = subdomain.value || isMe.value ? [] : [
+  const path = scope || isMe.value ? [] : [
     {
       text: artistName,
       to: { name: 'id', params: { id: id.value } }

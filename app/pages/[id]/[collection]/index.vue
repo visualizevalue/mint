@@ -19,9 +19,9 @@ const store = useOnchainStore()
 const isMe = useIsMe()
 const artistName = useAccountName(id.value)
 
-const subdomain = useSubdomain()
+const scope = useArtistScope()
 const breadcrumb = computed(() => {
-  const path = subdomain.value || isMe.value ? [] : [
+  const path = scope || isMe.value ? [] : [
     {
       text: artistName,
       to: { name: 'id', params: { id } }
