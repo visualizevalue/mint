@@ -3,6 +3,8 @@
 export default defineNuxtConfig({
   // devtools: { enabled: true },
 
+  ssr: process.env.STATIC_SITE !== 'true',
+
   runtimeConfig: {
     public: {
       title: 'Mint',
