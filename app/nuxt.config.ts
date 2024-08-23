@@ -1,8 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  // devtools: { enabled: true },
-
+  devtools: { enabled: !! process.env.NUXT_DEVTOOLS },
   ssr: process.env.NUXT_SSR !== 'false',
 
   runtimeConfig: {
@@ -106,11 +105,6 @@ export default defineNuxtConfig({
         target: 'esnext'
       }
     },
-    // prerender: {
-    //   crawlLinks: false,
-    //   routes: ["/"],
-    //   // routes: ["/sitemap.xml", "/robots.txt"],
-    // },
     prerender: {
       routes: ["/"],
       crawlLinks: false,

@@ -15,12 +15,12 @@
         "@csstools/postcss-global-data": "^2.1.1",
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@pinia/nuxt": "^0.5.3",
-        "@tanstack/vue-query": "^5.51.15",
+        "@tanstack/vue-query": ">=5.45.0",
         "@vite-pwa/nuxt": "^0.7.0",
         "@vueuse/components": "^10.11.0",
         "@vueuse/core": "^10.10.0",
         "@vueuse/nuxt": "^10.10.0",
-        "@wagmi/vue": "^0.0.33",
+        "@wagmi/vue": "^0.0.39",
         "buffer": "^6.0.3",
         "feather-icons": "^4.29.2",
         "multiformats": "^13.2.2",
@@ -37,6 +37,7 @@
     },
     "devDependencies": {
         "@vite-pwa/assets-generator": "^0.2.4",
+        "@vue/devtools-api": "6.6.3",
         "sharp": "^0.33.4"
     }
 }
