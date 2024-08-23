@@ -1,5 +1,8 @@
 {
     "name": "@visualizevalue/mint-contracts",
+    "version": "0.0.1",
+    "author": "jalil <jalil@vv.xyz>",
+    "private": true,
     "devDependencies": {
         "@nomicfoundation/hardhat-chai-matchers": "^2.0.7",
         "@nomicfoundation/hardhat-ledger": "^1.0.3",
