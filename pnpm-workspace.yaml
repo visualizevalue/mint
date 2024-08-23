@@ -1,5 +1,5 @@
 packages:
   - 'api'
-  - 'app'
+  # - 'app'
   - 'contracts'
   - 'utils'
