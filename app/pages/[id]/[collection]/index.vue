@@ -4,7 +4,8 @@
 
     <TokenOverviewCard v-for="token of tokens" :key="token.tokenId" :token="token" />
 
-    <div v-if="! tokens.length" class="centered">
+    <Loading v-if="loading" />
+    <div v-if="! tokens.length && !loading" class="centered">
       <p class="muted">No tokens yet</p>
     </div>
   </PageFrame>
@@ -40,9 +41,11 @@ useMetaData({
 })
 
 const tokens = computed(() => store.tokens(collection.value.address))
-
+const loading = ref(false)
 onMounted(() => {
+  loading.value = true
   store.fetchCollectionTokens(collection.value.address)
+  loading.value = false
 })
 </script>
 
