@@ -16,6 +16,7 @@
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@pinia/nuxt": "^0.5.3",
         "@tanstack/vue-query": ">=5.45.0",
+        "@visualizevalue/mint-utils": "workspace:../utils",
         "@vite-pwa/nuxt": "^0.7.0",
         "@vueuse/components": "^10.11.0",
         "@vueuse/core": "^10.10.0",

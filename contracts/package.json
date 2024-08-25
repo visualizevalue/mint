@@ -21,6 +21,7 @@
         "@types/chai": "^4.2.0",
         "@types/chai-as-promised": "^7.1.6",
         "@types/mocha": ">=9.1.0",
+        "@visualizevalue/mint-utils": "workspace:../utils",
         "chai": "^4.2.0",
         "hardhat-chai-matchers-viem": "^2.0.8",
         "hardhat-gas-reporter": "^2.2.0",
