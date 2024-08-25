@@ -33,6 +33,7 @@ export const MINT_ABI = parseAbi([
   'event URI(string value, uint256 indexed id)',
   'event Withdrawal(uint256 amount)',
   'function acceptOwnership()',
+  'function artifact(uint256 tokenId) view returns (bytes content)',
   'function balanceOf(address account, uint256 id) view returns (uint256)',
   'function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])',
   'function burn(address account, uint256 tokenId, uint256 amount)',

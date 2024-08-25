@@ -173,7 +173,16 @@ contract Mint is ERC1155 {
     function uri(uint tokenId) external override view returns (string memory) {
         Token memory token = tokens[tokenId];
 
-        return IRenderer(renderers[token.renderer]).uri(tokenId, token);
+        return IRenderer(renderers[token.renderer]).uri(tokenId, token, artifact(tokenId));
+    }
+
+    /// @notice Read an artifact.
+    function artifact (uint tokenId) public view returns (bytes memory content) {
+        Token memory token = tokens[tokenId];
+
+        for (uint8 i = 0; i < token.artifact.length; i++) {
+            content = abi.encodePacked(content, SSTORE2.read(token.artifact[i]));
+        }
     }
 
     /// @notice Get the metadata for this collection contract.

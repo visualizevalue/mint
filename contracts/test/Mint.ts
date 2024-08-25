@@ -1,4 +1,4 @@
-import { getAddress, parseGwei, zeroAddress } from 'viem'
+import { getAddress, fromHex, parseGwei, zeroAddress } from 'viem'
 import hre from 'hardhat'
 import { loadFixture, mine } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { toByteArray } from '@visualizevalue/mint-utils'
@@ -315,6 +315,16 @@ describe('Mint', () => {
       expect(data.name).to.equal(`VVM1`)
       expect(data.description).to.equal(`Lorem Ipsum dolor sit amet.`)
       expect(data.image).to.equal(TOKEN_TIME)
+    })
+
+    it('exposes the token artifact', async () => {
+      const { mint } = await loadFixture(collectionFixture)
+
+      await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0n, 0n ])
+
+      const data = await mint.read.artifact([1n])
+
+      expect(fromHex(data, 'string')).to.equal(`BAR`)
     })
 
     it('shows the correct token owner / balance', async () => {

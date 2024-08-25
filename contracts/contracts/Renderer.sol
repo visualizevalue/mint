@@ -9,13 +9,13 @@ import { Token     } from "./types/Token.sol";
 
 contract Renderer is IRenderer {
 
-    function uri (uint tokenId, Token calldata token) external view returns (string memory) {
+    function uri (uint tokenId, Token calldata token, bytes memory artifact) external pure returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"id": "', Strings.toString(tokenId), '",',
                 '"name": "', token.name, '",',
                 '"description": "', token.description, '",',
-                '"image": "', readArtifact(token), '"',
+                '"image": "', artifact, '"',
             '}'
         );
 
@@ -25,12 +25,6 @@ contract Renderer is IRenderer {
                 Base64.encode(dataURI)
             )
         );
-    }
-
-    function readArtifact (Token calldata token) internal view returns (bytes memory artifact) {
-        for (uint8 i = 0; i < token.artifact.length; i++) {
-            artifact = abi.encodePacked(artifact, SSTORE2.read(token.artifact[i]));
-        }
     }
 
 }

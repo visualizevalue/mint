@@ -8,7 +8,7 @@ import { Token     } from "../types/Token.sol";
 
 contract MockRenderer is IRenderer {
 
-    function uri (uint, Token calldata token) external pure returns (string memory) {
+    function uri (uint, Token calldata token, bytes memory) external pure returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"foo": "bar",',
