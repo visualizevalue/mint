@@ -2,7 +2,8 @@ import { getAddress, zeroAddress } from 'viem'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
 import hre from 'hardhat'
-import { ICON } from './constants'
+import { toByteArray } from '@visualizevalue/mint-utils'
+import { ICON, TOKEN_TIME } from './constants'
 import { collectionFixture, factoryFixture } from './fixtures'
 
 describe('Factory', function () {
@@ -13,9 +14,9 @@ describe('Factory', function () {
       'VV Mints',
       'VVM',
       'Lorem Ipsum dolor sit amet.',
-      ICON,
+      toByteArray(TOKEN_TIME),
     ])).to.emit(factory, 'Created')
-       .withArgs(getAddress(owner.account.address), '0x5392A33F7F677f59e833FEBF4016cDDD88fF9E67')
+       .withArgs(getAddress(owner.account.address), '0x61c36a8d610163660E21a8b7359e1Cac0C9133e1')
   })
 
   it('clones a new Mint contract', async function () {
@@ -25,7 +26,7 @@ describe('Factory', function () {
       'VV Mints',
       'VVM',
       'Lorem Ipsum dolor sit amet.',
-      ICON,
+      toByteArray(TOKEN_TIME),
     ])).to.be.fulfilled
   })
 
@@ -33,7 +34,7 @@ describe('Factory', function () {
     const { mint, owner } = await loadFixture(collectionFixture)
 
     await expect(mint.write.init([
-      'Nope', 'NP', 'Bad intent', '', zeroAddress, owner.account.address
+      'Nope', 'NP', 'Bad intent', toByteArray(''), zeroAddress, owner.account.address
     ])).to.be.revertedWithCustomError(mint, 'Initialized')
   })
 
@@ -63,7 +64,7 @@ describe('Factory', function () {
       'VV Mints 2',
       'VVM',
       'Lorem Ipsum dolor sit amet.',
-      ICON,
+      toByteArray(TOKEN_TIME),
     ])
     await publicClient.waitForTransactionReceipt({ hash })
     const createdEvents = await factory.getEvents.Created()

@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 import { Base64  } from "@openzeppelin/contracts/utils/Base64.sol";
+import { SSTORE2 } from "./SSTORE2.sol";
 
 library ContractMetadata {
 
@@ -10,16 +11,16 @@ library ContractMetadata {
         string name;
         string symbol;
         string description;
-        string image;
+        address[] image;
     }
 
-    function uri (Data memory data) external pure returns (string memory) {
+    function uri (Data memory data) external view returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"name": "', data.name, '",',
                 '"symbol": "', data.symbol, '",',
                 '"description": "', data.description, '",',
-                '"image": "', data.image, '"',
+                '"image": "', image(data), '"',
             '}'
         );
 
@@ -29,6 +30,12 @@ library ContractMetadata {
                 Base64.encode(dataURI)
             )
         );
+    }
+
+    function image (Data memory data) internal view returns (bytes memory content) {
+        for (uint8 i = 0; i < data.image.length; i++) {
+            content = abi.encodePacked(content, SSTORE2.read(data.image[i]));
+        }
     }
 
 }

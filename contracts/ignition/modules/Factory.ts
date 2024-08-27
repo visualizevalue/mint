@@ -1,16 +1,27 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
+import { toByteArray } from '@visualizevalue/mint-utils'
+import { ICON } from '../../test/constants'
 
 const FactoryModule = buildModule('Factory', (m) => {
-  const contractMetadataRenderer = m.contract('ContractMetadata')
+  const contractMetadata = m.contract('ContractMetadata')
+  const renderer = m.contract('Renderer')
 
-  const factory = m.contract('Factory', [], {
+  const mint = m.contract('Mint', [], {
     libraries: {
-      ContractMetadata: contractMetadataRenderer,
+      ContractMetadata: contractMetadata,
     },
-    // gasMultiplier: 2,
+    after: [contractMetadata, renderer]
+  })
+  m.call(mint, 'init', ['VV Mint', 'VVM', '', toByteArray(ICON), renderer, m.getAccount(0)])
+
+  const factory = m.contract('Factory', [renderer, mint], {
+    libraries: {
+      ContractMetadata: contractMetadata,
+    },
+    after: [renderer, contractMetadata]
   })
 
-  return { factory }
+  return { factory, mint, renderer, contractMetadata }
 })
 
 export default FactoryModule

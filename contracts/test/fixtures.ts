@@ -12,8 +12,15 @@ export async function factoryFixture() {
   await owner.sendTransaction({ to: JALIL, value: parseEther('1') })
 
   const contractMetadata = await hre.viem.deployContract('ContractMetadata', [])
+  const baseRenderer = await hre.viem.deployContract('Renderer', [])
+  const baseImplementation = await hre.viem.deployContract('Mint', [], {
+    libraries: {
+      ContractMetadata: contractMetadata.address,
+    }
+  })
+  await baseImplementation.write.init(['VV Mint', 'VVM', '', toByteArray(ICON), baseRenderer.address, owner.account.address])
 
-  const factory = await hre.viem.deployContract('Factory', [], {
+  const factory = await hre.viem.deployContract('Factory', [baseRenderer.address, baseImplementation.address], {
     libraries: {
       ContractMetadata: contractMetadata.address,
     }
@@ -31,11 +38,11 @@ export async function factoryFixture() {
 export async function collectionFixture() {
   const { factory, owner, publicClient } = await loadFixture(factoryFixture)
 
-  const hash = await factory.write.create([
+  const hash = await factory.write.clone([
     'VV Mints',
     'VVM',
     'Lorem Ipsum dolor sit amet.',
-    ICON,
+    toByteArray(ICON),
   ])
   await publicClient.waitForTransactionReceipt({ hash })
   const createdEvents = await factory.getEvents.Created()

@@ -22,12 +22,9 @@ contract Factory {
     mapping(address creator => address[] collections) private creatorCollections;
 
     /// @dev Initialize the contract with a base clonable mint contract implementation.
-    constructor() {
-        Mint mint = new Mint();
-        mint.init("", "", "", "", baseRenderer, address(this));
-        baseImplementation = address(mint);
-
-        baseRenderer = address(new Renderer());
+    constructor(address renderer, address mint) {
+        baseRenderer = renderer;
+        baseImplementation = mint;
     }
 
     /// @notice Deploy a new Mint contract with the specified metadata.
@@ -36,7 +33,7 @@ contract Factory {
         string memory name,
         string memory symbol,
         string memory description,
-        string memory image
+        bytes[] calldata image
     ) external returns (address) {
         Mint mint = new Mint();
 
@@ -57,15 +54,17 @@ contract Factory {
         string memory name,
         string memory symbol,
         string memory description,
-        string memory image
+        bytes[] calldata image
     ) external returns (address) {
-        address mint = Clone.clone(baseImplementation);
+        address mintAddress = Clone.clone(baseImplementation);
 
-        Mint(mint).init( name, symbol, description, image, baseRenderer, msg.sender);
+        Mint(mintAddress).init(name, symbol, description, image, baseRenderer, msg.sender);
 
-        emit Created(msg.sender, mint);
+        creatorCollections[msg.sender].push(mintAddress);
 
-        return mint;
+        emit Created(msg.sender, mintAddress);
+
+        return mintAddress;
     }
 
     /// @notice Access created collections without the need for historical syncs.

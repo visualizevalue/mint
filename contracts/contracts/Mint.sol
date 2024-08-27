@@ -58,10 +58,10 @@ contract Mint is ERC1155 {
 
     /// @notice Initializes the collection contract.
     function init(
-        string memory contractName,
-        string memory contractSymbol,
-        string memory contractDescription,
-        string memory contractImage,
+        string calldata contractName,
+        string calldata contractSymbol,
+        string calldata contractDescription,
+        bytes[] calldata contractImage,
         address renderer,
         address owner
     ) external {
@@ -71,7 +71,11 @@ contract Mint is ERC1155 {
         metadata.name        = contractName;
         metadata.symbol      = contractSymbol;
         metadata.description = contractDescription;
-        metadata.image       = contractImage;
+
+        // Write the contract image to storage.
+        for (uint8 i = 0; i < contractImage.length; i++) {
+            metadata.image.push(SSTORE2.write(contractImage[i]));
+        }
 
         // Set the inial renderer
         renderers.push(renderer);
