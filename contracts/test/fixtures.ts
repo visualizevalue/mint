@@ -20,7 +20,7 @@ export async function factoryFixture() {
   })
   await baseImplementation.write.init(['VV Mint', 'VVM', '', toByteArray(ICON), baseRenderer.address, owner.account.address])
 
-  const factory = await hre.viem.deployContract('Factory', [baseRenderer.address, baseImplementation.address], {
+  const factory = await hre.viem.deployContract('Factory', [baseImplementation.address, baseRenderer.address], {
     libraries: {
       ContractMetadata: contractMetadata.address,
     }

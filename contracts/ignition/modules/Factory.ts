@@ -14,7 +14,7 @@ const FactoryModule = buildModule('Factory', (m) => {
   })
   m.call(mint, 'init', ['VV Mint', 'VVM', '', toByteArray(ICON), renderer, m.getAccount(0)])
 
-  const factory = m.contract('Factory', [renderer, mint], {
+  const factory = m.contract('Factory', [mint, renderer], {
     libraries: {
       ContractMetadata: contractMetadata,
     },

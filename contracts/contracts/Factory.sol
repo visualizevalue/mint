@@ -22,9 +22,9 @@ contract Factory {
     mapping(address creator => address[] collections) private creatorCollections;
 
     /// @dev Initialize the contract with a base clonable mint contract implementation.
-    constructor(address renderer, address mint) {
-        baseRenderer = renderer;
+    constructor(address mint, address renderer) {
         baseImplementation = mint;
+        baseRenderer = renderer;
     }
 
     /// @notice Deploy a new Mint contract with the specified metadata.
