@@ -100,6 +100,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: 'node-cluster',
     esbuild: {
       options: {
         target: 'esnext'
