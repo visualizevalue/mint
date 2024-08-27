@@ -18,6 +18,9 @@ contract Factory {
     /// @dev The base Renderer all Mint contracts are initialized with.
     address immutable private baseRenderer;
 
+    /// @dev Helper to keep track of created collections without the need for complex synching.
+    mapping(address creator => address[] collections) private creatorCollections;
+
     /// @dev Initialize the contract with a base clonable mint contract implementation.
     constructor() {
         Mint mint = new Mint();
@@ -39,9 +42,13 @@ contract Factory {
 
         mint.init(name, symbol, description, image, baseRenderer, msg.sender);
 
-        emit Created(msg.sender, address(mint));
+        address mintAddress = address(mint);
 
-        return address(mint);
+        creatorCollections[msg.sender].push(mintAddress);
+
+        emit Created(msg.sender, mintAddress);
+
+        return mintAddress;
     }
 
     /// @notice Deploy a copy of the base Mint contract.
@@ -59,6 +66,11 @@ contract Factory {
         emit Created(msg.sender, mint);
 
         return mint;
+    }
+
+    /// @notice Access created collections without the need for historical syncs.
+    function getCreatorCollections(address creator) external view returns (address[] memory) {
+        return creatorCollections[creator];
     }
 
 }

@@ -1,6 +1,7 @@
 import { getAddress, zeroAddress } from 'viem'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
+import hre from 'hardhat'
 import { ICON } from './constants'
 import { collectionFixture, factoryFixture } from './fixtures'
 
@@ -53,5 +54,22 @@ describe('Factory', function () {
     expect(data.symbol).to.equal(`VVM`)
     expect(data.description).to.equal(`Lorem Ipsum dolor sit amet.`)
     expect(data.image).to.equal(ICON)
+  })
+
+  it('allows querying the created collections', async function () {
+    const { mint, factory, publicClient, owner } = await loadFixture(collectionFixture)
+
+    const hash = await factory.write.create([
+      'VV Mints 2',
+      'VVM',
+      'Lorem Ipsum dolor sit amet.',
+      ICON,
+    ])
+    await publicClient.waitForTransactionReceipt({ hash })
+    const createdEvents = await factory.getEvents.Created()
+    const mint2 = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress)
+
+    expect(JSON.stringify(await factory.read.getCreatorCollections([owner.account.address])))
+      .to.equal(JSON.stringify([mint.address, mint2.address]))
   })
 })
