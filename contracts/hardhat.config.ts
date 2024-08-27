@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv'
+import { zeroAddress } from 'viem'
 import type { HardhatUserConfig } from 'hardhat/config'
 import type { HardhatNetworkUserConfig } from 'hardhat/types'
 import '@nomicfoundation/hardhat-toolbox-viem'
@@ -11,8 +12,12 @@ import './tasks/export-abis'
 
 dotenv.config()
 
-const ACCOUNT_PRVKEYS: string[] = process.env.PRIVATE_KEY    ? [process.env.PRIVATE_KEY   ] : []
 const LEDGER_ACCOUNTS: string[] = process.env.LEDGER_ACCOUNT ? [process.env.LEDGER_ACCOUNT] : []
+const ACCOUNT_PRVKEYS: string[] = process.env.PRIVATE_KEY    ? [process.env.PRIVATE_KEY   ] : []
+const DEPLOY_AUTH: string = process.env.DEPLOY_AUTH || zeroAddress
+const REDEPLOY_PROTECTION: string = process.env.REDEPLOY_PROTECTION === 'true' ? `01` : `00`
+const ENTROPY: string = process.env.ENTROPY || `0000000000000000000009`
+const SALT: string = `${DEPLOY_AUTH}${REDEPLOY_PROTECTION}${ENTROPY}`
 
 const HARDHAT_NETWORK_CONFIG: HardhatNetworkUserConfig = {
   chainId: 1337,
@@ -50,6 +55,13 @@ const config: HardhatUserConfig = {
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     currency: 'USD',
     gasPrice: 10,
+  },
+  ignition: {
+    strategyConfig: {
+      create2: {
+        salt: SALT,
+      },
+    },
   },
   mocha: {
     // timeout: 5_000,
