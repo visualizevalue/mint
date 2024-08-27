@@ -1,0 +1,30 @@
+# Ignore everything
+*
+
+# Allow package.json files
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!app/package.json
+!api/package.json
+!utils/package.json
+!contracts/package.json
+
+# Allow source code
+!app/
+!api/
+!utils/
+!contracts/
+
+# But still ignore node_modules everywhere
+**/node_modules
+
+# Ignore other unnecessary files
+.git
+.gitignore
+README.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+*.log
+.DS_Store

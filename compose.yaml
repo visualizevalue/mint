@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile_App
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      - NUXT_PUBLIC_DOMAIN=${APP_DOMAIN}
+      - NUXT_PUBLIC_TITLE=${APP_TITLE}
+      - NUXT_PUBLIC_DESCRIPTION=${APP_DESCRIPTION}
+      - NUXT_PUBLIC_BLOCK_EXPLORER=${APP_BLOCK_EXPLORER}
+      - NUXT_PUBLIC_CHAIN_ID=${APP_CHAIN_ID}
+      - NUXT_PUBLIC_CREATOR_ADDRESS=${APP_CREATOR_ADDRESS}
+      - NUXT_PUBLIC_FACTORY_ADDRESS=${APP_FACTORY_ADDRESS}
+      - NUXT_PUBLIC_FACTORY_START_BLOCK=${APP_FACTORY_START_BLOCK}
+      - NUXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=${APP_WALLET_CONNECT_PROJECT_ID}
+      - NODE_ENV=production
+      - NITRO_PRESET=node_clusterj
+
+networks:
+  default:
+    name: mint

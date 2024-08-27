@@ -1,0 +1,31 @@
+FROM node:20-slim AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
+RUN apt-get update && apt-get install -y python3 make g++ \
+    && corepack enable \
+    && npm install -g node-gyp \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /mint
+
+# Copy package.json files
+COPY contracts/package.json ./contracts/
+COPY app/package.json ./app/
+COPY api/package.json ./api/
+COPY utils/package.json ./utils/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Copy the rest of the application
+COPY . .
+
+# Build
+RUN pnpm -F @visualizevalue/mint-app build
+
+WORKDIR /mint/app
+EXPOSE 3000
+CMD [ "node", ".output/server/index.mjs" ]
