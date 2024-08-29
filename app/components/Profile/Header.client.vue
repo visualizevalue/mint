@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header v-if="artist">
     <slot name="before" />
 
     <img :src="artist.avatar || `/icons/opepen.svg`" :alt="name">
