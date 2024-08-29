@@ -8,7 +8,8 @@
         "@nomicfoundation/hardhat-ledger": "^1.0.3",
         "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
         "dotenv": "^16.4.5",
-        "hardhat": "^2.22.7"
+        "hardhat": "^2.22.7",
+        "hardhat-contract-sizer": "^2.10.0"
     },
     "dependencies": {
         "@nomicfoundation/hardhat-ignition": "^0.15.5",

@@ -5,6 +5,7 @@ import type { HardhatNetworkUserConfig } from 'hardhat/types'
 import '@nomicfoundation/hardhat-toolbox-viem'
 import '@nomicfoundation/hardhat-ledger'
 import 'hardhat-chai-matchers-viem'
+import 'hardhat-contract-sizer'
 
 import './tasks/accounts'
 import './tasks/chain'
@@ -63,6 +64,9 @@ const config: HardhatUserConfig = {
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     currency: 'USD',
     gasPrice: 10,
+  },
+  contractSizer: {
+    alphaSort: true,
   },
   ignition: {
     strategyConfig: {
