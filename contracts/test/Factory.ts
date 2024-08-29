@@ -7,6 +7,34 @@ import { ICON, TOKEN_TIME } from './constants'
 import { collectionFixture, factoryFixture } from './fixtures'
 
 describe('Factory', function () {
+  it('sets ownership on the factory', async function () {
+    const { factory, owner } = await loadFixture(factoryFixture)
+
+    expect(await factory.read.owner()).to.equal(getAddress(owner.account.address))
+  })
+
+  it('exposes the factory version', async function () {
+    const { factory } = await loadFixture(factoryFixture)
+
+    expect(await factory.read.version()).to.equal(1n)
+  })
+
+  it('ensures only an owner can upgrade the factory', async function () {
+    const { factory, owner } = await loadFixture(factoryFixture)
+
+    // Deploy our new implementation
+    const mockV2Factory = await hre.viem.deployContract('MockV2Factory')
+
+    // Deploy our new implementation
+    await factory.write.upgradeToAndCall([mockV2Factory.address, '0x'])
+
+    // Check the new version
+    expect(await factory.read.version()).to.equal(999n)
+
+    // Make sure we maintain ownership as expected
+    expect(await factory.read.owner()).to.equal(getAddress(owner.account.address))
+  })
+
   it('creates a new Mint contract', async function () {
     const { factory, owner } = await loadFixture(factoryFixture)
 

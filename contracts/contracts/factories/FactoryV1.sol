@@ -84,6 +84,11 @@ contract FactoryV1 is Initializable, UUPSUpgradeable, Ownable2StepUpgradeable {
         return creatorCollections[creator];
     }
 
-    /// @dev Required by the OZ UUPS module
+    /// @notice Expose the factory version.
+    function version() external pure returns (uint) {
+        return 1;
+    }
+
+    /// @dev Prevent unauthorized upgrades.
     function _authorizeUpgrade(address) internal override onlyOwner {}
 }
