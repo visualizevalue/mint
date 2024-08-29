@@ -2,7 +2,6 @@ import { getPublicClient, readContract } from '@wagmi/core'
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
-  const config = useRuntimeConfig()
   const chainId = useMainChainId()
 
   return defineStore('onchainStore', {
@@ -144,8 +143,7 @@ export const useOnchainStore = () => {
       },
 
       async fetchCollection (address: `0x${string}`): Promise<Collection> {
-        if (this.hasCollection(address)) {
-          // TODO: Update Collection
+        if (this.hasCollection(address) && this.collection(address).latestTokenId > 0n) {
           return this.collection(address)
         }
 
