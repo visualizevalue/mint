@@ -29,5 +29,9 @@ const ICONS = {
     width: 100%;
     height: 100%;
   }
+
+  &.spin {
+    animation: spin 5s infinite linear;
+  }
 }
 </style>

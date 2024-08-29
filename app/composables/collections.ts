@@ -56,7 +56,6 @@ export const useOnchainStore = () => {
           description: '',
           collections: [],
           profileUpdatedAtBlock: 0n,
-          collectionsFetchedUntilBlock: 0n,
         }
 
         this.artists[artist.address] = artist
@@ -67,9 +66,9 @@ export const useOnchainStore = () => {
       async fetchArtistScope (address: `0x${string}`, factory: `0x${string}`) {
         if (! this.hasArtist(address)) this.initializeArtist(address)
 
-        const artist = await this.fetchArtistProfile(address)
+        await this.fetchArtistProfile(address)
 
-        await this.fetchCollections(address, factory, artist.collectionsFetchedUntilBlock)
+        await this.fetchCollections(address, factory)
       },
 
       async fetchArtistProfile (address: `0x${string}`): Promise<Artist> {
@@ -120,50 +119,28 @@ export const useOnchainStore = () => {
 
       async fetchCollections (
         artist: `0x${string}`,
-        factory: `0x${string}`,
-        queryFromBlock: bigint = 0n
+        factory: `0x${string}`
       ) {
-        const client = getPublicClient($wagmi, { chainId })
-        const startBlock = BigInt(config.public.factoryStartBlock)
-        const fromBlock = queryFromBlock < startBlock ? startBlock : queryFromBlock
-        const currentBlock = await client.getBlockNumber()
-        const toBlock = currentBlock - fromBlock > 5000n ? fromBlock + 5000n : currentBlock
+        const collectionAddresses: `0x${string}`[] = (await readContract($wagmi, {
+          abi: FACTORY_ABI,
+          address: factory,
+          functionName: 'getCreatorCollections',
+          args: [artist],
+          chainId,
+        })).map((a: `0x${string}`) => a.toLowerCase())
 
-        if (
-          this.artists[artist].collectionsFetchedUntilBlock > 0n &&
-          currentBlock <= this.artists[artist].collectionsFetchedUntilBlock // > 50n // 10 minutes
-        ) {
-          console.info(`Collections fetched already (${this.artists[artist].collectionsFetchedUntilBlock})`)
+        if (this.artists[artist].collections.length === collectionAddresses.length) {
+          console.info(`Collections fetched already (${collectionAddresses.length} collections)`)
           return
         }
 
-        console.info(`Fetching collections (${fromBlock} - ${toBlock})`)
-
         try {
-          const logs = await client.getContractEvents({
-            abi: FACTORY_ABI,
-            address: factory,
-            eventName: 'Created',
-            args: { ownerAddress: artist },
-            strict: true,
-            fromBlock,
-            toBlock,
-          })
+          await Promise.all(collectionAddresses.map(address => this.fetchCollection(address)))
 
-          const promises = logs.map(l => this.fetchCollection(l.args.contractAddress.toLowerCase() as `0x${string}`))
-
-          const collections = await Promise.all(promises)
-
-          this.artists[artist].collectionsFetchedUntilBlock = toBlock
-          this.artists[artist].collections = Array.from(new Set([
-            ...this.artists[artist].collections,
-            ...collections.map(c => c.address)
-          ]))
+          this.artists[artist].collections = collectionAddresses
         } catch (e) {
           console.error(e)
         }
-
-        if (toBlock < currentBlock) await this.fetchCollections(artist, factory, toBlock)
       },
 
       async fetchCollection (address: `0x${string}`): Promise<Collection> {

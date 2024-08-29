@@ -16,7 +16,10 @@
 
     <slot :name="step" :cancel="cancel"></slot>
 
-    <Button v-if="step === 'waiting'" :to="txLink" target="_blank" class="block-explorer">View on Etherscan</Button>
+    <Button v-if="step === 'waiting'" :to="txLink" target="_blank" class="block-explorer">
+      <Icon type="loader" class="spin" />
+      <span>View on Etherscan</span>
+    </Button>
 
     <Actions v-if="step === 'chain'" class="centered">
       <Button @click="cancel" class="secondary">Cancel</Button>

@@ -23,7 +23,6 @@ export interface Artist {
   github?: string|null
   collections: `0x${string}`[]
   profileUpdatedAtBlock: bigint,
-  collectionsFetchedUntilBlock: bigint,
 }
 
 export interface Collection {

@@ -109,7 +109,7 @@ const deployRequest = computed(() => async () => {
       title.value,
       symbol.value,
       description.value,
-      image.value,
+      toByteArray(image.value),
     ],
   })
 })

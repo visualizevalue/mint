@@ -2,10 +2,23 @@ import { parseAbi } from 'viem'
 
 export const FACTORY_ABI = parseAbi([
   'error ERC1167FailedCreateClone()',
+  'error OwnableInvalidOwner(address owner)',
+  'error OwnableUnauthorizedAccount(address account)',
   'event Created(address indexed ownerAddress, address contractAddress)',
-  'function clone(string name, string symbol, string description, string image) returns (address)',
-  'function create(string name, string symbol, string description, string image) returns (address)'
+  'event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)',
+  'event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)',
+  'function acceptOwnership()',
+  'function clone(string name, string symbol, string description, bytes[] image) returns (address)',
+  'function create(string name, string symbol, string description, bytes[] image) returns (address)',
+  'function getCreatorCollections(address creator) view returns (address[])',
+  'function initialize(address mint, address renderer)',
+  'function owner() view returns (address)',
+  'function pendingOwner() view returns (address)',
+  'function renounceOwnership()',
+  'function transferOwnership(address newOwner)',
+  'function version() pure returns (uint256)'
 ])
+
 
 export const MINT_ABI = parseAbi([
   'error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId)',
@@ -39,11 +52,11 @@ export const MINT_ABI = parseAbi([
   'function burn(address account, uint256 tokenId, uint256 amount)',
   'function contractURI() view returns (string)',
   'function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)',
-  'function init(string contractName, string contractSymbol, string contractDescription, string contractImage, address renderer, address owner)',
+  'function init(string contractName, string contractSymbol, string contractDescription, bytes[] contractImage, address renderer, address owner)',
   'function initBlock() view returns (uint256)',
   'function isApprovedForAll(address account, address operator) view returns (bool)',
   'function latestTokenId() view returns (uint256)',
-  'function metadata() view returns (string name, string symbol, string description, string image)',
+  'function metadata() view returns (string name, string symbol, string description)',
   'function mint(uint256 tokenId, uint256 amount) payable',
   'function mintOpenUntil(uint256 tokenId) view returns (uint256)',
   'function owner() view returns (address)',
@@ -59,5 +72,6 @@ export const MINT_ABI = parseAbi([
   'function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)',
   'function transferOwnership(address newOwner)',
   'function uri(uint256 tokenId) view returns (string)',
+  'function version() view returns (uint256)',
   'function withdraw()'
 ])

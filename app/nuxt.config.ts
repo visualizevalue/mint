@@ -11,7 +11,6 @@ export default defineNuxtConfig({
       blockExplorer: 'https://etherscan.io',
       creatorAddress: '',
       factoryAddress: '',
-      factoryStartBlock: 0,
       chainId: 1337,
       walletConnectProjectId: '',
     }
