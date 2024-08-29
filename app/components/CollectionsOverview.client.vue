@@ -1,14 +1,4 @@
 <template>
-  <!-- TODO: maybe reenable -->
-  <!-- <section v-else-if="unwrapMainCollection">
-    <slot name="before" :collections="collections" />
-
-    <section class="collections">
-      <CollectionOverviewCard :collection="mainCollection" />
-
-      <TokenOverviewCard v-for="token of mainCollectionTokens" :key="token.tokenId" :token="token" />
-    </section>
-  </section> -->
   <section v-if="collections.length" class="collections borderless">
     <slot name="before" :collections="collections" />
 
@@ -50,12 +40,12 @@ const collections = computed(() => isMe.value
   : store.forArtistOnlyMinted(id)
 )
 
-// const unwrapMainCollection = computed(() => collections.value.length === 1)
-// const mainCollection = computed(() => collections.value[0])
-// const mainCollectionTokens = computed(() => store.tokens(mainCollection.value.address))
-// const maybeLoadMainCollectionTokens = () => unwrapMainCollection.value && store.fetchCollectionTokens(mainCollection.value.address)
-// onMounted(() => maybeLoadMainCollectionTokens())
-// watch(unwrapMainCollection, () => maybeLoadMainCollectionTokens())
+// Force update collections with no mints
+if (store.forArtist(id).length !== collections.length) {
+  store.forArtist(id)
+    .filter(c => c.latestTokenId === 0n)
+    .forEach(c => store.fetchCollection(c.address))
+}
 </script>
 
 <style lang="postcss" scoped>
