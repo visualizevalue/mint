@@ -77,6 +77,10 @@ header {
       display: block;
     }
   }
+
+  @media (--md) {
+    padding: var(--spacer) calc(var(--spacer) * 1.618);
+  }
 }
 
 /* COLORS */
