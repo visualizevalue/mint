@@ -4,7 +4,7 @@ export const useArtistScope = () => {
   const subdomain = useSubdomain()
   const creatorAddress = useRuntimeConfig().public.creatorAddress
 
-  return subdomain.value || creatorAddress
+  return creatorAddress || subdomain.value
 }
 
 export const useArtistId = () => {
