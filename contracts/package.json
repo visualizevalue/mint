@@ -19,6 +19,7 @@
         "@nomicfoundation/hardhat-viem": "^2.0.0",
         "@nomicfoundation/ignition-core": "^0.15.5",
         "@openzeppelin/contracts": "^5.0.2",
+        "@openzeppelin/contracts-upgradeable": "^5.0.2",
         "@types/chai": "^4.2.0",
         "@types/chai-as-promised": "^7.1.6",
         "@types/mocha": ">=9.1.0",

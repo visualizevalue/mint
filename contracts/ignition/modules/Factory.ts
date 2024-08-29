@@ -3,25 +3,34 @@ import { toByteArray } from '@visualizevalue/mint-utils'
 import { ICON } from '../../test/constants'
 
 const FactoryModule = buildModule('Factory', (m) => {
+  const owner = m.getAccount(0)
+
+  // Prepare base contracts
   const contractMetadata = m.contract('ContractMetadata')
   const renderer = m.contract('Renderer')
-
   const mint = m.contract('Mint', [], {
     libraries: {
       ContractMetadata: contractMetadata,
     },
     after: [contractMetadata, renderer]
   })
-  m.call(mint, 'init', ['VV Mint', 'VVM', '', toByteArray(ICON), renderer, m.getAccount(0)])
+  m.call(mint, 'init', ['VV Mint', 'VVM', '', toByteArray(ICON), renderer, owner])
 
-  const factory = m.contract('Factory', [mint, renderer], {
+  // Deploy the initial Factory implementation
+  const factoryV1 = m.contract('FactoryV1', [], {
     libraries: {
       ContractMetadata: contractMetadata,
-    },
-    after: [renderer, contractMetadata]
+    }
   })
 
-  return { factory, mint, renderer, contractMetadata }
+  // Deploy the factory proxy
+  const factory = m.contract('Factory', [
+    factoryV1,
+    mint,
+    renderer,
+  ])
+
+  return { factory }
 })
 
 export default FactoryModule
