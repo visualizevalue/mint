@@ -44,6 +44,12 @@ describe('Factory', function () {
     expect(await mint.read.owner()).to.equal(getAddress(owner.account.address))
   })
 
+  it('exposes the mint contracts version', async function () {
+    const { mint } = await loadFixture(collectionFixture)
+
+    expect(await mint.read.version()).to.equal(1)
+  })
+
   it('sets the correct contract data', async function () {
     const { mint } = await loadFixture(collectionFixture)
 
