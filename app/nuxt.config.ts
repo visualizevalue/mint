@@ -95,7 +95,10 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ['eventemitter3'],
+      force: true,
+      include: [
+        '@wagmi/core > eventemitter3'
+      ],
     },
   },
 

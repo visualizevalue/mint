@@ -23,6 +23,7 @@
         "@vueuse/nuxt": "^10.10.0",
         "@wagmi/vue": "^0.0.39",
         "buffer": "^6.0.3",
+        "eventemitter3": "^5.0.1",
         "feather-icons": "^4.29.2",
         "multiformats": "^13.2.2",
         "nuxt": "^3.11.2",
