@@ -3,30 +3,20 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpe
 import { chunkArray, toByteArray } from '@visualizevalue/mint-utils'
 import hre from 'hardhat'
 import { ICON, JALIL, TOKEN_TIME } from './constants'
+import FactoryModule from '../ignition/modules/Factory'
 
 export async function factoryFixture() {
   const [owner] = await hre.viem.getWalletClients()
+
+  const publicClient = await hre.viem.getPublicClient()
 
   const testClient = await hre.viem.getTestClient()
   await testClient.impersonateAccount({ address: JALIL })
   await owner.sendTransaction({ to: JALIL, value: parseEther('1') })
 
-  const contractMetadata = await hre.viem.deployContract('ContractMetadata', [])
-  const baseRenderer = await hre.viem.deployContract('Renderer', [])
-  const baseImplementation = await hre.viem.deployContract('Mint', [], {
-    libraries: {
-      ContractMetadata: contractMetadata.address,
-    }
-  })
-  await baseImplementation.write.init(['VV Mint', 'VVM', '', toByteArray(ICON), baseRenderer.address, owner.account.address])
+  const { factory: factoryProxy } = await hre.ignition.deploy(FactoryModule)
 
-  const factory = await hre.viem.deployContract('Factory', [baseImplementation.address, baseRenderer.address], {
-    libraries: {
-      ContractMetadata: contractMetadata.address,
-    }
-  })
-
-  const publicClient = await hre.viem.getPublicClient()
+  const factory = await hre.viem.getContractAt('FactoryV1', factoryProxy.address)
 
   return {
     factory,

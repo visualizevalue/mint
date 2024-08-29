@@ -11,6 +11,9 @@ import { Token                 } from "./types/Token.sol";
 /// @author Visualize Value
 contract Mint is ERC1155 {
 
+    /// @notice Inaugural.
+    uint public constant version = 1;
+
     /// @notice Holds information about this collection.
     ContractMetadata.Data public metadata;
 

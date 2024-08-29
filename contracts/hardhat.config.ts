@@ -5,6 +5,7 @@ import type { HardhatNetworkUserConfig } from 'hardhat/types'
 import '@nomicfoundation/hardhat-toolbox-viem'
 import '@nomicfoundation/hardhat-ledger'
 import 'hardhat-chai-matchers-viem'
+import 'hardhat-contract-sizer'
 
 import './tasks/accounts'
 import './tasks/chain'
@@ -28,7 +29,15 @@ const HARDHAT_NETWORK_CONFIG: HardhatNetworkUserConfig = {
 }
 
 const config: HardhatUserConfig = {
-  solidity: '0.8.24',
+  solidity: {
+    version: '0.8.24',
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 100_000,
+      },
+    },
+  },
   networks: {
     mainnet: {
       url: process.env.MAINNET_URL || "",
@@ -55,6 +64,9 @@ const config: HardhatUserConfig = {
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     currency: 'USD',
     gasPrice: 10,
+  },
+  contractSizer: {
+    alphaSort: true,
   },
   ignition: {
     strategyConfig: {
