@@ -71,5 +71,23 @@ defineProps({
       }
     }
   }
+
+  &.link {
+    display: inline-flex;
+    align-self: baseline;
+    align-items: baseline;
+    gap: var(--size-0);
+    height: inherit;
+    min-height: 0;
+    /* margin: 0 var(--spacer-sm) !important; */
+    margin: 0 !important;
+    padding: 0 var(--size-0) !important;
+    line-height: inherit;
+    border: 0;
+
+    .icon {
+      align-self: center;
+    }
+  }
 }
 </style>

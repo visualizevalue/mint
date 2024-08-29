@@ -6,7 +6,7 @@
     :expanded="expanded"
     :toggle="toggle"
   >
-    <Button v-if="wasShortened" @click="toggle" class="small">
+    <Button v-if="wasShortened" @click="toggle" class="link">
       <Icon :type="expanded ? 'chevron-up' : 'chevron-right'" />
       <span>{{ expanded ? collapseText : expandText }}</span>
     </Button>
@@ -31,7 +31,7 @@ const { length, text } = defineProps({
 })
 
 const cleaned = computed(() => cleanText(text))
-const shortened = computed(() => shortenedCleanText(extractURLs(cleaned.value).text, 120))
+const shortened = computed(() => shortenedCleanText(extractURLs(cleaned.value).text, length))
 const wasShortened = computed(() => shortened.value !== cleaned.value)
 const expanded = ref(false)
 const toggle = () => expanded.value = !expanded.value

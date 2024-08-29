@@ -81,6 +81,10 @@ header {
   :deep(> .button:last-child) {
     margin-right: calc(-1 * var(--size-3));
   }
+
+  &:has(+ main > .frame.full) {
+    border-color: var(--border-color) !important;
+  }
 }
 
 /* COLORS */

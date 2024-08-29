@@ -1,11 +1,12 @@
 <template>
   <div>
     <AppHeader />
-    <Navbar />
 
     <main>
       <slot />
     </main>
+
+    <Navbar />
 
     <ToggleDarkMode />
   </div>
@@ -38,7 +39,7 @@ nav {
     padding: var(--navbar-height) 0;
 
     @media (--md) {
-      padding: var(--navbar-height) var(--navbar-width) 0;
+      padding: var(--navbar-height) 0 0;
     }
   }
 }

@@ -1,14 +1,20 @@
 <template>
   <article class="token">
-    <HeaderSection>
-      <h1>
-        <span>{{ token.name }} #{{ token.tokenId }}</span>
-        <span v-if="token.description">{{ shortString(token.description, 80, 60) }}</span>
-      </h1>
-      <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
-      <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
-    </HeaderSection>
-    <Image :src="token.artifact" :alt="token.name" />
+    <div class="content">
+      <HeaderSection>
+        <h1>
+          <span>{{ token.name }} #{{ token.tokenId }}</span>
+          <span v-if="token.description">{{ shortString(token.description, 60, 40) }}</span>
+        </h1>
+        <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
+        <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
+      </HeaderSection>
+      <Image :src="token.artifact" :alt="token.name" />
+      <CardLink :to="{
+        name: 'id-collection-tokenId',
+        params: { id: collection.owner, collection: token.collection, tokenId: token.tokenId }
+      }">View {{ token.name }}</CardLink>
+    </div>
     <footer>
       <MintToken v-if="mintOpen" :token="token" />
       <Button
@@ -54,20 +60,17 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 </script>
 
 <style lang="postcss" scoped>
-  .token {
+  .token,
+  .token > .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--spacer);
+  }
+
+  .token {
     padding: var(--spacer-xl) var(--spacer) !important;
     border: 0 !important;
-
-    h1 {
-      span:last-child:not(:first-child) {
-        color: var(--muted-light);
-        display: block;
-      }
-    }
 
     /* Tokens should be at min the screen height. */
     &:not(:first-of-type) {
@@ -82,6 +85,20 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
       color: var(--muted-light);
       font-size: var(--font-sm);
       text-align: left;
+    }
+  }
+
+  .token > .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--spacer);
+
+    h1 {
+      span:last-of-type:not(:first-child) {
+        color: var(--muted-light);
+        display: block;
+      }
     }
   }
 

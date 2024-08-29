@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="! token" />
-  <PageFrame v-else :title="breadcrumb">
-    <TokenOverviewCard :token=token />
+  <PageFrame v-else :title="breadcrumb" class="full">
+    <TokenDetail :token=token />
   </PageFrame>
 </template>
 
@@ -56,7 +56,7 @@ const breadcrumb = computed(() => {
       to: { name: 'id-collection', params: { id: id.value, collection: collection.value.address } }
     },
     {
-      text: `${ token.value?.name } #${ tokenId.value }`
+      text: `#${ tokenId.value }`
     },
   ]
 })
@@ -67,15 +67,4 @@ useMetaData({
 </script>
 
 <style lang="postcss" scoped>
-  article {
-    padding: 1rem;
-
-    h1 {
-      font-size: 1.25rem;
-    }
-
-    p {
-      color: gray;
-    }
-  }
 </style>

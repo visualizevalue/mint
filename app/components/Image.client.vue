@@ -71,6 +71,12 @@ article.image {
   padding-bottom: calc(100% - 2px);
   display: flex;
 
+  &.borderless {
+    padding-bottom: 100% !important;
+    border-radius: 0;
+    border: none;
+  }
+
   .loader {
     position: absolute;
     top: 0;

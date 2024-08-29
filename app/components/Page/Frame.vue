@@ -70,6 +70,10 @@ onMounted(() => {
     &.wide {
       max-width: var(--content-width-lg);
     }
+
+    &.full {
+      max-width: 100%;
+    }
   }
 }
 </style>
