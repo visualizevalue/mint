@@ -1,4 +1,7 @@
 {
-  "Factory#ContractMetadata": "0x05A9ee6F3FBe0522D05856C007995C792015547B",
-  "Factory#Factory": "0x0F36AFe182231e361dA6C4683073057A3546AEe9"
+  "Factory#ContractMetadata": "0xC32c747Adf7d1CcD382203Ac806d1F5d56460806",
+  "Factory#Renderer": "0xaac5d34fD96801140B16B7095C4E7AAB50fd05E7",
+  "Factory#FactoryV1": "0x31caACe15a29a8Bd2BfdEb042240fbcAA16C0F8c",
+  "Factory#Mint": "0x8790ea085459da767270E1d0Afba4EaEeCE62A38",
+  "Factory#Factory": "0xfd0edC665A0566EF44f9BD7aB4E45DF7A7601a2b"
 }
