@@ -207,7 +207,7 @@ useMetaData({
   display: grid;
 
   @media (--md) {
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 40% 1fr;
   }
 
   @media (--lg) {

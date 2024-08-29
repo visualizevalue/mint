@@ -4,66 +4,63 @@
       <Image :src="token.artifact" :alt="token.name" class="borderless" />
     </div>
 
-    <section class="details">
-      <header class="title">
-        <h1>{{ token.name }} <span class="muted-light">#{{ token.tokenId }}</span></h1>
-        <p v-if="token.description" class="muted-light">
-          <ExpandableText :text="token.description" :length="80" expand-text="Read More" />
-        </p>
-      </header>
+    <MintToken
+      :token="token"
+      :mint-count="mintCount"
+      #default="{
+        displayPrice,
+        dollarPrice,
+        mintRequest,
+        minted,
+        mintOpen,
+        blocksRemaining,
+        transactionFlowConfig
+      }"
+    >
+      <section class="details">
+        <header class="title">
+          <h1>{{ token.name }} <span class="muted-light">#{{ token.tokenId }}</span></h1>
+          <p v-if="token.description" class="muted-light">
+            <ExpandableText :text="token.description" :length="80" expand-text="Read More" />
+          </p>
+        </header>
 
-    </section>
-    <!-- <HeaderSection>
-      <h1>
-        <span>{{ token.name }} #{{ token.tokenId }}</span>
-        <span v-if="token.description">{{ shortString(token.description, 80, 60) }}</span>
-      </h1>
-      <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
-      <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
-    </HeaderSection> -->
-    <!-- <footer>
-      <MintToken v-if="mintOpen" :token="token" />
-      <Button
-        v-else
-        :to="{
-          name: 'id-collection-tokenId',
-          params: { id: collection.owner, collection: token.collection, tokenId: token.tokenId }
-        }"
-      >View {{ token.name }}</Button>
-    </footer>
-    <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p> -->
+        <div>
+          <MintTokenBar
+            v-if="mintOpen"
+            v-model:mintCount="mintCount"
+            v-bind="{
+              token,
+              displayPrice,
+              dollarPrice,
+              mintRequest,
+              transactionFlowConfig,
+              minted,
+            }"
+          />
+        </div>
+
+        <div class="mint-status">
+          <p v-if="mintOpen">{{ blocksRemaining }} blocks remaining</p>
+          <p class="muted-light" v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
+        </div>
+      </section>
+    </MintToken>
   </article>
 </template>
 
 <script setup lang="ts">
-import { useAccount, useBlockNumber } from '@wagmi/vue'
 import ExpandableText from '../ExpandableText.vue';
 
 const { token } = defineProps<{
   token: Token
 }>()
 
-const config = useRuntimeConfig()
-const { address, isConnected } = useAccount()
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
 
-const id = useArtistId()
-const artistName = useAccountName(id.value as `0x${string}`)
-
-const { data: currentBlock } = useBlockNumber({ chainId: config.public.chainId })
-const mintOpen = computed(() => currentBlock.value && token.untilBlock > currentBlock.value)
-const blocksRemaining = computed(() => token.untilBlock - (currentBlock.value || 0n))
-const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
-const until = computed(() => nowInSeconds() + secondsRemaining.value)
-
+const mintCount = ref('1')
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
-// const maybeCheckBalance = async (force = false) => {
-//   if (isConnected.value && (ownedBalance.value === null || force)) {
-//     await store.fetchTokenBalance(token, address.value as `0x${string}`)
-//   }
-// }
-
 </script>
 
 <style lang="postcss" scoped>
@@ -108,6 +105,16 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
       h1 {
         font-size: var(--font-lg);
       }
+    }
+  }
+
+  .mint-status {
+    display: flex;
+    gap: var(--spacer);
+    flex-wrap: wrap;
+
+    @media (--md) {
+      justify-content: space-between;
     }
   }
 

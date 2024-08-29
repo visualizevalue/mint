@@ -1,62 +1,62 @@
 <template>
-  <article class="token">
-    <div class="content">
-      <HeaderSection>
-        <h1>
-          <span>{{ token.name }} #{{ token.tokenId }}</span>
-          <span v-if="token.description">{{ shortString(token.description, 60, 40) }}</span>
-        </h1>
-        <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
-        <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
-      </HeaderSection>
-      <Image :src="token.artifact" :alt="token.name" />
-      <CardLink :to="{
-        name: 'id-collection-tokenId',
-        params: { id: collection.owner, collection: token.collection, tokenId: token.tokenId }
-      }">View {{ token.name }}</CardLink>
-    </div>
-    <footer>
-      <MintToken v-if="mintOpen" :token="token" />
-      <Button
-        v-else
-        :to="{
+  <MintToken
+    :token="token"
+    :mintCount="mintCount"
+    #default="{
+      displayPrice,
+      dollarPrice,
+      mintRequest,
+      minted,
+      mintOpen,
+      blocksRemaining,
+      transactionFlowConfig
+    }"
+  >
+    <article class="token">
+      <div class="content">
+        <HeaderSection>
+          <h1>
+            <span>{{ token.name }} #{{ token.tokenId }}</span>
+            <span v-if="token.description">{{ shortString(token.description, 60, 40) }}</span>
+          </h1>
+          <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
+          <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
+        </HeaderSection>
+        <Image :src="token.artifact" :alt="token.name" />
+        <CardLink :to="{
           name: 'id-collection-tokenId',
           params: { id: collection.owner, collection: token.collection, tokenId: token.tokenId }
-        }"
-      >View {{ token.name }}</Button>
-    </footer>
-    <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
-  </article>
+        }">View {{ token.name }}</CardLink>
+      </div>
+      <footer>
+        <MintTokenBar
+          v-if="mintOpen"
+          v-model:mintCount="mintCount"
+          v-bind="{
+            token,
+            displayPrice,
+            dollarPrice,
+            mintRequest,
+            transactionFlowConfig,
+            minted,
+          }"
+        />
+      </footer>
+      <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
+    </article>
+  </MintToken>
 </template>
 
 <script setup lang="ts">
-import { useAccount, useBlockNumber } from '@wagmi/vue'
-
 const { token } = defineProps<{
   token: Token
 }>()
 
-const config = useRuntimeConfig()
-const { address, isConnected } = useAccount()
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
 
-const id = useArtistId()
-const artistName = useAccountName(id.value as `0x${string}`)
-
-const { data: currentBlock } = useBlockNumber({ chainId: config.public.chainId })
-const mintOpen = computed(() => currentBlock.value && token.untilBlock > currentBlock.value)
-const blocksRemaining = computed(() => token.untilBlock - (currentBlock.value || 0n))
-const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
-const until = computed(() => nowInSeconds() + secondsRemaining.value)
-
+const mintCount = ref('1')
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
-// const maybeCheckBalance = async (force = false) => {
-//   if (isConnected.value && (ownedBalance.value === null || force)) {
-//     await store.fetchTokenBalance(token, address.value as `0x${string}`)
-//   }
-// }
-
 </script>
 
 <style lang="postcss" scoped>

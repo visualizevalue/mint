@@ -9,7 +9,7 @@ import type { RouteLocationRaw } from 'vue-router'
 
 withDefaults(defineProps<{
   to: RouteLocationRaw
-  title: string
+  title?: string
 }>(), {
   title: 'View',
 })
