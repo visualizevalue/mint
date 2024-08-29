@@ -52,7 +52,7 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: var(--spacer-lg);
-  padding: var(--spacer);
+  padding: var(--size-3) var(--size-6);
 
   :deep(> .breadcrumb) {
     max-width: 50vw;
@@ -78,8 +78,8 @@ header {
     }
   }
 
-  @media (--md) {
-    padding: var(--spacer) calc(var(--spacer) * 1.618);
+  :deep(> .button:last-child) {
+    margin-right: calc(-1 * var(--size-3));
   }
 }
 

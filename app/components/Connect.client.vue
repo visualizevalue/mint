@@ -6,22 +6,24 @@
     <Account :address="address" />
   </slot>
 
-  <Modal
-    v-if="showConnect"
-    :open="chooseModalOpen"
-    @close="closeModal"
-  >
-    <div class="wallet-options">
-      <Button
-        v-for="connector in shownConnectors"
-        @click="() => login(connector)"
-        class="choose-connector-button"
-      >
-        <img v-if="ICONS[connector.name]" :src="connector.icon || `/icons/wallets/${ICONS[connector.name]}`" alt="">
-        {{ connector.name }}
-      </Button>
-    </div>
-  </Modal>
+  <Teleport to="body">
+    <Modal
+      v-if="showConnect"
+      :open="chooseModalOpen"
+      @close="closeModal"
+    >
+      <div class="wallet-options">
+        <Button
+          v-for="connector in shownConnectors"
+          @click="() => login(connector)"
+          class="choose-connector-button"
+        >
+          <img v-if="ICONS[connector.name]" :src="connector.icon || `/icons/wallets/${ICONS[connector.name]}`" alt="">
+          {{ connector.name }}
+        </Button>
+      </div>
+    </Modal>
+  </Teleport>
 </template>
 
 <script setup>
