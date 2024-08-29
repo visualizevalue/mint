@@ -21,7 +21,7 @@
         <header class="title">
           <h1>{{ token.name }} <span class="muted-light">#{{ token.tokenId }}</span></h1>
           <p v-if="token.description" class="muted-light">
-            <ExpandableText :text="token.description" :length="80" expand-text="Read More" />
+            <ExpandableText :text="token.description" :length="95" expand-text="Read More" />
           </p>
         </header>
 
