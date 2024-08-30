@@ -1,5 +1,5 @@
 <template>
-  <Button v-if="showConnect" @click="chooseModalOpen = true">
+  <Button v-if="showConnect" @click="chooseModalOpen = true" :class="class">
     <slot>Connect</slot>
   </Button>
   <slot v-else name="connected">
@@ -35,6 +35,7 @@ const ICONS = {
   'WalletConnect': 'walletconnect.svg',
 }
 
+const props = defineProps(['class'])
 const emit = defineEmits(['connected', 'disconnected'])
 
 const chainId = useChainId()

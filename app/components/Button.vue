@@ -59,6 +59,10 @@ defineProps({
     text-align: left;
   }
 
+  &.block {
+    width: 100%;
+  }
+
   &.small {
     padding: calc(var(--size-1) + var(--size-0)) var(--size-3);
     font-size: var(--font-sm);

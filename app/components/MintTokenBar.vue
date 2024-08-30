@@ -1,32 +1,30 @@
 <template>
-  <FormGroup ref="el">
-    <Connect v-if="! isConnected">Connect To Mint</Connect>
-    <template v-else>
-      <FormInput
-        type="number"
-        v-model="mintCount"
-        min="1"
-        required
-        class="amount"
-      />
-      <Button disabled class="price">
-        {{ displayPrice.value }} {{ displayPrice.format }}
-        (${{ dollarPrice }})
-      </Button>
-      <TransactionFlow
-        :request="mintRequest"
-        :text="transactionFlowConfig"
-        @complete="onMinted"
-        skip-confirmation
-        auto-close-success
-      >
-        <template #start="{ start }">
-          <Button @click="start" class="mint">
-            Mint
-          </Button>
-        </template>
-      </TransactionFlow>
-    </template>
+  <Connect v-if="! isConnected" class="block">Connect To Mint</Connect>
+  <FormGroup v-else ref="el">
+    <FormInput
+      type="number"
+      v-model="mintCount"
+      min="1"
+      required
+      class="amount"
+    />
+    <Button disabled class="price">
+      {{ displayPrice.value }} {{ displayPrice.format }}
+      (${{ dollarPrice }})
+    </Button>
+    <TransactionFlow
+      :request="mintRequest"
+      :text="transactionFlowConfig"
+      @complete="onMinted"
+      skip-confirmation
+      auto-close-success
+    >
+      <template #start="{ start }">
+        <Button @click="start" class="mint">
+          Mint
+        </Button>
+      </template>
+    </TransactionFlow>
   </FormGroup>
 </template>
 
@@ -63,8 +61,8 @@ fieldset {
     }
 
     @container (min-width: 30rem) {
-      min-width: 5rem;
-      width: min-content;
+      min-width: 6rem;
+      width: fit-content;
     }
   }
 
@@ -74,7 +72,7 @@ fieldset {
 
   .mint {
     @container (min-width: 30rem) {
-      min-width: 8rem;
+      min-width: 9rem;
     }
   }
 }
