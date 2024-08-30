@@ -1,7 +1,9 @@
 <template>
   <article class="token">
     <div class="artifact">
-      <Image :src="token.artifact" :alt="token.name" class="borderless" />
+      <div :class="{ shaded }">
+        <Image :src="token.artifact" :alt="token.name" class="borderless" />
+      </div>
     </div>
 
     <MintToken
@@ -50,11 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import ExpandableText from '../ExpandableText.vue';
+import ExpandableText from '../ExpandableText.vue'
 
 const { token } = defineProps<{
   token: Token
 }>()
+
+const breakpoints = useBreakpoints()
+const shaded = computed(() => breakpoints.greater('sm').value && ! isDark.value)
 
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
@@ -72,7 +77,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
     @media (--md) {
       min-height: calc(100dvh - var(--navbar-height));
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 60% 1fr;
       grid-auto-rows: auto;
     }
   }
@@ -80,15 +85,31 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
   .artifact {
     > * {
       width: 100%;
+      border-bottom: var(--border) !important;
+      transition: all var(--speed-slow);
 
-      &.image {
-        border-bottom: var(--border) !important;
+      > .image {
+        width: 100%;
+      }
+
+      @media (--md) {
+        border-bottom: none !important;
+      }
+
+      &.shaded {
+        box-shadow: var(--shadow-xl);
+        transform: translateY(calc(-1 * var(--size-2))) scale(1.001);
       }
     }
 
     @media (--md) {
       border-right: var(--border);
       height: 100%;
+      padding: var(--spacer-lg);
+    }
+
+    @media (--lg) {
+      padding: var(--spacer-xl);
     }
   }
 
@@ -96,6 +117,10 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     > * {
       border-bottom: var(--border);
       padding: var(--spacer);
+
+      @media (--md) {
+        padding: var(--spacer) var(--spacer-lg);
+      }
     }
 
     header {
@@ -104,6 +129,10 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
       h1 {
         font-size: var(--font-lg);
+      }
+
+      @media (--md) {
+        padding: var(--spacer-lg);
       }
     }
   }
@@ -117,5 +146,4 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
       justify-content: space-between;
     }
   }
-
 </style>

@@ -103,6 +103,11 @@
   --border: 1px solid var(--border-color);
   --border-dark: 1px solid var(--border-color-dark);
 
+  /* SHADOWS */
+  --shadow-xl:
+    0 var(--size-3) var(--size-8) var(--gray-z-3-semi),
+    0 var(--size-8) var(--size-6) calc(-1 * var(--size-8)) var(--gray-z-6-semi);
+
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
 }
