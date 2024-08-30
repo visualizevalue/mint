@@ -175,12 +175,11 @@ const mint = async () => {
 
 const subdomain = useSubdomain()
 const isMe = useIsMe()
-const artistName = useAccountName(id.value)
 
 const breadcrumb = computed(() => {
   const path = subdomain.value || isMe.value ? [] : [
     {
-      text: artistName,
+      text: store.displayName(id.value),
       to: { name: 'id', params: { id: id.value } }
     }
   ]

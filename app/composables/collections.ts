@@ -23,6 +23,12 @@ export const useOnchainStore = () => {
       artist (state) {
         return (address: `0x${string}`) => state.artists[address]
       },
+      ens () {
+        return (address: `0x${string}`) => this.artist(address)?.ens
+      },
+      displayName () {
+        return (address: `0x${string}`) => this.ens(address) || shortAddress(address)
+      },
       forArtist (state) {
         return (address: `0x${string}`) => {
           if (! this.hasArtist(address)) return []
@@ -281,7 +287,10 @@ export const useOnchainStore = () => {
 
         this.collections[collection.address] = collection
 
-        if (! this.hasArtist(collection.owner)) this.initializeArtist(collection.owner)
+        if (! this.hasArtist(collection.owner)) {
+          this.initializeArtist(collection.owner)
+          this.fetchArtistProfile(collection.owner)
+        }
 
         this.artists[collection.owner].collections = Array.from(new Set([
           ...this.artists[collection.owner].collections,

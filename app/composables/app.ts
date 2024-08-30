@@ -3,12 +3,12 @@ export const useAppTitle = () => {
   const subdomain = useSubdomain()
   const state = useOnchainStore()
 
-  return computed(() => subdomain.value
-    ? state.artist(subdomain.value as `0x${string}`)?.ens || shortAddress(subdomain.value)
-    : config.public.title
-  )
+  return computed(() => {
+    return subdomain.value
+      ? state.ens(subdomain.value as `0x${string}`) || shortAddress(subdomain.value)
+      : config.public.title
+  })
 }
-
 
 export const useAppBreadcrumb = () => {
   return useState<Breadcrumbs>('breadcrumb', () => [])

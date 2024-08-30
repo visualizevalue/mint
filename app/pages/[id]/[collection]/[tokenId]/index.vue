@@ -12,7 +12,6 @@ const id = useArtistId()
 const route = useRoute()
 const isMe = useIsMe()
 const scope = useArtistScope()
-const artistName = useAccountName(id.value)
 const { address, isConnected } = useAccount()
 const props = defineProps(['collection'])
 const collection = computed(() => props.collection)
@@ -41,10 +40,11 @@ onMounted(async () => {
   await maybeCheckBalance()
 })
 
+const hideArtist = useShowArtistInHeader()
 const breadcrumb = computed(() => {
-  const path = scope || isMe.value ? [] : [
+  const path = hideArtist.value ? [] : [
     {
-      text: artistName,
+      text: store.displayName(id.value),
       to: { name: 'id', params: { id: id.value } }
     }
   ]

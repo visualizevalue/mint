@@ -21,23 +21,21 @@
 <script setup>
 const id = useArtistId()
 const isMe = useIsMe()
-const artistName = useAccountName(id.value)
-const scope = useArtistScope()
+const store = useOnchainStore()
 
+const hideArtist = useShowArtistInHeader()
 const breadcrumb = computed(() => {
-  if (scope || isMe.value) {
-    return []
-  }
+  if (hideArtist.value) return []
 
   return [
     {
-      text: artistName.value
+      text: store.displayName(id.value)
     }
   ]
 })
 
 useMetaData({
-  title: artistName.value,
+  title: store.displayName(id.value),
 })
 </script>
 

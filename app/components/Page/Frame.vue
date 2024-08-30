@@ -11,13 +11,15 @@ const props = defineProps({
 })
 
 const breadcrumbs = useAppBreadcrumb()
-onMounted(() => {
+const updateBreadcrumbs = () => {
   if (Array.isArray(props.title)) {
     breadcrumbs.value = props.title
   } else {
     breadcrumbs.value = []
   }
-})
+}
+onMounted(() => updateBreadcrumbs())
+watch(props, () => updateBreadcrumbs())
 </script>
 
 <style lang="postcss" scoped>

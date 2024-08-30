@@ -16,14 +16,12 @@ const props = defineProps(['collection'])
 const collection = computed(() => props.collection)
 const id = useArtistId()
 const store = useOnchainStore()
-const isMe = useIsMe()
-const artistName = useAccountName(id.value)
 
-const scope = useArtistScope()
+const hideArtist = useShowArtistInHeader()
 const breadcrumb = computed(() => {
-  const path = scope || isMe.value ? [] : [
+  const path = hideArtist.value ? [] : [
     {
-      text: artistName,
+      text: store.displayName(id.value),
       to: { name: 'id', params: { id } }
     }
   ]
