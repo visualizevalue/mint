@@ -166,9 +166,9 @@ useMetaData({
 form {
   width: 100%;
 
-  @media (--sm) {
-    :deep(fieldset) {
-      .form-item:last-child {
+  :deep(fieldset) {
+    .form-item:last-child {
+      @container (min-width: 30rem) {
         width: max(42%, 9rem);
       }
     }

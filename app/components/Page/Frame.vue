@@ -27,11 +27,7 @@ watch(props, () => updateBreadcrumbs())
   margin: 0 auto;
   gap: 0;
   max-width: 100vw;
-  display: flex;
-  height: fit-content;
-  align-self: center;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
   width: 100%;
 
   &.inset {
