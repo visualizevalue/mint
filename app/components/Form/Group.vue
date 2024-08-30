@@ -1,22 +1,36 @@
 <template>
-  <fieldset>
-    <slot />
-  </fieldset>
+  <div class="fieldset-wrapper">
+    <fieldset>
+      <slot />
+    </fieldset>
+  </div>
 </template>
 
 <style lang="postcss" scoped>
+.fieldset-wrapper {
+  max-width: -webkit-fill-available;
+  container-type: inline-size;
+  width: 100%;
+}
+
 fieldset {
   width: 100%;
   max-width: -webkit-fill-available;
+  display: flex;
+  flex-wrap: wrap;
 
-  :deep(> button),
-  :deep(> input) {
-    white-space: nowrap;
-    width: 100%;
+  > * {
+    width: 100cqw;
+    flex-shrink: 0;
   }
 
-  @media (--sm) {
-    display: flex;
+  @container (min-width: 30rem) {
+    flex-wrap: nowrap;
+
+    > * {
+      width: fit-content;
+      flex-shrink: 1;
+    }
   }
 
   :deep(> .form-item),
@@ -29,7 +43,7 @@ fieldset {
         border-top-color: var(--border-color-light);
       }
 
-      @media (--sm) {
+      @container (min-width: 30rem) {
         border-top-color: var(--border-color);
         border-left-color: transparent;
 

@@ -1,11 +1,5 @@
 <template>
-  <FormGroup>
-    <Button
-      v-if="showCheck"
-      class="non-interactive check"
-    >
-      <Icon type="check" />
-    </Button>
+  <FormGroup ref="el">
     <Connect v-if="! isConnected">Connect To Mint</Connect>
     <template v-else>
       <FormInput
@@ -15,7 +9,7 @@
         required
         class="amount"
       />
-      <Button disabled>
+      <Button disabled class="price">
         {{ displayPrice.value }} {{ displayPrice.format }}
         (${{ dollarPrice }})
       </Button>
@@ -55,16 +49,11 @@ const onMinted = () => {
   mintCount.value = '1'
   props.minted()
 }
-
-const breakpoints = useBreakpoints()
-const showCheck = computed(() => breakpoints.greater('xs').value)
 </script>
 
 <style lang="postcss" scoped>
 fieldset {
-  .check {
-    width: min-content;
-  }
+  container-type: inline-size;
 
   .amount {
     width: 100%;
@@ -72,13 +61,20 @@ fieldset {
     input {
       text-align: center;
     }
+
+    @container (min-width: 30rem) {
+      min-width: 5rem;
+      width: min-content;
+    }
   }
 
-  @media (--sm) {
-    .amount,
-    .mint {
+  .price {
+    width: 100%;
+  }
+
+  .mint {
+    @container (min-width: 30rem) {
       min-width: 8rem;
-      width: fit-content;
     }
   }
 }

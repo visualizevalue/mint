@@ -27,20 +27,16 @@ main {
   display: grid;
   gap: var(--spacer);
   min-height: 100dvh;
-  padding: var(--navbar-height) 0 0;
 
   &:not(:has(> .frame-sm)) {
     grid-auto-rows: min-content;
   }
-}
 
-nav {
-  + main {
-    padding: var(--navbar-height) 0;
+  /* Frame space around navbars */
+  padding: var(--navbar-height) 0 var(--navbar-height);
 
-    @media (--md) {
-      padding: var(--navbar-height) 0 0;
-    }
+  @media (--md) {
+    padding: var(--navbar-height) 0 0;
   }
 }
 </style>

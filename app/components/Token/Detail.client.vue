@@ -70,27 +70,65 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
 <style lang="postcss" scoped>
   .token {
+    position: relative;
+    container-type: inline-size;
+
     display: grid;
     grid-auto-rows: min-content;
     padding: 0 !important;
-    min-height: calc(100dvh - 2*var(--navbar-height));
 
     @media (--md) {
-      min-height: calc(100dvh - var(--navbar-height));
+      height: calc(100dvh - var(--navbar-height));
       grid-template-columns: 60% 1fr;
       grid-auto-rows: auto;
     }
   }
 
   .artifact {
-    > * {
-      width: 100%;
-      border-bottom: var(--border) !important;
-      transition: all var(--speed-slow);
+    --padding-x: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --width: 100cqw;
+    /* --height: calc(100cqh - var(--padding-top) - var(--padding-bottom)); */
+    --height: 100%;
+    --dimension: min(100cqw, 100cqh);
 
-      > .image {
-        width: 100%;
-      }
+    @media (--md) {
+      --width: 60cqw;
+      --height: calc(100cqh - var(--navbar-height));
+      --padding-top: var(--spacer-lg);
+      --padding-x: var(--spacer-lg);
+      --padding-bottom: calc(var(--spacer-lg) + var(--spacer));
+      --padding-bottom: var(--spacer-lg);
+
+      --dimension: min(
+        calc(60cqw - var(--padding-x)*2),
+        calc(100cqh - var(--padding-top) - var(--padding-bottom))
+      );
+    }
+
+    @media (--lg) {
+      --padding-top: var(--spacer-xl);
+      --padding-x: var(--spacer-xl);
+      --padding-bottom: calc(var(--spacer-xl) + var(--spacer-lg));
+    }
+
+    height: var(--height);
+    width: var(--width);
+    padding: var(--padding-top) var(--padding-x) var(--padding-bottom);
+
+    @media (--md) {
+      border-right: var(--border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    > * {
+      width: var(--dimension);
+      height: auto;
+      border-bottom: var(--border) !important;
+      transition: transform var(--speed-slow), box-shadow var(--speed-slow);
 
       @media (--md) {
         border-bottom: none !important;
@@ -101,17 +139,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
         transform: translateY(calc(-1 * var(--size-2))) scale(1.001);
       }
     }
-
-    @media (--md) {
-      border-right: var(--border);
-      height: 100%;
-      padding: var(--spacer-lg);
-    }
-
-    @media (--lg) {
-      padding: var(--spacer-xl);
-    }
-  }
+ }
 
   .details {
     > * {
