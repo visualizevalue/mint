@@ -37,6 +37,16 @@ onChange(() => emit('change', file.value))
 fieldset {
   width: fit-content;
   max-width: -webkit-fill-available;
+
+  .button {
+    white-space: nowrap;
+
+    &:first-child {
+      span:last-child {
+        text-align: right;
+      }
+    }
+  }
 }
 
 .button[disabled] {

@@ -30,7 +30,7 @@
             <p v-if="! isSmall" class="muted"><small>Note: This should be a small file, prefferably a simple SVG like <a href="/example-contract-icon.svg" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small></p>
           </div>
           <FormGroup>
-            <FormInput v-model="title" placeholder="Title" required />
+            <FormInput v-model="title" placeholder="Title" required class="title" />
             <FormInput v-model="symbol" placeholder="Symbol" required />
           </FormGroup>
           <FormInput v-model="description" placeholder="Description" />
@@ -167,9 +167,9 @@ form {
   width: 100%;
 
   :deep(fieldset) {
-    .form-item:last-child {
-      @container (min-width: 30rem) {
-        width: max(42%, 9rem);
+    @container (min-width: 30rem) {
+      .title {
+        width: 100%;
       }
     }
   }
