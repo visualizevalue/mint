@@ -14,14 +14,14 @@
   >
     <article class="token">
       <div class="content">
-        <HeaderSection>
+        <header>
           <h1>
             <span>{{ token.name }} #{{ token.tokenId }}</span>
             <span v-if="token.description">{{ shortString(token.description, 60, 40) }}</span>
           </h1>
           <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
           <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
-        </HeaderSection>
+        </header>
         <Image :src="token.artifact" :alt="token.name" />
         <CardLink :to="{
           name: 'id-collection-tokenId',
@@ -94,10 +94,34 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     justify-content: center;
     gap: var(--spacer);
 
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacer-xs);
+
+      @media (--sm) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--spacer);
+      }
+    }
+
     h1 {
       span:last-of-type:not(:first-child) {
         color: var(--muted-light);
-        display: block;
+        white-space: wrap;
+        display: none;
+
+        @media (--md) {
+          display: block;
+        }
+      }
+
+      + p {
+        @media (--md) {
+          text-align: right;
+        }
       }
     }
   }

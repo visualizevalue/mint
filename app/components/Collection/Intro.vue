@@ -12,8 +12,17 @@
       </div>
 
       <div>
-        <p v-if="id" class="muted-light">By {{ store.displayName(id) }}</p>
-        <p class="muted-light">{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
+        <p v-if="id" class="muted-light">
+          <span>
+            By <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
+          </span>
+          <span>
+            {{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }}
+          </span>
+          <span>
+            Created at Block {{ collection.initBlock }}
+          </span>
+        </p>
       </div>
 
       <Button
@@ -64,6 +73,14 @@ header {
     > div {
       display: grid;
       gap: var(--spacer-sm);
+
+      &:nth-child(2) {
+        span {
+          &:not(:last-child):after {
+            content: ' · ';
+          }
+        }
+      }
     }
 
     h1 {
