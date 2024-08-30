@@ -11,14 +11,9 @@ export const shortString = (str: string, max: number = 40, length: number = 10) 
     str.substring(0, length + 2) + '...'
   ) : str
 
-export const shortStringTwoSided = (str: string, max: number = 40, length: number = 10) => str?.length > max
-  ? (
-    str.substring(0, length + 2) +
-    '...' +
-    str.substring(str.length - length)
-  ) : str
-
-export const shortAddress = (address: string, length: number = 4) => shortStringTwoSided(address, 8, length)
+export const shortAddress = (address: string, length: number = 3) => address.substring(0, length + 2) +
+  '...' +
+  address.substring(address.length - length)
 
 export const customGweiFormat = (price: bigint, digits?: number) => price > 20000000000n
   ? formatNumber(roundNumber(formatGwei(price)), digits)

@@ -51,11 +51,15 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacer-lg);
+  gap: var(--spacer);
   padding: var(--size-3) var(--size-6);
 
+  @media (--md) {
+    gap: var(--spacer-lg);
+  }
+
   :deep(> .breadcrumb) {
-    max-width: 50vw;
+    /* max-width: 60vw; */
     overflow: hidden;
     text-overflow: ellipsis;
     justify-content: flex-start;

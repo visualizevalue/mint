@@ -11,7 +11,10 @@
         </p>
       </div>
 
-      <p class="muted-light">{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
+      <div>
+        <p v-if="id" class="muted-light">By {{ store.displayName(id) }}</p>
+        <p class="muted-light">{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
+      </div>
 
       <Button
         v-if="ownedByMe"
@@ -29,6 +32,7 @@ const { collection } = defineProps<{
 }>()
 
 const id = useArtistId()
+const store = useOnchainStore()
 
 const ownedByMe = useIsMeCheck(collection.owner)
 </script>

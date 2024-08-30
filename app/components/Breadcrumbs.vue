@@ -22,6 +22,14 @@ defineProps({
 
   > span {
     white-space: nowrap;
+
+    &:has(+ span > a) {
+      display: none;
+
+      @media (--md) {
+        display: inherit;
+      }
+    }
   }
 
   > span > a {
