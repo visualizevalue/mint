@@ -33,6 +33,7 @@ const ICONS = {
   'Coinbase Wallet': 'coinbase.svg',
   'MetaMask': 'metamask.svg',
   'WalletConnect': 'walletconnect.svg',
+  'Rainbow': 'rainbow.svg',
 }
 
 const props = defineProps(['class'])
