@@ -74,10 +74,10 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
     /* Tokens should be at min the screen height. */
     &:not(:first-of-type) {
-      min-height: calc(100dvh - 2*var(--navbar-height));
+      min-height: min(60rem, calc(100dvh - 2*var(--navbar-height)));
 
       @media (--md) {
-        min-height: calc(100dvh - var(--navbar-height));
+        min-height: min(60rem, calc(100dvh - var(--navbar-height)));
       }
     }
 
