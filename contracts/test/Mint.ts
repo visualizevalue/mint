@@ -327,6 +327,18 @@ describe('Mint', () => {
       expect(fromHex(data, 'string')).to.equal(`BAR`)
     })
 
+    it('calculates the mint end block correctly', async () => {
+      const { mint, publicClient } = await loadFixture(collectionFixture)
+
+      const hash = await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0n, 0n ])
+      await publicClient.waitForTransactionReceipt({ hash })
+
+      const untilBlock = await mint.read.mintOpenUntil([await mint.read.latestTokenId()])
+      const currentBlock = await publicClient.getBlockNumber()
+
+      expect(currentBlock + 7200n).to.equal(untilBlock)
+    })
+
     it('shows the correct token owner / balance', async () => {
       const { mint, owner } = await loadFixture(itemMintedFixture)
 
