@@ -25,11 +25,13 @@
           <p v-if="token.description" class="muted-light">
             <ExpandableText :text="token.description" :length="95" expand-text="Read More" />
           </p>
+          <p class="muted-light">
+            By <NuxtLink :to="{ name: 'id', params: { id: collection.owner } }">{{ store.displayName(collection.owner) }}</NuxtLink>
+          </p>
         </header>
 
-        <div>
+        <div v-if="mintOpen">
           <MintTokenBar
-            v-if="mintOpen"
             v-model:mintCount="mintCount"
             v-bind="{
               token,
@@ -44,6 +46,7 @@
 
         <div class="mint-status">
           <p v-if="mintOpen">{{ blocksRemaining }} blocks remaining</p>
+          <p v-else>Closed at block {{ token.untilBlock }}</p>
           <p class="muted-light" v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
         </div>
       </section>
