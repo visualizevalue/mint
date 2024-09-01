@@ -183,7 +183,7 @@ describe('Mint', () => {
   describe('Purchasing', async () => {
 
     it('allows buying an artifact at 3 gwei per gaas', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint, owner } = await loadFixture(itemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0xB2D05E00', // 3 gwei
@@ -193,11 +193,11 @@ describe('Mint', () => {
         [1n, 1n],
         { value: parseGwei((60000n * 3n).toString()) }
       )).to.emit(mint, 'NewMint')
-        .withArgs(1n, parseGwei((60000n * 3n).toString()), 1n)
+        .withArgs(1n, parseGwei((60000n * 3n).toString()), 1n, getAddress(owner.account.address))
     })
 
     it('allows buying an artifact at 10 gwei per gas', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint, owner } = await loadFixture(itemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -207,11 +207,11 @@ describe('Mint', () => {
         [1n, 1n],
         { value: parseGwei((60000n * 10n).toString()) }
       )).to.emit(mint, 'NewMint')
-        .withArgs(1n, parseGwei((60000n * 10n).toString()), 1n)
+        .withArgs(1n, parseGwei((60000n * 10n).toString()), 1n, getAddress(owner.account.address))
     })
 
     it('allows buying multiple of an artifact', async () => {
-      const { mint } = await loadFixture(itemMintedFixture)
+      const { mint, owner } = await loadFixture(itemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
         '0x2540be400', // 10 gwei
@@ -221,7 +221,7 @@ describe('Mint', () => {
         [1n, 9n],
         { value: parseGwei((60000n * 10n * 9n).toString()) }
       )).to.emit(mint, 'NewMint')
-        .withArgs(1n, parseGwei((60000n * 10n).toString()), 9n)
+        .withArgs(1n, parseGwei((60000n * 10n).toString()), 9n, getAddress(owner.account.address))
     })
 
     it('prevents buying an artifact at 10 gwei per gas for less than the set price', async () => {

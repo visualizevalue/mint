@@ -33,7 +33,7 @@ contract Mint is ERC1155 {
     uint constant MINT_BLOCKS = 7200;
 
     /// @dev Emitted when a collector mints a token.
-    event NewMint(uint indexed tokenId, uint unitPrice, uint amount);
+    event NewMint(uint indexed tokenId, uint unitPrice, uint amount, address minter);
 
     /// @dev Emitted when the artist registers a new Renderer contract.
     event NewRenderer(address indexed renderer, uint indexed index);
@@ -151,7 +151,7 @@ contract Mint is ERC1155 {
 
         _mint(msg.sender, tokenId, amount, "");
 
-        emit NewMint(tokenId, unitPrice, amount);
+        emit NewMint(tokenId, unitPrice, amount, msg.sender);
     }
 
     /// @notice Check until which block a mint is open.
