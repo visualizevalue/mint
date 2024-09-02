@@ -76,7 +76,10 @@ const mintRequest = computed(() => async () => {
 })
 
 const minted = async () => {
-  await store.fetchTokenBalance(props.token, address.value)
+  await Promise.all([
+    store.fetchTokenBalance(props.token, address.value),
+    store.fetchTokenMints(props.token),
+  ])
 
   emit('minted')
 }
