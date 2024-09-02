@@ -50,7 +50,7 @@
           <p class="muted-light" v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
         </div>
 
-        <TokenMintTimeline :token="token" class="network-mints" />
+        <TokenMintTimeline :token="token" :collection="collection" class="network-mints" />
       </section>
     </MintToken>
   </article>
@@ -147,6 +147,12 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
  }
 
   .details {
+
+    @media (--md) {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: auto;
+    }
+
     > * {
       border-bottom: var(--border);
       padding: var(--spacer);
@@ -159,6 +165,8 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     header {
       display: grid;
       gap: var(--spacer-sm);
+      background: var(--background-semi);
+      backdrop-filter: var(--blur);
 
       h1 {
         font-size: var(--font-lg);
@@ -166,6 +174,8 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
       @media (--md) {
         padding: var(--spacer-lg);
+        position: sticky;
+        top: 0;
       }
     }
   }
