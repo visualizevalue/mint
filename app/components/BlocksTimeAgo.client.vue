@@ -3,7 +3,7 @@
     <template v-if="days">{{ days }}d</template>
     <template v-else-if="hours">{{ hours }}h</template>
     <template v-else-if="minutes">{{ minutes }}m</template>
-    <template v-else-if="seconds">{{ seconds }}s</template>
+    <template v-else>&#60;1m</template>
     <slot> ago</slot>
   </span>
 </template>
