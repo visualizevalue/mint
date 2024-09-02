@@ -37,7 +37,7 @@ export const MINT_ABI = parseAbi([
   'error OwnableUnauthorizedAccount(address account)',
   'error TokenAlreadyMinted()',
   'event ApprovalForAll(address indexed account, address indexed operator, bool approved)',
-  'event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount)',
+  'event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)',
   'event NewRenderer(address indexed renderer, uint256 indexed index)',
   'event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)',
   'event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)',

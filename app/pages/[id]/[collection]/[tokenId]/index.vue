@@ -1,6 +1,5 @@
 <template>
-  <Loading v-if="! token" />
-  <PageFrame v-else :title="breadcrumb" class="full">
+  <PageFrame :title="breadcrumb" class="full">
     <TokenDetail :token=token />
   </PageFrame>
 </template>
@@ -10,15 +9,12 @@ import { useAccount } from '@wagmi/vue'
 
 const id = useArtistId()
 const route = useRoute()
-const isMe = useIsMe()
-const scope = useArtistScope()
 const { address, isConnected } = useAccount()
-const props = defineProps(['collection'])
+const props = defineProps(['collection', 'token'])
 const collection = computed(() => props.collection)
+const token = computed(() => props.token)
 const tokenId = computed(() => BigInt(route.params.tokenId))
 const store = useOnchainStore()
-
-const token = computed(() => collection.value.tokens[route.params.tokenId])
 
 // Keep track of account token balance
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.value.tokenId))

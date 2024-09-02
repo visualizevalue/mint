@@ -14,9 +14,9 @@
         </span>
 
         <span class="right">1<span class="muted-light">×</span></span>
-        <span class="right">Arist Mint</span>
+        <span class="right">Artist Mint</span>
 
-        <span class="right"><BlocksTimeAgo :blocks="currentBlock - (token.untilBlock - 7200n)" /></span>
+        <span class="right"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - (token.untilBlock - 7200n)" /></span>
 
         <span class="right muted-light">
           <NuxtLink :to="`${config.public.blockExplorer}/nft/${token.collection}/${token.tokenId}`" target="_blank">

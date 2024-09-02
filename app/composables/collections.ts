@@ -233,7 +233,7 @@ export const useOnchainStore = () => {
         return this.tokens(address)
       },
 
-      async fetchToken (address: `0x${string}`, id: bigint) {
+      async fetchToken (address: `0x${string}`, id: number|string|bigint) {
         const client = getPublicClient($wagmi, { chainId })
         const mintContract = getContract({
           address,
@@ -241,19 +241,22 @@ export const useOnchainStore = () => {
           client,
         })
 
+        // Normalize token ID
+        const tokenId = BigInt(id)
+
         try {
-          console.info(`Fetching token #${id}`)
+          console.info(`Fetching token #${tokenId}`)
 
           const [data, untilBlock] = await Promise.all([
-            mintContract.read.uri([id], { gas: 10_000_000_000 }) as Promise<string>,
-            mintContract.read.mintOpenUntil([id]) as Promise<bigint>,
+            mintContract.read.uri([tokenId], { gas: 10_000_000_000 }) as Promise<string>,
+            mintContract.read.mintOpenUntil([tokenId]) as Promise<bigint>,
           ])
 
           const json = Buffer.from(data.substring(29), `base64`).toString()
           const metadata = JSON.parse(json)
 
           const token: Token = {
-            tokenId: id,
+            tokenId,
             collection: address,
             name: metadata.name,
             description: metadata.description,
@@ -295,7 +298,7 @@ export const useOnchainStore = () => {
         // Until when
         const toBlock = currentBlock > token.untilBlock ? token.untilBlock : currentBlock
 
-        if (token.mintsFetchedUntilBlock >= toBlock) return console.info(`Already fetched`)
+        if (token.mintsFetchedUntilBlock >= toBlock) return console.info(`token mints already fetched`)
 
         // From when
         const maxRangeBlock = toBlock - 5000n
@@ -351,9 +354,9 @@ export const useOnchainStore = () => {
 
         const logs = await client.getLogs({
           address: token.collection,
-          event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount)'),
+          event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)'),
           args: {
-            tokenId: token.tokenId,
+            tokenId: BigInt(token.tokenId),
           },
           fromBlock,
           toBlock,
@@ -361,7 +364,7 @@ export const useOnchainStore = () => {
 
         return logs.map(l => ({
           tokenId: token.tokenId,
-          address: l.address,
+          address: l.args.minter,
           block: l.blockNumber,
           logIndex: l.logIndex,
           tx: l.transactionHash,

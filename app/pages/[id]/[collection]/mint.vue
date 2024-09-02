@@ -168,7 +168,14 @@ const mint = async () => {
   const mintedEvent = logs.find(log => log.eventName === 'TransferSingle')
 
   await store.fetchToken(collection.value.address, mintedEvent.args.id)
-  await navigateTo(`/${id.value}/${collection.value.address}`)
+
+  // Force update the collection mint ID
+  store.collections[collection.value.address].latestTokenId = mintedEvent.args.id
+
+  await navigateTo({
+    name: 'id-collection-tokenId',
+    params: { id: id.value, collection: collection.value.address, tokenId: mintedEvent.args.id }
+  })
 
   minting.value = false
 }
