@@ -1,7 +1,7 @@
 {
-  "Factory#ContractMetadata": "0xC32c747Adf7d1CcD382203Ac806d1F5d56460806",
-  "Factory#Renderer": "0xaac5d34fD96801140B16B7095C4E7AAB50fd05E7",
-  "Factory#FactoryV1": "0x31caACe15a29a8Bd2BfdEb042240fbcAA16C0F8c",
-  "Factory#Mint": "0x8790ea085459da767270E1d0Afba4EaEeCE62A38",
-  "Factory#Factory": "0xfd0edC665A0566EF44f9BD7aB4E45DF7A7601a2b"
+  "Factory#ContractMetadata": "0x07e2B5AE70f47fe65B872640Db014E208edA32F2",
+  "Factory#Renderer": "0x6b00d421cAB8dB7bD1754b69701EE981C5fF01d9",
+  "Factory#FactoryV1": "0xCc16Fe8cbAb41261CaC1Dc47F004536Be5212CEd",
+  "Factory#Mint": "0x17dE7960Fda7087F4AAA43b67f33B01Dc25568D4",
+  "Factory#Factory": "0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd"
 }
