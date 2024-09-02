@@ -150,7 +150,7 @@ const initializeRequest = async (request = props.request) => {
     if (e?.cause?.code === 4001) {
       open.value = false
     } else {
-      error.value = 'Error submitting transaction request.'
+      error.value = e.shortMessage || 'Error submitting transaction request.'
     }
     console.log(e)
   }
