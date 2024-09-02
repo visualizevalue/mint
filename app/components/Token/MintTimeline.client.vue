@@ -8,7 +8,7 @@
         :key="mint.tx"
         :block="currentBlock"
       />
-      <div>
+      <div v-if="! loading">
         <span>
           <Account :address="collection.owner" />
         </span>
