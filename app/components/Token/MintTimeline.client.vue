@@ -65,6 +65,7 @@ useIntervalFn(() => state.fetchTokenMints(token), 24_000)
 section {
   padding-top: var(--spacer-lg) !important;
   padding-bottom: var(--spacer-lg) !important;
+  container-type: inline-size;
 }
 
 h1 {
@@ -82,14 +83,27 @@ h1 {
   :deep(> div) {
     display: grid;
     gap: var(--spacer);
-    grid-template-columns: 6rem 3rem 1fr 6rem 1rem;
-
-    span {
-      white-space: nowrap;
-    }
 
     .right {
       text-align: right;
+    }
+
+    span {
+      white-space: nowrap;
+
+      &:nth-child(3) {
+        display: none;
+
+        @container (min-width: 30rem) {
+          display: inline;
+        }
+      }
+    }
+
+    grid-template-columns: 6rem 3rem 1fr 3rem;
+
+    @container (min-width: 30rem) {
+      grid-template-columns: 6rem 3rem 1fr 6rem 1rem;
     }
   }
 }
