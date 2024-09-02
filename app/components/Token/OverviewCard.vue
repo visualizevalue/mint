@@ -16,7 +16,7 @@
       <div class="content">
         <header>
           <h1>
-            <span>{{ token.name }} #{{ token.tokenId }}</span>
+            <span>{{ token.name }} <span class="muted">#{{ token.tokenId }}</span></span>
             <span v-if="token.description">{{ shortString(token.description, 60, 40) }}</span>
           </h1>
           <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
