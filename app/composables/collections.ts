@@ -269,7 +269,7 @@ export const useOnchainStore = () => {
       },
 
       async fetchTokenBalance (token: Token, address: `0x${string}`) {
-        const client = getPublicClient($wagmi)
+        const client = getPublicClient($wagmi, { chainId })
         const mintContract = getContract({
           address: token.collection,
           abi: MINT_ABI,
@@ -290,7 +290,7 @@ export const useOnchainStore = () => {
         const client = getPublicClient($wagmi)
 
         // We want to sync backwards from now
-        const currentBlock = await client.getBlockNumber()
+        const currentBlock = await client.getBlockNumber({ chainId })
 
         // Until when
         const toBlock = currentBlock > token.untilBlock ? token.untilBlock : currentBlock
@@ -347,7 +347,7 @@ export const useOnchainStore = () => {
       },
 
       async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint) {
-        const client = getPublicClient($wagmi)
+        const client = getPublicClient($wagmi, { chainId })
 
         const logs = await client.getLogs({
           address: token.collection,
