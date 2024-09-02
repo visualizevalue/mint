@@ -163,6 +163,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     }
 
     header {
+      z-index: 100;
       display: grid;
       gap: var(--spacer-sm);
       background: var(--background-semi);
