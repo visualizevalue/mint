@@ -2,6 +2,8 @@ import { getPublicClient, readContract } from '@wagmi/core'
 import { parseAbiItem } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
+export const CURRENT_STATE_VERSION = 2
+
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
   const chainId = useMainChainId()
@@ -9,7 +11,7 @@ export const useOnchainStore = () => {
   return defineStore('onchainStore', {
 
     state: () => ({
-      version: 1,
+      version: CURRENT_STATE_VERSION,
       artists: {} as { [key: `0x${string}`]: Artist },
       collections: {} as { [key: `0x${string}`]: Collection },
       // Collection -> Balance (just for the current user)
@@ -74,6 +76,11 @@ export const useOnchainStore = () => {
       },
 
       async fetchArtistScope (address: `0x${string}`, factory: `0x${string}`) {
+        if (this.version < CURRENT_STATE_VERSION) {
+          console.info(`Reset store`)
+          this.$reset()
+        }
+
         if (! this.hasArtist(address)) this.initializeArtist(address)
 
         await this.fetchArtistProfile(address)
