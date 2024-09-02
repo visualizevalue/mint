@@ -300,7 +300,11 @@ export const useOnchainStore = () => {
         // From when
         const maxRangeBlock = toBlock - 5000n
         const mintedAtBlock = token.untilBlock - 7200n
-        const fromBlock = maxRangeBlock > mintedAtBlock ? maxRangeBlock : mintedAtBlock
+        const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock
+          ? token.mintsFetchedUntilBlock
+          : maxRangeBlock > mintedAtBlock
+          ? maxRangeBlock
+          : mintedAtBlock
 
         // Load mints
         this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
