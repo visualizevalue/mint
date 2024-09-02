@@ -22,7 +22,7 @@ export interface Artist {
   twitter?: string|null
   github?: string|null
   collections: `0x${string}`[]
-  profileUpdatedAtBlock: bigint,
+  profileUpdatedAtBlock: bigint
 }
 
 export interface Collection {
@@ -44,4 +44,18 @@ export interface Token {
   description: string
   artifact: string
   untilBlock: bigint
+  mintsFetchedUntilBlock: bigint
+  mintsBackfilledUntilBlock: bigint
+  mints: MintEvent[]
+}
+
+export interface MintEvent {
+  tokenId: bigint
+  address: `0x${string}`
+  block: bigint
+  logIndex: number
+  tx: string
+  unitPrice: bigint
+  amount: bigint
+  price: bigint
 }

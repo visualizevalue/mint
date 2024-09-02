@@ -12,4 +12,13 @@
 
 .muted-light {
   color: var(--muted-light) !important;
+
+  &a, &.button,
+  > a, > .button {
+    transition: color var(--speed);
+
+    :--highlight {
+      color: var(--color) !important;
+    }
+  }
 }

@@ -49,6 +49,8 @@
           <p v-else class="muted-light">Closed at block {{ token.untilBlock }}</p>
           <p class="muted-light" v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
         </div>
+
+        <TokenMintTimeline :token="token" class="network-mints" />
       </section>
     </MintToken>
   </article>

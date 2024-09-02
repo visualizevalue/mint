@@ -1,4 +1,6 @@
 import { getPublicClient, readContract } from '@wagmi/core'
+import { parseAbiItem } from 'viem'
+import type { MintEvent } from '~/utils/types'
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
@@ -10,7 +12,8 @@ export const useOnchainStore = () => {
       version: 1,
       artists: {} as { [key: `0x${string}`]: Artist },
       collections: {} as { [key: `0x${string}`]: Collection },
-      tokenBalances: {} as { [key: `0x${string}`]: { [key: string]: bigint } }, // Collection -> Balance
+      // Collection -> Balance (just for the current user)
+      tokenBalances: {} as { [key: `0x${string}`]: { [key: string]: bigint } },
     }),
 
     getters: {
@@ -44,12 +47,14 @@ export const useOnchainStore = () => {
       hasCollection: (state) => (address: `0x${string}`) => state.collections[address] !== undefined,
       collection: (state) => (address: `0x${string}`) => state.collections[address],
       tokens: (state) => (address: `0x${string}`) =>
-          Object.values(state.collections[address].tokens)
-          .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
+        Object.values(state.collections[address].tokens)
+        .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
+      tokenMints: (state) => (address: `0x${string}`, tokenId: bigint): MintEvent[] =>
+        state.collections[address].tokens[tokenId.toString()].mints,
       tokenBalance: (state) => (address: `0x${string}`, tokenId: bigint): bigint|null =>
-          (state.tokenBalances[address] && (state.tokenBalances[address][`${tokenId}`] !== undefined))
-            ? state.tokenBalances[address][`${tokenId}`]
-            : null,
+        (state.tokenBalances[address] && (state.tokenBalances[address][`${tokenId}`] !== undefined))
+          ? state.tokenBalances[address][`${tokenId}`]
+          : null,
     },
 
     actions: {
@@ -254,6 +259,9 @@ export const useOnchainStore = () => {
             description: metadata.description,
             artifact: metadata.image,
             untilBlock,
+            mintsBackfilledUntilBlock: 0n,
+            mintsFetchedUntilBlock: 0n,
+            mints: []
           }
 
           this.collections[address].tokens[`${token.tokenId}`] = token
@@ -272,12 +280,91 @@ export const useOnchainStore = () => {
           this.tokenBalances[token.collection] = {}
         }
 
-        console.log('fetch token balance')
-
         this.tokenBalances[token.collection][`${token.tokenId}`] =
           await mintContract.read.balanceOf([address, token.tokenId])
 
-        console.log('fetched token balance', this.tokenBalances[token.collection][`${token.tokenId}`])
+        console.info('fetched token balance', this.tokenBalances[token.collection][`${token.tokenId}`])
+      },
+
+      async fetchTokenMints (token: Token) {
+        const client = getPublicClient($wagmi)
+
+        // We want to sync backwards from now
+        const currentBlock = await client.getBlockNumber()
+
+        // Until when
+        const toBlock = currentBlock > token.untilBlock ? token.untilBlock : currentBlock
+
+        if (token.mintsFetchedUntilBlock >= toBlock) return console.info(`Already fetched`)
+
+        // From when
+        const maxRangeBlock = toBlock - 5000n
+        const mintedAtBlock = token.untilBlock - 7200n
+        const fromBlock = maxRangeBlock > mintedAtBlock ? maxRangeBlock : mintedAtBlock
+
+        // Load mints
+        this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
+          ...this.collections[token.collection].tokens[token.tokenId.toString()].mints,
+          ...await this.loadMintEvents(
+            token,
+            fromBlock,
+            toBlock
+          )
+        ]
+
+        console.info(`Token mints fetched from ${fromBlock}-${toBlock}`)
+
+        // Set sync status
+        this.collections[token.collection].tokens[token.tokenId.toString()].mintsFetchedUntilBlock = toBlock
+
+        // If this is our first fetch, mark until when we have backfilled
+        if (! token.mintsBackfilledUntilBlock) {
+          this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock = fromBlock
+        }
+      },
+
+      async backfillTokenMints (token: Token) {
+        const mintedAtBlock = token.untilBlock - 7200n
+
+        while (
+          this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock > mintedAtBlock
+        ) {
+          const toBlock = this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock
+          const fromBlock = toBlock - 5000n > mintedAtBlock ? toBlock - 5000n : mintedAtBlock
+          console.log(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
+
+          this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
+            ...this.collections[token.collection].tokens[token.tokenId.toString()].mints,
+            ...await this.loadMintEvents(token, fromBlock, toBlock)
+          ]
+
+          this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock = fromBlock
+        }
+      },
+
+      async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint) {
+        const client = getPublicClient($wagmi)
+
+        const logs = await client.getLogs({
+          address: token.collection,
+          event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount)'),
+          args: {
+            tokenId: token.tokenId,
+          },
+          fromBlock,
+          toBlock,
+        })
+
+        return logs.map(l => ({
+          tokenId: token.tokenId,
+          address: l.address,
+          block: l.blockNumber,
+          logIndex: l.logIndex,
+          tx: l.transactionHash,
+          unitPrice: l.args.unitPrice,
+          amount: l.args.amount,
+          price: l.args.amount * l.args.unitPrice,
+        })).reverse()
       },
 
       async addCollection (collection: Collection) {
@@ -311,3 +398,4 @@ export const useOnchainStore = () => {
 
   })()
 }
+
