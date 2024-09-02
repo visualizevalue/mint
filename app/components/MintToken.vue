@@ -61,6 +61,8 @@ const mintCount = computed(() => props.mintCount)
 const { price, displayPrice } = await useMintPrice(mintCount)
 
 const mintRequest = computed(() => async () => {
+  const count = BigInt(props.mintCount)
+
   return writeContract($wagmi, {
     abi: MINT_ABI,
     chainId: config.public.chainId,
@@ -68,16 +70,17 @@ const mintRequest = computed(() => async () => {
     functionName: 'mint',
     args: [
       props.token.tokenId,
-      BigInt(props.mintCount),
+      count,
     ],
     value: price.value,
+    gas: 80_000n,
   })
 })
 
 const minted = async () => {
   await Promise.all([
     store.fetchTokenBalance(props.token, address.value),
-    store.fetchTokenMints(props.token),
+    // store.fetchTokenMints(props.token),
   ])
 
   emit('minted')

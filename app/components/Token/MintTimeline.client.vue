@@ -57,8 +57,7 @@ onMounted(async () => {
   loading.value = false
 })
 
-// Autoload new mints every 2 blocks
-useIntervalFn(() => state.fetchTokenMints(token), 24_000)
+watch(currentBlock, () => state.fetchTokenMints(token))
 </script>
 
 <style lang="postcss" scoped>
