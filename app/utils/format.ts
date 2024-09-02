@@ -19,8 +19,8 @@ export const customGweiFormat = (price: bigint, digits?: number) => price > 2000
   ? formatNumber(roundNumber(formatGwei(price)), digits)
   : formatNumber(parseFloat(formatGwei(price)), digits)
 
-export const customFormatEther = (value: bigint, digits: number = 2) => {
-  const format = value > 100_000_000_000_000_000n ? 'ETH' : 'GWEI'
+export const customFormatEther = (value: bigint, digits: number = 4) => {
+  const format = value > 1_000_000_000_000_000n ? 'ETH' : 'GWEI'
 
   const formatted = format === 'ETH'
     ? formatNumber(parseFloat(formatEther(value)), digits)

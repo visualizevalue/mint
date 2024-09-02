@@ -3,9 +3,10 @@
     <ClientOnly>
       <Breadcrumbs :items="breadcrumbs" />
 
-      <GasPrice #default="{ price }">
-        <span class="gas">{{ price.formatted.gwei }} GWEI</span>
-      </GasPrice>
+      <span class="gas">
+        {{ displayPrice.value }} {{ displayPrice.format }}
+        (${{ dollarPrice }})
+      </span>
 
       <Connect v-if="! isConnected" />
       <NuxtLink v-else :to="{ name: 'profile-address', params: { address: address?.toLowerCase() } }">
@@ -38,6 +39,11 @@ const breadcrumbs = computed(() => {
 })
 
 const { y } = useWindowScroll()
+
+const mintCount = ref(1)
+const { price, displayPrice } = await useMintPrice(mintCount)
+const priceFeed = usePriceFeedStore()
+const dollarPrice = computed(() => priceFeed.weiToUSD(price.value))
 </script>
 
 <style lang="postcss" scoped>

@@ -32,3 +32,15 @@ export const useGasPrice = async () => {
 
   return unitPrice
 }
+
+export const useMintPrice = async (mintCount: Ref<number>) => {
+  const gasPrice = await useGasPrice()
+
+  const price = computed(() => (gasPrice.value.wei || 0n) * 60_000n * BigInt(mintCount.value))
+  const displayPrice = computed(() => customFormatEther(price.value))
+
+  return {
+    price,
+    displayPrice,
+  }
+}

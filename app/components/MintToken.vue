@@ -57,9 +57,8 @@ const blocksRemaining = computed(() => props.token.untilBlock - (currentBlock.va
 const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
 const until = computed(() => nowInSeconds() + secondsRemaining.value)
 
-const gasPrice = await useGasPrice()
-const price = computed(() => gasPrice.value.wei * 60_000n * BigInt(props.mintCount))
-const displayPrice = computed(() => customFormatEther(price.value))
+const mintCount = computed(() => props.mintCount)
+const { price, displayPrice } = await useMintPrice(mintCount)
 
 const mintRequest = computed(() => async () => {
   return writeContract($wagmi, {
