@@ -308,7 +308,7 @@ export const useOnchainStore = () => {
 
         // Load mints
         this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
-          ...this.collections[token.collection].tokens[token.tokenId.toString()].mints,
+          ...(this.collections[token.collection].tokens[token.tokenId.toString()].mints) || [],
           ...await this.loadMintEvents(
             token,
             fromBlock,
