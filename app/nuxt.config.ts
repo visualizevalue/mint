@@ -13,6 +13,7 @@ export default defineNuxtConfig({
       factoryAddress: '',
       chainId: 1337,
       walletConnectProjectId: '',
+      platformUrl: 'https://networked.art',
     }
   },
 

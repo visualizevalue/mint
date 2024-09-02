@@ -28,7 +28,9 @@ watch(isConnected, () => maybeCheckBalance(true))
 // Navigation guards
 onMounted(async () => {
   if (collection.value.latestTokenId < tokenId.value) {
-    return navigateTo({ name: 'id-collection', params: { id: id.value, collection: collection.value.address }})
+    return navigateTo({ name: 'id-collection', params: { id: id.value, collection: collection.value.address }}, {
+      replace: true
+    })
   }
 
   if (! token.value) await store.fetchToken(collection.value.address, tokenId.value)

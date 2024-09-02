@@ -9,7 +9,7 @@ import { useAccount } from '@wagmi/vue'
 const { isConnected } = useAccount()
 
 const check = () => {
-  if (! isConnected.value) return navigateTo('/')
+  if (! isConnected.value) return navigateTo('/', { replace: true })
 }
 
 onMounted(() => check())

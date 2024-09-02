@@ -12,7 +12,9 @@ import { useAccount } from '@wagmi/vue'
 const { address, isConnected } = useAccount()
 
 const redirect = () => {
-  if (isConnected) navigateTo({ name: 'profile-address', params: { address: address.value?.toLowerCase() }})
+  if (isConnected) navigateTo({ name: 'profile-address', params: { address: address.value?.toLowerCase() }}, {
+    replace: true
+  })
 }
 onMounted(() => redirect())
 watch(isConnected, () => redirect())

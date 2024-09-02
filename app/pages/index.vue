@@ -4,7 +4,7 @@
       <p>{{ config.public.description }}</p>
 
       <ClientOnly>
-        <Connect @connected="$event => navigateTo({ name: 'id', params: { id: $event.address } })">
+        <Connect @connected="$event => navigateTo({ name: 'id', params: { id: $event.address } }, { replace: true })">
           <template #connected>
             <span></span>
           </template>
