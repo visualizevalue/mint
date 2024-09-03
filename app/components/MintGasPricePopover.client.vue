@@ -1,6 +1,6 @@
 <template>
   <Popover id="about-gas">
-    <template #trigger><MintGasPrice /></template>
+    <template #trigger><MintGasPrice :mint-count="2" /></template>
     <template #content>
       <div class="minimal-prose">
         <h1>Mint Pricing</h1>

@@ -29,7 +29,7 @@ const trigger = ref()
 const popover = ref()
 
 const { width: windowWidth } = useWindowSize()
-const { width: dialogWidth } = useElementSize(popover)
+const { width: dialogWidth } = useElementSize(popover, {}, { box: 'border-box' })
 const { x: targetX, y: targetY, width: targetWidth, height: targetHeight } = useElementBounding(trigger)
 const targetCenterX = computed(() => targetX.value + targetWidth.value / 2)
 const adjustmentX = computed(() => {
@@ -47,9 +47,7 @@ const popoverPosition = computed(() => {
 
 const popoverArrowPosition = computed(() => {
   return {
-    // left: targetCenterX.value + 'px',
     left: dialogWidth.value/2 - adjustmentX.value + 'px',
-    // top: targetY.value + targetHeight.value + 'px',
   }
 })
 </script>
@@ -81,8 +79,8 @@ const popoverArrowPosition = computed(() => {
     border-top: var(--border);
     border-left: var(--border);
     background: var(--background);
-    /* background: red; */
     transform: rotate(45deg);
+    margin-left: calc(-0.5 * var(--size-3));
     width: var(--size-3);
     height: var(--size-3);
     top: calc(-1 * var(--size-2) + 1px);
