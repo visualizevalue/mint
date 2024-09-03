@@ -12,7 +12,7 @@
   }
   h2 {
     font-size: var(--font-lg);
-    text-transform: uppercase;
+    text-transform: var(--text-transform-ui);
   }
   h3 {
     font-size: var(--font-lg);

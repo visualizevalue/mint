@@ -64,11 +64,12 @@
   @supports (font-variation-settings: normal) {
     --font-family-main: "InterVariable", sans-serif;
   }
-  --font-family-main: "Space Mono", "Fira Code", monospace, sans-serif;
+  --font-family-main: "Nunito", "Space Mono", "Fira Code", monospace, sans-serif;
   --font-family-prose: var(--font-family-main);
   --font-family-ui:    var(--font-family-main);
 
   --font-base: 13px;
+  --font-base: 15px;
   --font-xs: calc(var(--font-base) * 0.8);
   --font-sm: calc(var(--font-base) * 0.8);
   --font-lg: min(calc(var(--font-base) + 1vw * 2), calc(var(--font-base) * 1.25));
@@ -89,6 +90,9 @@
   --line-height:    100%;
   --line-height-md: 120%;
   --line-height-lg: 160%;
+
+  --text-transform: uppercase;
+  --text-transform: none;
 
   /* ANIMATION */
   --speed-fast: 0.15s;

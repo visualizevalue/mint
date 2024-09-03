@@ -33,7 +33,7 @@ const { user } = defineProps({
 
   > span {
     font-family: var(--font-family-ui);
-    text-transform: uppercase;
+    text-transform: var(--text-transform-ui);
     font-size: var(--font-sm);
     color: var(--white);
     text-align: center;

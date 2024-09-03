@@ -13,13 +13,13 @@ select {
   font-family: var(--font-family-ui);
   font-weight: var(--font-weight);
   transition: all var(--speed);
-  text-transform: uppercase;
+  text-transform: var(--text-transform-ui);
   user-select: none;
   border-radius: 0;
   background: var(--background);
 
   &::placeholder {
-    text-transform: uppercase;
+    text-transform: var(--text-transform-ui);
   }
 
   &:-internal-autofill-selected {
@@ -166,7 +166,7 @@ form {
   label {
     display: block;
     font-family: var(--font-family-ui);
-    text-transform: uppercase;
+    text-transform: var(--text-transform-ui);
     margin: var(--size-2) 0;
     color: var(--gray-z-7);
     transition: all var(--speed);

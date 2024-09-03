@@ -14,7 +14,7 @@
       <div>
         <Button :to="{ name: `id-create`, params: { id } }">
           <Icon type="plus" />
-          <span>Create your first</span>
+          <span>Create Your First</span>
         </Button>
       </div>
     </template>

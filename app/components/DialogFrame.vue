@@ -77,7 +77,7 @@ dialog {
     padding-right: var(--size-6);
     font-family: var(--font-family-ui);
     font-size: var(--font-lg);
-    text-transform: uppercase;
+    text-transform: var(--text-transform);
     margin-bottom: var(--size-3);
   }
 

@@ -24,7 +24,7 @@ const { txt } = defineProps({
   gap: var(--spacer-sm);
 
   .text {
-    text-transform: uppercase;
+    text-transform: var(--text-transform-ui);
     color: var(--muted);
     font-family: var(--font-family-ui);
     font-weight: var(--font-weight-bold);
