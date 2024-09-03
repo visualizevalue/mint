@@ -3,7 +3,7 @@
   <PageFrame v-else title="Profile">
 
     <ProfileHeader :address="address">
-      <template  v-if="isMe" #before>
+      <template v-if="isMe" #before>
         <Actions>
           <Button :to="`https://app.ens.domains/${address}`" class="small">
             <Icon type="edit-2" />
