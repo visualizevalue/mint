@@ -4,16 +4,16 @@ import { getGasPrice } from '@wagmi/core'
 import { useConfig, useBlockNumber } from '@wagmi/vue'
 
 let priceWatcher: WatchStopHandle|null = null
-const price: Ref<bigint|null> = ref(null)
+const price: Ref<bigint> = ref(0n)
 export const useGasPrice = async () => {
   const config = useConfig()
   const { data: blockNumber } = useBlockNumber()
 
   if (! priceWatcher) {
-    watch(blockNumber, async () => price.value = await getGasPrice(config))
+    priceWatcher = watch(blockNumber, async () => price.value = await getGasPrice(config))
   }
 
-  if (price.value === null) {
+  if (price.value === null && priceWatcher === null) {
     price.value = await getGasPrice(config)
   }
 
