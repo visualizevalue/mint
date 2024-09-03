@@ -60,8 +60,12 @@
   --border-radius: var(--size-1);
 
   /* FONTS */
-  --font-family-main:  Carbon, Space Mono, Inter, Avenir, Helvetica, Arial, sans-serif;
-  --font-family-prose: Space Grotesk, Inter, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-main: "Inter", sans-serif;
+  @supports (font-variation-settings: normal) {
+    --font-family-main: "InterVariable", sans-serif;
+    font-optical-sizing: auto;
+  }
+  --font-family-prose: var(--font-family-main);
   --font-family-ui:    var(--font-family-main);
 
   --font-xs: calc(var(--size-2) + var(--size-1));
@@ -72,8 +76,9 @@
   --font-title: min(calc(var(--size-4) + 1vw * 2), var(--size-7));
   --font-display: min(calc(var(--size-6) + 1vw * 2), var(--size-8));
   --font-weight-light: 300;
-  --font-weight: 400;
-  --font-weight-bold: 500;
+  --font-weight: 500;
+  --font-weight-bold: 700;
+  --rem: 14px;
 
   --letter-spacing-sm: -0.025em;
   --letter-spacing-md: 0.05em;
