@@ -25,12 +25,14 @@
         </p>
       </div>
 
-      <Button
-        v-if="ownedByMe"
-        :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
-        class="small"
-        id="mint-new"
-      >Mint New</Button>
+      <menu v-if="ownedByMe">
+        <CollectionWithdraw :collection="collection" />
+        <Button
+          :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
+          id="mint-new"
+          class="small"
+        >Mint New</Button>
+      </menu>
     </div>
   </header>
 </template>
@@ -90,23 +92,20 @@ header {
       }
     }
 
-    #mint-new {
-      width: 100%;
-    }
+    menu {
+      margin: 0;
+      display: flex;
+      padding: 0;
+      gap: var(--spacer-sm);
 
-    @media (--sm) {
-      h1 {
-        padding-right: 5rem;
-      }
+      button {
+        width: auto;
 
-      #mint-new {
-        position: absolute;
-        width: fit-content;
-        top: 0;
-        right: 0;
+        @media (--md) {
+          width: fit-content;
+        }
       }
     }
-
   }
 }
 </style>

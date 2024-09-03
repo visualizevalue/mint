@@ -35,6 +35,7 @@ export interface Collection {
   initBlock: bigint
   latestTokenId: bigint
   tokens: { [key: string]: Token }
+  balance: bigint
 }
 
 export interface Token {

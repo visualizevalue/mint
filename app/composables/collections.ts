@@ -1,8 +1,9 @@
-import { getPublicClient, readContract } from '@wagmi/core'
+import { getBalance, getPublicClient, readContract } from '@wagmi/core'
+import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 2
+export const CURRENT_STATE_VERSION = 3
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
@@ -15,7 +16,7 @@ export const useOnchainStore = () => {
       artists: {} as { [key: `0x${string}`]: Artist },
       collections: {} as { [key: `0x${string}`]: Collection },
       // Collection -> Balance (just for the current user)
-      tokenBalances: {} as { [key: `0x${string}`]: { [key: string]: bigint } },
+      tokenBalances: {} as { [key: `0x${string}`]: { [key: string]: bigint } },
     }),
 
     getters: {
@@ -50,10 +51,10 @@ export const useOnchainStore = () => {
       collection: (state) => (address: `0x${string}`) => state.collections[address],
       tokens: (state) => (address: `0x${string}`) =>
         Object.values(state.collections[address].tokens)
-        .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
+          .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
       tokenMints: (state) => (address: `0x${string}`, tokenId: bigint): MintEvent[] =>
         state.collections[address].tokens[tokenId.toString()].mints,
-      tokenBalance: (state) => (address: `0x${string}`, tokenId: bigint): bigint|null =>
+      tokenBalance: (state) => (address: `0x${string}`, tokenId: bigint): bigint | null =>
         (state.tokenBalances[address] && (state.tokenBalances[address][`${tokenId}`] !== undefined))
           ? state.tokenBalances[address][`${tokenId}`]
           : null,
@@ -75,13 +76,17 @@ export const useOnchainStore = () => {
         return artist
       },
 
-      async fetchArtistScope (address: `0x${string}`, factory: `0x${string}`) {
+      ensureStoreVersion () {
         if (this.version < CURRENT_STATE_VERSION) {
           console.info(`Reset store`)
           this.$reset()
         }
+      },
 
-        if (! this.hasArtist(address)) this.initializeArtist(address)
+      async fetchArtistScope (address: `0x${string}`, factory: `0x${string}`) {
+        this.ensureStoreVersion()
+
+        if (!this.hasArtist(address)) this.initializeArtist(address)
 
         await this.fetchArtistProfile(address)
 
@@ -105,7 +110,7 @@ export const useOnchainStore = () => {
         console.info(`Updating artist profile...`)
 
         let ens, avatar, description,
-            url, email, twitter, github
+          url, email, twitter, github
 
         try {
           ens = await client.getEnsName({ address })
@@ -120,7 +125,7 @@ export const useOnchainStore = () => {
               client.getEnsText({ name: ens, key: 'com.github' }),
             ])
           }
-        } catch (e) {}
+        } catch (e) { }
 
         this.artists[address].ens = ens
         this.artists[address].avatar = avatar
@@ -161,11 +166,13 @@ export const useOnchainStore = () => {
       },
 
       async fetchCollection (address: `0x${string}`): Promise<Collection> {
+        this.ensureStoreVersion()
+
         if (this.hasCollection(address) && this.collection(address).latestTokenId > 0n) {
           return this.collection(address)
         }
 
-        const [data, initBlock, latestTokenId, owner] = await Promise.all([
+        const [data, initBlock, latestTokenId, owner, balance] = await Promise.all([
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
@@ -190,6 +197,9 @@ export const useOnchainStore = () => {
             functionName: 'owner',
             chainId,
           }) as Promise<`0x${string}`>,
+          getBalance($wagmi, {
+            address,
+          }) as Promise<GetBalanceReturnType>,
         ])
 
         const json = Buffer.from(data.substring(29), `base64`).toString()
@@ -207,7 +217,13 @@ export const useOnchainStore = () => {
           latestTokenId,
           owner: artist,
           tokens: {},
+          balance: balance.value,
         })
+      },
+
+      async fetchCollectionBalance (address: `0x${string}`) {
+        const balance = await getBalance($wagmi, { address })
+        this.collections[address].balance = balance.value
       },
 
       async fetchCollectionTokens (address: `0x${string}`): Promise<Token[]> {
@@ -240,7 +256,7 @@ export const useOnchainStore = () => {
         return this.tokens(address)
       },
 
-      async fetchToken (address: `0x${string}`, id: number|string|bigint) {
+      async fetchToken (address: `0x${string}`, id: number | string | bigint) {
         const client = getPublicClient($wagmi, { chainId })
         const mintContract = getContract({
           address,
@@ -275,7 +291,7 @@ export const useOnchainStore = () => {
           }
 
           this.collections[address].tokens[`${token.tokenId}`] = token
-        } catch (e) {}
+        } catch (e) { }
       },
 
       async fetchTokenBalance (token: Token, address: `0x${string}`) {
@@ -313,8 +329,8 @@ export const useOnchainStore = () => {
         const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock
           ? token.mintsFetchedUntilBlock
           : maxRangeBlock > mintedAtBlock
-          ? maxRangeBlock
-          : mintedAtBlock
+            ? maxRangeBlock
+            : mintedAtBlock
 
         // Load mints
         this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
@@ -412,4 +428,3 @@ export const useOnchainStore = () => {
 
   })()
 }
-
