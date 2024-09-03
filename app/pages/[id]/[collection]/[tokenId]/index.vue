@@ -33,8 +33,6 @@ onMounted(async () => {
     })
   }
 
-  if (! token.value) await store.fetchToken(collection.value.address, tokenId.value)
-
   await maybeCheckBalance()
 })
 

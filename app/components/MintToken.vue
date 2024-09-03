@@ -6,6 +6,7 @@
       mintRequest,
       minted,
       mintOpen,
+      currentBlock,
       blocksRemaining,
       secondsRemaining,
       until,
