@@ -1,0 +1,8 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Carbon';
+  font-style:  normal;
+  font-weight: 400;
+  src: url('/fonts/carbon/carbon.woff2?v=1.0') format('woff2');
+}
+

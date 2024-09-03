@@ -26,6 +26,7 @@ defineProps({
   gap: var(--size-2);
   justify-content: center;
   align-items: center;
+  letter-spacing: var(--letter-spacing);
 
   &.non-interactive,
   &[disabled]:not([disabled="false"]) {

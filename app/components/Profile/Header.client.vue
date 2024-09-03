@@ -77,6 +77,7 @@ header {
 
     small {
       color: var(--muted);
+      font-size: var(--font-xs);
     }
   }
 

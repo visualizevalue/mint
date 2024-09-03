@@ -3,6 +3,12 @@
   line-height: var(--line-height-base);
   font-weight: var(--font-weight);
   font-size: var(--rem);
+  font-style: normal;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+
+  @supports (font-variation-settings: normal) {
+    font-optical-sizing: auto;
+  }
 
   background-color: var(--background);
   color: var(--color);
@@ -14,9 +20,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  letter-spacing: var(--letter-spacing);
 
   @media (--md) {
     background-color: var(--background);
+  }
+
+  * {
+    font-size: var(--font-base);
   }
 }
 

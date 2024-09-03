@@ -63,24 +63,25 @@
   --font-family-main: "Inter", sans-serif;
   @supports (font-variation-settings: normal) {
     --font-family-main: "InterVariable", sans-serif;
-    font-optical-sizing: auto;
   }
+  --font-family-main: "Space Mono", "Fira Code", monospace, sans-serif;
   --font-family-prose: var(--font-family-main);
   --font-family-ui:    var(--font-family-main);
 
-  --font-xs: calc(var(--size-2) + var(--size-1));
-  --font-sm: var(--size-3);
-  --font-base: var(--size-4);
-  --font-lg: min(calc(var(--size-3) + 1vw * 2), var(--size-5));
-  --font-xl: min(calc(var(--size-4) + 1vw * 2), var(--size-6));
+  --font-base: 13px;
+  --font-xs: calc(var(--font-base) * 0.8);
+  --font-sm: calc(var(--font-base) * 0.8);
+  --font-lg: min(calc(var(--font-base) + 1vw * 2), calc(var(--font-base) * 1.25));
+  --font-xl: min(calc(var(--font-lg) + 1vw * 2), calc(var(--font-lg) * 1.25));
   --font-title: min(calc(var(--size-4) + 1vw * 2), var(--size-7));
   --font-display: min(calc(var(--size-6) + 1vw * 2), var(--size-8));
   --font-weight-light: 300;
-  --font-weight: 500;
-  --font-weight-bold: 700;
-  --rem: 14px;
+  --font-weight: 600;
+  --font-weight-bold: 600;
+  --rem: 16px;
 
   --letter-spacing-sm: -0.025em;
+  --letter-spacing: 0.025em;
   --letter-spacing-md: 0.05em;
   --letter-spacing-lg: 0.1em;
 
