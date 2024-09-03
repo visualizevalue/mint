@@ -1,5 +1,5 @@
 <template>
-  <TransactionFlow v-if="collection.balance" :request="withdraw" :text="{
+  <TransactionFlow v-if="showWithdrawButton" :request="withdraw" :text="{
     title: {
       chain: 'Switch Chain',
       requesting: 'Confirm In Wallet',
@@ -34,6 +34,8 @@ const { collection } = defineProps({
   collection: Object,
 })
 
+const forceHide = ref(false)
+const showWithdrawButton = computed(() => collection.balance && ! forceHide.value)
 const balance = computed(() => customFormatEther(collection.balance))
 
 const withdraw = computed(() => async () => {
@@ -47,7 +49,10 @@ const withdraw = computed(() => async () => {
 
 const store = useOnchainStore()
 const onComplete = async () => {
+  forceHide.value = true
   await store.fetchCollectionBalance(collection.address)
+  await delay(1000)
+  forceHide.value = false
 }
 
 onMounted(async () => {
