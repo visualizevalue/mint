@@ -2,13 +2,14 @@
   <section>
     <h1>Mint Timeline</h1>
 
-    <div class="table">
+    <div v-if="currentBlock" class="table">
       <TokenMintTimelineItem
-        v-for="mint of mints" :mint="mint"
+        v-for="mint of mints"
+        :mint="mint"
         :key="mint.tx"
         :block="currentBlock"
       />
-      <div v-if="! loading">
+      <div v-if="! loading || mints.length">
         <span>
           <Account :address="collection.owner" />
         </span>
@@ -26,7 +27,7 @@
       </div>
     </div>
 
-    <Loading v-if="loading" txt="mint history..." />
+    <Loading v-if="loading || ! currentBlock" txt="Mint History..." />
   </section>
 </template>
 

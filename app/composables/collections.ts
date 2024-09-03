@@ -264,6 +264,11 @@ export const useOnchainStore = () => {
           client,
         })
 
+        if (this.collection(address).tokens[`${id}`]) {
+          console.info(`Token cached #${id}`)
+          return
+        }
+
         // Normalize token ID
         const tokenId = BigInt(id)
 

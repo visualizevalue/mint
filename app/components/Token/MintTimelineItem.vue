@@ -5,7 +5,7 @@
     </span>
 
     <span class="right">{{ mint.amount.toString() }}<span class="muted-light">×</span></span>
-    <!-- <span class="right">{{ customFormatEther(mint.unitPrice).value }}</span> -->
+
     <span class="right">{{ formattedPrice.value }} {{ formattedPrice.format }}</span>
 
     <span class="right"><BlocksTimeAgo :blocks="block - mint.block" /></span>
