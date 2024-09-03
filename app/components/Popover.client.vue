@@ -3,14 +3,16 @@
     :popovertarget="id"
     class="gas"
     ref="trigger"
+    @mouseenter="() => popover.showPopover()"
   ><slot name="trigger" /></button>
 
   <Teleport to="body">
     <div
-    popover
-    ref="popover"
-    :id="id"
-    :style="popoverPosition"
+      popover
+      ref="popover"
+      :id="id"
+      :style="popoverPosition"
+      @mouseleave="() => popover.hidePopover()"
     >
       <div class="arrow" :style="popoverArrowPosition"></div>
       <slot name="content" />
@@ -20,7 +22,7 @@
 
 <script setup>
 const {
-  id
+  id,
 } = defineProps({
   id: String,
 })
