@@ -3,7 +3,7 @@
     <ClientOnly>
       <Breadcrumbs :items="breadcrumbs" />
 
-      <MintGasPrice />
+      <MintGasPricePopover />
 
       <Connect v-if="! isConnected" />
       <NuxtLink v-else :to="{ name: 'profile-address', params: { address: address?.toLowerCase() } }">
@@ -57,7 +57,6 @@ header {
   }
 
   :deep(> .breadcrumb) {
-    /* max-width: 60vw; */
     overflow: hidden;
     text-overflow: ellipsis;
     justify-content: flex-start;
@@ -70,10 +69,11 @@ header {
     }
   }
 
-  .gas {
+  :deep(> .gas) {
     display: none;
     margin-left: auto;
     white-space: nowrap;
+    width: min-content;
 
     @media (--md) {
       display: block;

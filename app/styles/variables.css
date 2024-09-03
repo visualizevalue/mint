@@ -104,6 +104,10 @@
   --border-dark: 1px solid var(--border-color-dark);
 
   /* SHADOWS */
+  --shadow:
+    0 var(--size-0) var(--size-2) var(--gray-z-1-semi),
+    0 var(--size-2) var(--size-7) calc(-1 * var(--size-5)) var(--gray-z-3-semi);
+
   --shadow-xl:
     0 var(--size-3) var(--size-8) var(--gray-z-3-semi),
     0 var(--size-8) var(--size-6) calc(-1 * var(--size-8)) var(--gray-z-6-semi);
@@ -130,6 +134,7 @@
   --muted: var(--gray-z-6);
   --muted-light: var(--gray-z-4);
 
+  --background-0: rgba(0, 0, 0, 0);
   --background-semi: var(--black-semi);
   --gray-z-0-semi: var(--gray-950-semi);
   --gray-z-1-semi: var(--gray-900-semi);
@@ -161,6 +166,7 @@
   --gray-z-10: var(--gray-950);
   --color: var(--black);
 
+  --background-0: rgba(255, 255, 255, 0);
   --background-semi: var(--white-semi);
   --gray-z-0-semi: var(--gray-50-semi);
   --gray-z-1-semi: var(--gray-100-semi);

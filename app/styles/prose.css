@@ -116,6 +116,48 @@
   }
 }
 
+/* MINIMAL PROSE */
+.minimal-prose {
+  h1, h2, h3 {
+    width: min-content;
+    position: relative;
+    white-space: nowrap;
+    margin: var(--spacer) 0;
+    color: var(--color);
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: calc(100% + var(--spacer-xs)*2);
+      left: calc(-1 * var(--spacer-xs));
+      bottom: calc(-1 * var(--spacer-xs));
+      border-bottom: 3px solid var(--border-color);
+    }
+  }
+
+  > table {
+    margin: var(--spacer) 0;
+
+    td {
+      padding: calc(var(--spacer-sm) - var(--spacer-xs)) var(--spacer-sm);
+      border: var(--border);
+    }
+  }
+
+  > * {
+    margin: var(--spacer-sm) 0;
+    color: var(--gray-z-7);
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 /* GENERAL HINT RULES */
 p {
   a {
