@@ -1,5 +1,7 @@
 # for now...
 api
+app/layer-example
+app/example-2
 
 node_modules
 .env

@@ -33,26 +33,13 @@ export default defineNuxtConfig({
           name: 'twitter:card',
           content: 'summary_large_image',
         },
-        {
-          name: 'twitter:site',
-          content: '@evverydays',
-        }
       ],
       link: [
-        {
-          rel: 'icon',
-          href: '/favicon.ico',
-          sizes: '48x48'
-        },
         {
           rel: 'icon',
           href: '/icon.svg',
           sizes: 'any',
           type: 'image/svg+xml'
-        },
-        {
-          rel: 'apple-touch-icon',
-          href: '/apple-touch-icon-512x512.png'
         },
       ]
     }

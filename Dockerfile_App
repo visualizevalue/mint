@@ -23,7 +23,7 @@ RUN pnpm install --frozen-lockfile
 # Copy the rest of the application
 COPY . .
 
-# Build
+# Build TODO: Rename
 RUN pnpm -F @visualizevalue/mint-app build
 
 WORKDIR /mint/app

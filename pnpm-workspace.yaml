@@ -1,5 +1,5 @@
 packages:
-  - 'base'
-  - 'app'
+  - 'app/base'
+  - 'app/example'
   - 'contracts'
   - 'utils'

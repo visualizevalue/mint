@@ -1,0 +1,17 @@
+{
+    "name": "@visualizevalue/mint-example",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "dependencies": {
+        "nuxt": "^3.13.0",
+        "vue": "^3.4.27"
+    }
+}

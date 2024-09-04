@@ -1,5 +1,5 @@
 {
-    "name": "@visualizevalue/mint-app",
+    "name": "@visualizevalue/mint-app-base",
     "version": "0.0.1",
     "private": true,
     "type": "module",
@@ -17,7 +17,6 @@
         "@pinia/nuxt": "^0.5.3",
         "@tanstack/vue-query": ">=5.45.0",
         "@visualizevalue/mint-utils": "workspace:../utils",
-        "@vite-pwa/nuxt": "^0.7.0",
         "@vueuse/components": "^10.11.0",
         "@vueuse/core": "^10.10.0",
         "@vueuse/nuxt": "^10.10.0",
@@ -38,8 +37,6 @@
         "vue-virtual-scroller": "^2.0.0-beta.8"
     },
     "devDependencies": {
-        "@vite-pwa/assets-generator": "^0.2.4",
-        "@vue/devtools-api": "6.6.3",
-        "sharp": "^0.33.4"
+        "@vue/devtools-api": "6.6.3"
     }
 }
