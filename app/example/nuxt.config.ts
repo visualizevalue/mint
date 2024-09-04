@@ -1,11 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-  devtools: { enabled: !! process.env.NUXT_DEVTOOLS },
+  devtools: { enabled: true },
   ssr: process.env.NUXT_SSR !== 'false',
 
   extends: [
-    '../base/',
+    // '@visualizevalue/mint-app-base',
+    '../base'
   ],
 
   runtimeConfig: {
@@ -21,34 +22,18 @@ export default defineNuxtConfig({
     }
   },
 
-  app: {
-    head: {
-      title: 'Mint',
-      meta: [
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1, viewport-fit=cover'
-        },
-        { name: 'theme-color', content: '#000000' },
-        {
-          name: 'twitter:card',
-          content: 'summary_large_image',
-        },
-      ],
-      link: [
-        {
-          rel: 'icon',
-          href: '/icon.svg',
-          sizes: 'any',
-          type: 'image/svg+xml'
-        },
-      ]
-    }
-  },
-
   css: [
-    '~/styles/theme.css',
+    '~/assets/styles/theme.css',
   ],
+
+  vite: {
+    optimizeDeps: {
+      force: true,
+      include: [
+        '@wagmi/core > eventemitter3'
+      ],
+    },
+  },
 
   devServer: {
     port: 1618,

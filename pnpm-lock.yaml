@@ -86,12 +86,19 @@ importers:
 
   app/example:
     dependencies:
+      eventemitter3:
+        specifier: ^5.0.1
+        version: 5.0.1
       nuxt:
         specifier: ^3.13.0
         version: 3.13.1(@parcel/watcher@2.4.1)(@types/node@20.16.1)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.4)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@20.16.1)(terser@5.31.6))(webpack-sources@3.2.3)
       vue:
         specifier: ^3.4.27
         version: 3.5.1(typescript@5.5.4)
+    devDependencies:
+      '@vue/devtools-api':
+        specifier: 6.6.3
+        version: 6.6.3
 
   contracts:
     dependencies:

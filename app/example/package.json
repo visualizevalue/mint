@@ -11,7 +11,11 @@
         "postinstall": "nuxt prepare"
     },
     "dependencies": {
+        "eventemitter3": "^5.0.1",
         "nuxt": "^3.13.0",
         "vue": "^3.4.27"
+    },
+    "devDependencies": {
+        "@vue/devtools-api": "6.6.3"
     }
 }

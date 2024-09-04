@@ -1,7 +1,11 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: !! process.env.NUXT_DEVTOOLS },
+  devtools: { enabled: true },
   ssr: process.env.NUXT_SSR !== 'false',
 
   runtimeConfig: {
@@ -46,15 +50,15 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '~/styles/index.css',
+    join(currentDir, './assets/styles/index.css'),
   ],
 
   postcss: {
     plugins: {
       '@csstools/postcss-global-data': {
         files: [
-          'styles/custom-selectors.css',
-          'styles/custom-media.css',
+          join(currentDir, './assets/styles/custom-selectors.css'),
+          join(currentDir, './assets/styles/custom-media.css'),
         ]
       },
       'postcss-nested': {},
