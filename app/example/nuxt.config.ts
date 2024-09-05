@@ -10,10 +10,6 @@ export default defineNuxtConfig({
     '@visualizevalue/mint-app-base',
   ],
 
-  modules: [
-    '@vueuse/nuxt',
-  ],
-
   runtimeConfig: {
     public: {
       title: 'Mint',
@@ -36,5 +32,9 @@ export default defineNuxtConfig({
     host: process.env.NUXT_PUBLIC_DOMAIN || 'localhost',
   },
 
-  compatibilityDate: '2024-07-29'
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  compatibilityDate: '2024-08-14',
 })

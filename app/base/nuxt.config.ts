@@ -132,5 +132,9 @@ export default defineNuxtConfig({
     storage: 'localStorage'
   },
 
-  compatibilityDate: '2024-07-29'
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  compatibilityDate: '2024-08-14',
 })
