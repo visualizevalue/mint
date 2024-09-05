@@ -22,10 +22,6 @@
   -webkit-text-size-adjust: 100%;
   letter-spacing: var(--letter-spacing);
 
-  @media (--md) {
-    background-color: var(--background);
-  }
-
   * {
     font-size: var(--font-base);
   }
@@ -35,3 +31,4 @@ html,
 body {
   overflow-x: hidden;
 }
+

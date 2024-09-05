@@ -1,3 +1,6 @@
+@import "./variables.css";
+
 body {
-  border: 3px solid red;
+  border: var(--spacer) solid var(--gray-z-3);
 }
+

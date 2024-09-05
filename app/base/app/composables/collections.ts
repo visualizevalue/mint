@@ -1,7 +1,7 @@
 import { getBalance, getPublicClient, readContract } from '@wagmi/core'
 import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem } from 'viem'
-import type { MintEvent } from '~/utils/types'
+import type { MintEvent } from '~/app/utils/types'
 
 export const CURRENT_STATE_VERSION = 3
 

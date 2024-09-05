@@ -24,12 +24,18 @@ export default defineNuxtConfig({
   },
 
   css: [
+    // Doesn't work yet since ordering with layers is wrong.
+    // We import the styles in app.vue instead.
     '~/assets/styles/theme.css',
   ],
 
   devServer: {
     port: 1618,
     host: process.env.NUXT_PUBLIC_DOMAIN || 'localhost',
+  },
+
+  features: {
+    inlineStyles: false
   },
 
   future: {

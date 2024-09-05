@@ -23,42 +23,32 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      htmlAttrs: {
-        lang: 'en',
-      },
-      title: 'Mint',
+      viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
+      htmlAttrs: { lang: 'en' },
+      title: process.env.NUXT_PUBLIC_TITLE,
       meta: [
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1, viewport-fit=cover'
-        },
-        { name: 'theme-color', content: '#000000' },
-        {
-          name: 'twitter:card',
-          content: 'summary_large_image',
-        },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+        { name: 'theme-color', content: 'black' },
+        { name: 'theme-color', media: '(prefers-color-scheme: light)', content: 'white' },
+        { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: 'black' },
       ],
       link: [
-        {
-          rel: 'icon',
-          href: '/icon.svg',
-          sizes: 'any',
-          type: 'image/svg+xml'
-        },
+        { rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' },
       ]
     }
   },
 
   css: [
-    join(currentDir, './assets/styles/index.css'),
+    join(currentDir, './app/assets/styles/index.css'),
   ],
 
   postcss: {
     plugins: {
       '@csstools/postcss-global-data': {
         files: [
-          join(currentDir, './assets/styles/custom-selectors.css'),
-          join(currentDir, './assets/styles/custom-media.css'),
+          join(currentDir, './app/assets/styles/custom-selectors.css'),
+          join(currentDir, './app/assets/styles/custom-media.css'),
         ]
       },
       'postcss-nested': {},
