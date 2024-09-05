@@ -25,7 +25,7 @@
         <Image :src="token.artifact" :alt="token.name" />
         <CardLink :to="{
           name: 'id-collection-tokenId',
-          params: { id: collection.owner, collection: token.collection, tokenId: token.tokenId }
+          params: { id: collection.owner, collection: token.collection, tokenId: `${token.tokenId}` }
         }">View {{ token.name }}</CardLink>
       </div>
       <footer>

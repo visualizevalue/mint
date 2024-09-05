@@ -6,7 +6,12 @@ export default defineNuxtConfig({
 
   extends: [
     // '@visualizevalue/mint-app-base',
-    '../base'
+    // '../base'
+    '@visualizevalue/mint-app-base',
+  ],
+
+  modules: [
+    '@vueuse/nuxt',
   ],
 
   runtimeConfig: {
@@ -25,15 +30,6 @@ export default defineNuxtConfig({
   css: [
     '~/assets/styles/theme.css',
   ],
-
-  vite: {
-    optimizeDeps: {
-      force: true,
-      include: [
-        '@wagmi/core > eventemitter3'
-      ],
-    },
-  },
 
   devServer: {
     port: 1618,

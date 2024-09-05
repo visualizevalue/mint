@@ -20,7 +20,7 @@
   </Teleport>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const {
   id,
 } = defineProps({

@@ -10,12 +10,12 @@
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare"
     },
-    "dependencies": {
-        "eventemitter3": "^5.0.1",
-        "nuxt": "^3.13.0",
-        "vue": "^3.4.27"
-    },
     "devDependencies": {
-        "@vue/devtools-api": "6.6.3"
+        "@visualizevalue/mint-app-base": "workspace:./../base/",
+        "@vue/devtools-api": "^6.6.3",
+        "@vueuse/core": "^11.0.3",
+        "@vueuse/nuxt": "^11.0.3",
+        "eventemitter3": "^5.0.1",
+        "nuxt": "latest"
     }
 }

@@ -73,10 +73,9 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@wagmi/vue/nuxt',
-    '@vueuse/nuxt',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
+    '@vueuse/nuxt',
   ],
 
   devServer: {

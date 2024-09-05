@@ -3,40 +3,43 @@
     "version": "0.0.1",
     "private": true,
     "type": "module",
+    "main": "./nuxt.config.ts",
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev --port 1618",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare",
-        "generate-pwa-assets": "pwa-assets-generator --preset minimal-2023 public/icon.svg"
+        "postinstall": "nuxt prepare"
     },
     "dependencies": {
         "@csstools/postcss-global-data": "^2.1.1",
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@pinia/nuxt": "^0.5.3",
         "@tanstack/vue-query": ">=5.45.0",
-        "@visualizevalue/mint-utils": "workspace:../utils",
+        "@visualizevalue/mint-utils": "workspace:utils",
         "@vueuse/components": "^10.11.0",
-        "@vueuse/core": "^10.10.0",
-        "@vueuse/nuxt": "^10.10.0",
-        "@wagmi/vue": "^0.0.39",
+        "@wagmi/vue": "^0.0.40",
         "buffer": "^6.0.3",
         "eventemitter3": "^5.0.1",
         "feather-icons": "^4.29.2",
         "multiformats": "^13.2.2",
-        "nuxt": "^3.13.0",
         "postcss-custom-media": "^10.0.6",
         "postcss-custom-selectors": "^7.1.10",
         "postcss-nested": "^6.0.1",
         "postcss-preset-env": "^9.5.13",
         "viem": "2.x",
-        "vue": "^3.4.27",
         "vue-feather": "^2.0.0",
         "vue-router": "^4.3.2",
         "vue-virtual-scroller": "^2.0.0-beta.8"
     },
     "devDependencies": {
-        "@vue/devtools-api": "6.6.3"
+        "@types/node": "^22.5.4",
+        "@vue/devtools-api": "^6.6.3",
+        "@vueuse/core": "^11.0.3",
+        "@vueuse/nuxt": "^11.0.3",
+        "eventemitter3": "^5.0.1",
+        "nuxt": "latest",
+        "typescript": "^5.5.4",
+        "vite": "^5.4.3"
     }
 }
