@@ -34,7 +34,7 @@ defineExpose({
 })
 </script>
 
-<style lang="postcss">
+<style>
 dialog {
   position: fixed;
   padding: calc(var(--spacer)*2);

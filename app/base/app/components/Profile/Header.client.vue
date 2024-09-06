@@ -52,7 +52,7 @@ const hasTags = computed(() => artist.value.url ||
 )
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 header {
   display: flex;
   flex-direction: column;

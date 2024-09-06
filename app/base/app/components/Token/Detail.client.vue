@@ -74,7 +74,7 @@ const mintCount = ref('1')
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .token {
     position: relative;
     container-type: inline-size;

@@ -54,7 +54,7 @@ const popoverArrowPosition = computed(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 [popover] {
   --width: min(100vw - var(--spacer)*2, var(--dialog-width));
 

@@ -38,7 +38,7 @@ const breadcrumbs = computed(() => {
 const { y } = useWindowScroll()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 header {
   height: var(--navbar-height);
   position: fixed;

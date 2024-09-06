@@ -3,7 +3,7 @@
     class="image"
     :class="{ loaded }"
     @click="$emit('click')"
-    :style="{ padding: `0 0 calc(${height} - 2px)` }"
+    :style="{ padding: `0 0 ${height}` }"
     v-intersection-observer="loadImage"
   >
     <Loading v-if="! loaded" txt=""/>
@@ -58,23 +58,19 @@ const imageLoaded = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 article.image {
   overflow: hidden;
-  border: 1px solid var(--border-color);
   background-color: var(--gray-z-2);
-  border-radius: var(--border-radius);
   overflow: hidden;
   position: relative;
   height: 0;
   padding-bottom: 100%;
-  padding-bottom: calc(100% - 2px);
   display: flex;
 
-  &.borderless {
-    padding-bottom: 100% !important;
-    border-radius: 0;
-    border: none;
+  .bordered {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
   }
 
   .loader {

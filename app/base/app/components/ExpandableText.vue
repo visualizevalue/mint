@@ -39,7 +39,7 @@ const toggle = () => expanded.value = !expanded.value
 const visibleText = computed(() => wasShortened.value && !expanded.value ? shortened.value : cleaned.value)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 span.expanded {
   white-space: pre-wrap;
 }

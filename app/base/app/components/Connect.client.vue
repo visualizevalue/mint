@@ -73,7 +73,7 @@ watch(isConnected, () => check())
 onMounted(() => check())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .wallet-options {
   display: flex;
   gap: var(--spacer);

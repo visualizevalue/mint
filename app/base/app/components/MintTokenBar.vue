@@ -49,7 +49,7 @@ const onMinted = () => {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 fieldset {
   container-type: inline-size;
 

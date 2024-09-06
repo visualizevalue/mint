@@ -46,7 +46,7 @@
 <script setup>
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   table {
     width: 100%;
 

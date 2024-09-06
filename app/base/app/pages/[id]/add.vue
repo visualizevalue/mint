@@ -33,7 +33,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 form {
   width: 100%;
 }

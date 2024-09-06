@@ -14,7 +14,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 div {
   display: flex;
   flex-direction: column;

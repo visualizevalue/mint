@@ -22,7 +22,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 main {
   display: grid;
   gap: var(--spacer);

@@ -11,7 +11,7 @@ const { user } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .avatar {
   display: flex;
   align-items: center;

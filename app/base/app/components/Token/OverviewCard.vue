@@ -53,13 +53,13 @@ const { token } = defineProps<{
 }>()
 
 const store = useOnchainStore()
-const collection = computed(() => store.collection(token.collection))
+const collection = computed(() => store.collection(token.collection)) as ComputedRef<Collection>
 
 const mintCount = ref('1')
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   .token,
   .token > .content {
     display: flex;

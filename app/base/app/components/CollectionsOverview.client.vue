@@ -48,7 +48,7 @@ if (store.forArtist(id).length !== collections.length) {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .collections {
   display: grid;
   gap: var(--spacer-lg);

@@ -10,7 +10,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .errors {
   padding: var(--spacer) 0;
   color: var(--error);

@@ -14,7 +14,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss">
+<style>
 .button {
   min-width: fit-content;
   width: fit-content;

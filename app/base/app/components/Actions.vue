@@ -4,7 +4,7 @@
   </menu>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 menu {
   width: 100%;
   margin: 0;

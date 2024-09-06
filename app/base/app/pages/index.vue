@@ -26,7 +26,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 header {
   display: flex;
   flex-direction: column;

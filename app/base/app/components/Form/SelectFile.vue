@@ -33,7 +33,7 @@ const file = computed(() => files.value?.length ? files.value[0] : null)
 onChange(() => emit('change', file.value))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 fieldset {
   width: fit-content;
   max-width: -webkit-fill-available;

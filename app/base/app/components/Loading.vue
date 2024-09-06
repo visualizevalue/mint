@@ -14,7 +14,7 @@ const { txt } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .loader {
   position: relative;
   z-index: 2;

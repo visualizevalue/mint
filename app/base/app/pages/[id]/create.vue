@@ -134,7 +134,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .preview {
   .visual {
     width: 5rem;

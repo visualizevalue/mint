@@ -61,7 +61,7 @@ onMounted(async () => {
 watch(currentBlock, () => state.fetchTokenMints(token))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 section {
   padding-top: var(--spacer-lg) !important;
   padding-bottom: var(--spacer-lg) !important;

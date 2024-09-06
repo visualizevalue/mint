@@ -26,13 +26,11 @@ const { collection } = defineProps<{
 }>()
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 article {
   display: grid;
   padding: var(--spacer);
   gap: var(--spacer);
-  border: var(--border);
-  background: var(--background);
   transition: all var(--speed);
 
   &:has(> a:--highlight) {
@@ -47,8 +45,6 @@ article {
 
   img {
     width: 100%;
-    border: var(--border);
-    border-radius: var(--border-radius);
   }
 
   .text {

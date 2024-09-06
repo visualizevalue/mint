@@ -19,7 +19,7 @@ const ICONS = {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .icon {
   display: inline-block;
   width: var(--size-4);

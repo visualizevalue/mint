@@ -22,7 +22,7 @@ onMounted(() => updateBreadcrumbs())
 watch(props, () => updateBreadcrumbs())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .frame {
   margin: 0 auto;
   gap: 0;

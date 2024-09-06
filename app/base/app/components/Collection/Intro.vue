@@ -48,7 +48,7 @@ const store = useOnchainStore()
 const ownedByMe = useIsMeCheck(collection.owner)
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 header {
   display: grid;
   gap: var(--spacer);

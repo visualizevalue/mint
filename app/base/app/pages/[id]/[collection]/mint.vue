@@ -208,7 +208,7 @@ useMetaData({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 #mint-token {
   display: grid;
 

@@ -13,7 +13,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .breadcrumb {
   display: flex;
   align-items: center;

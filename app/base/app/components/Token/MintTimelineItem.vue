@@ -29,5 +29,5 @@ const props = defineProps({
 const formattedPrice = computed(() => customFormatEther(props.mint.price))
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 </style>

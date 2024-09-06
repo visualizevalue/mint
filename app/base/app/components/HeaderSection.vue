@@ -4,7 +4,7 @@
   </header>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 header {
   display: flex;
   gap: var(--spacer);

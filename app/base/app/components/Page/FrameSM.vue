@@ -4,7 +4,7 @@
   </section>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .frame-sm {
   width: 100%;
   max-width: var(--dialog-width);

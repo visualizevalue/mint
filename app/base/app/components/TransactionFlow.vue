@@ -186,7 +186,7 @@ defineExpose({
 })
 </script>
 
-<style lang="postcss">
+<style>
 .transaction-flow {
   display: grid;
   justify-content: center;

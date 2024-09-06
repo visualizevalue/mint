@@ -12,7 +12,7 @@ defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 a {
   color: var(--muted);
   transition: all var(--speed);

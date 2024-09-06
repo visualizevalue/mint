@@ -14,7 +14,7 @@ const { fill } = defineProps({
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 svg {
   height: var(--size-5);
 

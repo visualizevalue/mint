@@ -32,5 +32,5 @@ watch(() => props.open, async () => {
 })
 </script>
 
-<style lang="postcss">
+<style>
 </style>

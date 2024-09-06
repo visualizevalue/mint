@@ -27,7 +27,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
   button {
     display: none;
     position: fixed;

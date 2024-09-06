@@ -15,7 +15,7 @@ withDefaults(defineProps<{
 })
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 a {
   position: absolute;
   left: 0;
@@ -31,7 +31,7 @@ a {
 }
 </style>
 
-<style lang="postcss">
+<style>
 *:has(> .card-link) {
   position: relative;
 }

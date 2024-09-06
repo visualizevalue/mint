@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .fieldset-wrapper {
   max-width: -webkit-fill-available;
   container-type: inline-size;

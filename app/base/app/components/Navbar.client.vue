@@ -19,7 +19,7 @@ const { address, isConnected } = useAccount()
 const account = computed(() => address.value.toLowerCase())
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 nav {
   display: flex;
   align-items: center;
