@@ -27,6 +27,10 @@
   --gray-900-semi: #1c1917B2;
   --gray-950-semi: #0c0a09B2;
   --black-semi:    #000000B2;
+
+  /* FONTS */
+  --font-family-main: "Space Mono", monospace;
+  --font-weight: 700;
 }
 
 /* DARK */

@@ -60,11 +60,7 @@
   --border-radius: var(--size-1);
 
   /* FONTS */
-  --font-family-main: "Inter", sans-serif;
-  @supports (font-variation-settings: normal) {
-    --font-family-main: "InterVariable", sans-serif;
-  }
-  --font-family-main: "Nunito", "Space Mono", "Fira Code", monospace, sans-serif;
+  --font-family-main: serif;
   --font-family-prose: var(--font-family-main);
   --font-family-ui:    var(--font-family-main);
 
@@ -77,8 +73,8 @@
   --font-title: min(calc(var(--size-4) + 1vw * 2), var(--size-7));
   --font-display: min(calc(var(--size-6) + 1vw * 2), var(--size-8));
   --font-weight-light: 300;
-  --font-weight: 600;
-  --font-weight-bold: 600;
+  --font-weight: normal;
+  --font-weight-bold: bold;
   --rem: 16px;
 
   --letter-spacing-sm: -0.025em;

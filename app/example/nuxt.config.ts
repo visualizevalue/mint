@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   css: [
     // Doesn't work yet since ordering with layers is wrong.
     // We import the styles in app.vue instead.
-    '~/assets/styles/theme.css',
+    // '~/assets/styles/theme.css',
   ],
 
   devServer: {

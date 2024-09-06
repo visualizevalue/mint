@@ -41,8 +41,8 @@
             minted,
           }"
         />
+        <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
       </footer>
-      <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
     </article>
   </MintToken>
 </template>
