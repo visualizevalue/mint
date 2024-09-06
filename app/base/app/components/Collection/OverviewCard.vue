@@ -4,9 +4,7 @@
     <div class="text">
       <div>
         <h1>{{ collection.name }} <small>({{ collection.symbol }})</small></h1>
-        <p v-if="collection.description" class="muted-light">
-          <ExpandableText :text="collection.description" />
-        </p>
+        <p v-if="collection.description" class="muted-light">{{ shortDescription }}</p>
       </div>
 
       <div>
@@ -24,6 +22,8 @@
 const { collection } = defineProps<{
   collection: Collection
 }>()
+
+const shortDescription = computed(() => shortString(collection.description, 40, 30))
 </script>
 
 <style scoped>

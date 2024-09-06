@@ -7,9 +7,7 @@ export const toFloat = (number: string, digits: number = 2) => parseFloat(number
 export const roundNumber = (number: string) => parseInt(Math.round(parseFloat(number)).toString())
 
 export const shortString = (str: string, max: number = 40, length: number = 10) => str?.length > max
-  ? (
-    str.substring(0, length + 2) + '...'
-  ) : str
+  ? str.substring(0, length) + '...' : str
 
 export const shortAddress = (address: string, length: number = 3) => address.substring(0, length + 2) +
   '...' +
