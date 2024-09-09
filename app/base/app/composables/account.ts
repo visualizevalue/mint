@@ -1,9 +1,16 @@
 import { useAccount } from '@wagmi/vue'
 
-export const useIsMeCheck = (checkAddress: `0x${string}`|null) => {
-  const { isConnected, address } = useAccount()
+export const useIsMeCheck = (checkAddress: Ref|ComputedRef<`0x${string}`>|`0x${string}`|null) => {
+  const { address } = useAccount()
+  const toCheck = toValue(checkAddress)
 
-  return computed(() => isConnected.value && address.value?.toLowerCase() === checkAddress?.toLowerCase())
+  const isMe = ref()
+
+  watchEffect(() => {
+    isMe.value = address.value && address.value?.toLowerCase() === toCheck?.toLowerCase()
+  })
+
+  return isMe
 }
 
 export const useIsMe = () => {
@@ -11,3 +18,4 @@ export const useIsMe = () => {
 
   return useIsMeCheck(id.value)
 }
+

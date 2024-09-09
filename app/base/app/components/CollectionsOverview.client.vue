@@ -28,21 +28,22 @@
 <script setup>
 const store = useOnchainStore()
 
-const { id } = defineProps({
+const props = defineProps({
   id: String,
 })
+const id = computed(() => props.id)
 
 const isMe = useIsMeCheck(id)
 
 const { loading } = useLoadArtistData(id)
 const collections = computed(() => isMe.value
-  ? store.forArtist(id)
-  : store.forArtistOnlyMinted(id)
+  ? store.forArtist(id.value)
+  : store.forArtistOnlyMinted(id.value)
 )
 
 // Force update collections with no mints
-if (store.forArtist(id).length !== collections.length) {
-  store.forArtist(id)
+if (store.forArtist(id.value).length !== collections.length) {
+  store.forArtist(id.value)
     .filter(c => c.latestTokenId === 0n)
     .forEach(c => store.fetchCollection(c.address))
 }

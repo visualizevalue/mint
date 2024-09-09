@@ -2,7 +2,7 @@
   <PageFrame :title="breadcrumb">
     <ProfileHeader :address="id" />
 
-    <CollectionsOverview :id="id">
+    <CollectionsOverview :id="id" :key="`${isMe}-${id}`">
       <template #before="{ collections }">
         <HeaderSection v-if="isMe && collections.length">
           <h1>Your Collections</h1>
