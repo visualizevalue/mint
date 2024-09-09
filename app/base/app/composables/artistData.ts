@@ -1,6 +1,8 @@
-export const useLoadArtistData = (id: `0x${string}`) => {
+export const useLoadArtistData = (_id: ComputedRef|Ref<`0x${string}`>|`0x${string}`) => {
   const config = useRuntimeConfig()
   const store = useOnchainStore()
+
+  const id = toValue(_id)
 
   const loading = ref(true)
 
