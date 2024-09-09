@@ -39,7 +39,7 @@ import { useAccount, useBlockNumber } from '@wagmi/vue'
 const config = useRuntimeConfig()
 
 const { $wagmi } = useNuxtApp()
-const { address } = await useAccount()
+const { address } = useAccount()
 
 const props = defineProps({
   token: Object,
