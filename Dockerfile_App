@@ -12,8 +12,8 @@ WORKDIR /mint
 
 # Copy package.json files
 COPY contracts/package.json ./contracts/
-COPY app/package.json ./app/
-COPY api/package.json ./api/
+COPY app/base/package.json ./app/base/
+COPY app/example/package.json ./app/example/
 COPY utils/package.json ./utils/
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
@@ -23,9 +23,9 @@ RUN pnpm install --frozen-lockfile
 # Copy the rest of the application
 COPY . .
 
-# Build TODO: Rename
-RUN pnpm -F @visualizevalue/mint-app build
+# Build
+RUN pnpm -F @visualizevalue/mint-app-example build
 
-WORKDIR /mint/app
+WORKDIR /mint/app/example
 EXPOSE 3000
 CMD [ "node", ".output/server/index.mjs" ]
