@@ -1,17 +1,25 @@
 // import { custom, fallback } from 'viem'
 import { VueQueryPlugin } from '@tanstack/vue-query'
-import { http, cookieStorage, createConfig, createStorage, WagmiPlugin } from '@wagmi/vue'
+import { http, cookieStorage, createConfig, createStorage, WagmiPlugin, fallback, custom } from '@wagmi/vue'
 import { mainnet, sepolia, holesky, localhost } from '@wagmi/vue/chains'
 import { coinbaseWallet, injected, metaMask, walletConnect } from '@wagmi/vue/connectors'
-
-// const isBrowser = typeof window !== 'undefined' && window !== null
-// const transports = isBrowser && window.ethereum
-//   ? fallback([ custom(window.ethereum!), http() ])
-//   : http()
-const transports = http()
+import type { CustomTransport, Transport } from 'viem'
 
 export default defineNuxtPlugin(nuxtApp => {
   const title = nuxtApp.$config.public.title || 'Mint'
+
+  const transportDefinitions: CustomTransport|Transport[] = []
+
+  console.log(nuxtApp.$config.public)
+
+  if (nuxtApp.$config.public.rpc1) transportDefinitions.push(http(nuxtApp.$config.public.rpc1 as string))
+  if (nuxtApp.$config.public.rpc2) transportDefinitions.push(http(nuxtApp.$config.public.rpc2 as string))
+  if (nuxtApp.$config.public.rpc3) transportDefinitions.push(http(nuxtApp.$config.public.rpc3 as string))
+  transportDefinitions.push(http())
+
+  console.log(transportDefinitions)
+
+  const transports = fallback(transportDefinitions)
 
   const wagmiConfig = createConfig({
     chains: [mainnet, sepolia, holesky, localhost],
