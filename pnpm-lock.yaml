@@ -23,7 +23,7 @@ importers:
         specifier: '>=5.45.0'
         version: 5.52.0(vue@3.5.1(typescript@5.5.4))
       '@visualizevalue/mint-utils':
-        specifier: workspace:*
+        specifier: workspace:../../utils
         version: link:../../utils
       '@vueuse/components':
         specifier: ^10.11.0
@@ -93,7 +93,7 @@ importers:
   app/example:
     devDependencies:
       '@visualizevalue/mint-app-base':
-        specifier: workspace:*
+        specifier: workspace:../base
         version: link:../base
       '@vue/devtools-api':
         specifier: ^6.6.3
