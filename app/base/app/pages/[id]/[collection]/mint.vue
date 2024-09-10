@@ -90,10 +90,11 @@ const isSmall = computed(() => imageSize.value / 1024 < 10)
 const setImage = async (file) => {
   try {
     image.value = await imageFileToDataUri(file)
+    imageSize.value = file.size
   } catch (e) {
     image.value = ''
+    imageSize.value = 0
   }
-  imageSize.value = file.size
 }
 watch(ipfsCid, () => {
   const validated = validateCID(ipfsCid.value)
@@ -115,67 +116,71 @@ const mint = async () => {
 
   minting.value = true
 
-  if (multiTransactionPrepare) {
-    if (! confirm(`Due to the large artifact size, we have to split it into ${artifactChunks.length} chunks and store them in separate transactions. You will be prompted with multiple transaction requests before minting the final token.`)) {
-      return
+  try {
+    if (multiTransactionPrepare) {
+      if (! confirm(`Due to the large artifact size, we have to split it into ${artifactChunks.length} chunks and store them in separate transactions. You will be prompted with multiple transaction requests before minting the final token.`)) {
+        return
+      }
+
+      // On the first iteration we want to clear existing artifact data
+      let clearExisting = true
+
+      for (const chunk of artifactChunks) {
+        await txFlow.value.initializeRequest(() => writeContract($wagmi, {
+          abi: MINT_ABI,
+          chainId,
+          address: collection.value.address,
+          functionName: 'prepareArtifact',
+          args: [
+            collection.value.latestTokenId + 1n,
+            chunk,
+            clearExisting
+          ],
+        }))
+
+        // Make sure to rerender the tx flow component
+        txFlowKey.value ++
+
+        // On following iterations we want to keep existing artifact data
+        clearExisting = false
+      }
     }
 
-    // On the first iteration we want to clear existing artifact data
-    let clearExisting = true
+    const receipt = await txFlow.value.initializeRequest(() => writeContract($wagmi, {
+      abi: MINT_ABI,
+      chainId,
+      address: collection.value.address,
+      functionName: 'create',
+      args: [
+        name.value,
+        description.value,
+        multiTransactionPrepare ? [] : artifact,
+        0,
+        0n,
+      ],
+    }))
 
-    for (const chunk of artifactChunks) {
-      await txFlow.value.initializeRequest(() => writeContract($wagmi, {
-        abi: MINT_ABI,
-        chainId,
-        address: collection.value.address,
-        functionName: 'prepareArtifact',
-        args: [
-          collection.value.latestTokenId + 1n,
-          chunk,
-          clearExisting
-        ],
-      }))
+    const logs = receipt.logs.map(log => decodeEventLog({
+      abi: MINT_ABI,
+      data: log.data,
+      topics: log.topics,
+      strict: false,
+    }))
 
-      // Make sure to rerender the tx flow component
-      txFlowKey.value ++
+    const mintedEvent = logs.find(log => log.eventName === 'TransferSingle')
 
-      // On following iterations we want to keep existing artifact data
-      clearExisting = false
-    }
+    await store.fetchToken(collection.value.address, mintedEvent.args.id)
+
+    // Force update the collection mint ID
+    store.collections[collection.value.address].latestTokenId = mintedEvent.args.id
+
+    await navigateTo({
+      name: 'id-collection-tokenId',
+      params: { id: id.value, collection: collection.value.address, tokenId: mintedEvent.args.id }
+    })
+  } catch (e) {
+    console.error(e)
   }
-
-  const receipt = await txFlow.value.initializeRequest(() => writeContract($wagmi, {
-    abi: MINT_ABI,
-    chainId,
-    address: collection.value.address,
-    functionName: 'create',
-    args: [
-      name.value,
-      description.value,
-      multiTransactionPrepare ? [] : artifact,
-      0,
-      0n,
-    ],
-  }))
-
-  const logs = receipt.logs.map(log => decodeEventLog({
-    abi: MINT_ABI,
-    data: log.data,
-    topics: log.topics,
-    strict: false,
-  }))
-
-  const mintedEvent = logs.find(log => log.eventName === 'TransferSingle')
-
-  await store.fetchToken(collection.value.address, mintedEvent.args.id)
-
-  // Force update the collection mint ID
-  store.collections[collection.value.address].latestTokenId = mintedEvent.args.id
-
-  await navigateTo({
-    name: 'id-collection-tokenId',
-    params: { id: id.value, collection: collection.value.address, tokenId: mintedEvent.args.id }
-  })
 
   minting.value = false
 }
@@ -233,7 +238,6 @@ useMetaData({
 
   svg {
     box-shadow: var(--border-shadow);
-    border-radius: var(--border-radius);
   }
 
   h1 {
