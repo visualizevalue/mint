@@ -1,4 +1,4 @@
-import { getPublicClient } from '@wagmi/core'
+import { readContract } from '@wagmi/core'
 
 const CHAINLINK_PRICE_FEED_ABI = [
   {
@@ -45,17 +45,17 @@ export const usePriceFeedStore = () => {
 
     actions: {
       async fetchEthUsdPrice () {
-        const client = getPublicClient($wagmi, { chainId: 1 })
 
         if (nowInSeconds() - this.lastUpdated < 3_600) {
           return this.ethUSD
         }
 
         try {
-          const [, answer] = await client.readContract({
+          const [, answer] = await readContract($wagmi, {
             address: PRICE_FEED_ADDRESS,
             abi: CHAINLINK_PRICE_FEED_ABI,
-            functionName: 'latestRoundData'
+            functionName: 'latestRoundData',
+            chainId: 1,
           })
 
           this.ethUSDRaw = answer
