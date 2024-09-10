@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "type": "module",
     "main": "./nuxt.config.ts",
+    "private": true,
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev --port 1618",
