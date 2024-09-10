@@ -332,7 +332,7 @@ export const useOnchainStore = () => {
         const maxRangeBlock = toBlock - 5000n
         const mintedAtBlock = token.untilBlock - 7200n
         const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock
-          ? token.mintsFetchedUntilBlock
+          ? token.mintsFetchedUntilBlock + 1n
           : maxRangeBlock > mintedAtBlock
             ? maxRangeBlock
             : mintedAtBlock
