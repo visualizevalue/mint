@@ -107,6 +107,7 @@
   --border-color-dark: var(--gray-z-1);
   --border: 1px solid var(--border-color);
   --border-dark: 1px solid var(--border-color-dark);
+  --border-shadow: 0 0 0 1px var(--border-color-dark);
 
   /* SHADOWS */
   --shadow:

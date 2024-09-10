@@ -2,7 +2,7 @@
   <Authenticated>
     <PageFrame :title="breadcrumb" class="inset wide" id="mint-token">
       <article class="preview">
-        <Image v-if="image" :src="image" alt="Preview" />
+        <Image v-if="image" :src="image" alt="Preview" class="bordered" />
         <VisualImagePreview v-else />
         <h1 :class="{ 'muted-light': !name }">{{ name || 'Token' }}</h1>
         <p :class="{ 'muted-light': !description }">
@@ -227,10 +227,13 @@ useMetaData({
 
   .image,
   svg {
-    border-radius: var(--border-radius);
-    border: var(--border);
     margin-bottom: var(--spacer-sm);
     width: 100%;
+  }
+
+  svg {
+    box-shadow: var(--border-shadow);
+    border-radius: var(--border-radius);
   }
 
   h1 {

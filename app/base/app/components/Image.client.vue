@@ -70,7 +70,7 @@ article.image {
 
   .bordered {
     border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
+    box-shadow: var(--border-shadow);
   }
 
   .loader {
