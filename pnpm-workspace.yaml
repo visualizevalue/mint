@@ -1,6 +1,5 @@
 packages:
   - 'app/base'
   - 'app/example'
-  # - 'app/networked.art'
   - 'contracts'
   - 'utils'
