@@ -1,6 +1,5 @@
-// import { custom, fallback } from 'viem'
 import { VueQueryPlugin } from '@tanstack/vue-query'
-import { http, cookieStorage, createConfig, createStorage, WagmiPlugin, fallback, custom } from '@wagmi/vue'
+import { http, cookieStorage, createConfig, createStorage, WagmiPlugin, fallback } from '@wagmi/vue'
 import { mainnet, sepolia, holesky, localhost } from '@wagmi/vue/chains'
 import { coinbaseWallet, injected, metaMask, walletConnect } from '@wagmi/vue/connectors'
 import type { CustomTransport, Transport } from 'viem'
@@ -44,7 +43,7 @@ export default defineNuxtPlugin(nuxtApp => {
     }),
     ssr: true,
     transports: {
-      [mainnet.id]: transports,
+      [mainnet.id]: http(), // TODO: replace this with custom transports on mainnet deployment
       [sepolia.id]: transports,
       [holesky.id]: transports,
       [localhost.id]: transports,
