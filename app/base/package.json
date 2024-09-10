@@ -17,6 +17,8 @@
         "@tanstack/vue-query": ">=5.45.0",
         "@visualizevalue/mint-utils": "workspace:@visualizevalue/mint-utils@^0.0.1",
         "@vueuse/components": "^10.11.0",
+        "@vueuse/core": "^11.0.3",
+        "@vueuse/nuxt": "^11.0.3",
         "@wagmi/vue": "^0.0.40",
         "buffer": "^6.0.3",
         "eventemitter3": "^5.0.1",
@@ -34,8 +36,6 @@
     "devDependencies": {
         "@types/node": "^22.5.4",
         "@vue/devtools-api": "^6.6.3",
-        "@vueuse/core": "^11.0.3",
-        "@vueuse/nuxt": "^11.0.3",
         "eventemitter3": "^5.0.1",
         "nuxt": "latest",
         "typescript": "^5.5.4",
