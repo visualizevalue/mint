@@ -1,4 +1,12 @@
 :root {
   --card-border: var(--border);
   --card-border-radius: var(--border-radius);
+  --card-background: var(--background);
+  --card-background-highlight: var(--gray-z-2);
+
+  --button-border: var(--border);
+  --button-border-radius: var(--border-radius);
+  --button-background: var(--background);
+  --button-background-highlight: var(--gray-z-2);
 }
+

@@ -32,10 +32,12 @@ article.collection-overview-card {
   padding: var(--spacer);
   gap: var(--spacer);
   transition: all var(--speed);
+  border-radius: var(--card-border-radius);
+  background: var(--card-background);
   border: var(--card-border);
 
   &:has(> a:--highlight) {
-    background: var(--gray-z-0);
+    background: var(--card-background-highlight);
   }
 
   @media (--sm) {

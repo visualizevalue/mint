@@ -57,7 +57,7 @@
   --spacer-lg: var(--size-7);
   --spacer-xl: var(--size-9);
 
-  --border-radius: var(--size-1);
+  --border-radius: 0;
 
   /* FONTS */
   --font-family-main: serif;

@@ -19,8 +19,9 @@ defineProps({
   min-width: fit-content;
   width: fit-content;
   padding: var(--size-2) var(--size-4);
-  background: var(--background);
-  border: var(--border);
+  background: var(--button-background);
+  border: var(--button-border);
+  border-radius: var(--button-border-radius);
   position: relative;
   display: inline-flex;
   gap: var(--size-2);
@@ -37,7 +38,7 @@ defineProps({
   }
 
   &:--highlight {
-    background: var(--border-color);
+    background: var(--button-background-highlight);
   }
 
   > span {

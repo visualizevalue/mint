@@ -1,7 +1,9 @@
 <template>
-  <dialog ref="dialog">
-    <slot />
-  </dialog>
+  <Teleport to="body">
+    <dialog ref="dialog">
+      <slot />
+    </dialog>
+  </Teleport>
 </template>
 
 <script setup>

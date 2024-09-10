@@ -33,7 +33,7 @@ defineProps({
   }
 
   > span > a {
-    color: var(--gray-z-5);
+    color: var(--muted);
     transition: all var(--speed);
 
     &.router-link-active-exact,
@@ -44,7 +44,7 @@ defineProps({
 
   > span:not(:last-child):after {
     content: '/';
-    color: var(--gray-z-3);
+    color: var(--muted-light);
     margin-left: var(--spacer-sm);
   }
 }

@@ -128,9 +128,13 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
   footer {
     width: 100%;
     display: flex;
+    flex-direction: column;
     gap: var(--spacer);
     justify-content: space-between;
-    align-items: baseline;
+
+    > * {
+      width: 100%;
+    }
 
     > *:first-child:last-child {
       margin-left: auto;

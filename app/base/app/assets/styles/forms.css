@@ -6,8 +6,9 @@ textarea,
 select {
   --padding-y: var(--size-3);
   --padding-x: var(--size-5);
-  --background: var(--background);
-  --background-light: var(--gray-z-1);
+  --background: var(--button-background);
+  --background-light: var(--button-background-highlight);
+  --border-radius: var(--button-border-radius);
 
   width: 100%;
   font-family: var(--font-family-ui);
@@ -15,8 +16,6 @@ select {
   transition: all var(--speed);
   text-transform: var(--text-transform-ui);
   user-select: none;
-  border-radius: 0;
-  background: var(--background);
 
   &::placeholder {
     text-transform: var(--text-transform-ui);
@@ -32,12 +31,15 @@ select {
   }
 }
 
+.form-item,
 .button,
 .input,
 .textarea,
 .select {
   min-height: calc(var(--size-7) + var(--size-2));
   line-height: 1;
+  border-radius: var(--border-radius);
+  background: var(--background);
 }
 
 .input,
