@@ -12,17 +12,17 @@
       transactionFlowConfig
     }"
   >
-    <article class="token">
+    <article class="token-overview-card">
       <div class="content">
         <header>
           <h1>
             <span>{{ token.name }} <span class="muted">#{{ token.tokenId }}</span></span>
-            <span v-if="token.description">{{ shortString(token.description, 40, 30) }}</span>
+            <span v-if="token.description">{{ shortString(token.description, 60, 30) }}</span>
           </h1>
           <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
           <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
         </header>
-        <Image :src="token.artifact" :alt="token.name" />
+        <Image :src="token.artifact" :alt="token.name" class="bordered" />
         <CardLink :to="{
           name: 'id-collection-tokenId',
           params: { id: collection.owner, collection: token.collection, tokenId: `${token.tokenId}` }
@@ -60,17 +60,16 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 </script>
 
 <style scoped>
-  .token,
-  .token > .content {
+  .token-overview-card,
+  .token-overview-card > .content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--spacer);
   }
 
-  .token {
+  .token-overview-card {
     padding: var(--spacer-xl) var(--spacer) !important;
-    border: 0 !important;
 
     /* Tokens should be at min the screen height. */
     &:not(:first-of-type) {
@@ -88,7 +87,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     }
   }
 
-  .token > .content {
+  .token-overview-card > .content {
     display: flex;
     flex-direction: column;
     justify-content: center;

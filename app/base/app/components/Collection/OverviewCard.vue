@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="collection-overview-card">
     <Image v-if="collection.image" :src="collection.image" :alt="collection.name" />
     <div class="text">
       <div>
@@ -27,11 +27,12 @@ const shortDescription = computed(() => shortString(collection.description, 40, 
 </script>
 
 <style scoped>
-article {
+article.collection-overview-card {
   display: grid;
   padding: var(--spacer);
   gap: var(--spacer);
   transition: all var(--speed);
+  border: var(--card-border);
 
   &:has(> a:--highlight) {
     background: var(--gray-z-0);

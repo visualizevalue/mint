@@ -1,0 +1,4 @@
+:root {
+  --card-border: var(--border);
+  --card-border-radius: var(--border-radius);
+}

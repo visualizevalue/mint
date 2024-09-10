@@ -1,8 +1,8 @@
 <template>
-  <article class="token">
+  <article class="token-detail">
     <div class="artifact">
-      <div :class="{ shaded }">
-        <Image :src="token.artifact" :alt="token.name" class="borderless" />
+      <div>
+        <Image :src="token.artifact" :alt="token.name" />
       </div>
     </div>
 
@@ -64,18 +64,15 @@ const { token } = defineProps<{
   token: Token
 }>()
 
-const breakpoints = useBreakpoints()
-const shaded = computed(() => breakpoints.greater('sm').value && ! isDark.value)
-
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
 
 const mintCount = ref('1')
-const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
+const ownedBalance = computed(() => collection.value && store.tokenBalance(collection.value.address, token.tokenId))
 </script>
 
 <style scoped>
-  .token {
+  .token-detail {
     position: relative;
     container-type: inline-size;
 
@@ -116,7 +113,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     @media (--lg) {
       --padding-top: var(--spacer-xl);
       --padding-x: var(--spacer-xl);
-      --padding-bottom: calc(var(--spacer-xl) + var(--spacer-lg));
+      --padding-bottom: calc(var(--spacer-xl) + var(--spacer));
     }
 
     height: var(--height);
@@ -139,13 +136,8 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
       @media (--md) {
         border-bottom: none !important;
       }
-
-      &.shaded {
-        box-shadow: var(--shadow-xl);
-        transform: translateY(calc(-1 * var(--size-2))) scale(1.001);
-      }
     }
- }
+  }
 
   .details {
 

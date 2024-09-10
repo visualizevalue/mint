@@ -30,25 +30,25 @@
   --black-semi:    rgba(0, 0, 0, 0.7);
 
   /* COLORS */
-  --red: #EF4444;
+  --red:   #EF4444;
   --green: #94E337;
 
   /* PRESET COLORS */
-  --error: var(--red);
+  --error:   var(--red);
   --success: var(--green);
 
   /* SIZES */
-  --100vh: 100dvh;
-  --size-0: 0.125rem;
-  --size-1: 0.25rem;
-  --size-2: 0.5rem;
-  --size-3: 0.75rem;
-  --size-4: 1rem;
-  --size-5: 1.25rem;
-  --size-6: 1.5rem;
-  --size-7: 2rem;
-  --size-8: 3rem;
-  --size-9: 4.5rem;
+  --100vh:   100dvh;
+  --size-0:  0.125rem;
+  --size-1:  0.25rem;
+  --size-2:  0.5rem;
+  --size-3:  0.75rem;
+  --size-4:  1rem;
+  --size-5:  1.25rem;
+  --size-6:  1.5rem;
+  --size-7:  2rem;
+  --size-8:  3rem;
+  --size-9:  4.5rem;
   --size-10: 6rem;
 
   --spacer-xs: var(--size-0);
@@ -107,16 +107,12 @@
   --border-color-dark: var(--gray-z-1);
   --border: 1px solid var(--border-color);
   --border-dark: 1px solid var(--border-color-dark);
-  --border-shadow: 0 0 0 1px var(--border-color-dark);
+  --border-shadow: 0 0 0 1px var(--border-color);
 
   /* SHADOWS */
   --shadow:
     0 var(--size-0) var(--size-2) var(--gray-z-1-semi),
     0 var(--size-2) var(--size-7) calc(-1 * var(--size-5)) var(--gray-z-3-semi);
-
-  --shadow-xl:
-    0 var(--size-3) var(--size-8) var(--gray-z-3-semi),
-    0 var(--size-8) var(--size-6) calc(-1 * var(--size-8)) var(--gray-z-6-semi);
 
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
@@ -194,3 +190,4 @@
     --font-sm: calc(var(--size-3) + var(--size-0));
   }
 }
+

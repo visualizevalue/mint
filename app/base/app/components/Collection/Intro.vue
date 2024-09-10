@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="collection-intro">
     <figure v-if="collection.image">
       <Image :src="collection.image" :alt="collection.name" />
     </figure>
@@ -49,7 +49,7 @@ const ownedByMe = useIsMeCheck(collection.owner)
 </script>
 
 <style scoped>
-header {
+header.collection-intro {
   display: grid;
   gap: var(--spacer);
 

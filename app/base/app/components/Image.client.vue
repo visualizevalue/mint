@@ -68,8 +68,7 @@ article.image {
   padding-bottom: 100%;
   display: flex;
 
-  .bordered {
-    border-radius: var(--border-radius);
+  &.bordered {
     box-shadow: var(--border-shadow);
   }
 
