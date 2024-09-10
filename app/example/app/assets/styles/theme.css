@@ -1,8 +1,3 @@
 @import "./variables.css";
 @import "./font.css";
 
-body {
-  border: var(--size-0) solid var(--gray-z-3);
-  border-top: 0;
-}
-

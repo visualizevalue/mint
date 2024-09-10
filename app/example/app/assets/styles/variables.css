@@ -30,22 +30,45 @@
 
   /* FONTS */
   --font-family-main: "Space Mono", monospace;
-  --font-weight: 700;
+  --font-family-main: "M PLUS Rounded 1c", sans-serif;
+  --font-weight: 500;
+  --text-transform: lowercase;
+
+  --border-radius: var(--size-2);
+
+  --card-border: var(--border);
+  --card-border-radius: var(--border-radius);
+  --card-background: var(--gray-z-1);
+  --card-background-highlight: var(--gray-z-0);
+  --button-border: var(--border);
+  --button-border-radius: var(--border-radius);
+  --button-background: var(--gray-z-1);
+  --button-background-highlight: var(--gray-z-0);
+}
+
+/* MODES */
+:root,
+.lightmode {
+  --background: var(--gray-z-2);
+  --color: var(--gray-z-10);
+  --border-color: var(--gray-z-3);
+
+  --muted: var(--gray-z-8);
+  --muted-light: var(--gray-z-6);
+
+  --background-semi: var(--gray-z-2-semi);
 }
 
 /* DARK */
 :root {
-  --background: var(--gray-z-2);
-  --color: var(--gray-50);
-  --muted: var(--gray-z-8);
-  --muted-light: var(--gray-z-6);
-  --background-0: rgba(255, 255, 255, 0);
-  --background-semi: var(--gray-z-2-semi);
+  --background-0: rgba(0, 0, 0, 0);
 }
 
 /* LIGHT */
 .lightmode {
-  --background: var(--gray-z-2);
-  --color: var(--gray-z-10);
+  --background-0: rgba(255, 255, 255, 0);
+
+  --card-background-highlight: var(--gray-z-3);
+  --button-background-highlight: var(--gray-z-3);
 }
 
