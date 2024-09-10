@@ -10,14 +10,10 @@ export default defineNuxtPlugin(nuxtApp => {
 
   const transportDefinitions: CustomTransport|Transport[] = []
 
-  console.log(nuxtApp.$config.public)
-
   if (nuxtApp.$config.public.rpc1) transportDefinitions.push(http(nuxtApp.$config.public.rpc1 as string))
   if (nuxtApp.$config.public.rpc2) transportDefinitions.push(http(nuxtApp.$config.public.rpc2 as string))
   if (nuxtApp.$config.public.rpc3) transportDefinitions.push(http(nuxtApp.$config.public.rpc3 as string))
   transportDefinitions.push(http())
-
-  console.log(transportDefinitions)
 
   const transports = fallback(transportDefinitions)
 
