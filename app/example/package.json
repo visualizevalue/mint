@@ -11,7 +11,7 @@
         "postinstall": "nuxi prepare"
     },
     "devDependencies": {
-        "@visualizevalue/mint-app-base": "workspace:./../base/",
+        "@visualizevalue/mint-app-base": "workspace:*",
         "@vue/devtools-api": "^6.6.3",
         "@vueuse/core": "^11.0.3",
         "@vueuse/nuxt": "^11.0.3",
