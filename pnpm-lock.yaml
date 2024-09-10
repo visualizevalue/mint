@@ -23,8 +23,8 @@ importers:
         specifier: '>=5.45.0'
         version: 5.52.0(vue@3.5.1(typescript@5.5.4))
       '@visualizevalue/mint-utils':
-        specifier: workspace:../../utils@^0.0.1
-        version: link:../../utils@^0.0.1
+        specifier: workspace:@visualizevalue/mint-utils@^0.0.1
+        version: link:../../utils
       '@vueuse/components':
         specifier: ^10.11.0
         version: 10.11.1(vue@3.5.1(typescript@5.5.4))
