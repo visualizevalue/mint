@@ -11,7 +11,7 @@ const props = defineProps(['address'])
 
 const address = computed(() => props.address?.value || props.address)
 
-const { data: ens } = await useEnsName({
+const { data: ens } = useEnsName({
   address,
   chainId: 1,
 })

@@ -2,11 +2,7 @@
 @import "./theme.css";
 @import "./normalize.css";
 @import "./base.css";
-@import "./text.css";
-@import "./utils.css";
-@import "./cards.css";
 @import "./forms.css";
-@import "./scroll.css";
+@import "./cards.css";
 @import "./animation.css";
-@import "./prose.css";
 @import "./web3-modals.css";

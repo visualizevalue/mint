@@ -12,7 +12,6 @@ menu {
   border: 0;
   display: flex;
   gap: var(--spacer);
-  justify-content: flex-end;
 
   &:empty {
     display: none;

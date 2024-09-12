@@ -1,24 +1,21 @@
-.form-item,
 .button,
 button,
 input,
 textarea,
 select {
-  --padding-y: var(--size-3);
-  --padding-x: var(--size-5);
-  --background: var(--button-background);
-  --background-light: var(--button-background-highlight);
-  --border-radius: var(--button-border-radius);
-
   width: 100%;
-  font-family: var(--font-family-ui);
-  font-weight: var(--font-weight);
+  font-family: var(--ui-font-family);
+  font-weight: var(--ui-font-weight);
+  text-transform: var(--ui-text-transform);
   transition: all var(--speed);
-  text-transform: var(--text-transform-ui);
+  line-height: var(--ui-line-height);
+  border-radius: var(--button-border-radius);
+  background: var(--background-background);
+  padding: var(--ui-padding-y) var(--ui-padding-x);
   user-select: none;
 
   &::placeholder {
-    text-transform: var(--text-transform-ui);
+    text-transform: var(--ui-text-transform);
   }
 
   &:-internal-autofill-selected {
@@ -28,18 +25,15 @@ select {
 
   &:--highlight {
     outline: none;
+    border-color: var(--button-border-color-highlight);
+    background: var(--button-background-highlight);
   }
 }
 
-.form-item,
 .button,
 .input,
 .textarea,
 .select {
-  min-height: calc(var(--size-7) + var(--size-2));
-  line-height: 1;
-  border-radius: var(--border-radius);
-  background: var(--background);
 }
 
 .input,
@@ -49,7 +43,7 @@ select {
   line-height: 0;
   width: 100%;
   background: var(--background);
-  padding: var(--padding-y) var(--padding-x);
+  padding: var(--ui-padding-y) var(--ui-padding-x);
   text-transform: none;
 
   border: var(--border);
@@ -98,15 +92,13 @@ select {
 
   &:has(.input:hover),
   &:has(.input:focus) {
-    background: var(--background-light);
-  }
-  &:has(.input:focus) {
-    border-color: var(--border-color-light);
+    background: var(--button-background-highlight);
+    border-color: var(--button-border-color-highlight);
   }
 
   .prefix,
   .suffix {
-    padding: 0 var(--padding-x);
+    padding: 0 var(--ui-padding-x);
     color: var(--muted);
     height: 100%;
     display: flex;
@@ -115,32 +107,10 @@ select {
   }
 
   .prefix {
-    border-right: var(--border);
+    border-right: var(--button-border);
   }
   .suffix {
-    border-left: var(--border);
-  }
-
-  /* If the prefix/suffix should look as if it's part of the content */
-  &.fluent {
-    .prefix,
-    .suffix {
-      border: none;
-    }
-    .prefix {
-      padding-right: var(--size-0);
-    }
-    .suffix {
-      padding-left: var(--size-0);
-    }
-
-    &:has(.prefix) {
-      .input,
-      .select,
-      .textarea {
-        padding-left: 0;
-      }
-    }
+    border-left: var(--button-border);
   }
 }
 
@@ -150,7 +120,7 @@ select.select:--highlight {
   line-height: 1;
   background:
     url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM4ODgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLWNoZXZyb24tZG93biI+PHBvbHlsaW5lIHBvaW50cz0iNiA5IDEyIDE1IDE4IDkiPjwvcG9seWxpbmU+PC9zdmc+),
-    var(--gray-z-0);
+    var(--button-background);
   background-repeat: no-repeat, no-repeat;
   background-position: calc(100% - var(--size-4)) 50%, 0% 0%;
   background-size: var(--size-4), 100% 100%;
@@ -167,7 +137,7 @@ form {
 
   label {
     display: block;
-    font-family: var(--font-family-ui);
+    font-family: var(--ui-font-family);
     text-transform: var(--text-transform-ui);
     margin: var(--size-2) 0;
     color: var(--gray-z-7);

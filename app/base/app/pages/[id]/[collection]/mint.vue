@@ -2,7 +2,7 @@
   <Authenticated>
     <PageFrame :title="breadcrumb" class="inset wide" id="mint-token">
       <article class="preview">
-        <Image v-if="image" :src="image" alt="Preview" class="bordered" />
+        <Image v-if="image" :src="image" alt="Preview" />
         <VisualImagePreview v-else />
         <h1 :class="{ 'muted-light': !name }">{{ name || 'Token' }}</h1>
         <p :class="{ 'muted-light': !description }">

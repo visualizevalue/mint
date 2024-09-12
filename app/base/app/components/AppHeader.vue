@@ -1,5 +1,5 @@
 <template>
-  <header :style="{ borderColor: y > 10 ? 'var(--border-color)' : 'transparent' }">
+  <header>
     <ClientOnly>
       <Breadcrumbs :items="breadcrumbs" />
 
@@ -15,7 +15,6 @@
 
 <script setup>
 import { useAccount } from '@wagmi/vue'
-import { useWindowScroll } from '@vueuse/core'
 
 const { isConnected, address } = useAccount()
 const appBreadcumbs = useAppBreadcrumb()
@@ -34,18 +33,11 @@ const breadcrumbs = computed(() => {
 
   return all
 })
-
-const { y } = useWindowScroll()
 </script>
 
 <style scoped>
 header {
   height: var(--navbar-height);
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -79,21 +71,5 @@ header {
       display: block;
     }
   }
-
-  :deep(> .button:last-child) {
-    margin-right: calc(-1 * var(--size-3));
-  }
-
-  &:has(+ main > .frame.full) {
-    border-color: var(--border-color) !important;
-  }
-}
-
-/* COLORS */
-header {
-  background: var(--background-semi);
-  backdrop-filter: blur(var(--size-1));
-  border-bottom: var(--border);
-  border-color: transparent;
 }
 </style>

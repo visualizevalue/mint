@@ -53,16 +53,20 @@ fieldset {
     + .button {
       border-top-color: transparent;
 
+      &:has(.input:hover),
       &:has(.input:focus) {
-        border-top-color: var(--border-color-light);
+        border-top-color: var(--button-border-color-highlight);
       }
 
       @container (min-width: 30rem) {
         border-top-color: var(--border-color);
         border-left-color: transparent;
 
+        &:--highlight,
+        &:has(.input:hover),
         &:has(.input:focus) {
-          border-left-color: var(--border-color-light);
+          border-top-color: var(--button-border-color-highlight);
+          border-left-color: var(--button-border-color-highlight);
         }
       }
     }

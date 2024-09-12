@@ -38,6 +38,7 @@ article.collection-overview-card {
 
   &:has(> a:--highlight) {
     background: var(--card-background-highlight);
+    border-color: var(--card-border-color-highlight);
   }
 
   @media (--sm) {

@@ -1,6 +1,6 @@
 <template>
   <div class="avatar">
-    <Image v-if="user.pfp" :image="user.pfp" class="bordered round" />
+    <Image v-if="user.pfp" :image="user.pfp" class="round" />
     <span v-else>{{ user.domain.slice(0, 2) }}</span>
   </div>
 </template>

@@ -68,10 +68,6 @@ article.image {
   padding-bottom: 100%;
   display: flex;
 
-  &.bordered {
-    box-shadow: var(--border-shadow);
-  }
-
   .loader {
     position: absolute;
     top: 0;

@@ -96,24 +96,4 @@ const popoverArrowPosition = computed(() => {
     transform: translateY(var(--spacer-lg));
   }
 }
-
-/* BACKDROP */
-/* [popover]::backdrop {
-  background-color: var(--background-0);
-  transition:
-    display 0.7s allow-discrete,
-    overlay 0.7s allow-discrete,
-    background-color 0.7s;
-}
-
-[popover]:popover-open::backdrop {
-  background-color: var(--background-semi);
-  backdrop-filter: var(--blur);
-}
-
-@starting-style {
-  [popover]:popover-open::backdrop {
-    background-color: var(--background-0);
-  }
-} */
 </style>

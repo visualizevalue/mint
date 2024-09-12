@@ -7,10 +7,7 @@
         <HeaderSection v-if="isMe && collections.length">
           <h1>Your Collections</h1>
           <Actions>
-            <Button :to="{ name: `id-create`, params: { id } }" class="small">
-              <Icon type="plus" />
-              <span>Collection</span>
-            </Button>
+            <ButtonAddCollection :id="id" />
           </Actions>
         </HeaderSection>
       </template>
@@ -39,5 +36,3 @@ useMetaData({
 })
 </script>
 
-<style scoped>
-</style>

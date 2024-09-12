@@ -10,24 +10,20 @@
     </h1>
     <p v-if="artist?.description">{{ artist.description }}</p>
 
-    <ul v-if="hasTags">
+    <Actions v-if="hasTags">
       <Button v-if="validateURI(artist.url)" :to="validateURI(artist.url)" class="small">
-        <Icon type="globe" />
-        <span>{{ getMainDomain(artist.url) }}</span>
+        {{ getMainDomain(artist.url) }}
       </Button>
       <Button v-if="artist.email" :to="`mailto:${artist.email}`" class="small">
-        <Icon type="mail" />
-        <span>{{ artist.email }}</span>
+        {{ artist.email }}
       </Button>
       <Button v-if="artist.twitter" :to="`https://x.com/${artist.twitter}`" class="small">
-        <Icon type="x.com" />
-        <span>{{ artist.twitter }}</span>
+        {{ artist.twitter }}
       </Button>
       <Button v-if="artist.github" :to="`https://github.com/${artist.github}`" class="small">
-        <Icon type="github" />
-        <span>{{ artist.github }}</span>
+        {{ artist.github }}
       </Button>
-    </ul>
+    </Actions>
   </header>
 </template>
 
@@ -56,20 +52,15 @@ const hasTags = computed(() => artist.value.url ||
 header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: var(--spacer);
 
   img {
     width: var(--size-9);
     height: var(--size-9);
-    border-radius: 50%;
-    border: var(--border);
   }
 
   h1 {
     cursor: pointer;
-    text-align: center;
 
     > * {
       display: block;
@@ -79,18 +70,6 @@ header {
       color: var(--muted);
       font-size: var(--font-xs);
     }
-  }
-
-  p {
-    color: var(--muted);
-    text-align: center;
-  }
-
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacer-sm);
-    justify-content: center;
   }
 }
 </style>

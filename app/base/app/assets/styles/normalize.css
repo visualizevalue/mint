@@ -420,7 +420,7 @@ body {
 
 hr {
   border-top-width: 1px;
-  border-color: var(--gray-z-2);
+  border-color: var(--border-color);
 }
 
 /**
@@ -443,7 +443,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: #9ca3af;
+  color: var(--ui-placeholder-color);
 }
 
 button,
@@ -483,12 +483,13 @@ a {
  * normalize.css.
  */
 
+.button,
 button,
 input,
 optgroup,
 select,
 textarea {
-  padding: 0;
+  padding: var(--ui-padding-y) var(--ui-padding-x);
   line-height: inherit;
   color: inherit;
 }

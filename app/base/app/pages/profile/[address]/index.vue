@@ -5,10 +5,7 @@
     <ProfileHeader :address="address">
       <template v-if="isMe" #before>
         <Actions>
-          <Button :to="`https://app.ens.domains/${address}`" class="small">
-            <Icon type="edit-2" />
-            <span>Edit Profile</span>
-          </Button>
+          <ButtonEditProfile :address="address" />
         </Actions>
       </template>
     </ProfileHeader>

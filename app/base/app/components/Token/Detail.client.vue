@@ -79,6 +79,7 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
     display: grid;
     grid-auto-rows: min-content;
     padding: 0 !important;
+    border-top: var(--border);
 
     @media (--md) {
       height: calc(100dvh - var(--navbar-height));

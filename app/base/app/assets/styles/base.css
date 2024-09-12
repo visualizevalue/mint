@@ -1,29 +1,24 @@
 :root {
-  font-family: var(--font-family-main);
+  font-family: var(--font-family);
   line-height: var(--line-height-base);
   font-weight: var(--font-weight);
   font-size: var(--rem);
   font-style: normal;
-  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
-
-  @supports (font-variation-settings: normal) {
-    font-optical-sizing: auto;
-  }
 
   background-color: var(--background);
   color: var(--color);
-  color-scheme: dark;
 
   text-transform: var(--text-transform);
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  letter-spacing: var(--letter-spacing);
 
   * {
     font-size: var(--font-base);
+    letter-spacing: var(--letter-spacing);
   }
 }
 
