@@ -21,7 +21,7 @@
 import { useFileDialog } from '@vueuse/core'
 
 const emit = defineEmits<{
-  change: [file: File|null]
+  change: [file: File|null|undefined]
 }>()
 
 const { files, open, reset, onChange } = useFileDialog({

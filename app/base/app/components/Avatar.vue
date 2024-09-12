@@ -52,10 +52,6 @@ const { user } = defineProps({
     @container avatar (min-width: 2.75rem) {
       font-size: var(--font-lg);
     }
-
-    @container avatar (min-width: 3.5rem) {
-      font-size: var(--font-xl);
-    }
   }
 }
 </style>

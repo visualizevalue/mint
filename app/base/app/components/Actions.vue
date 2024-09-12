@@ -11,7 +11,8 @@ menu {
   padding: 0;
   border: 0;
   display: flex;
-  gap: var(--spacer);
+  flex-wrap: wrap;
+  gap: var(--spacer-sm);
 
   &:empty {
     display: none;

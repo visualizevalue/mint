@@ -22,11 +22,11 @@
     >
       <section class="details">
         <header class="title">
-          <h1>{{ token.name }} <span class="muted-light">#{{ token.tokenId }}</span></h1>
-          <p v-if="token.description" class="muted-light">
+          <h1>{{ token.name }} <small>#{{ token.tokenId }}</small></h1>
+          <p v-if="token.description">
             <ExpandableText :text="token.description" :length="95" expand-text="Read More" />
           </p>
-          <p class="muted-light">
+          <p v-if="collection" class="artist">
             By <NuxtLink :to="{ name: 'id', params: { id: collection.owner } }">{{ store.displayName(collection.owner) }}</NuxtLink>
           </p>
         </header>
@@ -47,8 +47,8 @@
 
         <div class="mint-status">
           <p v-if="mintOpen">{{ blocksRemaining }} blocks remaining</p>
-          <p v-else-if="currentBlock" class="muted-light">Closed at block {{ token.untilBlock }}</p>
-          <p class="muted-light" v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
+          <p v-else-if="currentBlock">Closed at block {{ token.untilBlock }}</p>
+          <p v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
         </div>
 
         <TokenMintTimeline :token="token" :collection="collection" class="network-mints" />
@@ -83,8 +83,12 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
 
     @media (--md) {
       height: calc(100dvh - var(--navbar-height));
-      grid-template-columns: 60% 1fr;
+      grid-template-columns: 50% 1fr;
       grid-auto-rows: auto;
+    }
+
+    @media (--lg) {
+      grid-template-columns: 60% 1fr;
     }
   }
 
@@ -93,12 +97,11 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
     --padding-top: 0;
     --padding-bottom: 0;
     --width: 100cqw;
-    /* --height: calc(100cqh - var(--padding-top) - var(--padding-bottom)); */
     --height: 100%;
     --dimension: min(100cqw, 100cqh);
 
     @media (--md) {
-      --width: 60cqw;
+      --width: 50cqw;
       --height: calc(100cqh - var(--navbar-height));
       --padding-top: var(--spacer-lg);
       --padding-x: var(--spacer-lg);
@@ -106,12 +109,13 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
       --padding-bottom: var(--spacer-lg);
 
       --dimension: min(
-        calc(60cqw - var(--padding-x)*2),
+        calc(var(--width) - var(--padding-x)*2),
         calc(100cqh - var(--padding-top) - var(--padding-bottom))
       );
     }
 
     @media (--lg) {
+      --width: 60cqw;
       --padding-top: var(--spacer-xl);
       --padding-x: var(--spacer-xl);
       --padding-bottom: calc(var(--spacer-xl) + var(--spacer));
@@ -160,11 +164,15 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
       z-index: 100;
       display: grid;
       gap: var(--spacer-sm);
-      background: var(--background-semi);
+      background: var(--card-background);
       backdrop-filter: var(--blur);
 
       h1 {
         font-size: var(--font-lg);
+
+        small {
+          color: var(--muted);
+        }
       }
 
       @media (--md) {

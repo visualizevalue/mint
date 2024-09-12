@@ -20,10 +20,11 @@
   --blue:  #3263D0;
 
   /* THEME COLORS */
+  --muted: var(--gray-z-6);
   --error:   var(--red);
   --success: var(--green);
   --primary: var(--blue);
-  --muted: var(--gray-z-6);
+  --secondary: var(--blue);
 
   /* Z-COLORS */
   --background: var(--white);
@@ -66,7 +67,6 @@
   --font-xs: calc(var(--font-base) * 0.8);
   --font-sm: calc(var(--font-base) * 0.8);
   --font-lg: min(calc(var(--font-base) + 1vw * 2), calc(var(--font-base) * 1.25));
-  --font-xl: min(calc(var(--font-lg) + 1vw * 2), calc(var(--font-lg) * 1.25));
   --font-weight-light: 300;
   --font-weight: normal;
   --font-weight-bold: bold;

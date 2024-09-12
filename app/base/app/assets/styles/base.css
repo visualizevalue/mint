@@ -4,6 +4,7 @@
   font-weight: var(--font-weight);
   font-size: var(--rem);
   font-style: normal;
+  letter-spacing: var(--letter-spacing);
 
   background-color: var(--background);
   color: var(--color);
@@ -15,11 +16,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
-  * {
-    font-size: var(--font-base);
-    letter-spacing: var(--letter-spacing);
-  }
 }
 
 html,

@@ -10,7 +10,7 @@
     <div class="text">
       <CheckSpinner class="spinner" />
       <h1 v-if="text.title[step]">{{ text.title[step] }}</h1>
-      <p class="muted-light">{{ text.lead[step] }}</p>
+      <p>{{ text.lead[step] }}</p>
       <p v-if="error">{{ error }}</p>
     </div>
 

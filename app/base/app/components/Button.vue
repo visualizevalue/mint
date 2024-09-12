@@ -24,7 +24,8 @@ defineProps({
   justify-content: center;
   align-items: center;
   gap: var(--ui-padding-x);
-  letter-spacing: var(--letter-spacing);
+  letter-spacing: var(--ui-letter-spacing);
+  line-height: var(--ui-line-height);
 
   background: var(--button-background);
   padding: var(--ui-padding-y) var(--ui-padding-x);
@@ -46,6 +47,7 @@ defineProps({
   > span {
     display: flex;
     gap: var(--ui-padding-x);
+    line-height: var(--ui-line-height);
     justify-content: center;
     text-align: center;
     align-items: center;
@@ -53,10 +55,11 @@ defineProps({
     height: 100%;
   }
 
-  &.small {
-    padding: calc(var(--size-1) + var(--size-0)) var(--size-3);
+  &.small,
+  &.small > * {
     font-size: var(--font-sm);
     min-height: 0;
+    gap: calc(var(--ui-padding-x) / 2);
   }
 
   &.link {
@@ -64,12 +67,10 @@ defineProps({
     align-self: baseline;
     align-items: baseline;
     height: inherit;
-    min-height: 0;
     margin: 0 !important;
     padding-top: 0;
     padding-bottom: 0;
     line-height: inherit;
-    border: 0;
 
     .icon {
       align-self: center;

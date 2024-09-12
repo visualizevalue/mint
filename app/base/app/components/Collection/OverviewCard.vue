@@ -4,7 +4,7 @@
     <div class="text">
       <div>
         <h1>{{ collection.name }} <small>({{ collection.symbol }})</small></h1>
-        <p v-if="collection.description" class="muted-light">{{ shortDescription }}</p>
+        <p v-if="collection.description">{{ shortDescription }}</p>
       </div>
 
       <div>
@@ -63,12 +63,12 @@ article.collection-overview-card {
     }
 
     > div:last-child {
-      color: var(--muted-light);
+      color: var(--);
     }
 
     h1 {
       small {
-        color: var(--muted-light);
+        color: var(--);
         font-size: var(--font-base);
       }
     }

@@ -23,6 +23,9 @@ const ICONS = {
   link: '↗︎',
   user: '☻',
   loading: 'ⴵ',
+  'chevron-up': '↑',
+  'chevron-down': '↓',
+  'chevron-right': '→',
 }
 
 const symbol = computed(() => ICONS[props.type])

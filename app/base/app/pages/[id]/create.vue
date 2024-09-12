@@ -15,10 +15,10 @@
           <VisualImagePreview v-else />
         </div>
         <h1>
-          <span :class="{ 'muted-light': !title }">{{ title || 'Token' }}</span>
-          <small :class="{ 'muted-light': !symbol }">{{ symbol || '$T' }}</small>
+          <span :class="{ '': !title }">{{ title || 'Token' }}</span>
+          <small :class="{ '': !symbol }">{{ symbol || '$T' }}</small>
         </h1>
-        <p :class="{ 'muted-light': !description }">
+        <p :class="{ '': !description }">
           {{ description || 'No description' }}
         </p>
       </article>

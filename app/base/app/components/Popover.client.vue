@@ -31,12 +31,12 @@ const trigger = ref()
 const popover = ref()
 
 const { width: windowWidth } = useWindowSize()
-const { width: dialogWidth } = useElementSize(popover, {}, { box: 'border-box' })
+const { width: dialogWidth } = useElementSize(popover, undefined, { box: 'border-box' })
 const { x: targetX, y: targetY, width: targetWidth, height: targetHeight } = useElementBounding(trigger)
 const targetCenterX = computed(() => targetX.value + targetWidth.value / 2)
 const adjustmentX = computed(() => {
   const popoverLeft = targetCenterX.value - (dialogWidth.value / 2)
-  const overflow = parseInt(windowWidth.value - (popoverLeft + dialogWidth.value) - 29)
+  const overflow = parseInt(`${windowWidth.value - (popoverLeft + dialogWidth.value) - 29}`)
   return overflow < 0 ? overflow : 0
 })
 
@@ -73,7 +73,7 @@ const popoverArrowPosition = computed(() => {
 
   &:popover-open {
     opacity: 1;
-    transform: translateY(var(--spacer));
+    transform: translateY(var(--spacer-sm));
   }
 
   .arrow {

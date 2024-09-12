@@ -1,30 +1,28 @@
 <template>
-  <section>
+  <section class="token-mint-timeline">
     <h1>Mint Timeline</h1>
 
-    <div v-if="currentBlock" class="table">
+    <div v-if="currentBlock" class="token-mint-timeline-items">
       <TokenMintTimelineItem
         v-for="mint of mints"
         :mint="mint"
         :key="mint.tx"
         :block="currentBlock"
       />
-      <div v-if="! loading || mints.length">
-        <span>
-          <Account :address="collection.owner" />
-        </span>
+      <TokenMintTimelineItem v-if="! loading || mints.length">
+        <Account :address="collection.owner" class="account" />
 
-        <span class="right">1<span class="muted-light">×</span></span>
-        <span class="right">Artist Mint</span>
+        <span class="amount">1<span>×</span></span>
+        <span class="price">Artist Mint</span>
 
-        <span class="right"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - (token.untilBlock - 7200n)" /></span>
+        <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - (token.untilBlock - 7200n)" /></span>
 
-        <span class="right muted-light">
+        <span class="links">
           <NuxtLink :to="`${config.public.blockExplorer}/nft/${token.collection}/${token.tokenId}`" target="_blank">
             <Icon type="link" />
           </NuxtLink>
         </span>
-      </div>
+      </TokenMintTimelineItem>
     </div>
 
     <Loading v-if="loading || ! currentBlock" txt="Mint History..." />
@@ -62,9 +60,9 @@ watch(currentBlock, () => state.fetchTokenMints(token))
 </script>
 
 <style scoped>
-section {
-  padding-top: var(--spacer-lg) !important;
-  padding-bottom: var(--spacer-lg) !important;
+.token-mint-timeline {
+  padding-top: var(--spacer-lg);
+  padding-bottom: var(--spacer-lg);
   container-type: inline-size;
 }
 
@@ -73,38 +71,11 @@ h1 {
   font-size: var(--font-base);
   border-bottom: var(--border);
   padding: 0 0 var(--spacer-sm);
-  margin: 0 0 var(--spacer-lg);
+  margin: 0 0 var(--spacer);
 }
 
-.table {
+.token-mint-timeline-items {
   display: grid;
   gap: var(--spacer);
-
-  :deep(> div) {
-    display: grid;
-    gap: var(--spacer);
-
-    .right {
-      text-align: right;
-    }
-
-    span {
-      white-space: nowrap;
-
-      &:nth-child(3) {
-        display: none;
-
-        @container (min-width: 30rem) {
-          display: inline;
-        }
-      }
-    }
-
-    grid-template-columns: 6rem 3rem 1fr 3rem;
-
-    @container (min-width: 30rem) {
-      grid-template-columns: 6rem 3rem 1fr 6rem 1rem;
-    }
-  }
 }
 </style>

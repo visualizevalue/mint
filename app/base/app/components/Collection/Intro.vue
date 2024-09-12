@@ -6,13 +6,13 @@
     <div class="text">
       <div>
         <h1>{{ collection.name }} <small>({{ collection.symbol }})</small></h1>
-        <p v-if="collection.description" class="muted-light">
+        <p v-if="collection.description">
           <ExpandableText :text="collection.description" />
         </p>
       </div>
 
       <div>
-        <p v-if="id" class="muted-light">
+        <p v-if="id">
           <span>
             By <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
           </span>
@@ -87,7 +87,7 @@ header.collection-intro {
 
     h1 {
       small {
-        color: var(--muted-light);
+        color: var(--);
         font-size: var(--font-base);
       }
     }

@@ -81,7 +81,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
     }
 
     > p {
-      color: var(--muted-light);
+      color: var(--);
       font-size: var(--font-sm);
       text-align: left;
     }
@@ -108,7 +108,7 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
     h1 {
       span:last-of-type:not(:first-child) {
-        color: var(--muted-light);
+        color: var(--);
         white-space: wrap;
         display: none;
 

@@ -4,8 +4,8 @@
       <article class="preview">
         <Image v-if="image" :src="image" alt="Preview" />
         <VisualImagePreview v-else />
-        <h1 :class="{ 'muted-light': !name }">{{ name || 'Token' }}</h1>
-        <p :class="{ 'muted-light': !description }">
+        <h1 :class="{ '': !name }">{{ name || 'Token' }}</h1>
+        <p :class="{ '': !description }">
           {{ description || 'No description' }}
         </p>
       </article>

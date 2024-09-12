@@ -433,6 +433,10 @@ hr {
  * https://github.com/tailwindcss/tailwindcss/issues/362
  */
 
+i {
+  font-style: normal;
+}
+
 img {
   border-style: solid;
 }
