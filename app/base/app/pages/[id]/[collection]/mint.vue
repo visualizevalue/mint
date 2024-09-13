@@ -3,7 +3,7 @@
     <PageFrame :title="breadcrumb" class="inset wide" id="mint-token">
       <article class="preview">
         <Image v-if="image" :src="image" alt="Preview" />
-        <VisualImagePreview v-else />
+        <ImagePreview v-else />
         <h1 :class="{ '': !name }">{{ name || 'Token' }}</h1>
         <p :class="{ '': !description }">
           {{ description || 'No description' }}

@@ -12,7 +12,7 @@
       <article class="preview">
         <div class="visual">
           <Image v-if="image" :src="image" alt="Preview" />
-          <VisualImagePreview v-else />
+          <ImagePreview v-else />
         </div>
         <h1>
           <span :class="{ '': !title }">{{ title || 'Token' }}</span>
