@@ -60,12 +60,7 @@ dialog {
   }
 
   &::backdrop {
-    background-image: linear-gradient(
-      45deg,
-      var(--gray-z-0-semi),
-      var(--gray-z-1-semi),
-      var(--gray-z-2-semi)
-    );
+    background: var(--dialog-background-color);
     backdrop-filter: var(--blur);
     pointer-events: none;
   }
