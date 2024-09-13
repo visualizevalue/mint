@@ -8,10 +8,10 @@ html {
   /*
   * Font settings
   */
+  font-size: var(--rem);
   font-family: var(--font-family);
   line-height: var(--line-height-base);
   font-weight: var(--font-weight);
-  font-size: var(--rem);
   font-style: normal;
   letter-spacing: var(--letter-spacing);
   text-transform: var(--text-transform);
@@ -23,6 +23,14 @@ html {
 }
 
 body {
+  /*
+  * We treat font sizes are separate from the root em (--rem) seetting.
+  */
+  font-size: var(--font-base);
+
+  /*
+  * We prevent horizontal overflow
+  */
   overflow-x: hidden;
 }
 

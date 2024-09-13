@@ -13,13 +13,15 @@ defineProps({
 })
 </script>
 
-<style scoped>
+<style>
 :root {
   --breadcrumb-nav-color: var(--muted);
   --breadcrumb-nav-active-color: var(--muted);
   --breadcrumb-separator-color: var(--muted);
 }
+</style>
 
+<style scoped>
 .breadcrumb {
   display: flex;
   align-items: center;

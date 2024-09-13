@@ -5,8 +5,7 @@
   --black:    rgb(0, 0, 0);
 
   /* COLORS */
-  --blue:  #3263D0;
-  --primary:   var(--blue);
+  --primary:   blue;
 
   /*
   * Z-COLORS
