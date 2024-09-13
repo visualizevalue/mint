@@ -48,7 +48,7 @@ const breadcrumb = computed(() => {
   return [
     ...path,
     {
-      text: `${ collection.value.name }`,
+      text: `${ collection.value.name || 'Unnamed Collection' }`,
       to: { name: 'id-collection', params: { id: id.value, collection: collection.value.address } }
     },
     {

@@ -5,14 +5,14 @@
     </figure>
     <div class="text">
       <div>
-        <h1>{{ collection.name }} <small>({{ collection.symbol }})</small></h1>
+        <h1>{{ collection.name || 'Unnamed Collection' }} <small v-if="collection.symbol">({{ collection.symbol }})</small></h1>
         <p v-if="collection.description">
           <ExpandableText :text="collection.description" />
         </p>
       </div>
 
-      <div>
-        <p v-if="id">
+      <div v-if="id">
+        <p>
           <span>
             By <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
           </span>
@@ -31,7 +31,10 @@
           :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
           id="mint-new"
           class="small"
-        >Mint New</Button>
+        >
+          <Icon type="add" />
+          <span>Mint New</span>
+        </Button>
       </menu>
     </div>
   </header>

@@ -1,9 +1,13 @@
 <template>
   <article class="collection-overview-card">
     <Image v-if="collection.image" :src="collection.image" :alt="collection.name" />
+
     <div class="text">
-      <div>
-        <h1>{{ collection.name }} <small>({{ collection.symbol }})</small></h1>
+      <div v-if="collection.name || collection.symbol || collection.description">
+        <h1 v-if="collection.name || collection.symbol">
+          <span>{{ collection.name }}</span>
+          <small v-if="collection.symbol">({{ collection.symbol }})</small>
+        </h1>
         <p v-if="collection.description">{{ shortDescription }}</p>
       </div>
 
@@ -11,6 +15,7 @@
         <p>{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
       </div>
     </div>
+
     <CardLink
       :to="{ name: 'id-collection', params: { id: collection.owner, collection: collection.address } }"
       :title="`View ${collection.name}`"

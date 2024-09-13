@@ -29,7 +29,7 @@ const breadcrumb = computed(() => {
   return [
     ...path,
     {
-      text: collection.value.name
+      text: collection.value.name || 'Unnamed Collection'
     }
   ]
 })
