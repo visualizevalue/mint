@@ -15,9 +15,14 @@ defineProps({
 
 <style>
 :root {
-  --breadcrumb-nav-color: var(--muted);
+  --breadcrumb-nav-color:        var(--muted);
   --breadcrumb-nav-active-color: var(--muted);
-  --breadcrumb-separator-color: var(--muted);
+  --breadcrumb-separator-color:  var(--muted);
+
+  --breadcrumb-font-family:      var(--ui-font-family);
+  --breadcrumb-font-size:        var(--ui-font-size);
+  --breadcrumb-font-font-weight: var(--ui-font-weight);
+  --breadcrumb-text-transform:   var(--ui-text-transform);
 }
 </style>
 
@@ -27,6 +32,10 @@ defineProps({
   align-items: center;
   justify-content: center;
   gap: var(--spacer-sm);
+  font-family: var(--breadcrumb-font-family);
+  font-weight: var(--breadcrumb-font-weight);
+  text-transform: var(--breadcrumb-text-transform);
+  font-size: var(--breadcrumb-font-size);
 
   > span {
     white-space: nowrap;
