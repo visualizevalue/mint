@@ -1,6 +1,7 @@
 :root {
 
   --ui-font-family: var(--font-family);
+  --ui-font-size: var(--font-sm);
   --ui-font-weight: var(--font-weight);
   --ui-text-transform: var(--text-transform);
 
@@ -11,7 +12,7 @@
   --ui-line-height: var(--line-height);
 
   --ui-padding-y: var(--spacer-sm);
-  --ui-padding-x: var(--spacer-sm);
+  --ui-padding-x: var(--spacer);
 
 }
 
