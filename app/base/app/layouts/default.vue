@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-// Fetch and update price feed
+// Fetch and update USD price feed
 const priceFeed = usePriceFeedStore()
 onMounted(() => {
   priceFeed.fetchEthUsdPrice()
