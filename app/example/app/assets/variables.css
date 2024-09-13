@@ -1,10 +1,34 @@
 :root {
+
+  /**
+  * GRAY TONES
+  * Inspired by the tailwind "Zinc" pallette.
+  */
+  --gray-50:  #fafafa;
+  --gray-100: #f4f4f5;
+  --gray-200: #e4e4e7;
+  --gray-300: #d4d4d8;
+  --gray-400: #a1a1aa;
+  --gray-500: #71717a;
+  --gray-600: #52525b;
+  --gray-700: #3f3f46;
+  --gray-800: #27272a;
+  --gray-900: #18181b;
+  --gray-950: #09090b;
+
+  /**
+  * COLORS
+  */
+  --primary:  red;
+
   /*
-  * Z-COLORS
+  * BACKGROUND/FOREGROUND & Z-COLORS
   * This makes migrating to dark/light modes much easier later.
   * We're not thinking about color per se, but about the viewers perspective.
   */
-  --background: var(--white);
+  --background: var(--gray-100);
+  --color:      var(--gray-900);
+
   --gray-z-0:   var(--gray-50);
   --gray-z-1:   var(--gray-100);
   --gray-z-2:   var(--gray-200);
@@ -16,6 +40,27 @@
   --gray-z-8:   var(--gray-800);
   --gray-z-9:   var(--gray-900);
   --gray-z-10:  var(--gray-950);
-  --color:      var(--black);
+
+  /*
+  * FONTS
+  */
+  --font-family: sans-serif;
+  --font-base: 14px;
+
+  /*
+  * UI ELEMENTS
+  */
+  --ui-font-family: monospace;
+  --ui-text-transform: uppercase;
+
+  /*
+  * BORDERS
+  */
+  --border-color: var(--muted);
+
+  /*
+  * COMPONENTS
+  */
+  --breadcrumb-separator-color: red;
 }
 

@@ -23,6 +23,7 @@ defineProps({
   --breadcrumb-font-size:        var(--ui-font-size);
   --breadcrumb-font-font-weight: var(--ui-font-weight);
   --breadcrumb-text-transform:   var(--ui-text-transform);
+  --breadcrumb-letter-spacing:   var(--ui-letter-spacing);
 }
 </style>
 
@@ -36,6 +37,7 @@ defineProps({
   font-weight: var(--breadcrumb-font-weight);
   text-transform: var(--breadcrumb-text-transform);
   font-size: var(--breadcrumb-font-size);
+  letter-spacing: var(--breadcrumb-letter-spacing);
 
   > span {
     white-space: nowrap;

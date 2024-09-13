@@ -6,7 +6,13 @@
       <MintGasPricePopover />
 
       <Connect v-if="! isConnected" />
-      <NuxtLink v-else :to="{ name: 'profile-address', params: { address: address?.toLowerCase() } }">
+      <NuxtLink v-else
+        :to="{
+          name: 'profile-address',
+          params: { address: address?.toLowerCase() }
+        }"
+        class="account"
+      >
         <Account :address="address" />
       </NuxtLink>
     </ClientOnly>
@@ -70,6 +76,13 @@ header {
     @media (--md) {
       display: block;
     }
+  }
+
+  .account {
+    font-family: var(--ui-font-family);
+    font-size: var(--ui-font-size);
+    letter-spacing: var(--ui-letter-spacing);
+    text-transform: var(--ui-text-transform);
   }
 }
 </style>

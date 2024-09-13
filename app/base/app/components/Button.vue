@@ -5,7 +5,7 @@
 
 <script setup>
 defineProps({
-  to: [String,Object],
+  to: [String, Object],
   target: {
     type: String,
     default: '_self',

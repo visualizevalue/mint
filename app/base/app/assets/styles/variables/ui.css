@@ -1,18 +1,18 @@
 :root {
 
-  --ui-font-family: var(--font-family);
-  --ui-font-size: var(--font-sm);
-  --ui-font-weight: var(--font-weight);
-  --ui-text-transform: var(--text-transform);
+  --ui-font-family:         var(--font-family);
+  --ui-font-size:           var(--font-sm);
+  --ui-font-weight:         var(--font-weight);
+  --ui-text-transform:      var(--text-transform);
+  --ui-letter-spacing:      var(--letter-spacing);
+  --ui-line-height:         var(--line-height);
 
-  --ui-placeholder-color: var(--muted);
-  --ui-color: var(--primary);
-  --ui-color-visited: var(--primary);
-  --ui-letter-spacing: var(--letter-spacing);
-  --ui-line-height: var(--line-height);
+  --ui-color:               var(--primary);
+  --ui-placeholder-color:   var(--muted);
+  --ui-color-visited:       var(--primary);
 
-  --ui-padding-y: var(--spacer-sm);
-  --ui-padding-x: var(--spacer);
+  --ui-padding-y:           var(--spacer-sm);
+  --ui-padding-x:           var(--spacer);
 
 }
 
