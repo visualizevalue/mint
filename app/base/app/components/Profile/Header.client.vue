@@ -11,18 +11,10 @@
     <p v-if="artist?.description">{{ artist.description }}</p>
 
     <Actions v-if="hasTags">
-      <Button v-if="validateURI(artist.url)" :to="validateURI(artist.url)" class="small">
-        {{ getMainDomain(artist.url) }}
-      </Button>
-      <Button v-if="artist.email" :to="`mailto:${artist.email}`" class="small">
-        {{ artist.email }}
-      </Button>
-      <Button v-if="artist.twitter" :to="`https://x.com/${artist.twitter}`" class="small">
-        {{ artist.twitter }}
-      </Button>
-      <Button v-if="artist.github" :to="`https://github.com/${artist.github}`" class="small">
-        {{ artist.github }}
-      </Button>
+      <ButtonProfileWebsite :profile="artist" />
+      <ButtonProfileEmail :profile="artist" />
+      <ButtonProfileTwitter :profile="artist" />
+      <ButtonProfileGithub :profile="artist" />
     </Actions>
   </header>
 </template>

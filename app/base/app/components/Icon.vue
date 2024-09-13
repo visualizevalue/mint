@@ -2,7 +2,6 @@
   <i v-if="ICONS[type]" class="icon">
     {{ symbol }}
   </i>
-  <FeatherIcon v-else :type="type" class="icon" />
 </template>
 
 <script setup>
@@ -26,6 +25,7 @@ const ICONS = {
   'chevron-up': '↑',
   'chevron-down': '↓',
   'chevron-right': '→',
+  withdraw: 'Ξ',
 }
 
 const symbol = computed(() => ICONS[props.type])
