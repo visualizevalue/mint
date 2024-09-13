@@ -7,8 +7,9 @@
     :x-close="false"
     class="transaction-flow"
   >
+    <slot name="before" />
+
     <div class="text">
-      <CheckSpinner class="spinner" />
       <h1 v-if="text.title[step]">{{ text.title[step] }}</h1>
       <p v-if="text.lead[step]">{{ text.lead[step] }}</p>
       <p v-if="error">{{ error }}</p>
