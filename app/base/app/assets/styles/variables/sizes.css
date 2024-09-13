@@ -1,0 +1,23 @@
+:root {
+
+  --100vh:   100dvh;
+  --size-0:  0.125rem;
+  --size-1:  0.25rem;
+  --size-2:  0.5rem;
+  --size-3:  0.75rem;
+  --size-4:  1rem;
+  --size-5:  1.25rem;
+  --size-6:  1.5rem;
+  --size-7:  2rem;
+  --size-8:  3rem;
+  --size-9:  4.5rem;
+  --size-10: 6rem;
+
+  --spacer-xs: var(--size-0);
+  --spacer-sm: var(--size-2);
+  --spacer: var(--size-4);
+  --spacer-lg: var(--size-7);
+  --spacer-xl: var(--size-9);
+
+}
+

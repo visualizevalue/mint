@@ -15,7 +15,7 @@ wcm-modal {
 .install-model {
   > div:first-child {
     opacity: 1 !important;
-    background: var(--dialog-background-color) !important;
+    background: var(--backdrop-background-color) !important;
     backdrop-filter: var(--blur) !important;
   }
 }

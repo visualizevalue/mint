@@ -5,15 +5,6 @@
   </svg>
 </template>
 
-<script setup>
-const { fill } = defineProps({
-  fill: {
-    type: String,
-    default: 'currentColor',
-  },
-})
-</script>
-
 <style scoped>
 svg {
   height: var(--size-5);
@@ -25,15 +16,6 @@ svg {
   path:first-child {
     animation: spin 9s infinite linear;
     transform-origin: center;
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
 </style>

@@ -1,117 +1,17 @@
-:root {
-  /* GRAYS */
-  --white:    rgb(255,255,255);
-  --gray-50:  rgb(250,250,250);
-  --gray-100: rgb(245,245,245);
-  --gray-200: rgb(229,229,229);
-  --gray-300: rgb(212,212,212);
-  --gray-400: rgb(163,163,163);
-  --gray-500: rgb(115,115,115);
-  --gray-600: rgb(82,82,82);
-  --gray-700: rgb(64,64,64);
-  --gray-800: rgb(38,38,38);
-  --gray-900: rgb(19,19,19);
-  --gray-950: rgb(10,10,10);
-  --black:    rgb(0, 0, 0);
+/*
+* Here we import the individual variable files.
+* They are thematically grouped. Note that the order matters,
+* since some files depend on others.
+*/
 
-  /* COLORS */
-  --red:   #EF4444;
-  --green: #94E337;
-  --blue:  #3263D0;
+@import "./variables/colors.css";
+@import "./variables/sizes.css";
+@import "./variables/fonts.css";
+@import "./variables/borders.css";
+@import "./variables/effects.css";
+@import "./variables/animations.css";
 
-  /* THEME COLORS */
-  --muted: var(--gray-z-6);
-  --error:   var(--red);
-  --success: var(--green);
-  --primary: var(--blue);
-  --secondary: var(--blue);
-
-  /* Z-COLORS */
-  --background: var(--white);
-  --gray-z-0: var(--gray-50);
-  --gray-z-1: var(--gray-100);
-  --gray-z-2: var(--gray-200);
-  --gray-z-3: var(--gray-300);
-  --gray-z-4: var(--gray-400);
-  --gray-z-5: var(--gray-500);
-  --gray-z-6: var(--gray-600);
-  --gray-z-7: var(--gray-700);
-  --gray-z-8: var(--gray-800);
-  --gray-z-9: var(--gray-900);
-  --gray-z-10: var(--gray-950);
-  --color: var(--black);
-
-  /* SIZES */
-  --100vh:   100dvh;
-  --size-0:  0.125rem;
-  --size-1:  0.25rem;
-  --size-2:  0.5rem;
-  --size-3:  0.75rem;
-  --size-4:  1rem;
-  --size-5:  1.25rem;
-  --size-6:  1.5rem;
-  --size-7:  2rem;
-  --size-8:  3rem;
-  --size-9:  4.5rem;
-  --size-10: 6rem;
-
-  --spacer-xs: var(--size-0);
-  --spacer-sm: var(--size-2);
-  --spacer: var(--size-4);
-  --spacer-lg: var(--size-7);
-  --spacer-xl: var(--size-9);
-
-  /* FONTS */
-  --rem: 16px;
-  --font-base: var(--rem);
-  --font-xs: calc(var(--font-base) * 0.8);
-  --font-sm: calc(var(--font-base) * 0.8);
-  --font-lg: calc(var(--font-base) * 1.2);
-  --font-weight-light: 300;
-  --font-weight: normal;
-  --font-weight-bold: bold;
-  --font-family: serif;
-
-  --letter-spacing-sm: -0.025em;
-  --letter-spacing: 0.025em;
-  --letter-spacing-md: 0.05em;
-  --letter-spacing-lg: 0.1em;
-
-  --line-height-sm: 105%;
-  --line-height:    100%;
-  --line-height-md: 120%;
-  --line-height-lg: 160%;
-
-  --text-transform: none;
-
-  /* ANIMATION */
-  --speed-fast: 0.15s;
-  --speed:      0.3s;
-  --speed-slow: 0.75s;
-
-  /* COMPONENTS */
-  --dialog-width: 27rem;
-  --content-width: 40rem;
-  --content-width-lg: 72rem;
-  --navbar-height: calc(var(--size-8) + var(--size-4));
-
-  /* BORDERS */
-  --border-color: var(--gray-z-6);
-  --border-color-light: var(--gray-z-4);
-  --border-color-dark: var(--gray-z-1);
-  --border-width: 1px;
-  --border: var(--border-width) solid var(--border-color);
-  --border-dark: var(--border-width) solid var(--border-color-dark);
-  --border-shadow: 0 0 0 var(--border-width) var(--border-color);
-  --border-radius: 0;
-
-  /* SHADOWS */
-  --shadow:
-    0 var(--size-0) var(--size-2) var(--gray-z-1-semi),
-    0 var(--size-2) var(--size-7) calc(-1 * var(--size-5)) var(--gray-z-3-semi);
-
-  /* BACKGROUNDS */
-  --blur: blur(var(--size-1));
-  --dialog-background-color: transparent;
-}
+@import "./variables/ui.css";
+@import "./variables/components.css";
+@import "./variables/layout.css";
 

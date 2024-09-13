@@ -1,0 +1,11 @@
+:root {
+  /* SHADOWS */
+  --shadow:
+    0 var(--size-0) var(--size-2) var(--gray-z-1-semi),
+    0 var(--size-2) var(--size-7) calc(-1 * var(--size-5)) var(--gray-z-3-semi);
+
+  /* BACKGROUNDS */
+  --blur: blur(var(--size-1));
+
+}
+

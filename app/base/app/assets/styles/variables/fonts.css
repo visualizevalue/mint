@@ -1,0 +1,26 @@
+:root {
+
+  --rem: 16px;
+  --font-base: var(--rem);
+  --font-xs: calc(var(--font-base) * 0.8);
+  --font-sm: calc(var(--font-base) * 0.8);
+  --font-lg: calc(var(--font-base) * 1.2);
+  --font-weight-light: 300;
+  --font-weight: normal;
+  --font-weight-bold: bold;
+  --font-family: serif;
+
+  --letter-spacing-sm: -0.025em;
+  --letter-spacing: 0.025em;
+  --letter-spacing-md: 0.05em;
+  --letter-spacing-lg: 0.1em;
+
+  --line-height-sm: 105%;
+  --line-height:    100%;
+  --line-height-md: 120%;
+  --line-height-lg: 160%;
+
+  --text-transform: none;
+
+}
+

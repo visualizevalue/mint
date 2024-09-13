@@ -1,0 +1,17 @@
+:root {
+
+  --ui-font-family: var(--font-family);
+  --ui-font-weight: var(--font-weight);
+  --ui-text-transform: var(--text-transform);
+
+  --ui-placeholder-color: var(--muted);
+  --ui-color: var(--primary);
+  --ui-color-visited: var(--primary);
+  --ui-letter-spacing: var(--letter-spacing);
+  --ui-line-height: var(--line-height);
+
+  --ui-padding-y: var(--spacer-sm);
+  --ui-padding-x: var(--spacer-sm);
+
+}
+

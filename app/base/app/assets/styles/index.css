@@ -1,9 +1,30 @@
+/*
+* We import all our variables from here.
+* They are sorted thematically into their own files.
+*/
 @import "./variables.css";
-@import "./theme.css";
+
+/*
+* A cross browser normalizer, slight adjustments on top
+* of the Tailwind normalizer.
+*/
 @import "./normalize.css";
+
+/*
+* Base element and layout styles
+*/
 @import "./base.css";
+
+/*
+* These styles are not specific to one particular components
+*/
 @import "./forms.css";
 @import "./cards.css";
 @import "./prose.css";
 @import "./animation.css";
+
+/*
+* We don't control these external components,
+* but want to apply some reasonable overrides.
+*/
 @import "./web3-modals.css";

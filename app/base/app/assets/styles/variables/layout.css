@@ -1,0 +1,9 @@
+:root {
+
+  --dialog-width: 27rem;
+  --content-width: 40rem;
+  --content-width-lg: 72rem;
+  --navbar-height: calc(var(--size-8) + var(--size-4));
+
+}
+

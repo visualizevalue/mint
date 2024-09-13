@@ -1,16 +1,4 @@
 :root {
-  --ui-font-family: var(--font-family);
-  --ui-font-weight: var(--font-weight);
-  --ui-text-transform: var(--text-transform);
-
-  --ui-placeholder-color: var(--muted);
-  --ui-color: var(--primary);
-  --ui-color-visited: var(--primary);
-  --ui-letter-spacing: var(--letter-spacing);
-  --ui-line-height: var(--line-height);
-
-  --ui-padding-y: var(--spacer-sm);
-  --ui-padding-x: var(--spacer-sm);
 
   --card-border: var(--border);
   --card-border-radius: var(--border-radius);
@@ -23,5 +11,8 @@
   --button-background: var(--background);
   --button-background-highlight: var(--background);
   --button-border-color-highlight: var(--primary);
+
+  --backdrop-background-color: transparent;
+
 }
 
