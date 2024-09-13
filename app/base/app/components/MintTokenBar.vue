@@ -68,6 +68,7 @@ fieldset {
 
   .price {
     width: 100%;
+    color: var(--color) !important;
   }
 
   .mint {

@@ -1,16 +1,20 @@
-:root {
+html {
+  /*
+  * Color settings
+  */
+  background-color: var(--background);
+  color: var(--color);
+
+  /*
+  * Font settings
+  */
   font-family: var(--font-family);
   line-height: var(--line-height-base);
   font-weight: var(--font-weight);
   font-size: var(--rem);
   font-style: normal;
   letter-spacing: var(--letter-spacing);
-
-  background-color: var(--background);
-  color: var(--color);
-
   text-transform: var(--text-transform);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,8 +22,8 @@
   -webkit-text-size-adjust: 100%;
 }
 
-html,
 body {
   overflow-x: hidden;
 }
+
 

@@ -11,7 +11,7 @@
         <p v-if="collection.description">{{ shortDescription }}</p>
       </div>
 
-      <div>
+      <div class="details">
         <p>{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
       </div>
     </div>
@@ -67,8 +67,8 @@ article.collection-overview-card {
       gap: var(--spacer-sm);
     }
 
-    > div:last-child {
-      color: var(--);
+    > .details {
+      color: var(--muted);
     }
 
     h1 {

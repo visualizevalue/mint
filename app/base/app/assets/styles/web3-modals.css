@@ -1,6 +1,6 @@
 wcm-modal {
   --wcm-z-index: 9999;
-  --wcm-overlay-background-color: var(--gray-z-1-semi);
+  --wcm-overlay-background-color: var(--backdrop-background-color);
   --wcm-overlay-backdrop-filter: var(--blur);
 }
 

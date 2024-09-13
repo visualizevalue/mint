@@ -134,7 +134,7 @@ form {
     font-family: var(--ui-font-family);
     text-transform: var(--text-transform-ui);
     margin: var(--size-2) 0;
-    color: var(--gray-z-7);
+    color: var(--muted);
     transition: all var(--speed);
 
     > span:first-child {

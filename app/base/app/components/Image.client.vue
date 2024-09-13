@@ -61,7 +61,7 @@ const imageLoaded = () => {
 <style scoped>
 article.image {
   overflow: hidden;
-  background-color: var(--gray-z-2);
+  background-color: var(--background);
   overflow: hidden;
   position: relative;
   height: 0;
@@ -106,10 +106,10 @@ article.image {
 
 @keyframes imageLoading {
   from {
-    background-color: var(--gray-z-1);
+    background-color: var(--background);
   }
   to {
-    background-color: var(--gray-z-2);
+    background-color: var(--muted);
   }
 }
 </style>
