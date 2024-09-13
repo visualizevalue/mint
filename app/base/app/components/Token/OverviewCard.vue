@@ -16,11 +16,11 @@
       <div class="content">
         <header>
           <h1>
-            <span>{{ token.name }} <span class="muted">#{{ token.tokenId }}</span></span>
-            <span v-if="token.description">{{ shortString(token.description, 60, 30) }}</span>
+            <span>{{ token.name }} <span class="token-id">#{{ token.tokenId }}</span></span>
+            <span v-if="token.description" class="description">{{ shortString(token.description, 60, 30) }}</span>
           </h1>
-          <p v-if="mintOpen" class="muted">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
-          <p v-else class="muted">Closed at block {{ token.untilBlock }}</p>
+          <p v-if="mintOpen" class="closes-in">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
+          <p v-else class="closed-at">Closed at block {{ token.untilBlock }}</p>
         </header>
         <Image :src="token.artifact" :alt="token.name" />
         <CardLink :to="{
@@ -69,16 +69,8 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
   }
 
   .token-overview-card {
-    padding: var(--spacer-xl) var(--spacer) !important;
-
-    /* Tokens should be at min the screen height. */
-    &:not(:first-of-type) {
-      min-height: min(60rem, calc(100dvh - 2*var(--navbar-height)));
-
-      @media (--md) {
-        min-height: min(60rem, calc(100dvh - var(--navbar-height)));
-      }
-    }
+    padding: var(--spacer-xl) var(--spacer);
+    min-height: min(60rem, 100dvh);
 
     > p {
       color: var(--);
@@ -108,7 +100,8 @@ const ownedBalance = computed(() => store.tokenBalance(collection.value.address,
 
     h1 {
       span:last-of-type:not(:first-child) {
-        color: var(--);
+        color: var(--muted);
+        font-size: var(--font-sm);
         white-space: wrap;
         display: none;
 
