@@ -44,7 +44,7 @@ defineProps({
 
   > span:not(:last-child):after {
     content: '/';
-    color: var(--);
+    color: var(--muted);
     margin-left: var(--spacer-sm);
   }
 }
