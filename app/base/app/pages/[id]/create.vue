@@ -23,53 +23,53 @@
         </p>
       </article>
 
-      <form @submit.stop.prevent="deploy" class="card borderless">
-        <div class="card">
-          <div>
-            <FormSelectFile @change="setImage" />
-            <p v-if="! isSmall" class="muted"><small>Note: This should be a small file, prefferably a simple SVG like <a href="/example-contract-icon.svg" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small></p>
-          </div>
-          <FormGroup>
-            <FormInput v-model="title" placeholder="Title" required class="title" />
-            <FormInput v-model="symbol" placeholder="Symbol" required />
-          </FormGroup>
-          <FormInput v-model="description" placeholder="Description" />
-        </div>
+      <TransactionFlow
+        :request="deployRequest"
+        :text="{
+          title: {
+            chain: 'Switch Chain',
+            requesting: 'Confirm In Wallet',
+            waiting: '2. Transaction Submitted',
+            complete: '3. Success!'
+          },
+          lead: {
+            chain: 'Requesting to switch chain...',
+            requesting: 'Requesting Signature...',
+            waiting: 'Checking Deployment Transaction...',
+            complete: `New Collection Created...`,
+          },
+          action: {
+            confirm: 'Mint',
+            error: 'Retry',
+            complete: 'OK',
+          },
+        }"
+        @complete="deployed"
+        skip-confirmation
+        auto-close-success
+      >
+        <template #start="{ start }">
+          <form @submit.stop.prevent="start" class="card borderless">
+            <div class="card">
+              <div>
+                <FormSelectFile @change="setImage" />
+                <p v-if="! isSmall" class="muted"><small>Note: This should be a small file, prefferably a simple SVG like <a href="/example-contract-icon.svg" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small></p>
+              </div>
+              <FormGroup>
+                <FormInput v-model="title" placeholder="Title" required class="title" />
+                <FormInput v-model="symbol" placeholder="Symbol" required />
+              </FormGroup>
+              <FormInput v-model="description" placeholder="Description" />
+            </div>
 
-        <Actions class="borderless">
-          <TransactionFlow
-            :request="deployRequest"
-            :text="{
-              title: {
-                chain: 'Switch Chain',
-                requesting: 'Confirm In Wallet',
-                waiting: '2. Transaction Submitted',
-                complete: '3. Success!'
-              },
-              lead: {
-                chain: 'Requesting to switch chain...',
-                requesting: 'Requesting Signature...',
-                waiting: 'Checking Deployment Transaction...',
-                complete: `New Collection Created...`,
-              },
-              action: {
-                confirm: 'Mint',
-                error: 'Retry',
-                complete: 'OK',
-              },
-            }"
-            @complete="deployed"
-            skip-confirmation
-            auto-close-success
-          >
-            <template #start="{ start }">
-              <Button @click="start">
+            <Actions class="borderless">
+              <Button type="submit">
                 Deploy
               </Button>
-            </template>
-          </TransactionFlow>
-        </Actions>
-      </form>
+            </Actions>
+          </form>
+        </template>
+      </TransactionFlow>
 
     </PageFrame>
   </Authenticated>
