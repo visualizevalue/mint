@@ -22,7 +22,7 @@ const ICONS = {
   image: '+',
   link: '↗︎',
   user: '☻',
-  loading: 'ⴵ',
+  loader: 'ⴵ',
   'chevron-up': '↑',
   'chevron-down': '↓',
   'chevron-right': '→',

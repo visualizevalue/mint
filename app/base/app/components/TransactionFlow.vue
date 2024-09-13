@@ -10,7 +10,7 @@
     <div class="text">
       <CheckSpinner class="spinner" />
       <h1 v-if="text.title[step]">{{ text.title[step] }}</h1>
-      <p>{{ text.lead[step] }}</p>
+      <p v-if="text.lead[step]">{{ text.lead[step] }}</p>
       <p v-if="error">{{ error }}</p>
     </div>
 
@@ -158,7 +158,7 @@ const initializeRequest = async (request = props.request) => {
   requesting.value = false
   waiting.value = false
 
-  if (props.autoCloseSuccess) {
+  if (props.autoCloseSuccess && step.value === 'complete') {
     await delay(2_000)
     open.value = false
     await delay(300) // Animations...
@@ -189,37 +189,31 @@ defineExpose({
 <style>
 .transaction-flow {
   display: grid;
-  justify-content: center;
   gap: var(--spacer);
 
   .spinner {
     width: var(--size-7);
     height: var(--size-7);
-    margin: calc(-1 * var(--size-4)) auto var(--size-3);
+    margin: calc(-1 * var(--size-4)) 0 var(--size-3);
   }
 
   .text {
+    width: 100%;
     height: min-content;
   }
 
   h1 {
     font-size: var(--font-lg);
     margin-bottom: var(--size-4);
-    text-align: center;
   }
 
   p {
     white-space: pre-wrap;
     width: 100%;
-    text-align: center;
 
     a {
       text-decoration: underline;
     }
-  }
-
-  .block-explorer {
-    justify-self: center;
   }
 }
 </style>
