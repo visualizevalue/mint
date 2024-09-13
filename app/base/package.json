@@ -36,6 +36,7 @@
     "devDependencies": {
         "@types/node": "^22.5.4",
         "@vue/devtools-api": "^6.6.3",
+        "@wagmi/core": "^2.13.5",
         "eventemitter3": "^5.0.1",
         "nuxt": "latest",
         "typescript": "^5.5.4",
