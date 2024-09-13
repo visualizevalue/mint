@@ -25,7 +25,7 @@
         },
         action: {
           confirm: 'Mint',
-          error: 'Retry',
+          error: 'Mint',
           complete: 'OK',
         },
       },
