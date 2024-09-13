@@ -12,15 +12,10 @@ wcm-modal {
 }
 
 /* Metamask */
-.select-modal {
+.install-model {
   > div:first-child {
     opacity: 1 !important;
-    background: linear-gradient(
-      45deg,
-      var(--gray-z-0-semi),
-      var(--gray-z-1-semi),
-      var(--gray-z-2-semi)
-    ) !important;
+    background: var(--dialog-background-color) !important;
     backdrop-filter: var(--blur) !important;
   }
 }

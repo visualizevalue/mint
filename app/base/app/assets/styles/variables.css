@@ -66,7 +66,7 @@
   --font-base: var(--rem);
   --font-xs: calc(var(--font-base) * 0.8);
   --font-sm: calc(var(--font-base) * 0.8);
-  --font-lg: min(calc(var(--font-base) + 1vw * 2), calc(var(--font-base) * 1.25));
+  --font-lg: calc(var(--font-base) * 1.2);
   --font-weight-light: 300;
   --font-weight: normal;
   --font-weight-bold: bold;
@@ -112,5 +112,6 @@
 
   /* BACKGROUNDS */
   --blur: blur(var(--size-1));
+  --dialog-background-color: transparent;
 }
 
