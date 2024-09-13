@@ -2,7 +2,7 @@
   <Popover id="about-gas">
     <template #trigger><MintGasPrice :mint-count="2" /></template>
     <template #content>
-      <div class="minimal-prose">
+      <div class="prose">
         <h1>Mint Pricing</h1>
         <p>Artifacts are priced based on the ethereum network fees at the time of collecting.</p>
         <p>Network fees (Gas fees) are an essential component of of securing and running decentralized blockchains.</p>
