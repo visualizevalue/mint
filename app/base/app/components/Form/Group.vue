@@ -18,6 +18,7 @@ fieldset {
   max-width: -webkit-fill-available;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 
   > * {
     width: 100cqw;
@@ -49,10 +50,19 @@ fieldset {
 
   :deep(> .form-item),
   :deep(> .button) {
+    z-index: 1;
+
+    &:--highlight,
+    &:has(.input:hover),
+    &:has(.input:focus) {
+      z-index: 2;
+    }
+
     + .form-item,
     + .button {
-      border-top-color: transparent;
+      margin-top: calc(-1 * var(--border-width));
 
+      &:--highlight,
       &:has(.input:hover),
       &:has(.input:focus) {
         border-top-color: var(--button-border-color-highlight);
@@ -60,7 +70,8 @@ fieldset {
 
       @container (min-width: 30rem) {
         border-top-color: var(--border-color);
-        border-left-color: transparent;
+        margin-top: 0;
+        margin-left: calc(-1 * var(--border-width));
 
         &:--highlight,
         &:has(.input:hover),
