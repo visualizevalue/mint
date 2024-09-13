@@ -30,7 +30,6 @@
         <Button
           :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
           id="mint-new"
-          class="small"
         >
           <Icon type="add" />
           <span>Mint New</span>

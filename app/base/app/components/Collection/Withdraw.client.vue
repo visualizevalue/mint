@@ -19,7 +19,7 @@
     },
   }" skip-confirmation auto-close-success @complete="onComplete">
     <template #start="{ start }">
-      <Button @click="start" class="small">
+      <Button @click="start">
         <Icon type="withdraw" />
         <span>Withdraw ({{ balance.value }} {{ balance.format }})</span>
       </Button>

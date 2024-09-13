@@ -23,7 +23,7 @@ defineProps({
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: var(--ui-padding-x);
+  gap: calc(var(--ui-padding-x) / 2);
   letter-spacing: var(--ui-letter-spacing);
   line-height: var(--ui-line-height);
 
@@ -53,13 +53,6 @@ defineProps({
     align-items: center;
     width: 100%;
     height: 100%;
-  }
-
-  &.small,
-  &.small > * {
-    font-size: var(--font-sm);
-    min-height: 0;
-    gap: calc(var(--ui-padding-x) / 2);
   }
 
   &.link {

@@ -12,7 +12,7 @@
 
       <form @submit.stop.prevent="mint" class="card">
         <Actions>
-          <select class="select small choose-mode" v-model="mode">
+          <select class="select choose-mode" v-model="mode">
             <option value="file" title="Data URI Encoded File Upload">DATA-URI</option>
             <option value="ipfs" title="Interplanetary File System">IPFS</option>
             <option value="http" title="Hypertext Transfer Protocol" disabled>HTTP</option>

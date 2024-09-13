@@ -63,12 +63,6 @@ select {
   &::-ms-input-placeholder {
     color: var(--border-color-light);
   }
-
-  &.small {
-    min-height: 0;
-    font-size: var(--font-sm);
-    padding: calc(var(--size-1) + var(--size-0)) var(--size-3);
-  }
 }
 
 .form-item {
