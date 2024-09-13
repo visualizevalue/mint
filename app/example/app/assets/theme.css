@@ -1,5 +1,22 @@
 :root {
   --font-family: monospace;
-  --breadcrumb-separator-color: lightblue;
+  --font-base: 14px;
+
+  /*
+  * Colors
+  */
+  --background: var(--black);
+  --color:      var(--white);
+  --primary:    red;
+
+  /*
+  * Borders
+  */
+  --border-color: var(--muted);
+
+  /*
+  * Components
+  */
+  --breadcrumb-separator-color: red;
 }
 
