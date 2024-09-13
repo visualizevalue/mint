@@ -34,8 +34,10 @@ const symbol = computed(() => ICONS[props.type])
 <style scoped>
 .icon {
   display: inline-flex;
-  width: var(--size-4);
-  height: var(--size-4);
+  width: 1em;
+  height: 1em;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 </style>
