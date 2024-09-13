@@ -7,5 +7,6 @@
 </template>
 
 <style>
-@import "~/assets/styles/theme.css";
+@import "~/assets/theme.css";
 </style>
+

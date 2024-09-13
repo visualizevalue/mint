@@ -1,0 +1,21 @@
+:root {
+  /*
+  * Z-COLORS
+  * This makes migrating to dark/light modes much easier later.
+  * We're not thinking about color per se, but about the viewers perspective.
+  */
+  --background: var(--white);
+  --gray-z-0:   var(--gray-50);
+  --gray-z-1:   var(--gray-100);
+  --gray-z-2:   var(--gray-200);
+  --gray-z-3:   var(--gray-300);
+  --gray-z-4:   var(--gray-400);
+  --gray-z-5:   var(--gray-500);
+  --gray-z-6:   var(--gray-600);
+  --gray-z-7:   var(--gray-700);
+  --gray-z-8:   var(--gray-800);
+  --gray-z-9:   var(--gray-900);
+  --gray-z-10:  var(--gray-950);
+  --color:      var(--black);
+}
+
