@@ -5,8 +5,6 @@ export default defineNuxtConfig({
   ssr: process.env.NUXT_SSR !== 'false',
 
   extends: [
-    // '@visualizevalue/mint-app-base',
-    // '../base'
     '@visualizevalue/mint-app-base',
   ],
 

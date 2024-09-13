@@ -1,0 +1,14 @@
+h1.display {
+  font-size: var(--font-display);
+}
+h1.title {
+  font-size: var(--font-title);
+}
+
+.lead {
+  font-size: var(--font-lg);
+}
+
+.centered {
+  text-align: center;
+}
