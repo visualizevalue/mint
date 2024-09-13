@@ -1,5 +1,5 @@
 <template>
-  <DialogFrame class="modal" ref="dialog">
+  <DialogFrame class="modal" :class="class" ref="dialog">
     <button v-if="xClose" class="close" @click="$emit('close')"><Icon type="close" /></button>
 
     <slot />
@@ -9,6 +9,7 @@
 <script setup>
 const props = defineProps({
   open: Boolean,
+  class: String,
   xClose: {
     type: Boolean,
     default: true,

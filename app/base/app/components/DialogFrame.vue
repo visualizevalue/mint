@@ -1,12 +1,14 @@
 <template>
   <Teleport to="body">
-    <dialog ref="dialog">
+    <dialog ref="dialog" :class="class">
       <slot />
     </dialog>
   </Teleport>
 </template>
 
 <script setup>
+defineProps({ class: 'String' })
+
 const dialog = ref()
 
 const close = () => {
