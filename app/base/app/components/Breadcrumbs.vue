@@ -14,6 +14,12 @@ defineProps({
 </script>
 
 <style scoped>
+:root {
+  --breadcrumb-nav-color: var(--muted);
+  --breadcrumb-nav-active-color: var(--muted);
+  --breadcrumb-separator-color: var(--muted);
+}
+
 .breadcrumb {
   display: flex;
   align-items: center;
@@ -33,18 +39,18 @@ defineProps({
   }
 
   > span > a {
-    color: var(--muted);
+    color: var(--breadcrumb-nav-color);
     transition: all var(--speed);
 
     &.router-link-active-exact,
     &:--highlight {
-      color: var(--color);
+      color: var(--breadcrumb-nav-active-color);
     }
   }
 
   > span:not(:last-child):after {
     content: '/';
-    color: var(--muted);
+    color: var(--breadcrumb-separator-color);
     margin-left: var(--spacer-sm);
   }
 }
