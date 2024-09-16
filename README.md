@@ -64,7 +64,116 @@ or start from scratch but adjusting / layering on top of the base app.
 
 #### Building a custom theme by adjusting the base theme directly
 
-
 #### Building a custom theme by creating a layered Nuxt application
 
+Note this guide only goes through setting up a fresh Mint application
+based on the `@visualizevalue/mint-app-base` implementation.
+Refer to the [Nuxt Documentation](https://nuxt.com/getting-started) for details
+on how to architect Nuxt applications.
+
+##### 1. Create a new Nuxt application
+
+```bash
+pnpm dlx nuxi@latest init <app-name> # and follow the prompts
+```
+
+##### 2. Install the required dependencies
+
+```bash
+# Install our base layer application
+pnpm add @visualizevalue/mint-app-base
+
+# Install required peer dependencies
+pnpm add @vue/devtools-api @vueuse/core @vueuse/nuxt eventemitter3
+```
+
+##### 3. Implement the base layer
+
+In order to start using the base application as our starting point,
+we have to add it to the `extends` config option in our nuxt config.
+To learn more about it check the `extends` documentation [here](https://nuxt.com/docs/api/nuxt-config#extends).
+
+Also, to make our build work we have to tell Vite where to find some
+package dependencies.
+
+```ts
+export default defineNuxtConfig({
+
+  // Extend the base layer
+  extends: `@visualizevalue/mint-app-base`,
+
+  // Properly resolve dependencies
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@visualizevalue/mint-app-base > buffer',
+      ],
+    }
+  }
+
+  // ...
+})
+```
+
+Finally, let's remove the default welcome screen and hook up our applications
+in the `app.vue` file.
+
+```vue
+<template>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
+</template>
+```
+
+##### 4. Test the application
+
+You can run the application in development mode now! Run `pnpm dev` to start the app.
+
+##### 5. Adjust some styling
+
+Let's create our own custom styles. Add a `theme.css` file
+in a new `assets` folder.
+
+```css
+/* Add Pepe styles */
+:root {
+  --background:   white;
+  --color:        black;
+  --primary:      red;
+  --muted:        blue;
+
+  --border-color: green;
+  --border-width: 4px;
+
+  --font-base:    2rem;
+  --font-family:  sans-serif;
+  --font-weight:  bold;
+  --text-transform: uppercase;
+
+  --button-background:           red;
+  --button-background-highlight: green;
+
+  --card-background:           red;
+  --card-background-highlight: green;
+}
+```
+
+And let's load the styles in our application. In the `app.vue` file, add:
+
+```vue
+<template><!-- ... --></template>
+
+<style>
+@import "~/assets/theme.css";
+</style>
+```
+
+For further inspiration on building a custom theme, including adding new components
+and features check out the `@visualizevalue/mint-app-example` applications
+in [/app/example](./app/example/).
+
 ## Contracts
+
