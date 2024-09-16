@@ -1,4 +1,4 @@
-.profile-header > ha {
+.profile-header > h1 {
   font-size: var(--font-lg);
 }
 
@@ -10,14 +10,15 @@
 /*
 * IMAGE adjustments
 */
-.profile-header > img {
-  border-radius: 50%;
-}
 .profile-header img,
 .collection-intro img,
 .collection-overview-card img,
 .token-overview-card img {
   border: var(--border);
   border-radius: var(--border-radius);
+}
+
+.profile-header > img {
+  border-radius: 50%;
 }
 
