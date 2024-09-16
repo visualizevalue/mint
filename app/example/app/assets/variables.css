@@ -16,6 +16,18 @@
   --gray-900: #18181b;
   --gray-950: #09090b;
 
+  --gray-50-semi:  #fafafa7b;
+  --gray-100-semi: #f4f4f57b;
+  --gray-200-semi: #e4e4e77b;
+  --gray-300-semi: #d4d4d87b;
+  --gray-400-semi: #a1a1aa7b;
+  --gray-500-semi: #71717a7b;
+  --gray-600-semi: #52525b7b;
+  --gray-700-semi: #3f3f467b;
+  --gray-800-semi: #27272a7b;
+  --gray-900-semi: #18181b7b;
+  --gray-950-semi: #09090b7b;
+
   /**
   * COLORS
   */
@@ -26,8 +38,10 @@
   * This makes migrating to dark/light modes much easier later.
   * We're not thinking about color per se, but about the viewers perspective.
   */
-  --background: var(--gray-100);
-  --color:      var(--gray-900);
+  --background-semi: var(--gray-200-semi);
+
+  --background: var(--gray-200);
+  --color:      var(--gray-800);
 
   --gray-z-0:   var(--gray-50);
   --gray-z-1:   var(--gray-100);
@@ -46,6 +60,7 @@
   */
   --font-family: sans-serif;
   --font-base: 14px;
+  --font-lg: calc(var(--font-base) * 1.618);
 
   /*
   * UI ELEMENTS

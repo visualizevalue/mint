@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="app-header">
     <ClientOnly>
       <Breadcrumbs :items="breadcrumbs" />
 

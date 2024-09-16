@@ -1,5 +1,5 @@
 <template>
-  <header v-if="artist">
+  <header v-if="artist" class="profile-header">
     <slot name="before" />
 
     <img :src="artist.avatar || `/icons/opepen.svg`" :alt="name">
@@ -60,7 +60,8 @@ header {
 
     small {
       color: var(--muted);
-      font-size: var(--font-xs);
+      font-size: var(--font-sm);
+      font-family: var(--ui-font-family);
     }
   }
 }
