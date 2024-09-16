@@ -20,7 +20,7 @@
 
   > * {
     margin: var(--spacer-sm) 0;
-    color: var(--muted);
+    color: var(--color);
 
     &:first-child {
       margin-top: 0;

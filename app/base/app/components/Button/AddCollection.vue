@@ -1,6 +1,6 @@
 <template>
   <Button :to="{ name: `id-create`, params: { id } }">
-    <Icon type="add"/>
+    <Icon type="add" />
     <span>Collection</span>
   </Button>
 </template>

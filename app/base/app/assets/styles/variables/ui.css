@@ -1,7 +1,7 @@
 :root {
 
   --ui-font-family:         var(--font-family);
-  --ui-font-size:           var(--font-sm);
+  --ui-font-size:           var(--font-base);
   --ui-font-weight:         var(--font-weight);
   --ui-text-transform:      var(--text-transform);
   --ui-letter-spacing:      var(--letter-spacing);

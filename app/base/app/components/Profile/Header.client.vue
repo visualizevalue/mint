@@ -2,7 +2,7 @@
   <header v-if="artist" class="profile-header">
     <slot name="before" />
 
-    <img :src="artist.avatar || `/icons/opepen.svg`" :alt="name">
+    <img :src="artist.avatar || `/icons/opepen.svg`" :alt="name" />
     <h1 @click="() => copy(address)">
       <span>{{ name }}</span>
       <small v-if="copied">copied...</small>
@@ -62,6 +62,8 @@ header {
       color: var(--muted);
       font-size: var(--font-sm);
       font-family: var(--ui-font-family);
+      letter-spacing: var(--ui-letter-spacing);
+      text-transform: var(--ui-text-transform);
     }
   }
 }

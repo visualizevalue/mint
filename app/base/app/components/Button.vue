@@ -61,12 +61,18 @@ defineProps({
     align-items: baseline;
     height: inherit;
     margin: 0 !important;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 calc(var(--ui-padding-x)/2) !important;
+    border: 0;
     line-height: inherit;
+    color: var(--muted);
+
+    &:--highlight {
+      color: var(--color);
+    }
 
     .icon {
       align-self: center;
+      height: inherit;
     }
   }
 }

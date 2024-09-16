@@ -70,7 +70,7 @@ h1 {
   margin-bottom: var(--spacer);
   font-size: var(--font-base);
   border-bottom: var(--border);
-  padding: 0 0 var(--spacer-sm);
+  padding: 0 0 var(--spacer);
   margin: 0 0 var(--spacer);
 }
 

@@ -65,6 +65,10 @@ const formattedPrice = computed(() => customFormatEther(props.mint.price))
       .amount {
         text-align: right;
       }
+
+      span:not(.account) {
+        font-size: var(--font-base);
+      }
     }
   }
 </style>

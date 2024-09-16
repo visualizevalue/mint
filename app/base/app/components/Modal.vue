@@ -1,6 +1,8 @@
 <template>
   <DialogFrame class="modal" :class="class" ref="dialog">
-    <button v-if="xClose" class="close" @click="$emit('close')"><Icon type="close" /></button>
+    <button v-if="xClose" class="close" @click="$emit('close')">
+      <Icon type="close" />
+    </button>
 
     <slot />
   </DialogFrame>

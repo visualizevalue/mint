@@ -16,14 +16,14 @@ defineProps({
 <style>
 :root {
   --breadcrumb-nav-color:        var(--muted);
-  --breadcrumb-nav-active-color: var(--muted);
+  --breadcrumb-nav-active-color: var(--color);
   --breadcrumb-separator-color:  var(--muted);
 
-  --breadcrumb-font-family:      var(--ui-font-family);
-  --breadcrumb-font-size:        var(--ui-font-size);
-  --breadcrumb-font-font-weight: var(--ui-font-weight);
-  --breadcrumb-text-transform:   var(--ui-text-transform);
-  --breadcrumb-letter-spacing:   var(--ui-letter-spacing);
+  --breadcrumb-font-family:      var(--app-header-font-family);
+  --breadcrumb-font-size:        var(--app-header-font-size);
+  --breadcrumb-font-font-weight: var(--app-header-font-weight);
+  --breadcrumb-text-transform:   var(--app-header-text-transform);
+  --breadcrumb-letter-spacing:   var(--app-header-letter-spacing);
 }
 </style>
 
