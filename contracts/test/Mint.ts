@@ -76,6 +76,8 @@ describe('Mint', () => {
     it('prepare a large artifact across multiple transactions', async () => {
       const { mint, largeArtifact } = await loadFixture(itemPreparedFixture)
 
+      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0n, 0n ])
+
       const dataURI = await mint.read.uri([2n], { gas: 1_000_000_000 })
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
       const data = JSON.parse(json)
@@ -93,6 +95,8 @@ describe('Mint', () => {
           true,
         ],
       )).to.be.fulfilled
+
+      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0n, 0n ])
 
       const dataURI = await mint.read.uri([2n])
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
@@ -348,6 +352,12 @@ describe('Mint', () => {
       await mint.write.safeTransferFrom([owner.account.address, JALIL, 1n, 1n, ''])
 
       expect(await mint.read.balanceOf([JALIL, 1n])).to.equal(1n)
+    })
+
+    it('throws on trying to retreive non existent tokens', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      await expect(mint.read.uri([ 9n ])).to.be.revertedWithCustomError(mint, 'NonExistentToken')
     })
 
   })

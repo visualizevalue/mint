@@ -178,6 +178,8 @@ contract Mint is ERC1155 {
 
     /// @notice Get the metadata for a given token id.
     function uri(uint tokenId) external override view returns (string memory) {
+        if (tokenId > latestTokenId) revert NonExistentToken();
+
         Token memory token = tokens[tokenId];
 
         return IRenderer(renderers[token.renderer]).uri(tokenId, token, artifact(tokenId));
