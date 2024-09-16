@@ -4,7 +4,13 @@ happy birthday ethereum
 
 ## App
 
-### Running the example application in a docker container
+### Running the example application in a docker container (1min)
+
+#### Prerequisites
+
+Note for this to work you need to have [Docker](https://www.docker.com) installed on your machine.
+
+#### Build and run the application
 
 Please set your environment variables in an `.env` file in the project root.
 
@@ -21,7 +27,14 @@ docker compose up --build
 This will expose the application on the host machine port specified in the
 env file (`:1618` by default).
 
-### Building the application locally
+### Building the application locally (2min)
+
+#### Prerequisites
+
+Note for this you need [Node](https://nodejs.org/en) and
+[PNPM](https://pnpm.io/) installed on your machine.
+
+#### Build an run the application
 
 There are two versions of the application available to play with:
 
@@ -56,11 +69,17 @@ a bare-bones but feature-complete UI to interact with the Mint contracts.
 
 It is build with [VueJS](https://vuejs.org) on top of [Nuxt](https://nuxt.com).
 Nuxt is a quality-of-life batteries included meta-framework on top of VueJS.
-It makes [layering new functionality](https://nuxt.com/docs/getting-started/layers) a breeze.
+It makes [layering new functionality](https://nuxt.com/docs/getting-started/layers)
+a breeze.
 
 The `@visualizevalue/mint-app-example` customizes the base application
 to implement a custom theme. You can use this as inspiration for your own theme,
 or start from scratch but adjusting / layering on top of the base app.
+
+#### Prerequisites
+
+Note for this you need [Node](https://nodejs.org/en) and a package manager
+like [NPM](https://www.npmjs.com/), [PNPM](https://pnpm.io/) or [Yarn](https://yarnpkg.com/) installed on your machine.
 
 #### Building a custom theme by adjusting the base theme directly
 
@@ -175,5 +194,12 @@ For further inspiration on building a custom theme, including adding new compone
 and features check out the `@visualizevalue/mint-app-example` applications
 in [/app/example](./app/example/).
 
-## Contracts
+### FAQ
 
+#### Can i add WalletConnect to my app?
+
+Yes – just add a `NUXT_PUBLIC_WALLET_CONNECT_PROJECT_ID` environment variable
+with your project id.
+Create one for your domain at the [WalletConnect cloud](https://cloud.walletconnect.com)
+
+## Contracts
