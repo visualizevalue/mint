@@ -72,6 +72,12 @@ article.collection-overview-card {
     }
 
     h1 {
+      span {
+        &:after {
+          content: ' ';
+        }
+      }
+
       small {
         color: var(--);
         font-size: var(--font-base);
