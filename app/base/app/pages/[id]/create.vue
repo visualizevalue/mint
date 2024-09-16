@@ -126,7 +126,10 @@ const deployed = async (receipt) => {
 
   const artist = store.artist(id.value)
   await store.fetchCollections(id.value, config.public.factoryAddress, artist.collectionsFetchedUntilBlock)
-  await navigateTo(`/${id.value}/${createdEvent.args.contractAddress}`)
+  await navigateTo({
+    name: 'id-collection',
+    params: { id: id.value, collection: createdEvent.args.contractAddress }
+  })
 }
 
 useMetaData({
