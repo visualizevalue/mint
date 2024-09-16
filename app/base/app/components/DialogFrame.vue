@@ -69,7 +69,10 @@ dialog {
     position: absolute;
     top: var(--spacer);
     right: var(--spacer);
-    width: min-content;
+    width: var(--spacer);
+    height: var(--spacer);
+    padding: 0;
+    z-index: 10;
   }
 
   > h1 {
