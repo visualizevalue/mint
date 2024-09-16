@@ -59,7 +59,7 @@ const secondsRemaining = computed(() => blocksToSeconds(blocksRemaining.value))
 const until = computed(() => nowInSeconds() + secondsRemaining.value)
 
 const mintCount = computed(() => props.mintCount)
-const { price, displayPrice } = await useMintPrice(mintCount)
+const { price, displayPrice } = useMintPrice(mintCount)
 
 const mintRequest = computed(() => async () => {
   const count = BigInt(props.mintCount)

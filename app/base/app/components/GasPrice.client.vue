@@ -1,9 +1,7 @@
 <template>
-  <slot :price="unitPrice">
-    <span>{{ unitPrice.formatted.gwei }} GWEI</span>
-  </slot>
+  <span>{{ unitPrice.formatted.gwei }} GWEI</span>
 </template>
 
 <script setup>
-const unitPrice = await useGasPrice()
+const unitPrice = useGasPrice()
 </script>

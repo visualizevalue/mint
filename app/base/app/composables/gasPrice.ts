@@ -5,16 +5,18 @@ import { useConfig, useBlockNumber } from '@wagmi/vue'
 
 let priceWatcher: WatchStopHandle|null = null
 const price: Ref<bigint> = ref(0n)
-export const useGasPrice = async () => {
+export const useGasPrice = () => {
   const config = useConfig()
   const { data: blockNumber } = useBlockNumber()
 
-  if (! priceWatcher) {
-    priceWatcher = watch(blockNumber, async () => price.value = await getGasPrice(config))
+  const updatePrice = async () => {
+    price.value = await getGasPrice(config)
   }
 
-  if (price.value === null && priceWatcher === null) {
-    price.value = await getGasPrice(config)
+  if (! priceWatcher) {
+    updatePrice()
+
+    priceWatcher = watch(blockNumber, () => updatePrice())
   }
 
   const unitPrice = computed(() => ({
@@ -23,7 +25,7 @@ export const useGasPrice = async () => {
     eth: formatEther(price.value as bigint),
 
     formatted: {
-      gwei: price.value as bigint > 20000000000n
+      gwei: price.value as bigint > 2_000_000_000_000n
         ? roundNumber(formatGwei(price.value as bigint))
         : toFloat(formatGwei(price.value as bigint), 1),
       eth: formatEther(price.value as bigint),
@@ -33,8 +35,8 @@ export const useGasPrice = async () => {
   return unitPrice
 }
 
-export const useMintPrice = async (mintCount: Ref<number>) => {
-  const gasPrice = await useGasPrice()
+export const useMintPrice = (mintCount: Ref<number>) => {
+  const gasPrice = useGasPrice()
 
   const price = computed(() => (gasPrice.value.wei || 0n) * 60_000n * BigInt(mintCount.value))
   const displayPrice = computed(() => customFormatEther(price.value))
@@ -42,5 +44,7 @@ export const useMintPrice = async (mintCount: Ref<number>) => {
   return {
     price,
     displayPrice,
+    gasPrice,
   }
 }
+

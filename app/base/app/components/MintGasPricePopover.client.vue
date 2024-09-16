@@ -4,7 +4,7 @@
     <template #content>
       <div class="prose">
         <h1>Mint Pricing</h1>
-        <p>Artifacts are priced based on the ethereum network fees at the time of collecting.</p>
+        <p>Artifacts are priced based on the Ethereum network fees at the time of collecting.</p>
         <p>Network fees (Gas fees) are an essential component of of securing and running decentralized blockchains.</p>
         <p>
           The cost to store and secure the object on the network is mirrored as compensation to the artist,

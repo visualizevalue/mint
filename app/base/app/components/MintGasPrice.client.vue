@@ -14,7 +14,10 @@ const props = defineProps({
   }
 })
 const mintCount = computed(() => props.mintCount)
-const { price, displayPrice } = await useMintPrice(mintCount)
+const { price, displayPrice } = useMintPrice(mintCount)
 const priceFeed = usePriceFeedStore()
-const dollarPrice = computed(() => priceFeed.weiToUSD(price.value))
+const dollarPrice = computed(() => {
+  const usd = priceFeed.weiToUSD(price.value)
+  return parseFloat(usd) > 0 ? usd : `<0.00`
+})
 </script>
