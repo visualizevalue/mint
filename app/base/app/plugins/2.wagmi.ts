@@ -1,11 +1,30 @@
 import { VueQueryPlugin } from '@tanstack/vue-query'
-import { http, cookieStorage, createConfig, createStorage, WagmiPlugin, fallback, type Config } from '@wagmi/vue'
+import { http, cookieStorage, createConfig, createStorage, WagmiPlugin, fallback, type Config, type CreateConnectorFn } from '@wagmi/vue'
 import { mainnet, sepolia, holesky, localhost } from '@wagmi/vue/chains'
 import { coinbaseWallet, injected, metaMask, walletConnect } from '@wagmi/vue/connectors'
 import type { CustomTransport, Transport } from 'viem'
 
 export default defineNuxtPlugin(nuxtApp => {
   const title = nuxtApp.$config.public.title || 'Mint'
+
+  const connectors: CreateConnectorFn[] = [
+    injected(),
+    coinbaseWallet({
+      appName: title,
+      appLogoUrl: '',
+    }),
+    metaMask({
+      dappMetadata: {
+        name: title,
+        iconUrl: '',
+        url: '',
+      }
+    }),
+  ]
+
+  if (nuxtApp.$config.public.walletConnectProjectId) connectors.push(walletConnect({
+    projectId: nuxtApp.$config.public.walletConnectProjectId,
+  }))
 
   const transportDefinitions: CustomTransport|Transport[] = []
 
@@ -21,23 +40,7 @@ export default defineNuxtPlugin(nuxtApp => {
     batch: {
       multicall: true,
     },
-    connectors: [
-      injected(),
-      walletConnect({
-        projectId: nuxtApp.$config.public.walletConnectProjectId,
-      }),
-      coinbaseWallet({
-        appName: title,
-        appLogoUrl: '',
-      }),
-      metaMask({
-        dappMetadata: {
-          name: title,
-          iconUrl: '',
-          url: '',
-        }
-      }),
-    ],
+    connectors,
     storage: createStorage({
       storage: cookieStorage,
     }),
