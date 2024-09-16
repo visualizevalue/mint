@@ -2,11 +2,11 @@
   <header v-if="artist" class="profile-header">
     <slot name="before" />
 
-    <img :src="artist.avatar || `/icons/opepen.svg`" :alt="name" />
-    <h1 @click="() => copy(address)">
+    <img :src="artist.avatar || avatar" :alt="name" />
+    <h1 @click="() => ! hideAddress && copy(address)">
       <span>{{ name }}</span>
       <small v-if="copied">copied...</small>
-      <small v-else-if="artist.ens">{{ shortAddress(address) }}</small>
+      <small v-else-if="! hideAddress">{{ shortAddress(address) }}</small>
     </h1>
     <p v-if="artist?.description">{{ artist.description }}</p>
 
@@ -22,14 +22,20 @@
 <script setup>
 import { useClipboard } from '@vueuse/core'
 
+const config = useRuntimeConfig()
+
 const props = defineProps({
   address: String,
+  avatar: String,
+  name: String,
+  hideAddress: Boolean,
 })
 
 const store = useOnchainStore()
 
+const avatar = computed(() => props.avatar || config.public.defaultAvatar)
 const artist = computed(() => store.artist(props.address))
-const name = computed(() => artist.value?.ens || shortAddress(props.address))
+const name = computed(() => props.name || artist.value?.ens || shortAddress(props.address))
 const artistAddress = computed(() => props.address)
 const { copy, copied } = useClipboard({ source: artistAddress })
 
@@ -52,8 +58,6 @@ header {
   }
 
   h1 {
-    cursor: pointer;
-
     > * {
       display: block;
     }
@@ -64,6 +68,7 @@ header {
       font-family: var(--ui-font-family);
       letter-spacing: var(--ui-letter-spacing);
       text-transform: var(--ui-text-transform);
+      cursor: pointer;
     }
   }
 }
