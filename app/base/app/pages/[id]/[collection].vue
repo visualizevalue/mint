@@ -14,7 +14,11 @@ const collection = ref(null)
 const load = async () => {
   loading.value = true
 
-  collection.value = await store.fetchCollection(address.value)
+  try {
+    collection.value = await store.fetchCollection(address.value)
+  } catch (e) {
+    navigateTo({ name: 'id' }, { replace: true })
+  }
 
   loading.value = false
 }

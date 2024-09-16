@@ -15,7 +15,11 @@ const loading = ref(true)
 const load = async () => {
   loading.value = true
 
-  await store.fetchToken(collection.value.address, route.params.tokenId)
+  try {
+    await store.fetchToken(collection.value.address, route.params.tokenId)
+  } catch (e) {
+    navigateTo({ name: 'id-collection' }, { replace: true })
+  }
 
   loading.value = false
 }
