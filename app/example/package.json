@@ -17,5 +17,9 @@
         "@vueuse/nuxt": "^11.0.3",
         "eventemitter3": "^5.0.1",
         "nuxt": "latest"
+    },
+    "dependencies": {
+        "feather-icons": "4",
+        "vue-feather": "^2.0.0"
     }
 }

@@ -16,44 +16,22 @@
   --gray-900: #18181b;
   --gray-950: #09090b;
 
-  --gray-50-semi:  #fafafa7b;
-  --gray-100-semi: #f4f4f57b;
-  --gray-200-semi: #e4e4e77b;
-  --gray-300-semi: #d4d4d87b;
-  --gray-400-semi: #a1a1aa7b;
-  --gray-500-semi: #71717a7b;
-  --gray-600-semi: #52525b7b;
-  --gray-700-semi: #3f3f467b;
-  --gray-800-semi: #27272a7b;
-  --gray-900-semi: #18181b7b;
-  --gray-950-semi: #09090b7b;
+  --gray-50-semi:  #fafafab9;
+  --gray-100-semi: #f4f4f5b9;
+  --gray-200-semi: #e4e4e7b9;
+  --gray-300-semi: #d4d4d8b9;
+  --gray-400-semi: #a1a1aab9;
+  --gray-500-semi: #71717ab9;
+  --gray-600-semi: #52525bb9;
+  --gray-700-semi: #3f3f46b9;
+  --gray-800-semi: #27272ab9;
+  --gray-900-semi: #18181bb9;
+  --gray-950-semi: #09090bb9;
 
   /**
   * COLORS
   */
-  --primary:  red;
-
-  /*
-  * BACKGROUND/FOREGROUND & Z-COLORS
-  * This makes migrating to dark/light modes much easier later.
-  * We're not thinking about color per se, but about the viewers perspective.
-  */
-  --background-semi: var(--gray-200-semi);
-
-  --background: var(--gray-200);
-  --color:      var(--gray-800);
-
-  --gray-z-0:   var(--gray-50);
-  --gray-z-1:   var(--gray-100);
-  --gray-z-2:   var(--gray-200);
-  --gray-z-3:   var(--gray-300);
-  --gray-z-4:   var(--gray-400);
-  --gray-z-5:   var(--gray-500);
-  --gray-z-6:   var(--gray-600);
-  --gray-z-7:   var(--gray-700);
-  --gray-z-8:   var(--gray-800);
-  --gray-z-9:   var(--gray-900);
-  --gray-z-10:  var(--gray-950);
+  --primary:  var(--color);
 
   /*
   * FONTS
@@ -66,16 +44,21 @@
   * UI ELEMENTS
   */
   --ui-font-family: monospace;
+  --ui-font-size: 12px;
   --ui-text-transform: uppercase;
+  --ui-font-weight: 500;
 
   /*
   * BORDERS
   */
-  --border-color: var(--muted);
+  --border-color: var(--gray-z-3);
+  --border-radius: var(--size-1);
 
   /*
   * COMPONENTS
   */
   --breadcrumb-separator-color: red;
+  --button-background-highlight: var(--gray-z-3);
+  --card-background-highlight: var(--gray-z-3);
 }
 

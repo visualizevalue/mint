@@ -1,9 +1,23 @@
-.profile-header {
-  img {
-    border-radius: 50%;
-  }
-
-  h1 {
-    font-size: var(--font-lg);
-  }
+.profile-header > ha {
+  font-size: var(--font-lg);
 }
+
+.token-mint-timeline > h1 {
+  margin: 0 0 calc(var(--spacer) + var(--spacer-sm)) !important;
+}
+
+
+/*
+* IMAGE adjustments
+*/
+.profile-header > img {
+  border-radius: 50%;
+}
+.profile-header img,
+.collection-intro img,
+.collection-overview-card img,
+.token-overview-card img {
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
