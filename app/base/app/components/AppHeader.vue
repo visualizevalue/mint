@@ -6,15 +6,15 @@
       <MintGasPricePopover />
 
       <Connect v-if="! isConnected" />
-      <NuxtLink v-else
+      <Button v-else
         :to="{
           name: 'profile-address',
           params: { address: address?.toLowerCase() }
         }"
-        class="account"
+        class="account link"
       >
         <Account :address="address" />
-      </NuxtLink>
+      </Button>
     </ClientOnly>
   </header>
 </template>
@@ -41,16 +41,6 @@ const breadcrumbs = computed(() => {
 })
 </script>
 
-<style>
-:root {
-  --app-header-font-family:      var(--ui-font-family);
-  --app-header-font-size:        var(--ui-font-size);
-  --app-header-font-weight:      var(--ui-font-weight);
-  --app-header-text-transform:   var(--ui-text-transform);
-  --app-header-letter-spacing:   var(--ui-letter-spacing);
-}
-</style>
-
 <style scoped>
 header {
   height: var(--navbar-height);
@@ -66,12 +56,7 @@ header {
   text-transform: var(--app-header-text-transform);
   letter-spacing: var(--app-header-letter-spacing);
 
-  @media (--md) {
-    gap: var(--spacer-lg);
-  }
-
   :deep(> .breadcrumb) {
-    overflow: hidden;
     text-overflow: ellipsis;
     justify-content: flex-start;
     white-space: nowrap;

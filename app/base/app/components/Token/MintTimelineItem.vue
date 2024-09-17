@@ -53,6 +53,13 @@ const formattedPrice = computed(() => customFormatEther(props.mint.price))
       }
     }
 
+    a,
+    button {
+      &:--highlight {
+        color: var(--color);
+      }
+    }
+
     @container (min-width: 24rem) {
       grid-template-columns: 6rem 3rem 1fr 1fr 2rem;
       gap: var(--spacer);

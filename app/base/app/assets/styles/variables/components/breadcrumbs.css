@@ -1,0 +1,20 @@
+:root {
+
+  --breadcrumb-color:           var(--muted);
+  --breadcrumb-active-color:    var(--color);
+  --breadcrumb-separator-color: var(--muted);
+
+  --breadcrumb-font-family:      var(--app-header-font-family);
+  --breadcrumb-font-size:        var(--app-header-font-size);
+  --breadcrumb-font-font-weight: var(--app-header-font-weight);
+  --breadcrumb-text-transform:   var(--app-header-text-transform);
+  --breadcrumb-letter-spacing:   var(--app-header-letter-spacing);
+
+  --breadcrumb-background:             transparent;
+  --breadcrumb-background-highlight:   transparent;
+  --breadcrumb-border:                 0;
+  --breadcrumb-border-color-highlight: transparent;
+  --breadcrumb-border-radius:          var(--border-radius);
+
+}
+

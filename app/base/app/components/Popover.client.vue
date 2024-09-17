@@ -1,10 +1,10 @@
 <template>
-  <button
+  <Button
     :popovertarget="id"
-    class="gas"
+    class="gas link"
     ref="trigger"
     @mouseenter="() => popover.showPopover()"
-  ><slot name="trigger" /></button>
+  ><slot name="trigger" /></Button>
 
   <Teleport to="body">
     <div
@@ -88,7 +88,6 @@ const popoverArrowPosition = computed(() => {
     top: calc(-1 * var(--size-2) + 1px);
   }
 }
-
 
 @starting-style {
   [popover]:popover-open {

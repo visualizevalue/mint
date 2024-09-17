@@ -56,17 +56,13 @@ defineProps({
   }
 
   &.link {
-    display: inline-flex;
-    align-self: baseline;
-    align-items: baseline;
-    height: inherit;
-    margin: 0 !important;
-    padding: 0 calc(var(--ui-padding-x)/2) !important;
     border: 0;
+    background: transparent;
     line-height: inherit;
     color: var(--muted);
 
     &:--highlight {
+      background: var(--button-background-highlight);
       color: var(--color);
     }
 
@@ -74,6 +70,15 @@ defineProps({
       align-self: center;
       height: inherit;
     }
+  }
+
+  &.inline {
+    display: inline-flex;
+    align-self: baseline;
+    align-items: baseline;
+    height: inherit;
+    margin: 0 !important;
+    padding: 0 calc(var(--ui-padding-x)/2) !important;
   }
 }
 </style>

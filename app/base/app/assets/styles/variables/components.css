@@ -1,18 +1,5 @@
-:root {
-
-  --card-border: var(--border);
-  --card-border-radius: var(--border-radius);
-  --card-background: var(--background);
-  --card-background-highlight: var(--background);
-  --card-border-color-highlight: var(--primary);
-
-  --button-border: var(--border);
-  --button-border-radius: var(--border-radius);
-  --button-background: var(--background);
-  --button-background-highlight: var(--background);
-  --button-border-color-highlight: var(--primary);
-
-  --backdrop-background-color: transparent;
-
-}
+@import "./components/breadcrumbs.css";
+@import "./components/buttons.css";
+@import "./components/cards.css";
+@import "./components/dialogs.css";
 

@@ -1,0 +1,10 @@
+:root {
+
+  --card-border: var(--border);
+  --card-border-radius: var(--border-radius);
+  --card-background: var(--background);
+  --card-background-highlight: var(--background);
+  --card-border-color-highlight: var(--primary);
+
+}
+

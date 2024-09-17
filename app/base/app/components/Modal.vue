@@ -35,5 +35,3 @@ watch(() => props.open, async () => {
 })
 </script>
 
-<style>
-</style>

@@ -88,6 +88,8 @@ header.collection-intro {
     }
 
     h1 {
+      font-size: var(--font-lg);
+
       small {
         color: var(--);
         font-size: var(--font-base);

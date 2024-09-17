@@ -1,0 +1,10 @@
+:root {
+
+  --app-header-font-family:      var(--ui-font-family);
+  --app-header-font-size:        var(--ui-font-size);
+  --app-header-font-weight:      var(--ui-font-weight);
+  --app-header-text-transform:   var(--ui-text-transform);
+  --app-header-letter-spacing:   var(--ui-letter-spacing);
+
+}
+

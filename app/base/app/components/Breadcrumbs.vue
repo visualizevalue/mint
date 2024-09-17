@@ -1,5 +1,5 @@
 <template>
-  <div class="breadcrumb">
+  <div class="breadcrumbs">
     <span v-for="item in items">
       <NuxtLink v-if="item.to" :to="item.to">{{ item.text }}</NuxtLink>
       <template v-else>{{ item.text }}</template>
@@ -13,22 +13,8 @@ defineProps({
 })
 </script>
 
-<style>
-:root {
-  --breadcrumb-nav-color:        var(--muted);
-  --breadcrumb-nav-active-color: var(--color);
-  --breadcrumb-separator-color:  var(--muted);
-
-  --breadcrumb-font-family:      var(--app-header-font-family);
-  --breadcrumb-font-size:        var(--app-header-font-size);
-  --breadcrumb-font-font-weight: var(--app-header-font-weight);
-  --breadcrumb-text-transform:   var(--app-header-text-transform);
-  --breadcrumb-letter-spacing:   var(--app-header-letter-spacing);
-}
-</style>
-
 <style scoped>
-.breadcrumb {
+.breadcrumbs {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,6 +27,7 @@ defineProps({
 
   > span {
     white-space: nowrap;
+    align-self: baseline;
 
     &:has(+ span > a) {
       display: none;
@@ -52,17 +39,23 @@ defineProps({
   }
 
   > span > a {
-    color: var(--breadcrumb-nav-color);
+    background: var(--breadcrumb-background);
+    color: var(--breadcrumb-color);
+    border: var(--breadcrumb-border);
+    border-radius: var(--breadcrumb-border-radius);
     transition: all var(--speed);
 
     &.router-link-active-exact,
     &:--highlight {
-      color: var(--breadcrumb-nav-active-color);
+      color: var(--breadcrumb-active-color);
+      background: var(--breadcrumb-background-highlight);
+      border-color: var(--breadcrumb-border-color-highlight);
     }
   }
 
   > span:not(:last-child):after {
     content: '/';
+    align-self: baseline;
     color: var(--breadcrumb-separator-color);
     margin-left: var(--spacer-sm);
   }

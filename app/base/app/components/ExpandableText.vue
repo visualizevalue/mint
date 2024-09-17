@@ -6,7 +6,7 @@
     :expanded="expanded"
     :toggle="toggle"
   >
-    <Button v-if="wasShortened" @click="toggle" class="link">
+    <Button v-if="wasShortened" @click="toggle" class="link inline">
       <Icon :type="expanded ? 'chevron-up' : 'chevron-right'" />
       <span>{{ expanded ? collapseText : expandText }}</span>
     </Button>
