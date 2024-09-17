@@ -183,7 +183,9 @@ in a new `assets` folder.
 And let's load the styles in our application. In the `app.vue` file, add:
 
 ```vue
-<template><!-- ... --></template>
+<template>
+  <!-- ... -->
+</template>
 
 <style>
 @import "~/assets/theme.css";
