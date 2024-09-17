@@ -1,12 +1,12 @@
 export default defineAppConfig({
-  myLayer: {
-    name: 'Hello from Nuxt layer'
-  }
+  theme: {
+    name: 'Zinc Theme',
+  },
 })
 
 declare module '@nuxt/schema' {
   interface AppConfigInput {
-    myLayer?: {
+    theme?: {
       /** Project name */
       name?: string
     }
