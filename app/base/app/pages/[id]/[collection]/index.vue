@@ -5,8 +5,8 @@
     <TokenOverviewCard v-for="token of tokens" :key="token.tokenId" :token="token" />
 
     <Loading v-if="loading" />
-    <div v-if="! tokens.length && !loading" class="centered">
-      <p class="muted">No tokens yet</p>
+    <div v-if="! tokens.length && !loading" >
+      <p>No tokens yet</p>
     </div>
   </PageFrame>
 </template>

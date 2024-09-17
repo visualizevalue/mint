@@ -22,7 +22,7 @@
       <span>View on Etherscan</span>
     </Button>
 
-    <Actions v-if="step === 'chain'" class="centered">
+    <Actions v-if="step === 'chain'">
       <Button @click="cancel" class="secondary">Cancel</Button>
     </Actions>
     <Actions v-if="step === 'confirm' || step === 'error'">

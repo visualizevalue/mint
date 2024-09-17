@@ -62,7 +62,7 @@
               <FormInput v-model="description" placeholder="Description" />
             </div>
 
-            <Actions class="borderless">
+            <Actions>
               <Button type="submit">
                 Deploy
               </Button>
