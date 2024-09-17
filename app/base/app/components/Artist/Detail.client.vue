@@ -1,4 +1,6 @@
 <template>
+  <slot name="before" />
+
   <ProfileHeader :address="id" />
 
   <CollectionsOverview :id="id" :key="`${isMe}-${id}`">
@@ -11,6 +13,8 @@
       </HeaderSection>
     </template>
   </CollectionsOverview>
+
+  <slot name="after" />
 </template>
 
 <script setup>
