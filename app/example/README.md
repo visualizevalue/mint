@@ -2,7 +2,5 @@
 
 ## Theme
 
-## Gotchas
-
-- [ ] CSS Layer ordering ([see issue on GH](https://github.com/nuxt/nuxt/issues/25167))
+This is using the [@visualizevalue/mint-theme-zinc](./../themes/zinc/) theme.
 

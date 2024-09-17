@@ -72,11 +72,6 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
   ],
 
-  devServer: {
-    port: 1618,
-    host: process.env.NUXT_PUBLIC_DOMAIN || 'localhost',
-  },
-
   vite: {
     optimizeDeps: {
       force: true,

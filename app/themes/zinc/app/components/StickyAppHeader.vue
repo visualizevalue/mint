@@ -1,5 +1,5 @@
 <template>
-  <BaseAppHeader
+  <AppHeader
     :style="{
       borderColor: y > 10 ? 'var(--border-color)' : 'transparent'
     }"
@@ -8,12 +8,13 @@
 
 <script setup>
 import { useWindowScroll } from '@vueuse/core'
-import BaseAppHeader from '@visualizevalue/mint-app-base/app/components/AppHeader.vue'
+// import BaseAppHeader from '@visualizevalue/mint-app-base/app/components/AppHeader.vue'
+// import BaseAppHeader from '@base/components/AppHeader.vue'
 
 const { y } = useWindowScroll()
 </script>
 
-<style scoped>
+<style>
   .app-header {
     position: sticky;
     top: 0;

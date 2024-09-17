@@ -1,0 +1,25 @@
+{
+  "name": "@visualizevalue/mint-theme-zinc",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi dev .playground",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground"
+  },
+  "dependencies": {
+    "feather-icons": "4",
+    "vue-feather": "^2.0.0"
+  },
+  "devDependencies": {
+    "nuxt": "^3.13.0",
+    "typescript": "^5.6.2",
+    "vue": "latest"
+  },
+  "peerDependencies": {
+    "@visualizevalue/mint-app-base": "workspace:@visualizevalue/mint-app-base@latest"
+  }
+}

@@ -1,5 +1,6 @@
 packages:
   - 'app/base'
   - 'app/example'
+  - 'app/themes/*'
   - 'contracts'
   - 'utils'
