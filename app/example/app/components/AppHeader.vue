@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import { useWindowScroll } from '@vueuse/core'
 import BaseAppHeader from '@visualizevalue/mint-app-base/app/components/AppHeader.vue'
 
 const { y } = useWindowScroll()
@@ -26,3 +27,4 @@ const { y } = useWindowScroll()
     transition: border-color var(--speed);
   }
 </style>
+

@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import { useToggle } from '@vueuse/core'
+import { useDark, useToggle } from '@vueuse/core'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)

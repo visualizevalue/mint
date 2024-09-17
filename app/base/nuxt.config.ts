@@ -81,7 +81,8 @@ export default defineNuxtConfig({
     optimizeDeps: {
       force: true,
       include: [
-        '@wagmi/core > eventemitter3'
+        '@wagmi/core > eventemitter3',
+        'buffer',
       ],
     },
   },

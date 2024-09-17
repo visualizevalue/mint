@@ -22,9 +22,15 @@ importers:
       '@tanstack/vue-query':
         specifier: '>=5.45.0'
         version: 5.52.0(vue@3.5.6(typescript@5.5.4))
+      '@types/node':
+        specifier: ^22.5.4
+        version: 22.5.4
       '@visualizevalue/mint-utils':
         specifier: workspace:@visualizevalue/mint-utils@^0.0.1
         version: link:../../utils
+      '@vue/devtools-api':
+        specifier: ^6.6.3
+        version: 6.6.3
       '@vueuse/components':
         specifier: ^10.11.0
         version: 10.11.1(vue@3.5.6(typescript@5.5.4))
@@ -34,6 +40,9 @@ importers:
       '@vueuse/nuxt':
         specifier: ^11.0.3
         version: 11.0.3(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3))(rollup@4.21.0)(vue@3.5.6(typescript@5.5.4))(webpack-sources@3.2.3)
+      '@wagmi/core':
+        specifier: ^2.13.5
+        version: 2.13.5(@tanstack/query-core@5.52.0)(immer@10.0.2)(react@18.3.1)(typescript@5.5.4)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))
       '@wagmi/vue':
         specifier: ^0.0.40
         version: 0.0.40(@tanstack/query-core@5.52.0)(@tanstack/vue-query@5.52.0(vue@3.5.6(typescript@5.5.4)))(bufferutil@4.0.8)(immer@10.0.2)(ioredis@5.4.1)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3))(react-dom@18.3.1(react@18.3.1))(react-native@0.75.2(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(bufferutil@4.0.8)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@18.3.1)(rollup@4.21.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))(vue@3.5.6(typescript@5.5.4))
@@ -61,9 +70,15 @@ importers:
       postcss-preset-env:
         specifier: ^9.5.13
         version: 9.6.0(postcss@8.4.47)
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
       viem:
         specifier: 2.x
         version: 2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)
+      vite:
+        specifier: ^5.4.3
+        version: 5.4.3(@types/node@22.5.4)(terser@5.31.6)
       vue-feather:
         specifier: ^2.0.0
         version: 2.0.0(feather-icons@4.29.2)(vue@3.5.6(typescript@5.5.4))
@@ -74,27 +89,15 @@ importers:
         specifier: ^2.0.0-beta.8
         version: 2.0.0-beta.8(vue@3.5.6(typescript@5.5.4))
     devDependencies:
-      '@types/node':
-        specifier: ^22.5.4
-        version: 22.5.4
-      '@vue/devtools-api':
-        specifier: ^6.6.3
-        version: 6.6.3
-      '@wagmi/core':
-        specifier: ^2.13.5
-        version: 2.13.5(@tanstack/query-core@5.52.0)(immer@10.0.2)(react@18.3.1)(typescript@5.5.4)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))
       nuxt:
         specifier: latest
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
-      vite:
-        specifier: ^5.4.3
-        version: 5.4.3(@types/node@22.5.4)(terser@5.31.6)
 
   app/example:
     dependencies:
+      '@visualizevalue/mint-app-base':
+        specifier: workspace:../base
+        version: link:../base
       feather-icons:
         specifier: '4'
         version: 4.29.2
@@ -102,21 +105,15 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(feather-icons@4.29.2)(vue@3.5.6(typescript@5.5.4))
     devDependencies:
-      '@visualizevalue/mint-app-base':
-        specifier: workspace:../base
-        version: link:../base
       '@vue/devtools-api':
         specifier: ^6.6.3
-        version: 6.6.3
+        version: 6.6.4
+      '@vueuse/components':
+        specifier: ^10.11.0
+        version: 10.11.1(vue@3.5.6(typescript@5.5.4))
       '@vueuse/core':
         specifier: ^11.0.3
         version: 11.0.3(vue@3.5.6(typescript@5.5.4))
-      '@vueuse/nuxt':
-        specifier: ^11.0.3
-        version: 11.0.3(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3))(rollup@4.21.0)(vue@3.5.6(typescript@5.5.4))(webpack-sources@3.2.3)
-      eventemitter3:
-        specifier: ^5.0.1
-        version: 5.0.1
       nuxt:
         specifier: latest
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
@@ -11663,22 +11660,6 @@ snapshots:
       - vue
       - webpack-sources
 
-  '@vueuse/nuxt@11.0.3(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3))(rollup@4.21.0)(vue@3.5.6(typescript@5.5.4))(webpack-sources@3.2.3)':
-    dependencies:
-      '@nuxt/kit': 3.13.1(magicast@0.3.5)(rollup@4.21.0)(webpack-sources@3.2.3)
-      '@vueuse/core': 11.0.3(vue@3.5.6(typescript@5.5.4))
-      '@vueuse/metadata': 11.0.3
-      local-pkg: 0.5.0
-      nuxt: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.9.1(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
-      vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - magicast
-      - rollup
-      - supports-color
-      - vue
-      - webpack-sources
-
   '@vueuse/shared@10.11.1(vue@3.5.6(typescript@5.5.4))':
     dependencies:
       vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
@@ -15682,7 +15663,7 @@ snapshots:
 
   pinia@2.2.2(typescript@5.5.4)(vue@3.5.6(typescript@5.5.4)):
     dependencies:
-      '@vue/devtools-api': 6.6.3
+      '@vue/devtools-api': 6.6.4
       vue: 3.5.6(typescript@5.5.4)
       vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
     optionalDependencies:
