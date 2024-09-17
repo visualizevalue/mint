@@ -131,10 +131,9 @@ and the base application layers.
 ```ts
 export default defineNuxtConfig({
 
-  // Extend the theme and the base layer
   extends: [
-    '..',
-    '@visualizevalue/mint-app-base',
+    '..', // Extend our theme
+    '@visualizevalue/mint-app-base', // Extend the base layer
   ],
 
 })
