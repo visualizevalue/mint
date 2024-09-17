@@ -2,7 +2,6 @@
     "name": "@visualizevalue/mint-app-example",
     "version": "0.0.1",
     "type": "module",
-    "main": "./nuxt.config.ts",
     "scripts": {
         "build": "nuxi build",
         "dev": "nuxi dev",
