@@ -1,9 +1,6 @@
 /*
 * APP HEADER + BREADCRUMBS
 */
-.app-header {
-  padding: var(--ui-padding-y) var(--ui-padding-x) !important;
-}
 
 .breadcrumbs a,
 .breadcrumbs > span:not(:has(> a)){
