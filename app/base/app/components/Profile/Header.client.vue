@@ -8,14 +8,16 @@
       <small v-if="copied">copied...</small>
       <small v-else-if="! hideAddress">{{ shortAddress(address) }}</small>
     </h1>
-    <p v-if="artist?.description">{{ artist.description }}</p>
+    <p v-if="description">{{ description }}</p>
 
-    <Actions v-if="hasTags">
-      <ButtonProfileWebsite :profile="artist" />
-      <ButtonProfileEmail :profile="artist" />
-      <ButtonProfileTwitter :profile="artist" />
-      <ButtonProfileGithub :profile="artist" />
-    </Actions>
+    <slot name="tags">
+      <Actions v-if="hasTags">
+        <ButtonProfileWebsite :profile="artist" />
+        <ButtonProfileEmail :profile="artist" />
+        <ButtonProfileTwitter :profile="artist" />
+        <ButtonProfileGithub :profile="artist" />
+      </Actions>
+    </slot>
   </header>
 </template>
 
@@ -28,6 +30,7 @@ const props = defineProps({
   address: String,
   avatar: String,
   name: String,
+  description: String,
   hideAddress: Boolean,
 })
 
@@ -38,6 +41,7 @@ const artist = computed(() => store.artist(props.address))
 const name = computed(() => props.name || artist.value?.ens || shortAddress(props.address))
 const artistAddress = computed(() => props.address)
 const { copy, copied } = useClipboard({ source: artistAddress })
+const description = computed(() => props.description || artist.value.description)
 
 const hasTags = computed(() => artist.value.url ||
   artist.value.email ||
