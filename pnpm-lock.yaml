@@ -96,7 +96,7 @@ importers:
   app/example:
     dependencies:
       '@visualizevalue/mint-app-base':
-        specifier: workspace:../base
+        specifier: workspace:@visualizevalue/mint-app-base@latest
         version: link:../base
       feather-icons:
         specifier: '4'

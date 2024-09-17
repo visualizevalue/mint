@@ -17,7 +17,7 @@
         "nuxt": "latest"
     },
     "dependencies": {
-        "@visualizevalue/mint-app-base": "workspace:../base",
+        "@visualizevalue/mint-app-base": "workspace:@visualizevalue/mint-app-base@latest",
         "feather-icons": "4",
         "vue-feather": "^2.0.0"
     }
