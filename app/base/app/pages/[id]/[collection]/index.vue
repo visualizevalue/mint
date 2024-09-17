@@ -1,13 +1,6 @@
 <template>
   <PageFrame :title="breadcrumb">
-    <CollectionIntro :collection="collection" />
-
-    <TokenOverviewCard v-for="token of tokens" :key="token.tokenId" :token="token" />
-
-    <Loading v-if="loading" />
-    <div v-if="! tokens.length && !loading" >
-      <p>No tokens yet</p>
-    </div>
+    <CollectionDetail :collection="collection" />
   </PageFrame>
 </template>
 
@@ -37,15 +30,5 @@ const breadcrumb = computed(() => {
 useMetaData({
   title: `${collection.value.name}`,
 })
-
-const tokens = computed(() => store.tokens(collection.value.address))
-const loading = ref(false)
-onMounted(async () => {
-  loading.value = true
-  await store.fetchCollectionTokens(collection.value.address)
-  loading.value = false
-})
 </script>
 
-<style scoped>
-</style>

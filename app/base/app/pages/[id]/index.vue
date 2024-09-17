@@ -1,23 +1,11 @@
 <template>
   <PageFrame :title="breadcrumb">
-    <ProfileHeader :address="id" />
-
-    <CollectionsOverview :id="id" :key="`${isMe}-${id}`">
-      <template #before="{ collections }">
-        <HeaderSection v-if="isMe && collections.length">
-          <h1>Your Collections</h1>
-          <Actions>
-            <ButtonAddCollection :id="id" />
-          </Actions>
-        </HeaderSection>
-      </template>
-    </CollectionsOverview>
+    <ArtistDetail />
   </PageFrame>
 </template>
 
 <script setup>
 const id = useArtistId()
-const isMe = useIsMe()
 const store = useOnchainStore()
 
 const appTitle = useAppTitle()
