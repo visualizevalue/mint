@@ -1,7 +1,17 @@
 <template>
   <div>
-    <NuxtLayout>
+    <AppHeader />
+
+    <main>
       <NuxtPage />
-    </NuxtLayout>
+    </main>
   </div>
 </template>
+
+<style scoped>
+main {
+  display: grid;
+  gap: var(--spacer);
+}
+</style>
+
