@@ -62,9 +62,16 @@ pnpm --filter @visualizevalue/mint-app-base dev
 
 Open the locally running app in your browser.
 
+## Themes
+
+The base mint app implementation allows registering themes on top of it,
+which extend its functionality and adjust its styling.
+
+You can check out the [Zinc Theme](./app/themes/zinc/) for an example theme implementation.
+
 ### Building a custom theme
 
-As mentioned, the `@visualizevalue/mint-app-base` application implements
+The `@visualizevalue/mint-app-base` application implements
 a bare-bones but feature-complete UI to interact with the Mint contracts.
 
 It is build with [VueJS](https://vuejs.org) on top of [Nuxt](https://nuxt.com).
@@ -72,9 +79,12 @@ Nuxt is a quality-of-life batteries included meta-framework on top of VueJS.
 It makes [layering new functionality](https://nuxt.com/docs/getting-started/layers)
 a breeze.
 
-The `@visualizevalue/mint-app-example` customizes the base application
+We can build separate layers as themes to extend the basic styles and features
+of the main application.
+
+The `@visualizevalue/mint-theme-zinc` customizes the base application
 to implement a custom theme. You can use this as inspiration for your own theme,
-or start from scratch but adjusting / layering on top of the base app.
+or start from scratch by layering on top of the base app directly.
 
 #### Prerequisites
 
@@ -82,6 +92,10 @@ Note for this you need [Node](https://nodejs.org/en) and a package manager
 like [NPM](https://www.npmjs.com/), [PNPM](https://pnpm.io/) or [Yarn](https://yarnpkg.com/) installed on your machine.
 
 #### Building a custom theme by adjusting the base theme directly
+
+You can always download fork/download the code for the base application and customize
+it directly. This is easy and quick to start but not the preferred way to build
+a custom theme since it comes with drawbacks when maintaining a theme over the long term.
 
 #### Building a custom theme by creating a layered Nuxt application
 
@@ -93,17 +107,16 @@ on how to architect Nuxt applications.
 ##### 1. Create a new Nuxt application
 
 ```bash
-pnpm dlx nuxi@latest init <app-name> # and follow the prompts
+pnpm dlx nuxi@latest init --template layer <app-name> # and follow the prompts
 ```
+
+This initializes our layer with a `.playground` application to test the theme.
 
 ##### 2. Install the required dependencies
 
 ```bash
 # Install our base layer application
-pnpm add @visualizevalue/mint-app-base
-
-# Install required peer dependencies
-pnpm add @vue/devtools-api @vueuse/core @vueuse/nuxt eventemitter3
+pnpm add @visualizevalue/mint-app-base --save-peer
 ```
 
 ##### 3. Implement the base layer
@@ -112,44 +125,25 @@ In order to start using the base application as our starting point,
 we have to add it to the `extends` config option in our nuxt config.
 To learn more about it check the `extends` documentation [here](https://nuxt.com/docs/api/nuxt-config#extends).
 
-Also, to make our build work we have to tell Vite where to find some
-package dependencies.
+Adjust the `.playground/nuxt.config.ts` file to use both our theme
+and the base application layers.
 
 ```ts
 export default defineNuxtConfig({
 
-  // Extend the base layer
-  extends: `@visualizevalue/mint-app-base`,
+  // Extend the theme and the base layer
+  extends: [
+    '..',
+    '@visualizevalue/mint-app-base',
+  ],
 
-  // Properly resolve dependencies
-  vite: {
-    optimizeDeps: {
-      include: [
-        '@visualizevalue/mint-app-base > buffer',
-      ],
-    }
-  }
-
-  // ...
 })
-```
-
-Finally, let's remove the default welcome screen and hook up our applications
-in the `app.vue` file.
-
-```vue
-<template>
-  <div>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
-</template>
 ```
 
 ##### 4. Test the application
 
-You can run the application in development mode now! Run `pnpm dev` to start the app.
+You can run the application in development mode now!
+Run `pnpm dev` to start the app.
 
 ##### 5. Adjust some styling
 
@@ -180,16 +174,27 @@ in a new `assets` folder.
 }
 ```
 
-And let's load the styles in our application. In the `app.vue` file, add:
+And let's load the styles in our application.
+In the theme's `nuxt.config.ts` file, add:
 
-```vue
-<template>
-  <!-- ... -->
-</template>
+```ts
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 
-<style>
-@import "~/assets/theme.css";
-</style>
+const currentDir = dirname(fileURLToPath(import.meta.url))
+
+export default defineNuxtConfig({
+  alias: {
+    '@base': '@visualizevalue/mint-app-base/app',
+  },
+
+  css: [
+    '@base/assets/styles/index.css', // Extend the base theme styles
+    join(currentDir, './assets/theme.css'), // Add our own styles
+  ],
+
+  // ...
+})
 ```
 
 For further inspiration on building a custom theme, including adding new components
