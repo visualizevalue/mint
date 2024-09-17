@@ -20,7 +20,8 @@ const id = useArtistId()
 const isMe = useIsMe()
 const store = useOnchainStore()
 
-const hideArtist = useShowArtistInHeader()
+const appTitle = useAppTitle()
+const hideArtist = useHideArtistInHeader()
 const breadcrumb = computed(() => {
   if (hideArtist.value) return []
 
@@ -32,7 +33,7 @@ const breadcrumb = computed(() => {
 })
 
 useMetaData({
-  title: store.displayName(id.value),
+  title: hideArtist.value ? appTitle.value : store.displayName(id.value),
 })
 </script>
 
