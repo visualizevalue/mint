@@ -13,7 +13,7 @@ export const useEnsureChainIdCheck = () => {
 
   return async () => {
     if (chainId !== currentChainId.value) {
-      await switchChain({ chainId })
+      switchChain({ chainId })
     }
 
     if (chainId === currentChainId.value) {

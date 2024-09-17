@@ -25,6 +25,7 @@
     <Actions v-if="step === 'chain'">
       <Button @click="cancel" class="secondary">Cancel</Button>
     </Actions>
+
     <Actions v-if="step === 'confirm' || step === 'error'">
       <Button @click="cancel" class="secondary">Cancel</Button>
       <Button @click="() => initializeRequest()">{{ text.action[step] || 'Execute' }}</Button>
@@ -34,7 +35,7 @@
 
 <script setup>
 import { useChainId } from '@wagmi/vue'
-import { waitForTransactionReceipt } from '@wagmi/core'
+import { waitForTransactionReceipt, watchChainId } from '@wagmi/core'
 const checkChain = useEnsureChainIdCheck()
 const chainId = useChainId()
 
@@ -69,14 +70,16 @@ const emit = defineEmits(['complete', 'cancel'])
 const open = ref(false)
 
 const switchChain = ref(false)
-watch(chainId, async () => {
-  if (! switchChain.value) return
+watchChainId($wagmi, {
+  async onChange() {
+    if (! switchChain.value) return
 
-  if (await checkChain()) {
-    switchChain.value = false
-    initializeRequest()
-  } else {
-    switchChain.value = true
+    if (await checkChain()) {
+      switchChain.value = false
+      initializeRequest()
+    } else {
+      switchChain.value = true
+    }
   }
 })
 
