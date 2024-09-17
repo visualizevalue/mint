@@ -7,7 +7,7 @@ export const useArtistScope = () => {
   return creatorAddress || subdomain.value
 }
 
-export const useShowArtistInHeader = () => {
+export const useHideArtistInHeader = () => {
   const isMe = useIsMe()
   const scope = useArtistScope()
 

@@ -17,7 +17,7 @@ const collection = computed(() => props.collection)
 const id = useArtistId()
 const store = useOnchainStore()
 
-const hideArtist = useShowArtistInHeader()
+const hideArtist = useHideArtistInHeader()
 const breadcrumb = computed(() => {
   const path = hideArtist.value ? [] : [
     {

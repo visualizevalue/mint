@@ -36,7 +36,7 @@ onMounted(async () => {
   await maybeCheckBalance()
 })
 
-const hideArtist = useShowArtistInHeader()
+const hideArtist = useHideArtistInHeader()
 const breadcrumb = computed(() => {
   const path = hideArtist.value ? [] : [
     {
