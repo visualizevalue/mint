@@ -6,11 +6,6 @@ export default defineNuxtConfig({
     '@visualizevalue/mint-app-base',
   ],
 
-  devServer: {
-    port: 1618,
-    host: process.env.NUXT_PUBLIC_DOMAIN || 'localhost',
-  },
-
   future: {
     compatibilityVersion: 4,
   },

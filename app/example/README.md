@@ -2,5 +2,5 @@
 
 ## Theme
 
-This is using the [@visualizevalue/mint-theme-zinc](./../themes/zinc/) theme.
+This simply extends the [@visualizevalue/mint-theme-zinc](./../themes/zinc/) theme.
 
