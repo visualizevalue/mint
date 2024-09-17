@@ -1,13 +1,31 @@
 .card {
   display: grid;
   gap: var(--spacer);
-  border: var(--border);
+  background: var(--card-background);
   height: 100%;
   padding: var(--spacer);
 
+  &:not(.borderless) {
+    border: var(--card-border);
+    border-radius: var(--card-border-radius);
+
+    &:has(> .card-link) {
+      &:has(> .card-link:hover),
+      &:has(> .card-link:focus) {
+        border-color: var(--card-border-color-highlight);
+      }
+    }
+  }
+
   &.borderless {
     padding: 0;
-    border: 0;
+  }
+
+  &:has(> .card-link) {
+    &:has(> .card-link:hover),
+    &:has(> .card-link:focus) {
+      background: var(--card-background-highlight);
+    }
   }
 
   > * {
@@ -15,6 +33,6 @@
 
     place-self: center;
     &:first-child { place-self: flex-start; }
-    &:last-child { place-self: flex-end; }
+    &:last-child  { place-self: flex-end;   }
   }
 }

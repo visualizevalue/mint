@@ -1,5 +1,5 @@
 <template>
-  <section v-if="collections.length" class="collections borderless">
+  <section v-if="collections.length" class="collections-overview">
     <slot name="before" :collections="collections" />
 
     <CollectionOverviewCard
@@ -8,7 +8,7 @@
       :collection="collection"
     />
   </section>
-  <section v-else-if="! loading" class="centered borderless">
+  <section v-else-if="! loading" class="collections-overview-empty">
     <template v-if="isMe">
       <p>It looks like you haven't deployed any collections.</p>
       <div>
@@ -50,9 +50,14 @@ if (store.forArtist(id.value).length !== collections.length) {
 </script>
 
 <style scoped>
-.collections {
+.collections-overview {
   display: grid;
   gap: var(--spacer-lg);
-  padding: var(--spacer-lg) var(--spacer) !important;
+  padding: var(--spacer-lg) var(--spacer);
+}
+
+.collections-overview-empty {
+  display: grid;
+  gap: var(--spacer);
 }
 </style>
