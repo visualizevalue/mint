@@ -13,36 +13,47 @@
     }"
   >
     <article class="token-overview-card">
-      <div class="content">
-        <header>
-          <h1>
-            <span>{{ token.name }} <span class="token-id">#{{ token.tokenId }}</span></span>
-            <span v-if="token.description" class="description">{{ shortString(token.description, 60, 30) }}</span>
-          </h1>
-          <p v-if="mintOpen" class="closes-in">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
-          <p v-else class="closed-at">Closed at block {{ token.untilBlock }}</p>
-        </header>
-        <Image :src="token.artifact" :alt="token.name" />
-        <CardLink :to="{
-          name: 'id-collection-tokenId',
-          params: { id: collection.owner, collection: token.collection, tokenId: `${token.tokenId}` }
-        }">View {{ token.name }}</CardLink>
-      </div>
-      <footer>
-        <MintTokenBar
-          v-if="mintOpen"
-          v-model:mintCount="mintCount"
-          v-bind="{
-            token,
-            displayPrice,
-            dollarPrice,
-            mintRequest,
-            transactionFlowConfig,
-            minted,
-          }"
-        />
-        <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
-      </footer>
+      <slot
+        :token="token"
+        :displayPrice="displayPrice"
+        :dollarPrice="dollarPrice"
+        :mintRequest="mintRequest"
+        :minted="minted"
+        :mintOpen="mintOpen"
+        :blocksRemaining="blocksRemaining"
+        :transactionFlowConfig="transactionFlowConfig"
+      >
+        <div class="content">
+          <header>
+            <h1>
+              <span>{{ token.name }} <span class="token-id">#{{ token.tokenId }}</span></span>
+              <span v-if="token.description" class="description">{{ shortString(token.description, 60, 30) }}</span>
+            </h1>
+            <p v-if="mintOpen" class="closes-in">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
+            <p v-else class="closed-at">Closed at block {{ token.untilBlock }}</p>
+          </header>
+          <Image :src="token.artifact" :alt="token.name" />
+          <CardLink :to="{
+            name: 'id-collection-tokenId',
+            params: { id: collection.owner, collection: token.collection, tokenId: `${token.tokenId}` }
+          }">View {{ token.name }}</CardLink>
+        </div>
+        <footer>
+          <MintTokenBar
+            v-if="mintOpen"
+            v-model:mintCount="mintCount"
+            v-bind="{
+              token,
+              displayPrice,
+              dollarPrice,
+              mintRequest,
+              transactionFlowConfig,
+              minted,
+            }"
+          />
+          <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
+        </footer>
+      </slot>
     </article>
   </MintToken>
 </template>

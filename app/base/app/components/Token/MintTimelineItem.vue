@@ -1,6 +1,6 @@
 <template>
   <div class="token-mint-timeline-item">
-    <slot>
+    <slot :mint="mint" :formatted-price="formattedPrice">
       <Account :address="mint.address" class="account" />
 
       <span class="amount">{{ mint.amount.toString() }}<span>×</span></span>
@@ -26,7 +26,7 @@ const props = defineProps({
   block: BigInt,
 })
 
-const formattedPrice = computed(() => customFormatEther(props.mint.price))
+const formattedPrice = computed(() => props.mint && customFormatEther(props.mint.price))
 </script>
 
 <style>

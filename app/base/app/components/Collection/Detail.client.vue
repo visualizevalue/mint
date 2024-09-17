@@ -1,4 +1,5 @@
 <template>
+  <slot :collection="collection">
     <CollectionIntro :collection="collection" />
 
     <TokenOverviewCard v-for="token of tokens" :key="token.tokenId" :token="token" />
@@ -7,6 +8,7 @@
     <div v-if="! tokens.length && !loading" >
       <p>No tokens yet</p>
     </div>
+  </slot>
 </template>
 
 <script setup>

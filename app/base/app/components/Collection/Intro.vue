@@ -1,41 +1,43 @@
 <template>
   <header class="collection-intro">
-    <figure v-if="collection.image">
-      <Image :src="collection.image" :alt="collection.name" />
-    </figure>
-    <div class="text">
-      <div>
-        <h1>{{ collection.name || 'Unnamed Collection' }} <small v-if="collection.symbol">({{ collection.symbol }})</small></h1>
-        <p v-if="collection.description">
-          <ExpandableText :text="collection.description" />
-        </p>
-      </div>
+    <slot :collection="collection">
+      <figure v-if="collection.image">
+        <Image :src="collection.image" :alt="collection.name" />
+      </figure>
+      <div class="text">
+        <div>
+          <h1>{{ collection.name || 'Unnamed Collection' }} <small v-if="collection.symbol">({{ collection.symbol }})</small></h1>
+          <p v-if="collection.description">
+            <ExpandableText :text="collection.description" />
+          </p>
+        </div>
 
-      <div v-if="id">
-        <p>
-          <span>
-            By <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
-          </span>
-          <span>
-            {{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }}
-          </span>
-          <span>
-            Created at Block {{ collection.initBlock }}
-          </span>
-        </p>
-      </div>
+        <div v-if="id">
+          <p>
+            <span>
+              By <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
+            </span>
+            <span>
+              {{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }}
+            </span>
+            <span>
+              Created at Block {{ collection.initBlock }}
+            </span>
+          </p>
+        </div>
 
-      <menu v-if="ownedByMe">
-        <CollectionWithdraw :collection="collection" />
-        <Button
-          :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
-          id="mint-new"
-        >
-          <Icon type="add" />
-          <span>Mint New</span>
-        </Button>
-      </menu>
-    </div>
+        <menu v-if="ownedByMe">
+          <CollectionWithdraw :collection="collection" />
+          <Button
+            :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
+            id="mint-new"
+          >
+            <Icon type="add" />
+            <span>Mint New</span>
+          </Button>
+        </menu>
+      </div>
+    </slot>
   </header>
 </template>
 
