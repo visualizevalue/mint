@@ -1,3 +1,20 @@
+/*
+* APP HEADER + BREADCRUMBS
+*/
+.app-header {
+  padding: var(--ui-padding-y) var(--ui-padding-x) !important;
+}
+
+.breadcrumbs a,
+.breadcrumbs > span:not(:has(> a)){
+  padding: var(--ui-padding-y) calc(var(--ui-padding-x)/2);
+}
+.breadcrumbs span:after {
+  padding: var(--ui-padding-y) 0;
+  margin: 0 calc(-0.25 * var(--ui-padding-x)) 0 calc(0.25 * var(--ui-padding-x)) !important;
+  z-index: 2;
+}
+
 .profile-header > h1 {
   font-size: var(--font-lg);
 }
@@ -10,12 +27,19 @@
 /*
 * IMAGE adjustments
 */
-.profile-header img,
-.collection-intro img,
-.collection-overview-card img,
-.token-overview-card img {
-  border: var(--border);
-  border-radius: var(--border-radius);
+.profile-header,
+.collection-intro,
+.collection-overview-card,
+.token-overview-card {
+
+  .image,
+  img {
+    border-radius: var(--border-radius);
+  }
+
+  img {
+    border: var(--border);
+  }
 }
 
 .profile-header > img {
