@@ -28,9 +28,6 @@ importers:
       '@visualizevalue/mint-utils':
         specifier: workspace:@visualizevalue/mint-utils@^0.0.1
         version: link:../../utils
-      '@vue/devtools-api':
-        specifier: ^6.6.3
-        version: 6.6.3
       '@vueuse/components':
         specifier: ^10.11.0
         version: 10.11.1(vue@3.5.6(typescript@5.5.4))
@@ -52,9 +49,6 @@ importers:
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
-      feather-icons:
-        specifier: ^4.29.2
-        version: 4.29.2
       multiformats:
         specifier: ^13.2.2
         version: 13.2.2
@@ -70,21 +64,12 @@ importers:
       postcss-preset-env:
         specifier: ^9.5.13
         version: 9.6.0(postcss@8.4.47)
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
       viem:
         specifier: 2.x
         version: 2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)
       vite:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.5.4)(terser@5.31.6)
-      vue-feather:
-        specifier: ^2.0.0
-        version: 2.0.0(feather-icons@4.29.2)(vue@3.5.6(typescript@5.5.4))
-      vue-router:
-        specifier: ^4.3.2
-        version: 4.4.3(vue@3.5.6(typescript@5.5.4))
       vue-virtual-scroller:
         specifier: ^2.0.0-beta.8
         version: 2.0.0-beta.8(vue@3.5.6(typescript@5.5.4))
@@ -92,6 +77,9 @@ importers:
       nuxt:
         specifier: latest
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
 
   app/example:
     dependencies:
@@ -108,9 +96,6 @@ importers:
 
   app/themes/zinc:
     dependencies:
-      '@visualizevalue/mint-app-base':
-        specifier: workspace:@visualizevalue/mint-app-base@latest
-        version: link:../../base
       feather-icons:
         specifier: '4'
         version: 4.29.2
@@ -118,6 +103,9 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(feather-icons@4.29.2)(vue@3.5.6(typescript@5.6.2))
     devDependencies:
+      '@visualizevalue/mint-app-base':
+        specifier: workspace:@visualizevalue/mint-app-base@^0.1.19
+        version: link:../../base
       nuxt:
         specifier: ^3.13.0
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
@@ -7710,11 +7698,6 @@ packages:
     resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}
     peerDependencies:
       vue: ^3.0.0
-
-  vue-router@4.4.3:
-    resolution: {integrity: sha512-sv6wmNKx2j3aqJQDMxLFzs/u/mjA9Z5LCgy6BE0f7yFWMjrPLnS/sPNn8ARY/FXw6byV18EFutn5lTO6+UsV5A==}
-    peerDependencies:
-      vue: ^3.2.0
 
   vue-router@4.4.5:
     resolution: {integrity: sha512-4fKZygS8cH1yCyuabAXGUAsyi1b2/o/OKgu/RUb+znIYOxPRxdkytJEx+0wGcpBE1pX6vUgh5jwWOKRGvuA/7Q==}
@@ -17869,11 +17852,6 @@ snapshots:
 
   vue-devtools-stub@0.1.0: {}
 
-  vue-feather@2.0.0(feather-icons@4.29.2)(vue@3.5.6(typescript@5.5.4)):
-    dependencies:
-      feather-icons: 4.29.2
-      vue: 3.5.6(typescript@5.5.4)
-
   vue-feather@2.0.0(feather-icons@4.29.2)(vue@3.5.6(typescript@5.6.2)):
     dependencies:
       feather-icons: 4.29.2
@@ -17885,11 +17863,6 @@ snapshots:
 
   vue-resize@2.0.0-alpha.1(vue@3.5.6(typescript@5.5.4)):
     dependencies:
-      vue: 3.5.6(typescript@5.5.4)
-
-  vue-router@4.4.3(vue@3.5.6(typescript@5.5.4)):
-    dependencies:
-      '@vue/devtools-api': 6.6.3
       vue: 3.5.6(typescript@5.5.4)
 
   vue-router@4.4.5(vue@3.5.6(typescript@5.5.4)):
