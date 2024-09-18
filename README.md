@@ -19,32 +19,11 @@ The cost to store and secure the object on the network is mirrored
 as compensation to the artist, creating a direct link
 between network value and creator reward.
 
-## Contracts
+Jump to:
 
-The mint protocol comes with two main contracts that users interact with:
-The [`Factory.sol`](./contracts/contracts/factories/FactoryV1.sol) and the `Mint.sol` collections.
-
-Artists create their collections by calling `create` on the Factory contract.
-
-![Factory & Mint](docs/assets/factory-mint.png)
-
-These collections are simple immutable [ERC1155](https://eips.ethereum.org/EIPS/eip-1155)
-contracts that allow the artist to mint their art and register
-custom renderers for each token.
-
-![Mint & Renderers](docs/assets/mint-create.png)
-
-Each token can define its own renderer contract and/or pass encoded data to it
-to e.g. customize the renderer functionality.
-
-The [default renderer](./contracts/contracts/renderers/Renderer.sol) simply takes
-the artifact data and encodes it as a blob. But developers have
-complete freedom to build custom renderers as they like.
-
-### Factory Deployments
-
-- Mainnet: `0x`
-- Sepolia: `0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd`
+- [App](#app)
+- [Contracts](#contracts)
+- [FAQ](#faq)
 
 ## App
 
@@ -281,18 +260,44 @@ For further inspiration on building a custom theme, including adding new compone
 and features check out the `@visualizevalue/mint-app-example` applications
 in [/app/example](./app/example/).
 
-### FAQ
+## Contracts
 
-#### Are the contracts upgradeable?
+The mint protocol comes with two main contracts that users interact with:
+The [`Factory.sol`](./contracts/contracts/factories/FactoryV1.sol) and the `Mint.sol` collections.
+
+Artists create their collections by calling `create` on the Factory contract.
+
+![Factory & Mint](docs/assets/factory-mint.png)
+
+These collections are simple immutable [ERC1155](https://eips.ethereum.org/EIPS/eip-1155)
+contracts that allow the artist to mint their art and register
+custom renderers for each token.
+
+![Mint & Renderers](docs/assets/mint-create.png)
+
+Each token can define its own renderer contract and/or pass encoded data to it
+to e.g. customize the renderer functionality.
+
+The [default renderer](./contracts/contracts/renderers/Renderer.sol) simply takes
+the artifact data and encodes it as a blob. But developers have
+complete freedom to build custom renderers as they like.
+
+### Factory Deployments
+
+- Mainnet: `0x`
+- Sepolia: `0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd`
+
+## FAQ
+
+### Are the contracts upgradeable?
 
 The `Factory.sol` contract through which artists can deploy their collections is upgradeable.
 When doing so, the `Mint.sol` contract instantiations they create are fully immutable
-and owned by the artists themselves.
+and owned by the artists themselves. No upgrade can ever affect existing Mint collections.
 
-#### Can i add WalletConnect to my app?
+### Can i add WalletConnect to my app?
 
 Yes – just add a `NUXT_PUBLIC_WALLET_CONNECT_PROJECT_ID` environment variable
 with your project id.
 Create one for your domain at the [WalletConnect cloud](https://cloud.walletconnect.com)
 
-## Contracts
