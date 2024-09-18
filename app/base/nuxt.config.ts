@@ -64,12 +64,15 @@ export default defineNuxtConfig({
     },
   },
 
+  hooks: {
+    'vite:extendConfig': (config) => {
+      config.optimizeDeps ??= {}
+      config.optimizeDeps.include = config.optimizeDeps.include || []
+      config.optimizeDeps.include.push('@visualizevalue/mint-app-base > eventemitter3')
+    }
+  },
+
   vite: {
-    optimizeDeps: {
-      include: [
-        '@wagmi/vue'
-      ]
-    },
     plugins: [
       nodePolyfills({
         globals: {
