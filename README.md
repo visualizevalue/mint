@@ -2,6 +2,49 @@
 
 happy birthday ethereum
 
+## Intro
+
+Mint is a simple protocol on Ethereum mainnet, allowing artists to create, manage and sell
+their collections easily. It encourages artists to mint immutable artifacts and
+offers opinionated standard contract deployment and mint functionality while ensuring
+artists and developers can build custom extensions like metadata renderers
+on top of the base rails.
+
+Artifacts are priced based on the Ethereum network fees at the time of collecting.
+
+Network fees (Gas fees) are an essential component of of securing
+and running decentralized blockchains.
+
+The cost to store and secure the object on the network is mirrored
+as compensation to the artist, creating a direct link
+between network value and creator reward.
+
+## Contracts
+
+The mint protocol comes with two main contracts that users interact with:
+The [`Factory.sol`](./contracts/contracts/factories/FactoryV1.sol) and the `Mint.sol` collections.
+
+Artists create their collections by calling `create` on the Factory contract.
+
+![Factory & Mint](docs/assets/factory-mint.png)
+
+These collections are simple immutable [ERC1155](https://eips.ethereum.org/EIPS/eip-1155)
+contracts that allow the artist to mint their art and register
+custom renderers for each token.
+
+![Mint & Renderers](docs/assets/mint-create.png)
+
+Each token can define its own renderer contract and/or pass encoded data to it
+to e.g. customize the renderer functionality.
+
+The default renderer simply takes the artifact data and encodes it as a blob. But
+developers have complete freedom to build custom renderers as they like.
+
+### Factory Deployments
+
+- Mainnet: `0x`
+- Sepolia: `0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd`
+
 ## App
 
 ### Running the example application in a docker container (1min)
@@ -201,6 +244,12 @@ and features check out the `@visualizevalue/mint-app-example` applications
 in [/app/example](./app/example/).
 
 ### FAQ
+
+#### Are the contracts upgradeable?
+
+The `Factory.sol` contract through which artists can deploy their collections is upgradeable.
+When doing so, the `Mint.sol` contract instantiations they create are fully immutable
+and owned by the artists themselves.
 
 #### Can i add WalletConnect to my app?
 
