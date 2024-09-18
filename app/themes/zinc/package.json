@@ -1,7 +1,7 @@
 {
   "name": "@visualizevalue/mint-theme-zinc",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi dev .playground",
@@ -20,6 +20,6 @@
     "vue": "latest"
   },
   "peerDependencies": {
-    "@visualizevalue/mint-app-base": "workspace:@visualizevalue/mint-app-base@latest"
+    "@visualizevalue/mint-app-base": "workspace:@visualizevalue/mint-app-base@^0.1.19"
   }
 }
