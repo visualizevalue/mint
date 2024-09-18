@@ -67,7 +67,7 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
-        '@wagmi/core > eventemitter3',
+        '@wagmi/vue'
       ]
     },
     plugins: [
