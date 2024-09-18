@@ -37,8 +37,9 @@ custom renderers for each token.
 Each token can define its own renderer contract and/or pass encoded data to it
 to e.g. customize the renderer functionality.
 
-The default renderer simply takes the artifact data and encodes it as a blob. But
-developers have complete freedom to build custom renderers as they like.
+The [default renderer](./contracts/contracts/renderers/Renderer.sol) simply takes
+the artifact data and encodes it as a blob. But developers have
+complete freedom to build custom renderers as they like.
 
 ### Factory Deployments
 
@@ -46,6 +47,41 @@ developers have complete freedom to build custom renderers as they like.
 - Sepolia: `0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd`
 
 ## App
+
+While anyone could build their own entirely novel user interface for the Mint
+protocol, we ship a default implementation. This application doesn't rely on any
+proprietary APIs and interacts with the Ethereum blockchain via configurable
+Node RPC endpoints many of which are open and free to use. This way,
+even if one node were to go down, it is easy to switch to a different
+RPC node to continue interacting with the protocol.
+
+The application has two main modes of deployment:
+
+- As a SPA (Single Page Application) using static HTML + CSS. 
+  This is the easiest and cheapest way to deploy the application.
+- As a Node server application. This is a more involved deployment
+  method tailored to developers who want to build more custom experiences
+  that require a server environment.
+
+And the application can be configured in two different ways:
+
+- As a scoped artist application, which showcases the configured
+  artists' work and allows users to mint the artifacts. The artists' collections are shown
+  chronologically and each collection is a simple feed of artifacts.
+- As a general purpose application, which allows anyone to mint and sell their work.
+  This deployment mode doesn't have a feed to browse art - artists have to share 
+  deep-links to their work if they want to use applications like this.
+
+It is architected to allow for easy customization via themes.
+
+Check out [base.mint.jalil.cc](https://base.mint.jalil.cc) for an installation of 
+the base application (without any customization).
+
+With the initial release, we've built one exemplary custom theme called "Zinc".
+For a clean installation of it check out [mint.jalil.cc](https://mint.jalil.cc)
+and for a more complex application using it check out [networked.art](https://networked.art).
+
+For an example of a custom theme implementation check out [mint.vv.xyz](https://sepolia.mint.vv.xyz).
 
 ### Running the example application in a docker container (1min)
 
@@ -139,6 +175,8 @@ like [NPM](https://www.npmjs.com/), [PNPM](https://pnpm.io/) or [Yarn](https://y
 You can always download fork/download the code for the base application and customize
 it directly. This is easy and quick to start but not the preferred way to build
 a custom theme since it comes with drawbacks when maintaining a theme over the long term.
+If you want to work on a fork of the base app directly, follow the
+[instructions on how to run the base app](#build-an-run-the-application) above.
 
 #### Building a custom theme by creating a layered Nuxt application
 
