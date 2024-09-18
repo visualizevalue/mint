@@ -32,11 +32,8 @@ importers:
         specifier: ^10.11.0
         version: 10.11.1(vue@3.5.6(typescript@5.5.4))
       '@vueuse/core':
-        specifier: ^11.0.3
-        version: 11.0.3(vue@3.5.6(typescript@5.5.4))
-      '@vueuse/nuxt':
-        specifier: ^11.0.3
-        version: 11.0.3(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3))(rollup@4.21.0)(vue@3.5.6(typescript@5.5.4))(webpack-sources@3.2.3)
+        specifier: ^11.1.0
+        version: 11.1.0(vue@3.5.6(typescript@5.5.4))
       '@wagmi/core':
         specifier: ^2.13.5
         version: 2.13.5(@tanstack/query-core@5.52.0)(immer@10.0.2)(react@18.3.1)(typescript@5.5.4)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))
@@ -75,7 +72,7 @@ importers:
         version: 2.0.0-beta.8(vue@3.5.6(typescript@5.5.4))
     devDependencies:
       nuxt:
-        specifier: latest
+        specifier: ^3.13.2
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
       typescript:
         specifier: ^5.5.4
@@ -91,7 +88,7 @@ importers:
         version: link:../themes/zinc
     devDependencies:
       nuxt:
-        specifier: latest
+        specifier: ^3.13.2
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
 
   app/themes/zinc:
@@ -107,14 +104,11 @@ importers:
         specifier: workspace:@visualizevalue/mint-app-base@^0.1.19
         version: link:../../base
       nuxt:
-        specifier: ^3.13.0
+        specifier: ^3.13.2
         version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
-      vue:
-        specifier: latest
-        version: 3.5.6(typescript@5.6.2)
 
   contracts:
     dependencies:
@@ -2923,9 +2917,6 @@ packages:
   '@vue/compiler-ssr@3.5.6':
     resolution: {integrity: sha512-VpWbaZrEOCqnmqjE83xdwegtr5qO/2OPUC6veWgvNqTJ3bYysz6vY3VqMuOijubuUYPRpG3OOKIh9TD0Stxb9A==}
 
-  '@vue/devtools-api@6.6.3':
-    resolution: {integrity: sha512-0MiMsFma/HqA6g3KLKn+AGpL1kgKhFWszC9U29NfpWK5LE7bjeXxySWJrOJ77hBz+TBrBQ7o4QJqbPbqbs8rJw==}
-
   '@vue/devtools-api@6.6.4':
     resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
 
@@ -2966,25 +2957,20 @@ packages:
   '@vueuse/core@10.11.1':
     resolution: {integrity: sha512-guoy26JQktXPcz+0n3GukWIy/JDNKti9v6VEMu6kV2sYBsWuGiTU8OWdg+ADfUbHg3/3DlqySDe7JmdHrktiww==}
 
-  '@vueuse/core@11.0.3':
-    resolution: {integrity: sha512-RENlh64+SYA9XMExmmH1a3TPqeIuJBNNB/63GT35MZI+zpru3oMRUA6cEFr9HmGqEgUisurwGwnIieF6qu3aXw==}
+  '@vueuse/core@11.1.0':
+    resolution: {integrity: sha512-P6dk79QYA6sKQnghrUz/1tHi0n9mrb/iO1WTMk/ElLmTyNqgDeSZ3wcDf6fRBGzRJbeG1dxzEOvLENMjr+E3fg==}
 
   '@vueuse/metadata@10.11.1':
     resolution: {integrity: sha512-IGa5FXd003Ug1qAZmyE8wF3sJ81xGLSqTqtQ6jaVfkeZ4i5kS2mwQF61yhVqojRnenVew5PldLyRgvdl4YYuSw==}
 
-  '@vueuse/metadata@11.0.3':
-    resolution: {integrity: sha512-+FtbO4SD5WpsOcQTcC0hAhNlOid6QNLzqedtquTtQ+CRNBoAt9GuV07c6KNHK1wCmlq8DFPwgiLF2rXwgSHX5Q==}
-
-  '@vueuse/nuxt@11.0.3':
-    resolution: {integrity: sha512-1tZGM9lvFl6HqmSQNM6hsHbAzLkBitoh8RsVC8kIG/93d3Pb5dEqUdt1k+OfHyR8V2rfSOwCfJx+wlUTlY0A2g==}
-    peerDependencies:
-      nuxt: ^3.0.0
+  '@vueuse/metadata@11.1.0':
+    resolution: {integrity: sha512-l9Q502TBTaPYGanl1G+hPgd3QX5s4CGnpXriVBR5fEZ/goI6fvDaVmIl3Td8oKFurOxTmbXvBPSsgrd6eu6HYg==}
 
   '@vueuse/shared@10.11.1':
     resolution: {integrity: sha512-LHpC8711VFZlDaYUXEBbFBCQ7GS3dVU9mjOhhMhXP6txTV4EhYQg/KGnQuvt/sPAtoUKq7VVUnL6mVtFoL42sA==}
 
-  '@vueuse/shared@11.0.3':
-    resolution: {integrity: sha512-0rY2m6HS5t27n/Vp5cTDsKTlNnimCqsbh/fmT2LgE+aaU42EMfXo8+bNX91W9I7DDmxfuACXMmrd7d79JxkqWA==}
+  '@vueuse/shared@11.1.0':
+    resolution: {integrity: sha512-YUtIpY122q7osj+zsNMFAfMTubGz0sn5QzE5gPzAIiCmtt2ha3uQUY1+JPyL4gRCTsLPX82Y9brNbo/aqlA91w==}
 
   '@wagmi/connectors@5.1.8':
     resolution: {integrity: sha512-LdImInHFogis83/Yhq0vJLracIFUSl9m8961JEWS+lGDPuU2QbVg4Rv2VAfratfRoR8oDuSJNTvIvp9Kyiu5ug==}
@@ -11393,7 +11379,7 @@ snapshots:
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
       '@tanstack/query-core': 5.52.0
-      '@vue/devtools-api': 6.6.3
+      '@vue/devtools-api': 6.6.4
       vue: 3.5.6(typescript@5.5.4)
       vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
 
@@ -11694,8 +11680,6 @@ snapshots:
       '@vue/compiler-dom': 3.5.6
       '@vue/shared': 3.5.6
 
-  '@vue/devtools-api@6.6.3': {}
-
   '@vue/devtools-api@6.6.4': {}
 
   '@vue/devtools-core@7.4.4(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(vue@3.5.6(typescript@5.5.4))':
@@ -11799,11 +11783,11 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@vueuse/core@11.0.3(vue@3.5.6(typescript@5.5.4))':
+  '@vueuse/core@11.1.0(vue@3.5.6(typescript@5.5.4))':
     dependencies:
       '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 11.0.3
-      '@vueuse/shared': 11.0.3(vue@3.5.6(typescript@5.5.4))
+      '@vueuse/metadata': 11.1.0
+      '@vueuse/shared': 11.1.0(vue@3.5.6(typescript@5.5.4))
       vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
     transitivePeerDependencies:
       - '@vue/composition-api'
@@ -11811,23 +11795,7 @@ snapshots:
 
   '@vueuse/metadata@10.11.1': {}
 
-  '@vueuse/metadata@11.0.3': {}
-
-  '@vueuse/nuxt@11.0.3(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3))(rollup@4.21.0)(vue@3.5.6(typescript@5.5.4))(webpack-sources@3.2.3)':
-    dependencies:
-      '@nuxt/kit': 3.13.1(magicast@0.3.5)(rollup@4.21.0)(webpack-sources@3.2.3)
-      '@vueuse/core': 11.0.3(vue@3.5.6(typescript@5.5.4))
-      '@vueuse/metadata': 11.0.3
-      local-pkg: 0.5.0
-      nuxt: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.0)(terser@5.31.6)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.31.6))(webpack-sources@3.2.3)
-      vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - magicast
-      - rollup
-      - supports-color
-      - vue
-      - webpack-sources
+  '@vueuse/metadata@11.1.0': {}
 
   '@vueuse/shared@10.11.1(vue@3.5.6(typescript@5.5.4))':
     dependencies:
@@ -11836,7 +11804,7 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@vueuse/shared@11.0.3(vue@3.5.6(typescript@5.5.4))':
+  '@vueuse/shared@11.1.0(vue@3.5.6(typescript@5.5.4))':
     dependencies:
       vue-demi: 0.14.10(vue@3.5.6(typescript@5.5.4))
     transitivePeerDependencies:

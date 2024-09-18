@@ -1,6 +1,6 @@
 {
     "name": "@visualizevalue/mint-app-base",
-    "version": "0.1.21",
+    "version": "0.1.22",
     "type": "module",
     "main": "./nuxt.config.ts",
     "scripts": {
@@ -18,8 +18,7 @@
         "@types/node": "^22.5.4",
         "@visualizevalue/mint-utils": "workspace:@visualizevalue/mint-utils@^0.0.1",
         "@vueuse/components": "^10.11.0",
-        "@vueuse/core": "^11.0.3",
-        "@vueuse/nuxt": "^11.0.3",
+        "@vueuse/core": "^11.1.0",
         "@wagmi/core": "^2.13.5",
         "@wagmi/vue": "^0.0.40",
         "buffer": "^6.0.3",
@@ -34,7 +33,7 @@
         "vue-virtual-scroller": "^2.0.0-beta.8"
     },
     "devDependencies": {
-        "nuxt": "latest",
+        "nuxt": "^3.13.2",
         "typescript": "^5.5.4"
     }
 }

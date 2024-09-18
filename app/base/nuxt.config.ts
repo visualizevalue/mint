@@ -7,6 +7,11 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 export default defineNuxtConfig({
   ssr: process.env.NUXT_SSR !== 'false',
 
+  modules: [
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+  ],
+
   runtimeConfig: {
     public: {
       blockExplorer: 'https://sepolia.etherscan.io',
@@ -29,13 +34,6 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       htmlAttrs: { lang: 'en' },
       title: process.env.NUXT_PUBLIC_TITLE,
-      meta: [
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-        { name: 'theme-color', content: 'black' },
-        { name: 'theme-color', media: '(prefers-color-scheme: light)', content: 'white' },
-        { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: 'black' },
-      ],
       link: [
         { rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' },
       ]
@@ -43,15 +41,15 @@ export default defineNuxtConfig({
   },
 
   css: [
-    join(currentDir, './app/assets/styles/index.css'),
+    join(currentDir, './assets/styles/index.css'),
   ],
 
   postcss: {
     plugins: {
       '@csstools/postcss-global-data': {
         files: [
-          join(currentDir, './app/assets/styles/custom-selectors.css'),
-          join(currentDir, './app/assets/styles/custom-media.css'),
+          join(currentDir, './assets/styles/custom-selectors.css'),
+          join(currentDir, './assets/styles/custom-media.css'),
         ]
       },
       'postcss-nested': {},
@@ -65,21 +63,15 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
-    '@vueuse/nuxt',
-  ],
-
-  vite: {
-    optimizeDeps: {
-      force: true,
-      include: [
-        '@wagmi/core > eventemitter3',
-        'buffer',
-      ],
-    },
-  },
+  // vite: {
+  //   optimizeDeps: {
+  //     force: true,
+  //     include: [
+  //       '@wagmi/core > eventemitter3',
+  //       'buffer',
+  //     ],
+  //   },
+  // },
 
   nitro: {
     preset: 'node-cluster',
@@ -119,10 +111,6 @@ export default defineNuxtConfig({
 
   piniaPersistedstate: {
     storage: 'localStorage'
-  },
-
-  future: {
-    compatibilityVersion: 4,
   },
 
   compatibilityDate: '2024-08-14',

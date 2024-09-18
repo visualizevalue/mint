@@ -21,6 +21,8 @@
 </template>
 
 <script setup lang="ts">
+import { useElementBounding, useElementSize, useWindowSize } from '@vueuse/core'
+
 const {
   id,
 } = defineProps({
