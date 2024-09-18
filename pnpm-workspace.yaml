@@ -3,4 +3,5 @@ packages:
   - 'app/example'
   - 'app/themes/*'
   - 'contracts'
+  - 'docs'
   - 'utils'

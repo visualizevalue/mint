@@ -22,6 +22,7 @@ between network value and creator reward.
 Jump to:
 
 - [App](#app)
+- [Themes](#themes)
 - [Contracts](#contracts)
 - [FAQ](#faq)
 
