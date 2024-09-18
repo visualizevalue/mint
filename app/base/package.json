@@ -1,6 +1,6 @@
 {
     "name": "@visualizevalue/mint-app-base",
-    "version": "0.1.25",
+    "version": "0.1.26",
     "type": "module",
     "main": "./nuxt.config.ts",
     "scripts": {
@@ -21,7 +21,6 @@
         "@vueuse/core": "^11.1.0",
         "@wagmi/core": "^2.13.5",
         "@wagmi/vue": "^0.0.40",
-        "buffer": "^6.0.3",
         "eventemitter3": "^5.0.1",
         "multiformats": "^13.2.2",
         "postcss-custom-media": "^10.0.6",
@@ -30,6 +29,7 @@
         "postcss-preset-env": "^9.5.13",
         "viem": "2.x",
         "vite": "^5.4.3",
+        "vite-plugin-node-polyfills": "^0.22.0",
         "vue-virtual-scroller": "^2.0.0-beta.8"
     },
     "devDependencies": {
