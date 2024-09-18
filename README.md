@@ -127,7 +127,7 @@ which extend its functionality and adjust its styling.
 
 You can check out the [Zinc Theme](./app/themes/zinc/) for an example theme implementation.
 
-| [![The Base Theme](./docs/assets/base-theme.png)](./app/base/)  | [![The Zinc Theme](./docs/assets/zinc-theme.png)](./app/themes/zinc/)  |
+| ![The Base Theme](./docs/assets/base-theme.png)<br><small>[Base Theme](./app/base/)</small> | [![The Zinc Theme](./docs/assets/zinc-theme.png)](./app/themes/zinc/)<br><small>[Zinc Theme](./app/themes/zinc/)</small>  |
 | --- | --- |
 
 ### Building a custom theme
