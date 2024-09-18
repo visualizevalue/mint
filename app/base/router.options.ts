@@ -23,3 +23,4 @@ export default {
     return _routes
   },
 } satisfies RouterConfig
+

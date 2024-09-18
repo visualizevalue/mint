@@ -14,6 +14,7 @@ WORKDIR /mint
 COPY contracts/package.json ./contracts/
 COPY app/base/package.json ./app/base/
 COPY app/example/package.json ./app/example/
+COPY app/themes/zinc/package.json ./app/themes/zinc/
 COPY utils/package.json ./utils/
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 

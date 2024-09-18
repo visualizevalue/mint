@@ -13,13 +13,5 @@ export default defineNuxtConfig({
     '@base/assets/styles/index.css',
     join(currentDir, './assets/theme.css'),
   ],
-
-  // vite: {
-  //   optimizeDeps: {
-  //     include: [
-  //       '@visualizevalue/mint-app-base > buffer',
-  //     ],
-  //   }
-  // },
 })
 

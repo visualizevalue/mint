@@ -4,9 +4,5 @@ export default defineNuxtConfig({
     '@visualizevalue/mint-theme-zinc',
     '@visualizevalue/mint-app-base',
   ],
-
-  future: {
-    compatibilityVersion: 4,
-  },
 })
 
