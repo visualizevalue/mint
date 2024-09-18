@@ -63,16 +63,6 @@ export default defineNuxtConfig({
     },
   },
 
-  vite: {
-    optimizeDeps: {
-      force: true,
-      include: [
-        '@wagmi/core > eventemitter3',
-        'buffer',
-      ],
-    },
-  },
-
   nitro: {
     preset: 'node-cluster',
     esbuild: {
