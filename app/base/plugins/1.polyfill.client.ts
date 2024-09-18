@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from '#app'
-import buffer from 'buffer'
+import { Buffer } from 'buffer'
 
 // This also uses the server `polyfill` plugin...
 export default defineNuxtPlugin({
@@ -7,6 +7,6 @@ export default defineNuxtPlugin({
   enforce: 'pre',
   async setup () {
     window.global = window
-    window.Buffer = buffer.Buffer
+    window.Buffer = Buffer
   }
 })
