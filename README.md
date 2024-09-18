@@ -127,7 +127,7 @@ which extend its functionality and adjust its styling.
 
 You can check out the [Zinc Theme](./app/themes/zinc/) for an example theme implementation.
 
-| ![The Base Theme](./docs/assets/base-theme.png)  | ![The Zinc Theme](./docs/assets/zinc-theme.png)  |
+| [![The Base Theme](./docs/assets/base-theme.png)](./app/base/)  | [![The Zinc Theme](./docs/assets/zinc-theme.png)](./app/themes/zinc/)  |
 | --- | --- |
 
 ### Building a custom theme
@@ -266,7 +266,7 @@ in [/app/example](./app/example/).
 ## Contracts
 
 The mint protocol comes with two main contracts that users interact with:
-The [`Factory.sol`](./contracts/contracts/factories/FactoryV1.sol) and the `Mint.sol` collections.
+The [`Factory.sol`](./contracts/contracts/factories/FactoryV1.sol) and the [`Mint.sol`](./contracts/contracts/Mint.sol) collections.
 
 Artists create their collections by calling `create` on the Factory contract.
 
