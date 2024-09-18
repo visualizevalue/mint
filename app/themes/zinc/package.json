@@ -15,7 +15,7 @@
     "vue-feather": "^2.0.0"
   },
   "devDependencies": {
-    "@visualizevalue/mint-app-base": "workspace:@visualizevalue/mint-app-base@^0.1.19",
+    "@visualizevalue/mint-app-base": "workspace:^",
     "nuxt": "^3.13.2",
     "typescript": "^5.6.2"
   }

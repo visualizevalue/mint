@@ -122,10 +122,13 @@ Open the locally running app in your browser.
 
 ## Themes
 
-The base mint app implementation allows registering themes on top of it,
+The [base mint app](./app/base/) implementation allows registering themes on top of it,
 which extend its functionality and adjust its styling.
 
 You can check out the [Zinc Theme](./app/themes/zinc/) for an example theme implementation.
+
+| ![The Base Theme](./docs/assets/base-theme.png)  | ![The Zinc Theme](./docs/assets/zinc-theme.png)  |
+| --- | --- |
 
 ### Building a custom theme
 
@@ -176,7 +179,7 @@ This initializes our layer with a `.playground` application to test the theme.
 
 ```bash
 # Install our base layer application
-pnpm add @visualizevalue/mint-app-base --save-peer
+pnpm add -D @visualizevalue/mint-app-base
 ```
 
 ##### 3. Implement the base layer
@@ -212,17 +215,17 @@ in a new `assets` folder.
 ```css
 /* Add Pepe styles */
 :root {
-  --background:   white;
-  --color:        black;
-  --primary:      red;
-  --muted:        blue;
+  --background: white;
+  --color:      black;
+  --primary:    red;
+  --muted:      blue;
 
   --border-color: green;
   --border-width: 4px;
 
-  --font-base:    2rem;
-  --font-family:  sans-serif;
-  --font-weight:  bold;
+  --font-base:      2rem;
+  --font-family:    sans-serif;
+  --font-weight:    bold;
   --text-transform: uppercase;
 
   --button-background:           red;
