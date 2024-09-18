@@ -65,6 +65,11 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    optimizeDeps: {
+      include: [
+        '@wagmi/vue > eventemitter3',
+      ]
+    },
     plugins: [
       nodePolyfills({
         globals: {
