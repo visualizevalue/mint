@@ -13,5 +13,13 @@ export default defineNuxtConfig({
     '@base/assets/styles/index.css',
     join(currentDir, './assets/theme.css'),
   ],
+
+  hooks: {
+    'vite:extendConfig': (config) => {
+      config.optimizeDeps ??= {}
+      config.optimizeDeps.include = config.optimizeDeps.include || []
+      config.optimizeDeps.include.push('@visualizevalue/mint-theme-zinc > vue-feather')
+    }
+  },
 })
 
