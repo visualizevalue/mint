@@ -45,7 +45,6 @@ export const usePriceFeedStore = () => {
 
     actions: {
       async fetchEthUsdPrice () {
-
         if (nowInSeconds() - this.lastUpdated < 3_600) {
           return this.ethUSD
         }
