@@ -258,3 +258,63 @@ function burn(address account, uint256 tokenId, uint256 amount) external {
     _burn(account, tokenId, amount);
 }
 ```
+
+## Mint ABI
+
+```json
+[
+  "error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId)",
+  "error ERC1155InvalidApprover(address approver)",
+  "error ERC1155InvalidArrayLength(uint256 idsLength, uint256 valuesLength)",
+  "error ERC1155InvalidOperator(address operator)",
+  "error ERC1155InvalidReceiver(address receiver)",
+  "error ERC1155InvalidSender(address sender)",
+  "error ERC1155MissingApprovalForAll(address operator, address owner)",
+  "error Initialized()",
+  "error MintClosed()",
+  "error MintPriceNotMet()",
+  "error NonExistentRenderer()",
+  "error NonExistentToken()",
+  "error OwnableInvalidOwner(address owner)",
+  "error OwnableUnauthorizedAccount(address account)",
+  "error TokenAlreadyMinted()",
+  "event ApprovalForAll(address indexed account, address indexed operator, bool approved)",
+  "event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)",
+  "event NewRenderer(address indexed renderer, uint256 indexed index)",
+  "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+  "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+  "event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values)",
+  "event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value)",
+  "event URI(string value, uint256 indexed id)",
+  "event Withdrawal(uint256 amount)",
+  "function acceptOwnership()",
+  "function artifact(uint256 tokenId) view returns (bytes content)",
+  "function balanceOf(address account, uint256 id) view returns (uint256)",
+  "function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])",
+  "function burn(address account, uint256 tokenId, uint256 amount)",
+  "function contractURI() view returns (string)",
+  "function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)",
+  "function init(string contractName, string contractSymbol, string contractDescription, bytes[] contractImage, address renderer, address owner)",
+  "function initBlock() view returns (uint256)",
+  "function isApprovedForAll(address account, address operator) view returns (bool)",
+  "function latestTokenId() view returns (uint256)",
+  "function metadata() view returns (string name, string symbol, string description)",
+  "function mint(uint256 tokenId, uint256 amount) payable",
+  "function mintOpenUntil(uint256 tokenId) view returns (uint256)",
+  "function owner() view returns (address)",
+  "function pendingOwner() view returns (address)",
+  "function prepareArtifact(uint256 tokenId, bytes[] tokenArtifact, bool clear)",
+  "function registerRenderer(address renderer) returns (uint256)",
+  "function renderers(uint256) view returns (address)",
+  "function renounceOwnership()",
+  "function safeBatchTransferFrom(address from, address to, uint256[] ids, uint256[] values, bytes data)",
+  "function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)",
+  "function setApprovalForAll(address operator, bool approved)",
+  "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+  "function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)",
+  "function transferOwnership(address newOwner)",
+  "function uri(uint256 tokenId) view returns (string)",
+  "function version() view returns (uint256)",
+  "function withdraw()"
+]
+```
