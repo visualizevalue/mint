@@ -11,11 +11,10 @@ hero:
     alt: Mint
   actions:
     - theme: brand
-      text: Learn more
+      text: Get started
       link: /guide/
-    - theme: alt
-      text: Ecosystem
-      link: /ecosystem/
+    # - theme: alt
+    #   text: Ecosystem
+    #   link: /ecosystem/artists
 ---
-
 

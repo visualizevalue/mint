@@ -14,9 +14,8 @@ export default defineConfig({
 
     nav: [
       { text: 'Guide', link: '/guide/' },
-      { text: 'Ecosystem', link: '/ecosystem/' },
+      { text: 'Ecosystem', link: '/ecosystem/artists' },
       { text: 'Reference', link: '/reference/' },
-      { text: 'Networked.Art', link: 'https://networked.art' },
     ],
 
     sidebar: {
@@ -44,8 +43,7 @@ export default defineConfig({
         {
           text: 'App',
           items: [
-            { text: 'App Intro', link: '/guide/app/' },
-            { text: 'Base Implementation', link: '/guide/app/base' },
+            { text: 'Base Application', link: '/guide/app/' },
             { text: 'Run Your Own', link: '/guide/app/run-your-own' },
             { text: 'Extend Base', link: '/guide/app/extend' },
           ]
@@ -55,7 +53,7 @@ export default defineConfig({
           items: [
             { text: 'About Themes', link: '/guide/themes/' },
             { text: 'Build Themes', link: '/guide/themes/build' },
-            { text: 'Theme Showcase', link: '/ecosystem/themes' },
+            { text: 'The Zinc Theme', link: '/guide/themes/zinc' },
           ]
         },
         {
@@ -64,20 +62,42 @@ export default defineConfig({
         },
         {
           text: 'Ecosystem',
-          link: '/ecosystem/'
+          link: '/ecosystem/artists'
         },
       ],
+
       '/ecosystem/': [
         {
           text: 'Ecosystem',
           items: [
-            { text: 'A Decentralized Network', link: '/ecosystem/' },
+            // { text: 'A Decentralized Network', link: '/ecosystem/' },
             { text: 'Artist Showcase', link: '/ecosystem/artists' },
             { text: 'Theme Showcase', link: '/ecosystem/themes' },
             { text: 'Known Deployments', link: '/ecosystem/deployments' },
           ],
         },
-      ]
+      ],
+
+      '/reference/': [
+        {
+          text: 'Base App',
+          items: [
+            { text: 'Components', link: '/reference/app/components' },
+            { text: 'CSS Variables', link: '/reference/app/css' },
+          ],
+        },
+        {
+          text: 'Contracts',
+          items: [
+            { text: 'Create Mint Collection', link: '/reference/contracts/create-collections' },
+            { text: 'Read Creator Collections', link: '/reference/contracts/read-creator-collections' },
+            { text: 'Create Artifact', link: '/reference/contracts/create-artifacts' },
+            { text: 'Read Artifact', link: '/reference/contracts/read-artifacts' },
+            { text: 'Purchase Artifacts', link: '/reference/contracts/purchase-artifacts' },
+          ],
+        },
+      ],
+
     },
 
     socialLinks: [
