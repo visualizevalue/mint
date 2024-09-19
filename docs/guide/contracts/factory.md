@@ -1,6 +1,9 @@
 # The Factory
 
-The Factory contract serves two basic purposes.
+The Factory contract serves two basic purposes. Deploying and resolving
+creator collections.
+
+## Deploying Collections
 
 First, it's the entry point for artists, through which they can deploy their own
 collections without complicated dev knowledge or setup.
@@ -53,13 +56,15 @@ function clone(
 }
 ```
 
+## Resolving Collections
+
 Second, the Factory serves as a repository storing which collections were created by
 whom and making that information available to DAPPs.
 
 If you look closely at the above snippets you can see that each call writes 
 the created collection address to `creatorCollections[msg.sender]`.
 Client side applications can use this to show all collections created
-by artists by calling `getCreatorCollections()`.
+by artists by calling `getCreatorCollections(address creator)`.
 
 ```solidity
 /// @notice Access created collections without the need for historical syncs.
@@ -85,4 +90,4 @@ function getCreatorCollections(address creator) external view returns (address[]
 ## Factory Deployments
 
 - Mainnet: `0x`
-- Sepolia: `0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd`
+- Sepolia: [`0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd`](https://sepolia.etherscan.io/address/0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd)

@@ -1,0 +1,23 @@
+:root {
+  --vp-c-brand-1: #638ef5;
+  --vp-c-brand-2: #b78cff;
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #b78cff 30%, #638ef5);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #b78cff 50%, #638ef5 50%);
+  --vp-home-hero-image-filter: blur(80px);
+}
+
+.VPHome {
+  min-height: calc(100dvh - var(--vp-nav-height));
+  margin: 0 !important;
+  align-content: center;
+}
+
+.VPHomeHero {
+  padding: 24px !important;
+
+  @media (min-width: 960px) {
+    padding: 64px !important;
+  }
+}
