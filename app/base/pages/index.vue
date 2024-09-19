@@ -24,6 +24,10 @@ useMetaData({
   title: config.public.title,
   description: config.public.description,
 })
+
+definePageMeta({
+  middleware: ['redirect-user-scope']
+})
 </script>
 
 <style scoped>
