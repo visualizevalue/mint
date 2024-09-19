@@ -11,7 +11,7 @@ The Mint Contract(s) are artist-owned collection contracts.
 These collections are simple & immutable [ERC1155](https://eips.ethereum.org/EIPS/eip-1155)
 contracts that allow the artist to mint and distribute their art.
 
-![Factory & Mint](../../../assets/factory-mint.png)
+![Factory & Mint](../../assets/factory-mint.png)
 
 Mint contracts provide a standardized way to distribute these artifacts in a
 time-boxed, open, and protocol-native manner.
@@ -22,7 +22,7 @@ token they mint.
 Renderers can implement arbitrary logic to customize the artifact metadata
 and contents.
 
-![Mint & Renderers](../../../assets/mint-create.png)
+![Mint & Renderers](../../assets/mint-create.png)
 
 Each token can define its own renderer contract and/or pass encoded data to it
 to e.g. customize the renderer functionality.
