@@ -7,3 +7,4 @@ their versions of the app easily with many artists.
 
 Themes, just like the base app, can be extended and customized further.
 
+Think of this like Wordpress themes and plugins, but for the Mint protocol.

@@ -126,5 +126,9 @@ new components and features check out the
 ## Publishing your theme
 
 You can publish your theme on Github or as an NPM package.
-Make sure to submit a PR to the [Mint](https://github.com/visualizevalue/mint)
-Github repository and add your theme to the [showcase gallery](/ecosystem/themes).
+
+Users of the theme are able to easily install it in their applications
+via a public Github link or an NPM package.
+
+Make sure to submit a PR to the [Mint Github repository](https://github.com/visualizevalue/mint)
+and add your theme to the [showcase gallery](/ecosystem/themes).

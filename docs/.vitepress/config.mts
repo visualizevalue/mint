@@ -25,6 +25,7 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Intro',
+          collapsed: false,
           items: [
             { text: 'About Mint', link: '/guide/' },
             { text: 'What It Is & Isn\'t', link: '/guide/what-it-is' },
@@ -33,8 +34,9 @@ export default defineConfig({
         },
         {
           text: 'Contracts',
+          collapsed: false,
           items: [
-            { text: 'Overview', link: '/guide/contracts/' },
+            { text: 'Contracts Overview', link: '/guide/contracts/' },
             { text: 'Factory', link: '/guide/contracts/factory' },
             { text: 'Mint', link: '/guide/contracts/mint' },
             { text: 'Renderers', link: '/guide/contracts/renderers' },
@@ -42,6 +44,7 @@ export default defineConfig({
         },
         {
           text: 'App',
+          collapsed: false,
           items: [
             { text: 'Base Application', link: '/guide/app/' },
             { text: 'Run Your Own', link: '/guide/app/run-your-own' },
@@ -50,6 +53,7 @@ export default defineConfig({
         },
         {
           text: 'Themes',
+          collapsed: false,
           items: [
             { text: 'About Themes', link: '/guide/themes/' },
             { text: 'Build Themes', link: '/guide/themes/build' },

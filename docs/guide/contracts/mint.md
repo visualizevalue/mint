@@ -261,6 +261,43 @@ function burn(address account, uint256 tokenId, uint256 amount) external {
 
 ## Mint ABI
 
+The ABI specific to the Mint protocol:
+
+```json
+[
+  "error MintClosed()",
+  "error MintPriceNotMet()",
+  "error NonExistentRenderer()",
+  "error NonExistentToken()",
+  "error OwnableInvalidOwner(address owner)",
+  "error OwnableUnauthorizedAccount(address account)",
+  "error TokenAlreadyMinted()",
+  "event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)",
+  "event NewRenderer(address indexed renderer, uint256 indexed index)",
+  "event URI(string value, uint256 indexed id)",
+  "event Withdrawal(uint256 amount)",
+  "function artifact(uint256 tokenId) view returns (bytes content)",
+  "function burn(address account, uint256 tokenId, uint256 amount)",
+  "function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)",
+  "function initBlock() view returns (uint256)",
+  "function latestTokenId() view returns (uint256)",
+  "function metadata() view returns (string name, string symbol, string description)",
+  "function mint(uint256 tokenId, uint256 amount) payable",
+  "function mintOpenUntil(uint256 tokenId) view returns (uint256)",
+  "function prepareArtifact(uint256 tokenId, bytes[] tokenArtifact, bool clear)",
+  "function registerRenderer(address renderer) returns (uint256)",
+  "function renderers(uint256) view returns (address)",
+  "function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)",
+  "function uri(uint256 tokenId) view returns (string)",
+  "function version() view returns (uint256)",
+  "function withdraw()"
+]
+```
+
+As Mint contracts implement the ERC1155 standard, it also supports all of
+its public getters and methods. Check the full ABI below.
+
+::: details Click to view complete ABI
 ```json
 [
   "error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId)",
@@ -318,3 +355,4 @@ function burn(address account, uint256 tokenId, uint256 amount) external {
   "function withdraw()"
 ]
 ```
+:::
