@@ -6,7 +6,7 @@ When users call the `uri()` method, the token checks for its registered
 renderer contract and hands off rendering of the metadata to
 the specific token renderer.
 
-```solidity
+```solidity{7}
 /// @notice Get the metadata for a given token id.
 function uri(uint tokenId) external override view returns (string memory) {
     if (tokenId > latestTokenId) revert NonExistentToken();
@@ -30,12 +30,21 @@ All renderers have to implement the simple `IRenderer` interface.
 They receive the `tokenId`, the `token` metadata (name, description, ...)
 and the resolved `artifact` data.
 
-```solidity
-interface IRenderer {
-    function uri (uint tokenId, Token calldata token, bytes memory artifact) external view returns (string memory);
-}
+::: code-group
 
-/// Token data is passed to the renderer, as well as the artifact data.
+```solidity [IRenderer.sol]
+interface IRenderer {
+
+    function uri (
+        uint tokenId,
+        Token calldata token,
+        bytes memory artifact
+    ) external view returns (string memory)
+
+}
+```
+
+```solidity [Token.sol]
 struct Token {
     string  name;         // token name
     string  description; // token description
@@ -45,6 +54,8 @@ struct Token {
     uint192 data;    // optional data for the renderer
 }
 ```
+
+:::
 
 How renderers generate the metadata is entirely up to them.
 The base renderer implementation that ships with every
