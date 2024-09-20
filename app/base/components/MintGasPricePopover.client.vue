@@ -56,7 +56,7 @@
                 <input
                   type="number"
                   min="1"
-                  :value="amount"
+                  :value="mintAmount"
                   @input="amount = $event.target.value"
                   @focus="animate = false"
                   :class="{ animate }"
@@ -84,7 +84,8 @@
 
 <script setup>
 const amount = ref('2')
-const ethPercentage = computed(() => (100 / (parseInt(amount.value) + 1)).toFixed(2))
+const mintAmount = computed(() => amount.value ? Math.max(1, parseInt(amount.value)) : 1)
+const ethPercentage = computed(() => (100 / Math.max(1, mintAmount.value + 1)).toFixed(2))
 const artistPercentage = computed(() => (100 - ethPercentage.value).toFixed(2))
 
 const animate = ref(true)
