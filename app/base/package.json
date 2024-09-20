@@ -1,6 +1,6 @@
 {
     "name": "@visualizevalue/mint-app-base",
-    "version": "0.1.34",
+    "version": "0.1.35",
     "type": "module",
     "main": "./nuxt.config.ts",
     "scripts": {
@@ -16,7 +16,7 @@
         "@pinia/nuxt": "^0.5.3",
         "@tanstack/vue-query": ">=5.45.0",
         "@types/node": "^22.5.4",
-        "@visualizevalue/mint-utils": "workspace:@visualizevalue/mint-utils@^0.0.1",
+        "@visualizevalue/mint-utils": "workspace:^",
         "@vueuse/components": "^10.11.0",
         "@vueuse/core": "^11.1.0",
         "@wagmi/core": "^2.13.5",
