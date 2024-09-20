@@ -28,7 +28,6 @@
   table:first-of-type {
     td:first-child {
       background: var(--gray-z-3);
-      /* font-weight: bold; */
     }
 
     tr:not(:last-child) td:first-child {
@@ -48,10 +47,15 @@
 
     td:has(input) {
       width: 25%;
+
+      input {
+        &.animate {
+          background: var(--button-background-highlight);
+        }
+      }
     }
   }
 }
-
 
 /*
 * IMAGE adjustments
