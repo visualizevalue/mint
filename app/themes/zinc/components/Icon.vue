@@ -49,4 +49,3 @@ const type = computed(() => ICON_NAMES[props.type] || props.type)
 }
 </style>
 
-

@@ -8,8 +8,6 @@
 
 <script setup>
 import { useWindowScroll } from '@vueuse/core'
-// import BaseAppHeader from '@visualizevalue/mint-app-base/app/components/AppHeader.vue'
-// import BaseAppHeader from '@base/components/AppHeader.vue'
 
 const { y } = useWindowScroll()
 </script>
