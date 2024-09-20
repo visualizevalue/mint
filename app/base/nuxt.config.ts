@@ -1,6 +1,5 @@
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
-// import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 const currentDir = dirname(fileURLToPath(import.meta.url))
 
@@ -70,17 +69,6 @@ export default defineNuxtConfig({
       config.optimizeDeps.include = config.optimizeDeps.include || []
       config.optimizeDeps.include.push('@visualizevalue/mint-app-base > eventemitter3')
     }
-  },
-
-  vite: {
-    plugins: [
-      // nodePolyfills({
-      //   globals: {
-      //     Buffer: true,
-      //     global: true,
-      //   }
-      // })
-    ],
   },
 
   nitro: {

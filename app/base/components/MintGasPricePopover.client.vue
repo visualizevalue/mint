@@ -125,10 +125,6 @@ onMounted(() => {
       input {
         border-radius: 0;
         border: 0;
-
-        &.animate:not(:focus) {
-          animation: highlight var(--speed-slow) infinite alternate;
-        }
       }
     }
 
@@ -143,15 +139,6 @@ onMounted(() => {
     :deep(.usd) {
       display: inline-block;
       margin-left: auto;
-    }
-  }
-
-  @keyframes highlight {
-    from {
-      background: var(--button-background);
-    }
-    to {
-      background: var(--button-background-highlight);
     }
   }
 </style>
