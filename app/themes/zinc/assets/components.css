@@ -20,6 +20,38 @@
   margin: 0 0 calc(var(--spacer) + var(--spacer-sm)) !important;
 }
 
+/**
+* PRICE MODAL
+*/
+
+#about-gas {
+  table:first-of-type {
+    td:first-child {
+      background: var(--gray-z-3);
+      /* font-weight: bold; */
+    }
+
+    tr:not(:last-child) td:first-child {
+      border-bottom-color: var(--gray-z-2);
+    }
+  }
+
+  table:last-of-type {
+    th {
+      background: var(--gray-z-3);
+      border-bottom-color: var(--gray-z-2);
+
+      &:not(:last-child) {
+        border-right-color: var(--gray-z-2);
+      }
+    }
+
+    td:has(input) {
+      width: 25%;
+    }
+  }
+}
+
 
 /*
 * IMAGE adjustments
