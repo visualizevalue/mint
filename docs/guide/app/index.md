@@ -43,7 +43,7 @@ If your account looks empty on a Mint app, head over to ENS to fill out your pro
 The beauty of decentralized identity: You set your data once, and it will
 be available to all other apps with ENS integrations.
 
-As an example for a filled out ENS profile profile, check out [jalil.eth](https://app.ens.domains/jalil.eth).
+As an example for a filled out ENS profile, check out [jalil.eth](https://app.ens.domains/jalil.eth).
 
 ## Examples
 

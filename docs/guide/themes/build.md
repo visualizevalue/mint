@@ -3,7 +3,7 @@
 The `@visualizevalue/mint-app-base` application implements
 a bare-bones but feature-complete UI to interact with the Mint contracts.
 
-It is build with [VueJS](https://vuejs.org) on top of [Nuxt](https://nuxt.com).
+It is built with [VueJS](https://vuejs.org) on top of [Nuxt](https://nuxt.com).
 Nuxt is a quality-of-life batteries included meta-framework on top of VueJS.
 It makes [layering new functionality](https://nuxt.com/getting-started/layers)
 a breeze.

@@ -11,7 +11,7 @@ of new collection contracts.
 Mint is an application framework and set of UI components that facilitate
 interacting with those smart contracts for both artists and collectors.
 
-Mint makes easy for artists to create and customize their own website,
+Mint makes it easy for artists to create and customize their own website,
 and to showcase and sell their work however they like.
 
 Mint enables developers to build custom experiences on top of the core protocol

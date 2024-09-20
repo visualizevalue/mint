@@ -46,7 +46,7 @@ collection contracts.
 /// @notice The token metadata renderers registered with this collection.
 address[] public renderers;
 
-/// @notice Let's the artist register a new renderer to use for future mints.
+/// @notice Lets the artist register a new renderer to use for future mints.
 function registerRenderer(address renderer) external onlyOwner returns (uint) {
     renderers.push(renderer);
     uint index = renderers.length - 1;
@@ -69,7 +69,7 @@ and finally the remaining `192` bits for storing arbitrary data
 that is later passed to the token metadata renderer.
 
 ```solidity
-/// @notice Let's the artist create a new token.
+/// @notice Lets the artist create a new token.
 function create(
     string  calldata tokenName,
     string  calldata tokenDescription,
@@ -115,7 +115,7 @@ call `prepareArtifact` N times to write + append data to a yet-to-be-minted
 token:
 
 ```solidity
-/// @notice Let's the artist prepare artifacts that are too large to store in a single transaction.
+/// @notice Lets the artist prepare artifacts that are too large to store in a single transaction.
 function prepareArtifact(uint tokenId, bytes[] calldata tokenArtifact, bool clear) external onlyOwner {
     if (tokenId <= latestTokenId) revert TokenAlreadyMinted();
 
@@ -206,7 +206,7 @@ During the mint window, users can mint a token at a given `amount` via
 the `mint()` function.
 
 ```solidity
-/// @notice Let's collectors purchase a token during its mint window.
+/// @notice Lets collectors purchase a token during its mint window.
 function mint(uint tokenId, uint amount) external payable {
     if (tokenId > latestTokenId) revert NonExistentToken();
 
@@ -232,7 +232,7 @@ Proceeds from mints are stored in the contract. They can be batch-withdrawn
 by the artist via the `withdraw` function:
 
 ```solidity
-/// @notice Let's the artist withdraw the contract balance.
+/// @notice Lets the artist withdraw the contract balance.
 function withdraw() external onlyOwner {
     payable(owner()).transfer(address(this).balance);
 
