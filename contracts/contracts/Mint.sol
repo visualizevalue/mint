@@ -90,7 +90,7 @@ contract Mint is ERC1155 {
         _transferOwnership(owner);
     }
 
-    /// @notice Let's the artist create a new token.
+    /// @notice Lets the artist create a new token.
     function create(
         string  calldata tokenName,
         string  calldata tokenDescription,
@@ -125,7 +125,7 @@ contract Mint is ERC1155 {
         _mint(msg.sender, latestTokenId, 1, "");
     }
 
-    /// @notice Let's the artist prepare artifacts that are too large to store in a single transaction.
+    /// @notice Lets the artist prepare artifacts that are too large to store in a single transaction.
     function prepareArtifact(uint tokenId, bytes[] calldata tokenArtifact, bool clear) external onlyOwner {
         if (tokenId <= latestTokenId) revert TokenAlreadyMinted();
 
@@ -139,7 +139,7 @@ contract Mint is ERC1155 {
         }
     }
 
-    /// @notice Let's collectors purchase a token during its mint window.
+    /// @notice Lets collectors purchase a token during its mint window.
     function mint(uint tokenId, uint amount) external payable {
         if (tokenId > latestTokenId) revert NonExistentToken();
 
@@ -159,7 +159,7 @@ contract Mint is ERC1155 {
         return initBlock + tokens[tokenId].blocks + MINT_BLOCKS;
     }
 
-    /// @notice Let's the artist register a new renderer to use for future mints.
+    /// @notice Lets the artist register a new renderer to use for future mints.
     function registerRenderer(address renderer) external onlyOwner returns (uint) {
         renderers.push(renderer);
         uint index = renderers.length - 1;
@@ -169,7 +169,7 @@ contract Mint is ERC1155 {
         return index;
     }
 
-    /// @notice Let's the artist withdraw the contract balance.
+    /// @notice Lets the artist withdraw the contract balance.
     function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
 
