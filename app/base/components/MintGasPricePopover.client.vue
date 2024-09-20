@@ -38,12 +38,70 @@
             </tr>
           </tbody>
         </table>
+        <p>
+          Mints of more than one don't increase the Ethereum fee, resulting in higher
+          artist compensation.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Ethereum fee</th>
+              <th>Artist <abbr title="Artist Compensation">comp.</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  type="number"
+                  min="1"
+                  :value="amount"
+                  @input="amount = $event.target.value"
+                  @focus="animate = false"
+                  :class="{ animate }"
+                />
+              </td>
+              <td>
+                {{ ethPercentage }}%
+                <MintGasPrice v-slot="{ dollarPrice }" :mint-count="1">
+                  <span>(${{ dollarPrice }})</span>
+                </MintGasPrice>
+              </td>
+              <td>
+                {{ artistPercentage }}%
+                <MintGasPrice v-slot="{ dollarPrice }" :mint-count="amount">
+                  <span>(${{ dollarPrice }})</span>
+                </MintGasPrice>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </template>
   </Popover>
 </template>
 
 <script setup>
+const amount = ref('2')
+const ethPercentage = computed(() => (100 / (parseInt(amount.value) + 1)).toFixed(2))
+const artistPercentage = computed(() => (100 - ethPercentage.value).toFixed(2))
+
+const animate = ref(true)
+const runAnimation = async () => {
+  await delay(3000)
+  if (! animate.value) return
+  const amounts = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]
+  const mints = takeRandom(amounts)
+
+  amount.value = mints
+
+  runAnimation()
+}
+
+onMounted(() => {
+  runAnimation()
+})
 </script>
 
 <style scoped>
@@ -58,11 +116,42 @@
           white-space: nowrap;
         }
       }
+
+      &:has(input) {
+        padding: 0;
+        width: 33%;
+      }
+
+      input {
+        border-radius: 0;
+        border: 0;
+
+        &.animate:not(:focus) {
+          animation: highlight var(--speed-slow) infinite alternate;
+        }
+      }
+    }
+
+    thead {
+      th {
+        text-align: left;
+        white-space: nowrap;
+        font-weight: var(--font-weight);
+      }
     }
 
     :deep(.usd) {
       display: inline-block;
       margin-left: auto;
+    }
+  }
+
+  @keyframes highlight {
+    from {
+      background: var(--button-background);
+    }
+    to {
+      background: var(--button-background-highlight);
     }
   }
 </style>

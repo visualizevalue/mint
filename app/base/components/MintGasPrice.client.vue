@@ -1,9 +1,11 @@
 <template>
-  <span>
-    {{ displayPrice.value }} {{ displayPrice.format }}
+  <slot v-bind="{ displayPrice, dollarPrice }">
+    <span>
+      {{ displayPrice.value }} {{ displayPrice.format }}
 
-    <span class="usd">(${{ dollarPrice }})</span>
-  </span>
+      <span class="usd">(${{ dollarPrice }})</span>
+    </span>
+  </slot>
 </template>
 
 <script setup>

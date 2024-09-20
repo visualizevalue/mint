@@ -12,6 +12,7 @@
   > table {
     margin: var(--spacer) 0;
 
+    th,
     td {
       padding: calc(var(--spacer-sm) - var(--spacer-xs)) var(--spacer-sm);
       border: var(--border);

@@ -20,3 +20,10 @@ export function chunkArray<T> (array: T[], chunkSize: number): T[][] {
   }
   return result;
 }
+
+export function takeRandom<T>(arr: Array<T>, randomNumber = Math.random()): T|null {
+  if (! arr?.length) return null
+
+  return arr[Math.floor(randomNumber * arr.length)]
+}
+

@@ -1,1 +1,1 @@
-export { chunkArray } from '@visualizevalue/mint-utils'
+export { chunkArray, takeRandom } from '@visualizevalue/mint-utils'
