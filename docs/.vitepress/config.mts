@@ -3,9 +3,14 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Mint",
-  description: "An opinionated creator owned stack for publishing art to Ethereum.",
+  description: "An open source internet protocol enabling the creation and collection of digital artifacts on the Ethereum Virtual Machine.",
 
-  head: [['link', { rel: 'icon', href: '/icon.svg' }]],
+  lang: 'en-US',
+
+  head: [
+    ['link', { rel: 'icon', href: '/icon.svg' }],
+    ['meta', { property: 'og:image', content: '/og.png' }],
+  ],
 
   cleanUrls: true,
 
