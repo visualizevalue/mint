@@ -3,7 +3,8 @@
 ## Base
 
 ![The Base Theme](../assets/base-theme.png)
-The most barebones application with minimal styling.
+The barebones application with minimal styling.
+An example is running on [base.mint.jalil.cc](https://base.mint.jalil.cc).
 
 ## Zinc
 

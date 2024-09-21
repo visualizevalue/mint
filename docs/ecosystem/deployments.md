@@ -7,6 +7,5 @@
 Known general purpose application deployments:
 
 - [networked.art](https://networked.art)
-- [mint.worldcomputer.art](https://mint.worldcomputer.art)
-- [mint.1001.studio](https://1001.studio)
-
+<!-- - [mint.worldcomputer.art](https://mint.worldcomputer.art) -->
+<!-- - [mint.1001.studio](https://1001.studio) -->

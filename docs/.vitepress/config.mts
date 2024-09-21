@@ -29,16 +29,6 @@ export default defineConfig({
           ]
         },
         {
-          text: 'Contracts',
-          collapsed: false,
-          items: [
-            { text: 'Contracts Overview', link: '/guide/contracts/' },
-            { text: 'Factory', link: '/guide/contracts/factory' },
-            { text: 'Mint', link: '/guide/contracts/mint' },
-            { text: 'Renderers', link: '/guide/contracts/renderers' },
-          ]
-        },
-        {
           text: 'App',
           collapsed: false,
           items: [
@@ -57,6 +47,16 @@ export default defineConfig({
           ]
         },
         {
+          text: 'Contracts',
+          collapsed: false,
+          items: [
+            { text: 'Contracts Overview', link: '/guide/contracts/' },
+            { text: 'Factory', link: '/guide/contracts/factory' },
+            { text: 'Mint', link: '/guide/contracts/mint' },
+            { text: 'Renderers', link: '/guide/contracts/renderers' },
+          ]
+        },
+        {
           text: 'FAQ',
           link: '/guide/faq/'
         },
@@ -70,7 +70,6 @@ export default defineConfig({
         {
           text: 'Ecosystem',
           items: [
-            // { text: 'A Decentralized Network', link: '/ecosystem/' },
             { text: 'Artist Showcase', link: '/ecosystem/artists' },
             { text: 'Theme Showcase', link: '/ecosystem/themes' },
             { text: 'Known Deployments', link: '/ecosystem/deployments' },
