@@ -13,6 +13,9 @@ hero:
     - theme: brand
       text: Get started
       link: /guide/
+    - theme: alt
+      text: Github
+      link: https://github.com/visualizevalue/mint
     # - theme: alt
     #   text: Ecosystem
     #   link: /ecosystem/artists
