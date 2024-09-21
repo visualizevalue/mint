@@ -36,6 +36,16 @@ export default defineConfig({
           ]
         },
         {
+          text: 'Contracts',
+          collapsed: false,
+          items: [
+            { text: 'Contracts Overview', link: '/guide/contracts/' },
+            { text: 'Factory', link: '/guide/contracts/factory' },
+            { text: 'Mint', link: '/guide/contracts/mint' },
+            { text: 'Renderers', link: '/guide/contracts/renderers' },
+          ]
+        },
+        {
           text: 'App',
           collapsed: false,
           items: [
@@ -51,16 +61,6 @@ export default defineConfig({
             { text: 'About Themes', link: '/guide/themes/' },
             { text: 'Build Themes', link: '/guide/themes/build' },
             { text: 'The Zinc Theme', link: '/guide/themes/zinc' },
-          ]
-        },
-        {
-          text: 'Contracts',
-          collapsed: false,
-          items: [
-            { text: 'Contracts Overview', link: '/guide/contracts/' },
-            { text: 'Factory', link: '/guide/contracts/factory' },
-            { text: 'Mint', link: '/guide/contracts/mint' },
-            { text: 'Renderers', link: '/guide/contracts/renderers' },
           ]
         },
         {
