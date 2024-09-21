@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import { getHighlighter, bundledLanguages } from 'shiki'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -19,9 +18,6 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/': [
-
-      ],
       '/guide/': [
         {
           text: 'Intro',
