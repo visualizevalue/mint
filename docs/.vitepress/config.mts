@@ -7,6 +7,8 @@ export default defineConfig({
 
   head: [['link', { rel: 'icon', href: '/icon.svg' }]],
 
+  cleanUrls: true,
+
   // https://vitepress.dev/reference/default-theme-config
   themeConfig: {
     logo: { src: '/icon.svg', width: 24, height: 24 },
