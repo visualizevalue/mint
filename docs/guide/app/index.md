@@ -22,8 +22,8 @@ The application has two main modes of deployment:
 And the application can be configured in two different ways:
 
 - **As a scoped artist application**, which showcases the configured
-  artists' work and allows users to mint the artifacts. The artists' collections are shown
-  chronologically and each collection is a simple feed of artifacts.
+  artists' work and allows users to mint the artifacts. The artists' collections
+  are shown chronologically and each collection is a simple feed of artifacts.
 - **As a general purpose application**, which allows anyone to mint and sell their work.
   This deployment mode doesn't have a feed to browse art - artists have to share
   deep-links to their work if they want to use applications like this.
@@ -43,12 +43,11 @@ If your account looks empty on a Mint app, head over to ENS to fill out your pro
 The beauty of decentralized identity: You set your data once, and it will
 be available to all other apps with ENS integrations.
 
-As an example for a filled out ENS profile, check out [jalil.eth](https://app.ens.domains/jalil.eth).
+As an example for a filled out ENS profile, check out [brantly.eth](https://app.ens.domains/brantly.eth).
 
 ## Examples
 
-- Artist Scoped SPA (Custom Theme): [mint.vv.xyz](https://sepolia.mint.vv.xyz)
+- Artist Scoped SPA (Custom Theme): [sepolia.mint.vv.xyz](https://sepolia.mint.vv.xyz)
 - Artist Scoped SPA (Zinc Theme): [mint.jalil.cc](https://mint.jalil.cc)
 - Artist Scoped SPA (Base Theme): [base.mint.jalil.cc](https://base.mint.jalil.cc)
 - General Purpose Node Application (Zinc Theme): [networked.art](https://networked.art)
-
