@@ -63,6 +63,13 @@ export default defineNuxtConfig({
 })
 ```
 
+Since our base app comes with an `app.vue` entry file, let's
+delete our own for now.
+
+```bash
+rm app.vue
+```
+
 ## 4. Test the application
 
 You can run the application in development mode now!
