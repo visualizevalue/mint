@@ -107,7 +107,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 
 export default defineNuxtConfig({
   alias: {
-    '@base': '@visualizevalue/mint-app-base/app',
+    '@base': '@visualizevalue/mint-app-base',
   },
 
   css: [

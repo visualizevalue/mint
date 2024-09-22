@@ -110,7 +110,7 @@ In the theme's `nuxt.config.ts` file, add:
 ```ts
 export default defineNuxtConfig({
   alias: {
-    '@base': '@visualizevalue/mint-app-base/app',
+    '@base': '@visualizevalue/mint-app-base',
   },
 
   css: [
