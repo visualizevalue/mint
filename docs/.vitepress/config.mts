@@ -59,6 +59,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'About Themes', link: '/guide/themes/' },
+            { text: 'Using Themes', link: '/guide/themes/using-themes' },
             { text: 'Build Themes', link: '/guide/themes/build' },
             { text: 'The Zinc Theme', link: '/guide/themes/zinc' },
           ]

@@ -77,6 +77,10 @@ to deploy new collections or to mint new tokens.
 
 ## 3. Adjust some styling
 
+> [!TIP]
+> If you want to use a theme instead of applying your own styles,
+> check out [how to use themes](../themes/using-themes).
+
 Let's create our own custom styles. Add a `styles.css` file
 in a new `assets` folder.
 
