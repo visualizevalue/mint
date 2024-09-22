@@ -29,16 +29,17 @@ on how to architect Nuxt applications.
 
 ```bash
 pnpm dlx nuxi@latest init --template layer <app-name>
-
-# and follow the prompts
 ```
 
-This initializes our layer with a `.playground` application to test the theme.
+Execute the above command and follow its prompts.
+This initializes our layer with a `.playground` folder
+containing the application to test the theme.
 
 ## 2. Install the required dependencies
 
+Now let's install the base layer
+
 ```bash
-# Install our base layer application
 pnpm add -D @visualizevalue/mint-app-base
 ```
 

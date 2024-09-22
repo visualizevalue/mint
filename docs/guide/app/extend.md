@@ -8,10 +8,11 @@ Let's do this now!
 
 ## 1. Create a new Nuxt application
 
-In your terminal, navigate to the folder you want to initialize the project in and run:
+In your terminal, navigate to the folder you want to initialize
+the project in, and run the following command:
 
 ```bash
-pnpm dlx nuxi@latest init <app-name> # and follow the prompts
+pnpm dlx nuxi@latest init <app-name>
 ```
 
 Once done, you can run your local Nuxt app like so:
@@ -25,7 +26,6 @@ pnpm dev
 First we need to install the base Mint application.
 
 ```bash
-# Install our base layer application
 pnpm add -D @visualizevalue/mint-app-base
 ```
 

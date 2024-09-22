@@ -49,11 +49,10 @@ Install the packages:
 pnpm install
 ```
 
-Build the application for development:
+Build and run the application for development:
 
 ```bash
 pnpm --filter @visualizevalue/mint-app-base dev
-# ... ➜ Local: http://localhost:1618/
 ```
 
 Open the locally running app in your browser.
