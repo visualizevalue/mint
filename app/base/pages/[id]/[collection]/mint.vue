@@ -110,6 +110,11 @@ const txFlow = ref()
 const txFlowKey = ref(0)
 const minting = ref(false)
 const mint = async () => {
+  if (! image.value) {
+    alert(`Empty image data. Please try again.`)
+    return
+  }
+
   const artifact = toByteArray(image.value)
   const artifactChunks = chunkArray(artifact, 4)
   const multiTransactionPrepare = artifactChunks.length > 1
