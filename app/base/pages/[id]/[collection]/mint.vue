@@ -15,6 +15,7 @@
           <select class="select choose-mode" v-model="mode">
             <option value="file" title="Data URI Encoded File Upload">DATA-URI</option>
             <option value="ipfs" title="Interplanetary File System">IPFS</option>
+            <option value="ar" title="Arweave">ARWEAVE</option>
             <option value="http" title="Hypertext Transfer Protocol" disabled>HTTP</option>
             <option value="svg" title="Scalable Vector Graphic" disabled>SVG</option>
           </select>
@@ -31,6 +32,7 @@
             </p>
           </div>
           <FormInput v-else-if="mode === 'ipfs'" v-model="ipfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
+          <FormInput v-else-if="mode === 'ar'" v-model="arTxId" placeholder="TX ID (frV...)" prefix="ar://" required />
 
           <FormInput v-model="name" placeholder="Title" required />
           <FormInput v-model="description" placeholder="Description" />
@@ -81,6 +83,8 @@ const collection = computed(() => props.collection)
 
 const mode = ref('file')
 const ipfsCid = ref('')
+// TODO: Rework to plugin architecture. Or at least per renderer logic.
+const arTxId= ref('')
 const image = ref('')
 const name = ref('')
 const description = ref('')
@@ -103,6 +107,9 @@ watch(ipfsCid, () => {
   } else {
     image.value = ipfsToHttpURI(`ipfs://${validated}`)
   }
+})
+watch(arTxId, () => {
+  image.value = `https://arweave.net/${arTxId.value}`
 })
 watch(mode, () => image.value = '')
 
