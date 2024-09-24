@@ -32,7 +32,8 @@
             <p v-if="mintOpen" class="closes-in">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
             <p v-else class="closed-at">Closed at block {{ token.untilBlock }}</p>
           </header>
-          <Image :src="token.artifact" :alt="token.name" />
+          <Image v-if="token.artifact" :src="token.artifact" :alt="token.name" />
+          <ImageVoid v-else />
           <CardLink :to="{
             name: 'id-collection-tokenId',
             params: { id: collection.owner, collection: token.collection, tokenId: `${token.tokenId}` }

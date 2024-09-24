@@ -2,7 +2,8 @@
   <article class="token-detail">
     <div class="artifact">
       <div>
-        <Image :src="token.artifact" :alt="token.name" />
+        <Image v-if="token.artifact" :src="token.artifact" :alt="token.name" />
+        <ImageVoid v-else />
       </div>
     </div>
 
