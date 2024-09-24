@@ -20,6 +20,14 @@
   margin: 0 0 calc(var(--spacer) + var(--spacer-sm)) !important;
 }
 
+.token-mint-timeline-item {
+  > a {
+    &:--highlight {
+      text-decoration: underline;
+    }
+  }
+}
+
 /**
 * PRICE MODAL
 */
