@@ -53,7 +53,9 @@
             <div class="card">
               <div>
                 <FormSelectFile @change="setImage" />
-                <p v-if="! isSmall" class="muted"><small>Note: This should be a small file, prefferably a simple SVG like <a href="/example-contract-icon.svg" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small></p>
+                <p v-if="! isSmall" class="muted">
+                  <small>Note: This should be a small file, prefferably a simple SVG like <a :href="`${base}example-contract-icon.svg`" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small>
+                </p>
               </div>
               <FormGroup>
                 <FormInput v-model="title" placeholder="Title" required class="title" />
@@ -77,6 +79,7 @@
 
 <script setup>
 const config = useRuntimeConfig()
+const base = useBaseURL()
 const store = useOnchainStore()
 const chainId = useMainChainId()
 

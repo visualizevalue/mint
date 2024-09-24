@@ -18,7 +18,11 @@
           @click="() => login(connector)"
           class="choose-connector-button"
         >
-          <img v-if="ICONS[connector.name]" :src="connector.icon || `/icons/wallets/${ICONS[connector.name]}`" alt="">
+          <img
+            v-if="ICONS[connector.name]"
+            :src="connector.icon || `${base}icons/wallets/${ICONS[connector.name]}`"
+            :alt="connector.name"
+          >
           {{ connector.name }}
         </Button>
       </div>
@@ -38,6 +42,7 @@ const ICONS = {
 
 const props = defineProps(['class'])
 const emit = defineEmits(['connected', 'disconnected'])
+const base = useBaseURL()
 
 const chainId = useChainId()
 const { connectors, connect } = useConnect()
