@@ -1,7 +1,9 @@
 <template>
   <div class="token-mint-timeline-item">
     <slot :mint="mint" :formatted-price="formattedPrice">
-      <Account :address="mint.address" class="account" />
+      <NuxtLink :to="{ name: 'profile-address', params: { address: mint.address } }">
+        <Account :address="mint.address" class="account" />
+      </NuxtLink>
 
       <span class="amount">{{ mint.amount.toString() }}<span>×</span></span>
 
