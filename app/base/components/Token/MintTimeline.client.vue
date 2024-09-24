@@ -3,34 +3,35 @@
     <slot :mints="mints" :loading="loading">
       <h1>Mint Timeline</h1>
 
-      <div v-if="currentBlock" class="token-mint-timeline-items">
-        <TokenMintTimelineItem
-          v-for="mint of mints"
-          :mint="mint"
-          :key="mint.tx"
-          :block="currentBlock"
-        />
-        <TokenMintTimelineItem v-if="backfillComplete">
-          <Account :address="collection.owner" class="account" />
+      <template v-if="currentBlock">
+      <TokenMintTimelineVirtualScroller
+        :mints="mints"
+        :block="currentBlock"
+      >
+        <template #after>
+          <TokenMintTimelineItem v-if="backfillComplete">
+            <Account :address="collection.owner" class="account" />
 
-          <span class="amount">1<span>×</span></span>
-          <span class="price">Artist Mint</span>
+            <span class="amount">1<span>×</span></span>
+            <span class="price">Artist Mint</span>
 
-          <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - mintedAtBlock" /></span>
+            <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - mintedAtBlock" /></span>
 
-          <span class="links">
-            <NuxtLink :to="`${config.public.blockExplorer}/nft/${token.collection}/${token.tokenId}`" target="_blank">
-              <Icon type="link" />
-            </NuxtLink>
-          </span>
-        </TokenMintTimelineItem>
-      </div>
+            <span class="links">
+              <NuxtLink :to="`${config.public.blockExplorer}/nft/${token.collection}/${token.tokenId}`" target="_blank">
+                <Icon type="link" />
+              </NuxtLink>
+            </span>
+          </TokenMintTimelineItem>
+        </template>
+      </TokenMintTimelineVirtualScroller>
+      </template>
 
       <div v-if="! backfillComplete" v-show="! loading" ref="loadMore" class="load-more">
         <Button @click="backfill">Load more</Button>
       </div>
 
-      <Loading v-if="loading || ! currentBlock" txt="Mint History..." />
+      <Loading v-if="loading || ! currentBlock" txt="Loading Mint History..." />
     </slot>
   </section>
 </template>
@@ -72,16 +73,27 @@ watch(currentBlock, () => {
   state.fetchTokenMints(token)
 })
 
-const backfill = async () => {
-  loading.value = true
-  await state.backfillTokenMints(token)
-  loading.value = false
-}
-
 const loadMore = ref()
 const loadMoreVisible = useElementVisibility(loadMore)
+const backfill = async () => {
+  loading.value = true
+
+  try {
+    await state.backfillTokenMints(token)
+
+    if (loadMoreVisible.value) {
+      await delay(300)
+      await backfill()
+    }
+  } catch (e) {
+    console.error(`Issue during backfill`, e)
+  }
+
+  loading.value = false
+}
 watch(loadMoreVisible, () => {
-  if (! loadMoreVisible.value) return
+  // Skip if we have enough mints for the viewport or we're already loading
+  if (! loadMoreVisible.value || loading.value) return
 
   backfill()
 })
@@ -92,6 +104,11 @@ watch(loadMoreVisible, () => {
   padding-top: var(--spacer-lg);
   padding-bottom: var(--spacer-lg);
   container-type: inline-size;
+
+  :deep(.token-mint-timeline-items) {
+    display: grid;
+    gap: var(--spacer);
+  }
 }
 
 h1 {
@@ -102,10 +119,6 @@ h1 {
   margin: 0 0 var(--spacer);
 }
 
-.token-mint-timeline-items {
-  display: grid;
-  gap: var(--spacer);
-}
 
 .load-more {
   .button {

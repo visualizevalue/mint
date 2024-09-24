@@ -4,7 +4,7 @@ import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
 export const CURRENT_STATE_VERSION = 4
-export const MAX_BLOCK_RANGE = 2500n
+export const MAX_BLOCK_RANGE = 1000n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
 export const useOnchainStore = () => {
@@ -320,7 +320,7 @@ export const useOnchainStore = () => {
       },
 
       async fetchTokenMints (token: Token) {
-        const client = getPublicClient($wagmi) as PublicClient
+        const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const currentBlock = await client.getBlockNumber()
         const mintedAtBlock = token.untilBlock - MINT_BLOCKS
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
@@ -365,7 +365,7 @@ export const useOnchainStore = () => {
 
         // We want to fetch until our max range (5000), or until when the token minted
         const fromBlock = toBlock - MAX_BLOCK_RANGE > mintedAtBlock ? toBlock - MAX_BLOCK_RANGE : mintedAtBlock
-        console.log(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
+        console.info(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
 
         // Finally, we update our database
         this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock), 'append')

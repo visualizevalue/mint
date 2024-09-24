@@ -1,8 +1,8 @@
 <template>
   <div class="token-mint-timeline-item">
     <slot :mint="mint" :formatted-price="formattedPrice">
-      <NuxtLink :to="{ name: 'profile-address', params: { address: mint.address } }">
-        <Account :address="mint.address" class="account" />
+      <NuxtLink :to="{ name: 'profile-address', params: { address: mint.address } }" class="account">
+        <Account :address="mint.address" />
       </NuxtLink>
 
       <span class="amount">{{ mint.amount.toString() }}<span>×</span></span>
@@ -49,7 +49,7 @@ const formattedPrice = computed(() => props.mint && customFormatEther(props.mint
     span {
       white-space: nowrap;
 
-      &:not(.account) {
+      &:not(.account):not(.account *) {
         color: var(--muted);
         font-size: var(--font-sm);
       }
@@ -57,6 +57,8 @@ const formattedPrice = computed(() => props.mint && customFormatEther(props.mint
 
     a,
     button {
+      color: var(--color);
+
       &:--highlight {
         color: var(--color);
       }
