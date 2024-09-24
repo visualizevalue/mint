@@ -10,13 +10,13 @@
           :key="mint.tx"
           :block="currentBlock"
         />
-        <TokenMintTimelineItem v-if="! loading || mints.length">
+        <TokenMintTimelineItem v-if="backfillComplete">
           <Account :address="collection.owner" class="account" />
 
           <span class="amount">1<span>×</span></span>
           <span class="price">Artist Mint</span>
 
-          <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - (token.untilBlock - 7200n)" /></span>
+          <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - mintedAtBlock" /></span>
 
           <span class="links">
             <NuxtLink :to="`${config.public.blockExplorer}/nft/${token.collection}/${token.tokenId}`" target="_blank">
@@ -26,12 +26,17 @@
         </TokenMintTimelineItem>
       </div>
 
+      <div v-if="! backfillComplete" v-show="! loading" ref="loadMore" class="load-more">
+        <Button @click="backfill">Load more</Button>
+      </div>
+
       <Loading v-if="loading || ! currentBlock" txt="Mint History..." />
     </slot>
   </section>
 </template>
 
 <script setup>
+import { useElementVisibility } from '@vueuse/core'
 import { useBlockNumber } from '@wagmi/vue'
 
 const config = useRuntimeConfig()
@@ -45,8 +50,10 @@ const { token, collection } = defineProps({
 const state = useOnchainStore()
 
 const mints = computed(() => state.tokenMints(token.collection, token.tokenId))
+const mintedAtBlock = computed(() => token.untilBlock - MINT_BLOCKS)
+const backfillComplete = computed(() => token.mintsBackfilledUntilBlock <= mintedAtBlock.value)
 
-const loading = ref(false)
+const loading = ref(true)
 onMounted(async () => {
   loading.value = true
   try {
@@ -63,6 +70,20 @@ watch(currentBlock, () => {
   if (loading.value) return
 
   state.fetchTokenMints(token)
+})
+
+const backfill = async () => {
+  loading.value = true
+  await state.backfillTokenMints(token)
+  loading.value = false
+}
+
+const loadMore = ref()
+const loadMoreVisible = useElementVisibility(loadMore)
+watch(loadMoreVisible, () => {
+  if (! loadMoreVisible.value) return
+
+  backfill()
 })
 </script>
 
@@ -84,5 +105,12 @@ h1 {
 .token-mint-timeline-items {
   display: grid;
   gap: var(--spacer);
+}
+
+.load-more {
+  .button {
+    display: block;
+    width: 100%;
+  }
 }
 </style>

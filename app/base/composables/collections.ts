@@ -4,6 +4,8 @@ import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
 export const CURRENT_STATE_VERSION = 4
+export const MAX_BLOCK_RANGE = 2500n
+export const MINT_BLOCKS = BLOCKS_PER_DAY
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
@@ -320,7 +322,7 @@ export const useOnchainStore = () => {
       async fetchTokenMints (token: Token) {
         const client = getPublicClient($wagmi) as PublicClient
         const currentBlock = await client.getBlockNumber()
-        const mintedAtBlock = token.untilBlock - 7200n
+        const mintedAtBlock = token.untilBlock - MINT_BLOCKS
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
         // We want to sync until now, or when the mint closed
@@ -332,7 +334,7 @@ export const useOnchainStore = () => {
 
         // Initially, we want to sync backwards,
         // but at most 5000 blocks (the general max range for an event query)
-        const maxRangeBlock = toBlock - 5000n
+        const maxRangeBlock = toBlock - MAX_BLOCK_RANGE
         const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock // If we've already fetched
           ? token.mintsFetchedUntilBlock + 1n // we want to continue where we left off
           : maxRangeBlock > mintedAtBlock // Otherwise we'll go back as far as possible
@@ -352,25 +354,24 @@ export const useOnchainStore = () => {
       },
 
       async backfillTokenMints (token: Token) {
-        const mintedAtBlock = token.untilBlock - 7200n
+        const mintedAtBlock = token.untilBlock - MINT_BLOCKS
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
-        while (
-          storedToken.mintsBackfilledUntilBlock > mintedAtBlock
-        ) {
-          // We want to fetch the tokens up until where we stopped backfilling (excluding the last block)
-          const toBlock = storedToken.mintsBackfilledUntilBlock - 1n
+        // If we've backfilled all the way;
+        if (storedToken.mintsBackfilledUntilBlock <= mintedAtBlock) return
 
-          // We want to fetch until our max range (5000), or until when the token minted
-          const fromBlock = toBlock - 5000n > mintedAtBlock ? toBlock - 5000n : mintedAtBlock
-          console.log(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
+        // We want to fetch the tokens up until where we stopped backfilling (excluding the last block)
+        const toBlock = storedToken.mintsBackfilledUntilBlock - 1n
 
-          // Finally, we update our database
-          this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock), 'append')
+        // We want to fetch until our max range (5000), or until when the token minted
+        const fromBlock = toBlock - MAX_BLOCK_RANGE > mintedAtBlock ? toBlock - MAX_BLOCK_RANGE : mintedAtBlock
+        console.log(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
 
-          // And save until when we have backfilled our tokens.
-          storedToken.mintsBackfilledUntilBlock = fromBlock
-        }
+        // Finally, we update our database
+        this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock), 'append')
+
+        // And save until when we have backfilled our tokens.
+        storedToken.mintsBackfilledUntilBlock = fromBlock
       },
 
       async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint): Promise<MintEvent[]> {
