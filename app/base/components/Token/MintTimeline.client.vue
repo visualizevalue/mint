@@ -50,6 +50,7 @@ const loading = ref(false)
 onMounted(async () => {
   loading.value = true
   try {
+    console.info(`Attempting to load + backfill token mints for #${token.tokenId}`)
     await state.fetchTokenMints(token)
     await state.backfillTokenMints(token)
   } catch (e) {
@@ -58,7 +59,11 @@ onMounted(async () => {
   loading.value = false
 })
 
-watch(currentBlock, () => state.fetchTokenMints(token))
+watch(currentBlock, () => {
+  if (loading.value) return
+
+  state.fetchTokenMints(token)
+})
 </script>
 
 <style scoped>

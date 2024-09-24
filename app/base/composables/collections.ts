@@ -1,9 +1,9 @@
 import { getBalance, getPublicClient, readContract } from '@wagmi/core'
 import { type GetBalanceReturnType } from '@wagmi/core'
-import { parseAbiItem } from 'viem'
-import type { MintEvent } from '~/app/utils/types'
+import { parseAbiItem, type PublicClient } from 'viem'
+import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 3
+export const CURRENT_STATE_VERSION = 4
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
@@ -94,7 +94,7 @@ export const useOnchainStore = () => {
       },
 
       async fetchArtistProfile (address: `0x${string}`): Promise<Artist> {
-        const client = getPublicClient($wagmi, { chainId: 1 })
+        const client = getPublicClient($wagmi, { chainId: 1 }) as PublicClient
         const block = await client.getBlockNumber()
 
         // Only update once per hour
@@ -149,7 +149,7 @@ export const useOnchainStore = () => {
           functionName: 'getCreatorCollections',
           args: [artist],
           chainId,
-        })).map((a: `0x${string}`) => a.toLowerCase())
+        })).map((a: `0x${string}`) => a.toLowerCase() as `0x${string}`)
 
         if (this.artists[artist].collections.length === collectionAddresses.length) {
           console.info(`Collections fetched already (${collectionAddresses.length} collections)`)
@@ -318,67 +318,63 @@ export const useOnchainStore = () => {
       },
 
       async fetchTokenMints (token: Token) {
-        const client = getPublicClient($wagmi)
+        const client = getPublicClient($wagmi) as PublicClient
+        const currentBlock = await client.getBlockNumber()
+        const mintedAtBlock = token.untilBlock - 7200n
+        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
-        // We want to sync backwards from now
-        const currentBlock = await client.getBlockNumber({ chainId })
-
-        // Until when
+        // We want to sync until now, or when the mint closed
         const toBlock = currentBlock > token.untilBlock ? token.untilBlock : currentBlock
 
-        if (token.mintsFetchedUntilBlock >= toBlock) return console.info(`token mints already fetched`)
+        if (token.mintsFetchedUntilBlock >= toBlock) {
+          return console.info(`mints for #${token.tokenId} already fetched`)
+        }
 
-        // From when
+        // Initially, we want to sync backwards,
+        // but at most 5000 blocks (the general max range for an event query)
         const maxRangeBlock = toBlock - 5000n
-        const mintedAtBlock = token.untilBlock - 7200n
-        const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock
-          ? token.mintsFetchedUntilBlock + 1n
-          : maxRangeBlock > mintedAtBlock
-            ? maxRangeBlock
-            : mintedAtBlock
+        const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock // If we've already fetched
+          ? token.mintsFetchedUntilBlock + 1n // we want to continue where we left off
+          : maxRangeBlock > mintedAtBlock // Otherwise we'll go back as far as possible
+            ? maxRangeBlock // (to our max range)
+            : mintedAtBlock // (or all the way to when the token minted)
 
-        // Load mints
-        this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
-          ...await this.loadMintEvents(
-            token,
-            fromBlock,
-            toBlock
-          ),
-          ...(this.collections[token.collection].tokens[token.tokenId.toString()].mints) || [],
-        ]
-
-        console.info(`Token mints fetched from ${fromBlock}-${toBlock}`)
+        // Load mints in range
+        this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock))
 
         // Set sync status
-        this.collections[token.collection].tokens[token.tokenId.toString()].mintsFetchedUntilBlock = toBlock
+        storedToken.mintsFetchedUntilBlock = toBlock
 
         // If this is our first fetch, mark until when we have backfilled
         if (! token.mintsBackfilledUntilBlock) {
-          this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock = fromBlock
+          storedToken.mintsBackfilledUntilBlock = fromBlock
         }
       },
 
       async backfillTokenMints (token: Token) {
         const mintedAtBlock = token.untilBlock - 7200n
+        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
         while (
-          this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock > mintedAtBlock
+          storedToken.mintsBackfilledUntilBlock > mintedAtBlock
         ) {
-          const toBlock = this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock
+          // We want to fetch the tokens up until where we stopped backfilling (excluding the last block)
+          const toBlock = storedToken.mintsBackfilledUntilBlock - 1n
+
+          // We want to fetch until our max range (5000), or until when the token minted
           const fromBlock = toBlock - 5000n > mintedAtBlock ? toBlock - 5000n : mintedAtBlock
           console.log(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
 
-          this.collections[token.collection].tokens[token.tokenId.toString()].mints = [
-            ...this.collections[token.collection].tokens[token.tokenId.toString()].mints,
-            ...await this.loadMintEvents(token, fromBlock, toBlock)
-          ]
+          // Finally, we update our database
+          this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock), 'append')
 
-          this.collections[token.collection].tokens[token.tokenId.toString()].mintsBackfilledUntilBlock = fromBlock
+          // And save until when we have backfilled our tokens.
+          storedToken.mintsBackfilledUntilBlock = fromBlock
         }
       },
 
-      async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint) {
-        const client = getPublicClient($wagmi, { chainId })
+      async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint): Promise<MintEvent[]> {
+        const client = getPublicClient($wagmi, { chainId }) as PublicClient
 
         const logs = await client.getLogs({
           address: token.collection,
@@ -390,6 +386,8 @@ export const useOnchainStore = () => {
           toBlock,
         })
 
+        console.info(`Token mints fetched from ${fromBlock}-${toBlock}`)
+
         return logs.map(l => ({
           tokenId: token.tokenId,
           address: l.args.minter,
@@ -398,8 +396,16 @@ export const useOnchainStore = () => {
           tx: l.transactionHash,
           unitPrice: l.args.unitPrice,
           amount: l.args.amount,
-          price: l.args.amount * l.args.unitPrice,
-        })).reverse()
+          price: ( l.args.amount || 0n ) * ( l.args.unitPrice || 0n ),
+        }) as MintEvent).reverse()
+      },
+
+      async addTokenMints (token: Token, mints: MintEvent[], location: 'prepend'|'append' = 'prepend') {
+        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
+
+        storedToken.mints = location === 'prepend'
+          ? [ ...mints, ...storedToken.mints ]
+          : [ ...storedToken.mints, ...mints ]
       },
 
       async addCollection (collection: Collection) {
