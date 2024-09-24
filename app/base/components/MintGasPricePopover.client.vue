@@ -70,7 +70,7 @@
               </td>
               <td>
                 {{ artistPercentage }}%
-                <MintGasPrice v-slot="{ dollarPrice }" :mint-count="amount">
+                <MintGasPrice v-slot="{ dollarPrice }" :mint-count="parseInt(amount)">
                   <span>(${{ dollarPrice }})</span>
                 </MintGasPrice>
               </td>
