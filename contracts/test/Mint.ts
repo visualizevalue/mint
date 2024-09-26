@@ -19,7 +19,7 @@ describe('Mint', () => {
         'VVM1',
         'Lorem Ipsum dolor sit amet.',
         toByteArray(TOKEN_TIME),
-        0n,
+        0,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
     })
@@ -33,7 +33,7 @@ describe('Mint', () => {
         'VVM1',
         'Lorem Ipsum dolor sit amet.',
         toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
-        0n,
+        0,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 1n, 1n)
     })
@@ -47,7 +47,7 @@ describe('Mint', () => {
         'VVM2',
         'Lorem Ipsum dolor sit amet.',
         toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
-        0n,
+        0,
         0n,
       ])).to.emit(mint, 'TransferSingle').withArgs(address, zeroAddress, address, 2n, 1n)
     })
@@ -66,7 +66,7 @@ describe('Mint', () => {
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
           toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
-          0n,
+          0,
           0n,
         ],
         { account: JALIL }
@@ -76,8 +76,9 @@ describe('Mint', () => {
     it('prepare a large artifact across multiple transactions', async () => {
       const { mint, largeArtifact } = await loadFixture(itemPreparedFixture)
 
-      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0n, 0n ])
+      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0, 0n ])
 
+      // @ts-ignore
       const dataURI = await mint.read.uri([2n], { gas: 1_000_000_000 })
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
       const data = JSON.parse(json)
@@ -98,7 +99,7 @@ describe('Mint', () => {
 
       await mint.write.create([ 'PREPARED', '', toByteArray(''), 0n, 0n ])
 
-      const dataURI = await mint.read.uri([2n])
+      const dataURI = await mint.read.uri([2n]) as string
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
       const data = JSON.parse(json)
 
@@ -113,7 +114,7 @@ describe('Mint', () => {
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
           toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
-          0n,
+          0,
           0n,
         ]
       )).to.be.fulfilled
@@ -133,11 +134,12 @@ describe('Mint', () => {
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
           [],
-          0n,
+          0,
           0n,
         ]
       )).to.be.fulfilled
 
+      // @ts-ignore
       const dataURI = await mint.read.uri([2n], { gas: 1_000_000_000 })
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
       const data = JSON.parse(json)
@@ -170,7 +172,7 @@ describe('Mint', () => {
         'mock',
         '',
         toByteArray('void'),
-        1n,
+        1,
         19n,
       ])).to.be.fulfilled
 
@@ -265,7 +267,7 @@ describe('Mint', () => {
           'VVM2',
           'Lorem Ipsum dolor sit amet.',
           [],
-          0n,
+          0,
           0n,
         ]
       )
@@ -324,7 +326,7 @@ describe('Mint', () => {
     it('exposes the token artifact', async () => {
       const { mint } = await loadFixture(collectionFixture)
 
-      await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0n, 0n ])
+      await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0, 0n ])
 
       const data = await mint.read.artifact([1n])
 
@@ -334,7 +336,7 @@ describe('Mint', () => {
     it('calculates the mint end block correctly', async () => {
       const { mint, publicClient } = await loadFixture(collectionFixture)
 
-      const hash = await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0n, 0n ])
+      const hash = await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0, 0n ])
       await publicClient.waitForTransactionReceipt({ hash })
 
       const untilBlock = await mint.read.mintOpenUntil([await mint.read.latestTokenId()])
@@ -349,7 +351,7 @@ describe('Mint', () => {
       expect(await mint.read.balanceOf([owner.account.address, 1n])).to.equal(1n)
       expect(await mint.read.balanceOf([JALIL, 1n])).to.equal(0n)
 
-      await mint.write.safeTransferFrom([owner.account.address, JALIL, 1n, 1n, ''])
+      await mint.write.safeTransferFrom([owner.account.address, JALIL, 1n, 1n, zeroAddress])
 
       expect(await mint.read.balanceOf([JALIL, 1n])).to.equal(1n)
     })

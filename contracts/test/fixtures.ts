@@ -36,7 +36,7 @@ export async function collectionFixture() {
   ])
   await publicClient.waitForTransactionReceipt({ hash })
   const createdEvents = await factory.getEvents.Created()
-  const mint = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress)
+  const mint = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress as `0x${string}`)
 
   return {
     mint,
@@ -53,7 +53,7 @@ export async function itemMintedFixture() {
     'VVM1',
     'Lorem Ipsum dolor sit amet.',
     toByteArray(TOKEN_TIME),
-    0n,
+    0,
     0n,
   ])
 
