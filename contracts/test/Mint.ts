@@ -97,7 +97,7 @@ describe('Mint', () => {
         ],
       )).to.be.fulfilled
 
-      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0n, 0n ])
+      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0, 0n ])
 
       const dataURI = await mint.read.uri([2n]) as string
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
