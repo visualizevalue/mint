@@ -25,8 +25,6 @@ contract P5Renderer is IRenderer {
     ) external view returns (string memory) {
         (string memory image, string memory script) = abi.decode(artifact, (string, string));
 
-        bytes memory animation = generateHtml(token.name, script);
-
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"id": "', Strings.toString(tokenId), '",',
@@ -34,7 +32,7 @@ contract P5Renderer is IRenderer {
                 '"description": "', token.description, '",',
                 '"image": "', image, '",',
                 '"script_url": "data:text/javascript;base64,', Base64.encode(bytes(script)), '",',
-                '"animation_url": "', animation, '"',
+                '"animation_url": "', generateHtml(token.name, script), '"',
             '}'
         );
 
