@@ -101,7 +101,7 @@ describe('Factory', function () {
     ])
     await publicClient.waitForTransactionReceipt({ hash })
     const createdEvents = await factory.getEvents.Created()
-    const mint2 = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress)
+    const mint2 = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress as `0x${string}`)
 
     expect(JSON.stringify(await factory.read.getCreatorCollections([owner.account.address])))
       .to.equal(JSON.stringify([mint.address, mint2.address]))
