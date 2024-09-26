@@ -10,6 +10,7 @@
         "dotenv": "^16.4.5",
         "hardhat": "^2.22.7",
         "hardhat-contract-sizer": "^2.10.0",
+        "scripty.sol": "^2.1.1",
         "viem": "2.x"
     },
     "dependencies": {

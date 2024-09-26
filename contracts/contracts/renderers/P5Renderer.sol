@@ -3,11 +3,17 @@ pragma solidity ^0.8.24;
 
 import { Strings   } from "@openzeppelin/contracts/utils/Strings.sol";
 import { Base64    } from "@openzeppelin/contracts/utils/Base64.sol";
+import { IScriptyBuilderV2,
+         HTMLRequest,
+         HTMLTagType,
+         HTMLTag } from "scripty.sol/contracts/scripty/interfaces/IScriptyBuilderV2.sol";
 import { IRenderer } from "./../interfaces/IRenderer.sol";
-import { SSTORE2   } from "./../libraries/SSTORE2.sol";
 import { Token     } from "./../types/Token.sol";
 
 contract P5Renderer is IRenderer {
+    address constant private ethfsFileStorage = 0x8FAA1AAb9DA8c75917C43Fb24fDdb513edDC3245;
+    address constant private scriptyBuilder   = 0xD7587F110E08F4D120A231bA97d3B577A81Df022;
+    address constant private scriptyStorage   = 0xbD11994aABB55Da86DC246EBB17C1Be0af5b7699;
 
     /// @notice Generate the JSON medata for a given token.
     ///         We expect the static preview image and P5 script
@@ -16,10 +22,10 @@ contract P5Renderer is IRenderer {
         uint tokenId,
         Token calldata token,
         bytes memory artifact
-    ) external pure returns (string memory) {
+    ) external view returns (string memory) {
         (string memory image, string memory script) = abi.decode(artifact, (string, string));
 
-        bytes memory animation = generateHtmlURI(generateHtml(token.name, script));
+        bytes memory animation = generateHtml(token.name, script);
 
         bytes memory dataURI = abi.encodePacked(
             '{',
@@ -27,6 +33,7 @@ contract P5Renderer is IRenderer {
                 '"name": "', token.name, '",',
                 '"description": "', token.description, '",',
                 '"image": "', image, '",',
+                '"script_url": "data:text/javascript;base64,', Base64.encode(bytes(script)), '",',
                 '"animation_url": "', animation, '"',
             '}'
         );
@@ -39,33 +46,42 @@ contract P5Renderer is IRenderer {
         );
     }
 
-    /// @dev Transforms a given HTML string into its data-uri encoded version.
-    function generateHtmlURI (bytes memory html) internal pure returns (bytes memory) {
-        return abi.encodePacked(
-            "data:text/html;base64,",
-            Base64.encode(html)
-        );
-    }
-
     /// @dev Generates the HTML for a given token script.
-    function generateHtml (string memory name, string memory script) internal pure returns (bytes memory) {
-        return abi.encodePacked(
-            '<!DOCTYPE html>',
-            '<html lang="en">',
-            '<head>',
-                '<meta charset="UTF-8">',
-                '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
-                '<title>', name, '</title>',
-                '<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>',
-                '<style> body { margin: 0; padding: 0; } </style>',
-            '</head>',
-            '<body>',
-                '<script>',
-                    script,
-                '</script>',
-            '</body>',
-            '</html>'
-        );
+    function generateHtml (string memory name, string memory script) internal view returns (bytes memory) {
+        HTMLTag[] memory headTags = new HTMLTag[](2);
+
+        // Name the file
+        headTags[0].tagOpen = "<title>";
+        headTags[0].tagContent = bytes(name);
+        headTags[0].tagClose = "</title>";
+
+        // Add base styles
+        headTags[1].name = "fullSizeCanvas.css";
+        headTags[1].tagOpen = '<link rel="stylesheet" href="data:text/css;base64,';
+        headTags[1].tagClose = '">';
+        headTags[1].contractAddress = ethfsFileStorage;
+
+        // Add p5 script
+        HTMLTag[] memory bodyTags = new HTMLTag[](3);
+        bodyTags[0].name = "p5-v1.5.0.min.js.gz";
+        bodyTags[0].tagType = HTMLTagType.scriptGZIPBase64DataURI;
+        bodyTags[0].contractAddress = ethfsFileStorage;
+
+        // Unzip p5 script
+        bodyTags[1].name = "gunzipScripts-0.0.1.js";
+        bodyTags[1].tagType = HTMLTagType.scriptBase64DataURI;
+        bodyTags[1].contractAddress = ethfsFileStorage;
+
+        // Add our p5 script
+        bodyTags[2].tagContent = bytes(script);
+        bodyTags[2].tagType = HTMLTagType.script;
+
+        // Assemble the html
+        HTMLRequest memory htmlRequest;
+        htmlRequest.headTags = headTags;
+        htmlRequest.bodyTags = bodyTags;
+
+        return IScriptyBuilderV2(scriptyBuilder).getEncodedHTML(htmlRequest);
     }
 
 }
