@@ -1,9 +1,9 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 
-const FactoryModule = buildModule('Renderer', (m) => {
+const RendererModule = buildModule('Renderer', (m) => {
   const renderer = m.contract('Renderer')
 
   return { renderer }
 })
 
-export default FactoryModule
+export default RendererModule

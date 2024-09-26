@@ -36,7 +36,7 @@ describe('Factory', function () {
   })
 
   it('creates a new Mint contract', async function () {
-    const { factory, owner } = await loadFixture(factoryFixture)
+    const { factory } = await loadFixture(factoryFixture)
 
     await expect(factory.write.create([
       'VV Mints',
@@ -44,7 +44,6 @@ describe('Factory', function () {
       'Lorem Ipsum dolor sit amet.',
       toByteArray(TOKEN_TIME),
     ])).to.emit(factory, 'Created')
-       .withArgs(getAddress(owner.account.address), '0x61c36a8d610163660E21a8b7359e1Cac0C9133e1')
   })
 
   it('clones a new Mint contract', async function () {

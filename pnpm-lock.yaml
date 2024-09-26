@@ -185,6 +185,9 @@ importers:
       hardhat-contract-sizer:
         specifier: ^2.10.0
         version: 2.10.0(hardhat@2.22.9(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@22.6.1)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))
+      scripty.sol:
+        specifier: ^2.1.1
+        version: 2.1.1
       viem:
         specifier: 2.x
         version: 2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)
@@ -7012,6 +7015,9 @@ packages:
 
   scheduler@0.24.0-canary-efb381bbf-20230505:
     resolution: {integrity: sha512-ABvovCDe/k9IluqSh4/ISoq8tIJnW8euVAWYt5j/bg6dRnqwQwiGO1F/V4AyK96NGF/FB04FhOUDuWj8IKfABA==}
+
+  scripty.sol@2.1.1:
+    resolution: {integrity: sha512-JZFo+fAxn1vY37kHhb6PwYviZiW2ofA/FIlHfnhJs+iRWV/7qj17uEhoxBBae9+P/k+KS4LrWrfSPhRBG2GBPw==}
 
   scrypt-js@3.0.1:
     resolution: {integrity: sha512-cdwTTnqPu0Hyvf5in5asVdZocVDTNRmR7XEcJuIzMjJeSHybHl7vpB66AzwTaIg6CLSbtjcxc8fqcySfnTkccA==}
@@ -17499,6 +17505,8 @@ snapshots:
   scheduler@0.24.0-canary-efb381bbf-20230505:
     dependencies:
       loose-envify: 1.4.0
+
+  scripty.sol@2.1.1: {}
 
   scrypt-js@3.0.1: {}
 

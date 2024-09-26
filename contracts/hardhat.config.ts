@@ -23,9 +23,10 @@ const SALT: string = `${DEPLOY_AUTH}${REDEPLOY_PROTECTION}${ENTROPY}`
 const HARDHAT_NETWORK_CONFIG: HardhatNetworkUserConfig = {
   chainId: 1337,
   ledgerAccounts: LEDGER_ACCOUNTS,
-  // forking: {
-  //   url: process.env.MAINNET_URL || '',
-  // },
+  forking: {
+    url: process.env.MAINNET_URL || '',
+    blockNumber: 20835233,
+  },
 }
 
 const config: HardhatUserConfig = {
@@ -74,7 +75,10 @@ const config: HardhatUserConfig = {
         salt: SALT,
       },
     },
-  }
+  },
+  mocha: {
+    timeout: 120_000,
+  },
 }
 
 export default config
