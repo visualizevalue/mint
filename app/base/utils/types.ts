@@ -34,8 +34,9 @@ export interface Collection {
   description: string
   initBlock: bigint
   latestTokenId: bigint
-  tokens: { [key: string]: Token }
   balance: bigint
+  tokens: { [key: string]: Token }
+  renderers: Renderer[]
 }
 
 export interface Token {
@@ -59,4 +60,11 @@ export interface MintEvent {
   unitPrice: bigint
   amount: bigint
   price: bigint
+}
+
+export interface Renderer {
+  address: `0x${string}`
+  name: string
+  description?: string
+  version: bigint
 }

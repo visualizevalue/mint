@@ -19,7 +19,6 @@ export const FACTORY_ABI = parseAbi([
   'function version() pure returns (uint256)'
 ])
 
-
 export const MINT_ABI = parseAbi([
   'error ERC1155InsufficientBalance(address sender, uint256 balance, uint256 needed, uint256 tokenId)',
   'error ERC1155InvalidApprover(address approver)',
@@ -75,3 +74,9 @@ export const MINT_ABI = parseAbi([
   'function version() view returns (uint256)',
   'function withdraw()'
 ])
+
+export const RENDERER_ABI = parseAbi([
+  'function name() external pure returns (string memory)',
+  'function version() external pure returns (uint version)',
+])
+

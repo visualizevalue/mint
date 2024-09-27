@@ -26,16 +26,7 @@
           </p>
         </div>
 
-        <menu v-if="ownedByMe">
-          <CollectionWithdraw :collection="collection" />
-          <Button
-            :to="{ name: 'id-collection-mint', params: { id, collection: collection.address } }"
-            id="mint-new"
-          >
-            <Icon type="add" />
-            <span>Mint New</span>
-          </Button>
-        </menu>
+        <CollectionActions :collection="collection" />
       </div>
     </slot>
   </header>
@@ -48,8 +39,6 @@ const { collection } = defineProps<{
 
 const id = useArtistId()
 const store = useOnchainStore()
-
-const ownedByMe = useIsMeCheck(collection.owner)
 </script>
 
 <style scoped>

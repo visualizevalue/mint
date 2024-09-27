@@ -16,6 +16,7 @@ const ICONS = {
   'chevron-right': '➡️',
   'chevron-up': '⬆️',
   'close': '✖️',
+  'code': '🩻',
   'discord': '🤖',
   'edit': '📝',
   'email': '📧',

@@ -34,10 +34,8 @@
 </template>
 
 <script setup>
-import { useChainId } from '@wagmi/vue'
 import { waitForTransactionReceipt, watchChainId } from '@wagmi/core'
 const checkChain = useEnsureChainIdCheck()
-const chainId = useChainId()
 
 const { $wagmi } = useNuxtApp()
 const config = useRuntimeConfig()

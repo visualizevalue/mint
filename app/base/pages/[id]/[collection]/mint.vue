@@ -1,6 +1,7 @@
 <template>
   <Authenticated>
     <PageFrame :title="breadcrumb" class="inset wide" id="mint-token">
+
       <article class="preview">
         <Image v-if="image" :src="image" alt="Preview" />
         <ImagePreview v-else />

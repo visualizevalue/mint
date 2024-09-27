@@ -3,7 +3,7 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 4
+export const CURRENT_STATE_VERSION = 5
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
@@ -220,12 +220,54 @@ export const useOnchainStore = () => {
           owner: artist,
           tokens: {},
           balance: balance.value,
+          renderers: [],
         })
       },
 
       async fetchCollectionBalance (address: `0x${string}`) {
         const balance = await getBalance($wagmi, { address })
         this.collections[address].balance = balance.value
+      },
+
+      async fetchCollectionRenderers (address: `0x${string}`) {
+        const renderers = this.collections[address].renderers
+
+        let index = renderers.length
+        while (true) {
+          try {
+            const rendererAddress = await readContract($wagmi, {
+              abi: MINT_ABI,
+              address,
+              functionName: 'renderers',
+              args: [BigInt(index)],
+              chainId,
+            })
+
+            const rendererArgs = { abi: RENDERER_ABI, address: rendererAddress, chainId }
+
+            const [name, version] = await Promise.all([
+              await readContract($wagmi, {
+                ...rendererArgs,
+                functionName: 'name',
+              }),
+              await readContract($wagmi, {
+                ...rendererArgs,
+                functionName: 'version',
+              }),
+            ])
+
+            this.collections[address].renderers.push({
+              address: rendererAddress.toLowerCase() as `0x${string}`,
+              name,
+              version,
+            })
+
+            index ++
+          } catch (e) {
+            console.info(`Stopped parsing renderers ${e.shortMessage || e.message}`)
+            return
+          }
+        }
       },
 
       async fetchCollectionTokens (address: `0x${string}`): Promise<Token[]> {
