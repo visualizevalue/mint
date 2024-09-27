@@ -24,8 +24,9 @@ const HARDHAT_NETWORK_CONFIG: HardhatNetworkUserConfig = {
   chainId: 1337,
   ledgerAccounts: LEDGER_ACCOUNTS,
   forking: {
+    enabled: process.env.FORK_MAINNET === 'true',
     url: process.env.MAINNET_URL || '',
-    blockNumber: 20835233,
+    blockNumber: 20000000,
   },
 }
 

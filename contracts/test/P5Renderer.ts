@@ -4,9 +4,19 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpe
 import { toByteArray } from '@visualizevalue/mint-utils'
 import { expect } from 'chai'
 import { P5_HELLO_WORLD_HTML_URL, P5_HELLO_WORLD_IMG, P5_HELLO_WORLD_SCRIPT, P5_HELLO_WORLD_SCRIPT_URL } from './constants'
-import { itemMintedFixture } from './fixtures'
+import { baseFixture, itemMintedFixture } from './fixtures'
 
-describe('P5Renderer', () => {
+// Need to test on mainnet fork for this to work...
+// `FORK_MAINNET=true hh test test/P5Renderer.ts`
+describe.skip('P5Renderer', () => {
+  it('should expose the name an version', async () => {
+    await loadFixture(baseFixture)
+
+    const renderer = await hre.viem.deployContract('P5Renderer', [])
+
+    expect(await renderer.read.name()).to.equal('P5 Renderer')
+    expect(await renderer.read.version()).to.equal(1)
+  })
 
   it('allows minting (and reading) artifacts', async () => {
     const { mint } = await loadFixture(itemMintedFixture)

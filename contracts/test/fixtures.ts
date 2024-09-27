@@ -5,14 +5,27 @@ import hre from 'hardhat'
 import { ICON, JALIL, TOKEN_TIME } from './constants'
 import FactoryModule from '../ignition/modules/Factory'
 
-export async function factoryFixture() {
+export async function baseFixture() {
   const [owner] = await hre.viem.getWalletClients()
 
   const publicClient = await hre.viem.getPublicClient()
 
   const testClient = await hre.viem.getTestClient()
   await testClient.impersonateAccount({ address: JALIL })
-  await owner.sendTransaction({ to: JALIL, value: parseEther('1') })
+  await testClient.setBalance({
+    address: JALIL,
+    value: parseEther('100')
+  })
+  await testClient.setBalance({
+    address: owner.account.address,
+    value: parseEther('100')
+  })
+
+  return { owner, publicClient }
+}
+
+export async function factoryFixture() {
+  const { owner, publicClient } = await loadFixture(baseFixture)
 
   const { factory: factoryProxy } = await hre.ignition.deploy(FactoryModule)
 

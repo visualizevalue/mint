@@ -15,6 +15,16 @@ contract P5Renderer is IRenderer {
     address constant private scriptyBuilder   = 0xD7587F110E08F4D120A231bA97d3B577A81Df022;
     address constant private scriptyStorage   = 0xbD11994aABB55Da86DC246EBB17C1Be0af5b7699;
 
+    /// @notice Expose the name of this renderer for easy registration in UIs.
+    function name () external pure returns (string memory) {
+        return "P5 Renderer";
+    }
+
+    /// @notice Expose the version of this renderer to identify it in UIs.
+    function version () external pure returns (uint) {
+        return 1;
+    }
+
     /// @notice Generate the JSON medata for a given token.
     ///         We expect the static preview image and P5 script
     //          to both be encoded in the artifact data.
