@@ -55,24 +55,6 @@ const mintedAtBlock = computed(() => token.untilBlock - MINT_BLOCKS)
 const backfillComplete = computed(() => token.mintsBackfilledUntilBlock <= mintedAtBlock.value)
 
 const loading = ref(true)
-onMounted(async () => {
-  loading.value = true
-  try {
-    console.info(`Attempting to load + backfill token mints for #${token.tokenId}`)
-    await state.fetchTokenMints(token)
-    await state.backfillTokenMints(token)
-  } catch (e) {
-    console.error(e)
-  }
-  loading.value = false
-})
-
-watch(currentBlock, () => {
-  if (loading.value) return
-
-  state.fetchTokenMints(token)
-})
-
 const loadMore = ref()
 const loadMoreVisible = useElementVisibility(loadMore)
 const backfill = async () => {
@@ -81,9 +63,11 @@ const backfill = async () => {
   try {
     await state.backfillTokenMints(token)
 
-    if (loadMoreVisible.value) {
-      await delay(300)
-      await backfill()
+    // If we're not fully backfilled and we have less than 20 mints loaded,
+    // continue backfilling events.
+    while (! backfillComplete.value && mints.value?.length < 20) {
+      await delay(250)
+      await state.backfillTokenMints(token)
     }
   } catch (e) {
     console.error(`Issue during backfill`, e)
@@ -91,11 +75,30 @@ const backfill = async () => {
 
   loading.value = false
 }
+
+onMounted(async () => {
+  loading.value = true
+  try {
+    console.info(`Attempting to load + backfill token mints for #${token.tokenId}`)
+    await state.fetchTokenMints(token)
+    await backfill()
+  } catch (e) {
+    console.error(e)
+  }
+  loading.value = false
+})
+
 watch(loadMoreVisible, () => {
   // Skip if we have enough mints for the viewport or we're already loading
   if (! loadMoreVisible.value || loading.value) return
 
   backfill()
+})
+
+watch(currentBlock, () => {
+  if (loading.value) return
+
+  state.fetchTokenMints(token)
 })
 </script>
 
