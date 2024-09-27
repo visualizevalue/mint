@@ -4,7 +4,7 @@ import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
 export const CURRENT_STATE_VERSION = 4
-export const MAX_BLOCK_RANGE = 1000n
+export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
 export const useOnchainStore = () => {
