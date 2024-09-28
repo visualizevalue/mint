@@ -6,14 +6,14 @@
       id="mint-new"
     >
       <Icon type="add" />
-      <span>Mint New</span>
+      <span>Mint</span>
     </Button>
     <Button
       :to="{ name: 'id-collection-renderers', params: { id, collection: collection.address } }"
       id="renderers"
     >
       <Icon type="code" />
-      <span>Manage Renderers</span>
+      <span>Renderers</span>
     </Button>
   </menu>
 </template>
