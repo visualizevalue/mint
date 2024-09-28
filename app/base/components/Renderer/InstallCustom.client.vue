@@ -4,18 +4,18 @@
     <FormInput v-model="rendererAddressInput" placeholder="0x..." />
 
     <Loading v-if="loading" />
-    <CollectionRenderersOverviewCard
+    <RendererOverviewCard
       v-else-if="rendererAddress && rendererName"
       :renderer="renderer"
     >
       <template #after>
-        <CollectionRenderersInstallRendererButton
+        <RendererInstallRendererButton
           :collection="collection"
           :renderer="renderer"
           #after
         />
       </template>
-    </CollectionRenderersOverviewCard>
+    </RendererOverviewCard>
   </article>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <Authenticated>
     <PageFrame :title="breadcrumb" class="inset" id="manage-renderers">
-      <CollectionRenderersOverview :collection="collection" />
+      <RendererOverview :collection="collection" />
     </PageFrame>
   </Authenticated>
 </template>

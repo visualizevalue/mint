@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="renderer-overview-card">
     <div class="details">
       <h1>{{ renderer.name }} <small>v{{ renderer.version }}</small></h1>
       <p v-if="renderer.description">{{ renderer.description }}</p>

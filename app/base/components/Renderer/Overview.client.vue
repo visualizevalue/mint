@@ -3,7 +3,7 @@
     <h1>Installed Renderers</h1>
 
     <div>
-      <CollectionRenderersOverviewCard
+      <RendererOverviewCard
         v-for="renderer of collection.renderers"
         :renderer="renderer"
       />
@@ -14,26 +14,26 @@
     <h1>Available Renderers</h1>
 
     <div v-if="availableRenderers.length">
-      <CollectionRenderersOverviewCard
+      <RendererOverviewCard
         v-for="renderer of availableRenderers"
         :renderer="renderer"
       >
         <template #after>
           <div class="actions">
-            <CollectionRenderersInstallRendererButton
+            <RendererInstallRendererButton
               :collection="collection"
               :renderer="renderer"
             />
           </div>
         </template>
-      </CollectionRenderersOverviewCard>
+      </RendererOverviewCard>
     </div>
 
     <div v-if="! availableRenderers.length" class="empty">
       <p>All known Renderers installed</p>
     </div>
 
-    <CollectionRenderersInstallCustomRenderer :collection="collection" />
+    <RendererInstallCustom :collection="collection" />
   </section>
 </template>
 
@@ -58,6 +58,7 @@ onMounted(() => {
 .renderers {
   display: grid;
   gap: var(--spacer);
+  overflow-x: hidden;
 
   > h1 {
     font-size: var(--font-lg);
