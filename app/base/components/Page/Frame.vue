@@ -33,6 +33,7 @@ watch(props, () => updateBreadcrumbs())
   &.inset {
     gap: var(--spacer);
     padding: var(--spacer);
+    overflow-x: hidden;
 
     > *:not(.borderless) {
       border: var(--border);
