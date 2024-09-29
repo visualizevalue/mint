@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-fieldset {
+.fieldset-wrapper > fieldset {
   width: 100%;
   max-width: -webkit-fill-available;
   display: flex;
