@@ -5,6 +5,7 @@
     <Actions>
       <Button>Mint</Button>
     </Actions>
+
     <TransactionFlow
       ref="txFlow"
       :text="{
@@ -28,6 +29,7 @@
       }"
       skip-confirmation
       auto-close-success
+      @complete="onComplete"
     />
   </form>
 </template>
@@ -51,7 +53,6 @@ const description = computed(() => props.description)
 
 const txFlow = ref()
 const txFlowKey = ref(0)
-const minting = ref(false)
 const mint = async () => {
   if (! image.value) {
     alert(`Empty image data. Please try again.`)
@@ -61,8 +62,6 @@ const mint = async () => {
   const artifact = toByteArray(image.value)
   const artifactChunks = chunkArray(artifact, 4)
   const multiTransactionPrepare = artifactChunks.length > 1
-
-  minting.value = true
 
   try {
     if (multiTransactionPrepare) {
@@ -94,7 +93,7 @@ const mint = async () => {
       }
     }
 
-    const receipt = await txFlow.value.initializeRequest(() => writeContract($wagmi, {
+    await txFlow.value.initializeRequest(() => writeContract($wagmi, {
       abi: MINT_ABI,
       chainId,
       address: collection.value.address,
@@ -107,29 +106,29 @@ const mint = async () => {
         0n, // Additional Data
       ],
     }))
-
-    const logs = receipt.logs.map(log => decodeEventLog({
-      abi: MINT_ABI,
-      data: log.data,
-      topics: log.topics,
-      strict: false,
-    }))
-
-    const mintedEvent = logs.find(log => log.eventName === 'TransferSingle')
-
-    await store.fetchToken(collection.value.address, mintedEvent.args.id)
-
-    // Force update the collection mint ID
-    store.collections[collection.value.address].latestTokenId = mintedEvent.args.id
-
-    await navigateTo({
-      name: 'id-collection-tokenId',
-      params: { id: id.value, collection: collection.value.address, tokenId: mintedEvent.args.id }
-    })
   } catch (e) {
     console.error(e)
   }
+}
 
-  minting.value = false
+const onComplete = async (receipt) => {
+  const logs = receipt.logs.map(log => decodeEventLog({
+    abi: MINT_ABI,
+    data: log.data,
+    topics: log.topics,
+    strict: false,
+  }))
+
+  const mintedEvent = logs.find(log => log.eventName === 'TransferSingle')
+
+  await store.fetchToken(collection.value.address, mintedEvent.args.id)
+
+  // Force update the collection mint ID
+  store.collections[collection.value.address].latestTokenId = mintedEvent.args.id
+
+  await navigateTo({
+    name: 'id-collection-tokenId',
+    params: { id: id.value, collection: collection.value.address, tokenId: mintedEvent.args.id }
+  })
 }
 </script>
