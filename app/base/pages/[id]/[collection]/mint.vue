@@ -1,6 +1,6 @@
 <template>
   <Authenticated>
-    <PageFrame :title="breadcrumb" class="inset wide">
+    <PageFrame :title="breadcrumb" class="inset wide mint-detail">
       <MintDetail :collection="collection" />
     </PageFrame>
   </Authenticated>
@@ -39,3 +39,16 @@ useMetaData({
 })
 </script>
 
+<style>
+.mint-detail {
+  display: grid;
+
+  @media (--md) {
+    grid-template-columns: 40% 1fr;
+  }
+
+  @media (--lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+</style>

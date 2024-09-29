@@ -1,45 +1,43 @@
 <template>
-  <div class="mint-detail">
-    <MintPreview
-      :image="image"
-      :name="name"
-      :description="description"
-    />
+  <MintPreview
+    :image="image"
+    :name="name"
+    :description="description"
+  />
 
-    <MintAction
-      :image="image"
-      :name="name"
-      :description="description"
-      :collection="collection"
-    >
-      <Actions>
-        <select class="select choose-mode" v-model="mode">
-          <option value="file" title="Data URI Encoded File Upload">DATA-URI</option>
-          <option value="ipfs" title="Interplanetary File System">IPFS</option>
-          <option value="ar" title="Arweave">ARWEAVE</option>
-          <option value="http" title="Hypertext Transfer Protocol" disabled>HTTP</option>
-          <option value="svg" title="Scalable Vector Graphic" disabled>SVG</option>
-        </select>
-      </Actions>
+  <MintAction
+    :image="image"
+    :name="name"
+    :description="description"
+    :collection="collection"
+  >
+    <Actions>
+      <select class="select choose-mode" v-model="mode">
+        <option value="file" title="Data URI Encoded File Upload">DATA-URI</option>
+        <option value="ipfs" title="Interplanetary File System">IPFS</option>
+        <option value="ar" title="Arweave">ARWEAVE</option>
+        <option value="http" title="Hypertext Transfer Protocol" disabled>HTTP</option>
+        <option value="svg" title="Scalable Vector Graphic" disabled>SVG</option>
+      </select>
+    </Actions>
 
-      <div>
-        <div v-if="mode === 'file'">
-          <FormSelectFile @change="setImage" />
-          <p v-if="! isSmall" class="muted">
-            <small>
-              Note: This should be a small file, prefferably an SVG like <a href="https://presence.art/tokens/perspective.svg" target="_blank">this one (810 bytes)</a>.
-              If it is larger than what we can store within one transaction, the token creation will be split up into multiple transactions.
-            </small>
-          </p>
-        </div>
-        <FormInput v-else-if="mode === 'ipfs'" v-model="ipfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
-        <FormInput v-else-if="mode === 'ar'" v-model="arTxId" placeholder="TX ID (frV...)" prefix="ar://" required />
-
-        <FormInput v-model="name" placeholder="Title" required />
-        <FormInput v-model="description" placeholder="Description" />
+    <div>
+      <div v-if="mode === 'file'">
+        <FormSelectFile @change="setImage" />
+        <p v-if="! isSmall" class="muted">
+          <small>
+            Note: This should be a small file, prefferably an SVG like <a href="https://presence.art/tokens/perspective.svg" target="_blank">this one (810 bytes)</a>.
+            If it is larger than what we can store within one transaction, the token creation will be split up into multiple transactions.
+          </small>
+        </p>
       </div>
-    </MintAction>
-  </div>
+      <FormInput v-else-if="mode === 'ipfs'" v-model="ipfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
+      <FormInput v-else-if="mode === 'ar'" v-model="arTxId" placeholder="TX ID (frV...)" prefix="ar://" required />
+
+      <FormInput v-model="name" placeholder="Title" required />
+      <FormInput v-model="description" placeholder="Description" />
+    </div>
+  </MintAction>
 </template>
 
 <script setup>
@@ -79,18 +77,7 @@ watch(mode, () => image.value = '')
 
 </script>
 
-<style>
-.mint-detail {
-  display: grid;
-
-  @media (--md) {
-    grid-template-columns: 40% 1fr;
-  }
-
-  @media (--lg) {
-  }
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
+<style scoped>
   form {
     width: 100%;
 
@@ -103,5 +90,4 @@ watch(mode, () => image.value = '')
   select.choose-mode {
     width: fit-content;
   }
-}
 </style>
