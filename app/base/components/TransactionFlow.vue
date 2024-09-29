@@ -81,6 +81,9 @@ watchChainId($wagmi, {
   }
 })
 
+const cachedRequest = ref(props.request)
+watch(props, () => { cachedRequest.value = props.request })
+
 const requesting = ref(false)
 const waiting = ref(false)
 const complete = ref(false)
@@ -119,7 +122,8 @@ const step = computed(() => {
   return 'error'
 })
 
-const initializeRequest = async (request = props.request) => {
+const initializeRequest = async (request = cachedRequest.value) => {
+  cachedRequest.value = request
   complete.value = false
   open.value = true
   error.value = ''
