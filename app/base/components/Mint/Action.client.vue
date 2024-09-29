@@ -29,7 +29,7 @@
       }"
       skip-confirmation
       auto-close-success
-      @complete="onComplete"
+      @complete="minted"
     />
   </form>
 </template>
@@ -111,7 +111,7 @@ const mint = async () => {
   }
 }
 
-const onComplete = async (receipt) => {
+const minted = async (receipt) => {
   const logs = receipt.logs.map(log => decodeEventLog({
     abi: MINT_ABI,
     data: log.data,
