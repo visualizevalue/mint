@@ -1,7 +1,9 @@
 <template>
   <Authenticated>
     <PageFrame :title="breadcrumb" class="inset wide mint-detail">
+
       <MintDetail :collection="collection" />
+
     </PageFrame>
   </Authenticated>
 </template>

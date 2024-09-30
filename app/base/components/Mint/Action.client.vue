@@ -1,37 +1,33 @@
 <template>
-  <form @submit.stop.prevent="mint" class="card">
-    <slot />
+  <Actions class="borderless">
+    <Button @click="mint">Mint</Button>
+  </Actions>
 
-    <Actions>
-      <Button>Mint</Button>
-    </Actions>
-
-    <TransactionFlow
-      ref="txFlow"
-      :text="{
-        title: {
-          chain: 'Switch Chain',
-          requesting: 'Confirm In Wallet',
-          waiting: 'Transaction Submitted',
-          complete: 'Success!'
-        },
-        lead: {
-          chain: 'Requesting to switch chain...',
-          requesting: 'Requesting Signature...',
-          waiting: 'Checking mint Transaction...',
-          complete: `New token minted...`,
-        },
-        action: {
-          confirm: 'Mint',
-          error: 'Retry',
-          complete: 'OK',
-        },
-      }"
-      skip-confirmation
-      auto-close-success
-      @complete="minted"
-    />
-  </form>
+  <TransactionFlow
+    ref="txFlow"
+    :text="{
+      title: {
+        chain: 'Switch Chain',
+        requesting: 'Confirm In Wallet',
+        waiting: 'Transaction Submitted',
+        complete: 'Success!'
+      },
+      lead: {
+        chain: 'Requesting to switch chain...',
+        requesting: 'Requesting Signature...',
+        waiting: 'Checking mint Transaction...',
+        complete: `New token minted...`,
+      },
+      action: {
+        confirm: 'Mint',
+        error: 'Retry',
+        complete: 'OK',
+      },
+    }"
+    skip-confirmation
+    auto-close-success
+    @complete="minted"
+  />
 </template>
 
 <script setup>
@@ -42,24 +38,20 @@ const store = useOnchainStore()
 
 const props = defineProps({
   collection: Object,
-  image: String,
+  artifact: String,
   name: String,
   description: String,
 })
-const collection = computed(() => props.collection)
-const image = computed(() => props.image)
-const name = computed(() => props.name)
-const description = computed(() => props.description)
 
 const txFlow = ref()
 const txFlowKey = ref(0)
 const mint = async () => {
-  if (! image.value) {
-    alert(`Empty image data. Please try again.`)
+  if (! props.artifact) {
+    alert(`Empty artifact data. Please try again.`)
     return
   }
 
-  const artifact = toByteArray(image.value)
+  const artifact = toByteArray(props.artifact)
   const artifactChunks = chunkArray(artifact, 4)
   const multiTransactionPrepare = artifactChunks.length > 1
 
@@ -76,10 +68,10 @@ const mint = async () => {
         await txFlow.value.initializeRequest(() => writeContract($wagmi, {
           abi: MINT_ABI,
           chainId,
-          address: collection.value.address,
+          address: props.collection.address,
           functionName: 'prepareArtifact',
           args: [
-            collection.value.latestTokenId + 1n,
+            props.collection.latestTokenId + 1n,
             chunk,
             clearExisting
           ],
@@ -96,11 +88,11 @@ const mint = async () => {
     await txFlow.value.initializeRequest(() => writeContract($wagmi, {
       abi: MINT_ABI,
       chainId,
-      address: collection.value.address,
+      address: props.collection.address,
       functionName: 'create',
       args: [
-        name.value,
-        description.value,
+        props.name,
+        props.description,
         multiTransactionPrepare ? [] : artifact,
         0, // Renderer
         0n, // Additional Data
@@ -132,3 +124,13 @@ const minted = async (receipt) => {
   })
 }
 </script>
+
+<style scoped>
+menu {
+  justify-content: flex-end;
+
+  @media (--md) {
+    grid-column: 2;
+  }
+}
+</style>
