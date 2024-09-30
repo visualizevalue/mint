@@ -1,35 +1,33 @@
 <template>
-  <MintPreview
-    :name="name"
-    :description="description"
-    :image="image"
-    :animation-url="animationUrl"
-  />
+  <div class="mint-detail">
+    <MintPreview />
 
-  <MintRendererBase
-    :v-model:artifact="artifact"
-    :v-model:image="image"
-    :v-model:name="name"
-    :v-model:description="description"
-    class="card"
-  />
+    <MintRendererBase class="card" />
 
-  <MintAction
-    :artifact="artifact"
-    :name="name"
-    :description="description"
-    :collection="collection"
-  />
+    <MintAction :collection="collection" />
+  </div>
 </template>
 
 <script setup>
 const props = defineProps(['collection'])
-
-const artifact = ref('')
-const name = ref('')
-const description = ref('')
-
-const image = ref('')
-const animationUrl = ref('')
 </script>
 
+<style>
+.mint-detail {
+  display: grid;
+  gap: var(--spacer);
+
+  > * {
+    border: var(--border);
+    padding: var(--spacer);
+  }
+
+  @media (--md) {
+    grid-template-columns: 40% 1fr;
+  }
+
+  @media (--lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+</style>

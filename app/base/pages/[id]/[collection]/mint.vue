@@ -1,18 +1,23 @@
 <template>
   <Authenticated>
-    <PageFrame :title="breadcrumb" class="inset wide mint-detail">
+    <PageFrame :title="breadcrumb" class="inset wide">
 
-      <MintDetail :collection="collection" />
+      <MintDetail :collection="collection" class="borderless" />
 
     </PageFrame>
   </Authenticated>
 </template>
 
 <script setup>
+// Reset any previously set data on initial load
+const { reset } = useCreateMintData()
+onMounted(() => reset())
+
+// Prepare breadcrumbs
 const props = defineProps(['collection'])
+const collection = computed(() => props.collection)
 const id = useArtistId()
 const store = useOnchainStore()
-const collection = computed(() => props.collection)
 const subdomain = useSubdomain()
 const isMe = useIsMe()
 
@@ -41,16 +46,3 @@ useMetaData({
 })
 </script>
 
-<style>
-.mint-detail {
-  display: grid;
-
-  @media (--md) {
-    grid-template-columns: 40% 1fr;
-  }
-
-  @media (--lg) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-</style>

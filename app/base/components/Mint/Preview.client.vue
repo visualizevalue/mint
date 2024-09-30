@@ -10,11 +10,7 @@
 </template>
 
 <script setup>
-const { image, name, description } = defineProps({
-  image: String,
-  name: String,
-  description: String,
-})
+const { image, name, description } = useCreateMintData()
 </script>
 
 <style scoped>

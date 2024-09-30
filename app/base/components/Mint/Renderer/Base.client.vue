@@ -29,12 +29,13 @@
   </div>
 </template>
 
-
 <script setup>
-const artifact = defineModel('artifact')
-const name = defineModel('name')
-const description = defineModel('description')
-const image = defineModel('image')
+const {
+  artifact,
+  image,
+  name,
+  description,
+} = useCreateMintData()
 
 const mode = ref('file')
 const ipfsCid = ref('')
