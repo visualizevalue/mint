@@ -9,7 +9,7 @@
       :renderer="renderer"
     >
       <template #after>
-        <RendererInstallRendererButton
+        <RendererInstallButton
           :collection="collection"
           :renderer="renderer"
           #after

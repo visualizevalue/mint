@@ -66,5 +66,6 @@ export interface Renderer {
   address: `0x${string}`
   name: string
   description?: string
+  component?: string
   version: bigint
 }

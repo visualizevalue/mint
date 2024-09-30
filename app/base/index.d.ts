@@ -3,7 +3,7 @@ import { Renderer } from './utils/types'
 declare module 'nuxt/schema' {
   interface AppConfigInput {
     // Known renderers besides the base renderer
-    renderers: Renderer[],
+    knownRenderers: Renderer[],
   }
 }
 

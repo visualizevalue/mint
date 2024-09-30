@@ -1,7 +1,12 @@
 <template>
   <article class="mint-preview">
-    <Image v-if="image" :src="image" alt="Preview" />
-    <ImagePreview v-else />
+    <div class="static">
+      <Image v-if="image" :src="image" alt="Preview" />
+      <ImagePreview v-else />
+    </div>
+
+    <Embed v-if="animationUrl" :src="animationUrl" />
+
     <h1 :class="{ '': !name }">{{ name || 'Token' }}</h1>
     <p :class="{ '': !description }">
       {{ description || 'No description' }}
@@ -10,7 +15,7 @@
 </template>
 
 <script setup>
-const { image, name, description } = useCreateMintData()
+const { image, animationUrl, name, description } = useCreateMintData()
 </script>
 
 <style scoped>
@@ -18,14 +23,24 @@ const { image, name, description } = useCreateMintData()
   height: 100%;
   place-content: center;
 
+  svg {
+    box-shadow: var(--border-shadow);
+  }
+
   .image,
   svg {
     margin-bottom: var(--spacer-sm);
     width: 100%;
   }
 
-  svg {
-    box-shadow: var(--border-shadow);
+  .static {
+    &:has(+ .embed) {
+      width: 30%;
+    }
+  }
+
+  .embed {
+    margin: var(--spacer-sm) 0;
   }
 
   h1 {

@@ -9,10 +9,6 @@
 </template>
 
 <script setup>
-// Reset any previously set data on initial load
-const { reset } = useCreateMintData()
-onMounted(() => reset())
-
 // Prepare breadcrumbs
 const props = defineProps(['collection'])
 const collection = computed(() => props.collection)

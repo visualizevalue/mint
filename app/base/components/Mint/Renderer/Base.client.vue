@@ -30,6 +30,13 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  decoupleArtifact: {
+    type: Boolean,
+    default: false,
+  },
+})
+
 const {
   artifact,
   image,
@@ -42,33 +49,35 @@ const mode = ref('file')
 const ipfsCid = ref('')
 const arTxId= ref('')
 
-const artifactSize = ref(0)
-const isSmall = computed(() => artifactSize.value / 1024 < 10)
+const imageSize = ref(0)
+const isSmall = computed(() => imageSize.value / 1024 < 10)
 const setArtifact = async (file) => {
   try {
-    artifact.value = await imageFileToDataUri(file)
-    artifactSize.value = file.size
+    image.value = await imageFileToDataUri(file)
+    imageSize.value = file.size
   } catch (e) {
-    artifact.value = ''
-    artifactSize.value = 0
+    image.value = ''
+    imageSize.value = 0
   }
 }
 watch(ipfsCid, () => {
   const validated = validateCID(ipfsCid.value)
   if (! validated) {
-    artifact.value = ''
+    image.value = ''
   } else {
-    artifact.value = ipfsToHttpURI(`ipfs://${validated}`)
+    image.value = ipfsToHttpURI(`ipfs://${validated}`)
   }
 })
 watch(arTxId, () => {
-  artifact.value = `https://arweave.net/${arTxId.value}`
+  image.value = `https://arweave.net/${arTxId.value}`
 })
-watch(mode, () => artifact.value = '')
+watch(mode, () => image.value = '')
 
-watch(artifact, () => {
+watch(image, () => {
+  if (props.decoupleArtifact) return
+
   // Copy to image (simple and stupid for the base renderer...)
-  image.value = artifact.value
+  artifact.value = image.value
 
   // If artifact is empty, reset the select field
   if (! artifact.value) select.value.reset()

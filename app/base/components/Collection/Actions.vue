@@ -8,13 +8,6 @@
       <Icon type="add" />
       <span>Mint</span>
     </Button>
-    <Button
-      :to="{ name: 'id-collection-renderers', params: { id, collection: collection.address } }"
-      id="renderers"
-    >
-      <Icon type="code" />
-      <span>Renderers</span>
-    </Button>
   </menu>
 </template>
 

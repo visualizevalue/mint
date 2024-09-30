@@ -20,7 +20,7 @@
       >
         <template #after>
           <div class="actions">
-            <RendererInstallRendererButton
+            <RendererInstallButton
               :collection="collection"
               :renderer="renderer"
             />

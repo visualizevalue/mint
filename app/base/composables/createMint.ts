@@ -10,8 +10,8 @@ const image        = ref('')
 const animationUrl = ref('')
 
 // Renderer data
-const renderer  = ref(0)
-const extraData = ref(0n)
+const renderer: Ref<number>  = ref(0)
+const extraData: Ref<bigint> = ref(0n)
 
 // Main token creation composable
 export const useCreateMintData = () => {
@@ -24,7 +24,6 @@ export const useCreateMintData = () => {
     image.value = ''
     animationUrl.value = ''
 
-    renderer.value = 0
     extraData.value = 0n
   }
 
@@ -38,6 +37,24 @@ export const useCreateMintData = () => {
     extraData,
 
     reset,
+  }
+}
+
+// Expose the mint component based on the selected renderer
+export const useCreateMintRendererComponent = (collection: Collection) => {
+  const appConfig = useAppConfig()
+  const rendererAddress: Ref<string | null> = computed(() => {
+    if (! collection.renderers?.length) return null
+
+    return collection.renderers[renderer.value].address.toLowerCase()
+  })
+
+  const component = computed(() => appConfig.knownRenderers
+    .find((r: Renderer) => r.address.toLowerCase() === rendererAddress.value)?.component || 'Base'
+  )
+
+  return {
+    component,
   }
 }
 
@@ -99,7 +116,7 @@ export const useCreateMintFlow = (collection: Collection, txFlow: Ref) => {
           name.value,
           description.value,
           multiTransactionPrepare ? [] : artifactByteArray,
-          0, // Renderer
+          renderer.value,
           0n, // Additional Data
         ],
       }))
