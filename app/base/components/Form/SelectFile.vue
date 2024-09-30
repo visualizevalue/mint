@@ -31,6 +31,10 @@ const { files, open, reset, onChange } = useFileDialog({
 
 const file = computed(() => files.value?.length ? files.value[0] : null)
 onChange(() => emit('change', file.value))
+
+defineExpose({
+  reset,
+})
 </script>
 
 <style scoped>

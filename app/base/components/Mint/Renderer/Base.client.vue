@@ -12,7 +12,7 @@
 
     <div>
       <div v-if="mode === 'file'">
-        <FormSelectFile @change="setArtifact" />
+        <FormSelectFile ref="select" @change="setArtifact" />
         <p v-if="! isSmall" class="muted">
           <small>
             Note: This should be a small file, prefferably an SVG like <a href="https://presence.art/tokens/perspective.svg" target="_blank">this one (810 bytes)</a>.
@@ -37,6 +37,7 @@ const {
   description,
 } = useCreateMintData()
 
+const select = ref()
 const mode = ref('file')
 const ipfsCid = ref('')
 const arTxId= ref('')
@@ -65,8 +66,13 @@ watch(arTxId, () => {
 })
 watch(mode, () => artifact.value = '')
 
-// Simple and stupid for the base renderer..
-watch(artifact, () => image.value = artifact.value)
+watch(artifact, () => {
+  // Copy to image (simple and stupid for the base renderer...)
+  image.value = artifact.value
+
+  // If artifact is empty, reset the select field
+  if (! artifact.value) select.value.reset()
+})
 </script>
 
 <style scoped>
