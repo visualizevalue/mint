@@ -19,17 +19,22 @@ const {
   artifact,
   image,
   animationUrl,
-  name,
-  description,
 } = useCreateMintData()
 
 const script = ref(DEFAULT_P5_SCRIPT)
-const update = () => {
-  animationUrl.value = getP5HtmlUri(name.value, script.value)
-  console.log('update', animationUrl.value)
-}
-onMounted(() => update())
-watch(script, () => update())
+
+// Keep the animationURL (for the preview) up to date
+watchEffect(() => {
+  animationUrl.value = getP5HtmlUri('Preview', script.value)
+})
+
+// Encode the artifact as per how the P5Renderer.sol contract expects it.
+watchEffect(() => {
+  artifact.value = encodeAbiParameters(
+    [ { type: 'string', name: 'image' }, { type: 'string', name: 'script' } ],
+    [ image.value, script.value ],
+  )
+})
 </script>
 
 <style>
