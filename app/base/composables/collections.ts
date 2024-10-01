@@ -333,7 +333,9 @@ export const useOnchainStore = () => {
             name: metadata.name,
             description: metadata.description,
             image: metadata.image,
-            animationUrl: metadata.animation_url,
+            // FIXME: Remove this for sepolia + mainnet
+            // animationUrl: metadata.animation_url,
+            animationUrl: metadata.script_url && getP5HtmlUri('', metadata.script_url, true),
             scriptUrl: metadata.script_url,
             untilBlock,
             mintsBackfilledUntilBlock: 0n,
