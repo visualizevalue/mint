@@ -10,6 +10,7 @@ import 'hardhat-contract-sizer'
 import './tasks/accounts'
 import './tasks/chain'
 import './tasks/export-abis'
+import './tasks/interact'
 
 dotenv.config()
 
