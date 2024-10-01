@@ -1,4 +1,3 @@
-import { zeroAddress } from 'viem'
 import { formatAbi } from 'abitype'
 import { task } from 'hardhat/config'
 
