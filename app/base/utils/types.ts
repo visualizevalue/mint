@@ -44,7 +44,9 @@ export interface Token {
   tokenId: bigint
   name: string
   description: string
-  artifact: string
+  image: string,
+  animationUrl?: string,
+  scriptUrl?: string,
   untilBlock: bigint
   mintsFetchedUntilBlock: bigint
   mintsBackfilledUntilBlock: bigint

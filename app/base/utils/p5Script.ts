@@ -6,7 +6,7 @@ function setup() {
 
   createCanvas(dimension, dimension)
 
-  background(50)
+  background(150)
 }
 
 function draw() {
@@ -14,7 +14,7 @@ function draw() {
 }
 `
 
-export const getP5Html = (title: string, script: string) =>
+export const getP5Html = (title: string, script: string, isUri: boolean = false) =>
 `<html>
     <head>
         <title>${title}</title>
@@ -22,10 +22,12 @@ export const getP5Html = (title: string, script: string) =>
     </head>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
-        <script>${script}</script>
+        ${
+          isUri ? `<script src="${script}"></script>` : `<script>${script}</script>`
+        }
     </body>
 </html>`
 
-export const getP5HtmlUri = (title: string, script: string) =>
-  `data:text/html;base64,${Buffer.from(getP5Html(title, script)).toString('base64')}`
+export const getP5HtmlUri = (title: string, script: string, isUri: boolean = false) =>
+  `data:text/html;base64,${Buffer.from(getP5Html(title, script, isUri)).toString('base64')}`
 
