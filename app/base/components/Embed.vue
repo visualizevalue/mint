@@ -4,6 +4,7 @@
       ref="frame"
       frameborder="0"
       :src="src"
+      sandbox="allow-scripts"
     ></iframe>
   </div>
 </template>
