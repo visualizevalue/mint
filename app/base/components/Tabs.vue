@@ -23,9 +23,10 @@ const select = k => active.value = k
   display: flex;
   gap: var(--size-1);
 
-  > Button {
-    /* border-bottom-color: transparent; */
+  > .button {
     margin-bottom: calc(-1 * var(--border-width));
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
     &.active {
       border-color: var(--border-color);
