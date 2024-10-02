@@ -141,7 +141,7 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
       align-items: center;
     }
 
-    > * {
+    > *:not(menu) {
       width: var(--dimension);
       height: auto;
       border-bottom: var(--border) !important;
