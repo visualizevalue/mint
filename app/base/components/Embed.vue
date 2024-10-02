@@ -19,8 +19,13 @@ const props = defineProps({
   src: String,
 })
 
+// Update on input change
 const src = ref(props.src)
+watch(props, () => {
+  src.value = props.src
+})
 
+// Force reload on resize
 const { width } = useWindowSize()
 watch(width, () => {
   src.value = ''
