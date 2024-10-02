@@ -1,5 +1,5 @@
 {
-    "name": "@visualizevalue/mint-app-example",
+    "name": "@visualizevalue/mint-app-example-base",
     "version": "0.0.2",
     "type": "module",
     "scripts": {
@@ -13,7 +13,6 @@
         "nuxt": "^3.13.2"
     },
     "dependencies": {
-        "@visualizevalue/mint-app-base": "workspace:@visualizevalue/mint-app-base@latest",
-        "@visualizevalue/mint-theme-zinc": "workspace:@visualizevalue/mint-theme-zinc@latest"
+        "@visualizevalue/mint-app-base": "@visualizevalue/mint-app-base@latest"
     }
 }
