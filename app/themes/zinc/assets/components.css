@@ -85,11 +85,14 @@
 .token-overview-card {
 
   .image,
-  img {
+  .embed,
+  img,
+  iframe {
     border-radius: var(--border-radius);
   }
 
-  img {
+  img,
+  iframe {
     border: var(--border);
   }
 }
