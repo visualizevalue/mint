@@ -84,14 +84,34 @@ importers:
         specifier: ^5.5.4
         version: 5.5.4
 
-  app/example:
+  app/examples/ipfs:
     dependencies:
       '@visualizevalue/mint-app-base':
-        specifier: workspace:@visualizevalue/mint-app-base@latest
-        version: link:../base
+        specifier: '@visualizevalue/mint-app-base@latest'
+        version: link:@visualizevalue/mint-app-base@latest
+    devDependencies:
+      nuxt:
+        specifier: ^3.13.2
+        version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.22.5)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3)
+
+  app/examples/starter-base:
+    dependencies:
+      '@visualizevalue/mint-app-base':
+        specifier: '@visualizevalue/mint-app-base@latest'
+        version: link:@visualizevalue/mint-app-base@latest
+    devDependencies:
+      nuxt:
+        specifier: ^3.13.2
+        version: 3.13.2(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(eslint@9.10.0(jiti@1.21.6))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.22.5)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.5(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3)
+
+  app/examples/starter-zinc:
+    dependencies:
+      '@visualizevalue/mint-app-base':
+        specifier: '@visualizevalue/mint-app-base@latest'
+        version: link:@visualizevalue/mint-app-base@latest
       '@visualizevalue/mint-theme-zinc':
-        specifier: workspace:@visualizevalue/mint-theme-zinc@latest
-        version: link:../themes/zinc
+        specifier: '@visualizevalue/mint-theme-zinc@latest'
+        version: link:@visualizevalue/mint-theme-zinc@latest
     devDependencies:
       nuxt:
         specifier: ^3.13.2
