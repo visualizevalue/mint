@@ -1,5 +1,8 @@
 <template>
-  <div class="embed">
+  <div
+    class="embed"
+    @touchmove.stop.prevent="() => null"
+  >
     <iframe
       ref="frame"
       frameborder="0"
@@ -10,8 +13,21 @@
 </template>
 
 <script setup>
-defineProps({
+import { useWindowSize } from '@vueuse/core'
+
+const props = defineProps({
   src: String,
+})
+
+const src = ref(props.src)
+
+const { width } = useWindowSize()
+watch(width, () => {
+  src.value = ''
+
+  nextTick(() => {
+    src.value = props.src
+  })
 })
 </script>
 
@@ -21,12 +37,14 @@ defineProps({
   height: 0;
   padding-bottom: 100%;
   position: relative;
+  touch-action: none;
+  overflow: hidden;
 
   iframe {
     width: 100%;
     height: 100%;
     position: absolute;
-    border: var(--border);
+    pointer-events: all;
   }
 }
 </style>

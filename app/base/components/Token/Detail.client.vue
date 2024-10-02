@@ -6,6 +6,12 @@
         <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
         <ImageVoid v-else />
       </div>
+
+      <Actions>
+        <Button :to="{ name: 'id-collection-tokenId-full' }" title="Open">
+          <Icon type="maximize" />
+        </Button>
+      </Actions>
     </div>
 
     <MintToken
@@ -126,6 +132,7 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
     height: var(--height);
     width: var(--width);
     padding: var(--padding-top) var(--padding-x) var(--padding-bottom);
+    position: relative;
 
     @media (--md) {
       border-right: var(--border);
@@ -143,6 +150,14 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
       @media (--md) {
         border-bottom: none !important;
       }
+    }
+
+    > menu {
+      position: absolute;
+      bottom: var(--spacer);
+      right: var(--spacer);
+      width: fit-content;
+      padding: 0;
     }
   }
 
