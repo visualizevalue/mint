@@ -69,6 +69,8 @@ export default defineNuxtConfig({
       config.optimizeDeps.include = config.optimizeDeps.include || []
       config.optimizeDeps.include.push('@visualizevalue/mint-app-base > eventemitter3')
       config.optimizeDeps.include.push('@visualizevalue/mint-app-base > buffer/')
+      config.optimizeDeps.include.push('@visualizevalue/mint-app-base > codemirror')
+      config.optimizeDeps.include.push('@visualizevalue/mint-app-base > codemirror-editor-vue3')
     }
   },
 
