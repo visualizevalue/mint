@@ -16,7 +16,6 @@ import CodeMirror from 'codemirror-editor-vue3'
 import 'codemirror/addon/display/placeholder.js'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
 import 'codemirror/mode/javascript/javascript.js'
-// import 'codemirror/theme/ayu-mirage.css'
 
 const props = defineProps({
   modelValue: String,
@@ -25,12 +24,13 @@ const props = defineProps({
     type: String,
     default: 'text/javascript'
   },
+  theme: String,
 })
 const emit = defineEmits(['update:modelValue'])
 
 const cmOptions = computed(() => ({
   mode: props.mode,
-  // theme: 'ayu-mirage',
+  theme: props.theme,
   indentUnit: 2,
   tabSize: 2,
   indentWithTab: false
