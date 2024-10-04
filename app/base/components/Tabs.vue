@@ -17,7 +17,6 @@ const select = k => active.value = k
 
 <style>
 .tabs {
-  border-bottom: var(--border);
   padding: 0 var(--size-1);
   margin: 0;
   display: flex;
@@ -32,6 +31,10 @@ const select = k => active.value = k
       border-color: var(--border-color);
       border-bottom-color: var(--background);
     }
+  }
+
+  .tabs-content {
+    border-top: var(--border);
   }
 }
 </style>
