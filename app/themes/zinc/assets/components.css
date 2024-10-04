@@ -34,7 +34,7 @@
 .tabs {
   > .button {
     &.active {
-      border-bottom-color: var(--border-color) !important;
+      background: var(--background);
     }
   }
 }
