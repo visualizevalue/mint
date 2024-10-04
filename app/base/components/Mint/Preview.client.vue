@@ -22,6 +22,7 @@ const { image, animationUrl, name, description } = useCreateMintData()
 .mint-preview {
   height: 100%;
   place-content: center;
+  border-radius: var(--card-border-radius);
 
   svg {
     box-shadow: var(--border-shadow);
@@ -30,6 +31,7 @@ const { image, animationUrl, name, description } = useCreateMintData()
   .image,
   svg {
     margin-bottom: var(--spacer-sm);
+    border-radius: var(--card-border-radius);
     width: 100%;
   }
 
@@ -41,6 +43,8 @@ const { image, animationUrl, name, description } = useCreateMintData()
 
   .embed {
     margin: var(--spacer-sm) 0;
+    border-radius: var(--card-border-radius);
+    border: var(--border);
   }
 
   h1 {
