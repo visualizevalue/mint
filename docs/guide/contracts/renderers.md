@@ -1,5 +1,7 @@
 # Renderers
 
+## About Renderers
+
 Artifacts are stored as submitted by the user using SSTORE2.
 
 When users call the `uri()` method, the token checks for its registered
@@ -58,6 +60,9 @@ struct Token {
 :::
 
 How renderers generate the metadata is entirely up to them.
+
+## Default Renderer
+
 The base renderer implementation that ships with every
 Mint contract by default simply returns
 artifact data as a blob.
@@ -86,5 +91,57 @@ contract Renderer is IRenderer {
 }
 ```
 
-We're working on an onchain P5 renderer, but developers are invited to
-get creative and contribute their own to the ecosystem.
+## Renderer Extensions
+
+### P5 Renderer
+
+As an initial extension example, we have built a renderer for generating [p5.js](https://p5js.org/)
+based artifacts onchain.
+
+Check out the [`P5Renderer.sol`](https://github.com/visualizevalue/mint/blob/main/contracts/contracts/renderers/P5Renderer.sol) on Github.
+
+This renderer also comes with its custom UI implementation to edit and preview the P5 script.
+
+![](../../assets/renderer-ui-p5.png)
+
+How this works under the hood is that we encode both the static asset and the script content
+within the artifact bytecode, and decode it into its parts during rendering.
+
+Also note how the renderer exposes both a `script_url` with just the artists' p5 script
+and the complete `animation_url` with the entire encoded html page.
+
+```solidity {9}
+/// @notice Generate the JSON medata for a given token.
+///         We expect the static preview image and P5 script
+//          to both be encoded in the artifact data.
+function uri (
+    uint tokenId,
+    Token calldata token,
+    bytes memory artifact
+) external view returns (string memory) {
+    (string memory image, string memory script) = abi.decode(artifact, (string, string));
+
+    bytes memory dataURI = abi.encodePacked(
+        '{',
+            '"id": "', Strings.toString(tokenId), '",',
+            '"name": "', token.name, '",',
+            '"description": "', token.description, '",',
+            '"image": "', image, '",',
+            '"script_url": "data:text/javascript;base64,', Base64.encode(bytes(script)), '",',
+            '"animation_url": "', generateHtml(token.name, script), '"',
+        '}'
+    );
+
+    return string(
+        abi.encodePacked(
+            "data:application/json;base64,",
+            Base64.encode(dataURI)
+        )
+    );
+}
+```
+
+### Community Renderers
+
+Developers are invited to get creative and contribute their own to the ecosystem.
+
