@@ -25,7 +25,10 @@ const props = defineProps({
     type: String,
     default: 'text/javascript'
   },
-  theme: String,
+  theme: {
+    type: String,
+    default: 'default'
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
