@@ -40,6 +40,13 @@
 }
 
 /**
+* EDITOR
+*/
+.mint-preview {
+  top: calc(var(--size-7) + var(--spacer)*3) !important;
+}
+
+/**
 * PRICE MODAL
 */
 
