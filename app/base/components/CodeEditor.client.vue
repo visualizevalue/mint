@@ -1,11 +1,12 @@
 <template>
   <div class="code-editor">
     <CodeMirror
+      ref="cmRef"
       :value="modelValue"
       :options="cmOptions"
-      height="100%"
       :placeholder="placeholder"
       @change="$emit('update:modelValue', $event)"
+      height="100%"
       original-style
     />
   </div>
@@ -35,6 +36,12 @@ const cmOptions = computed(() => ({
   tabSize: 2,
   indentWithTab: false
 }))
+
+const cmRef = ref()
+
+defineExpose({
+  cmRef,
+})
 </script>
 
 <style scoped>
