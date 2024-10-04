@@ -1,5 +1,5 @@
 <template>
-  <AppHeader
+  <BaseAppHeader
     :style="{
       borderColor: y > 10 ? 'var(--border-color)' : 'transparent'
     }"
@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import { default as BaseAppHeader } from '@base/components/AppHeader.vue'
 import { useWindowScroll } from '@vueuse/core'
 
 const { y } = useWindowScroll()
