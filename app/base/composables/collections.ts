@@ -256,11 +256,11 @@ export const useOnchainStore = () => {
               }),
             ])
 
-            this.collections[address].renderers.push({
+            this.collections[address].renderers[index] = {
               address: rendererAddress.toLowerCase() as `0x${string}`,
               name,
               version,
-            })
+            }
 
             index ++
           } catch (e) {
