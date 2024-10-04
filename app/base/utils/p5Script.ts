@@ -6,11 +6,30 @@ function setup() {
 
   createCanvas(dimension, dimension)
 
-  background(150)
+  background(255)
 }
 
 function draw() {
-  // ...
+	const width  = dimension/16
+  			offset = width / 2
+
+ 	fill(0)
+  strokeWeight(0)
+
+  rect(
+    dimension/3 - offset, dimension/3,
+    width, dimension/3
+  )
+
+  rect(
+    dimension/2 - offset, dimension/2.5,
+    width, dimension/5
+  )
+
+  rect(
+    dimension - dimension/3 - offset, dimension/3,
+    width, dimension/3
+  )
 }
 `
 
