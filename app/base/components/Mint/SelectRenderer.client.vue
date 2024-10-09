@@ -10,7 +10,7 @@
         :title="renderer.name"
       >{{ renderer.name }}</option>
       <option disabled>----</option>
-      <option value="new">Install New</option>
+      <option value="new">{{ $t('mint.select.install_new') }}</option>
     </select>
   </aside>
 </template>

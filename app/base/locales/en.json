@@ -1,0 +1,107 @@
+{
+  "connect_button": "Connect",
+  "mint_button": "Mint",
+  "read_more": "Read More",
+  "collapse": "Collapse",
+  "tokens": "token | tokens",
+  "blocks": "block | blocks",
+  "choose_file": "Choose File",
+  "popover": {
+    "mint_pricing": "Mint Pricing",
+    "pricing_info": "Artifacts are priced based on the Ethereum network fees at the time of collecting.",
+    "network_fees": "Network fees (Gas fees) are an essential component of securing and running decentralized blockchains.",
+    "artist_reward": "The cost to store and secure the object on the network is mirrored as compensation to the artist, creating a direct link between network value and creator reward.",
+    "gas_price": "Gas price",
+    "cost_to_mint": "Cost to mint",
+    "ethereum_fee": "Ethereum fee (50%)",
+    "artist_compensation": "Artist comp. (50%)",
+    "mint_price": "Mint price",
+    "mint_more_info": "Mints of more than one don't increase the Ethereum fee, resulting in higher artist compensation.",
+    "amount": "Amount",
+    "eth_fee": "Ethereum fee",
+    "artist_comp": "Artist comp."
+  },
+  "profile": {
+    "address_copied": "copied...",
+    "edit_button": "Edit Profile",
+    "add_collection_button": "Collection",
+    "your_collections": "Your Collections"
+  },
+  "collections_overview": {
+    "no_collections": "It looks like you haven't deployed any collections.",
+    "create_first": "Create Your First",
+    "no_collections_other": "It looks like this account hasn't deployed any collections.",
+    "querying_blockchain": "Querying the blockchain..."
+  },
+  "collection": {
+    "unnamed": "Unnamed Collection",
+    "created_at_block": "Created at Block",
+    "by": "By",
+    "no_tokens": "No tokens yet.",
+    "withdraw": "Withdraw"
+  },
+  "mint": {
+    "base": {
+      "note": {
+        "start": "Note: This should be a small file, preferably an SVG like",
+        "link_text": "this one (810 bytes)",
+        "end": "If it is larger than what we can store within one transaction, the token creation will be split up into multiple transactions."
+      },
+      "title_placeholder": "Title",
+      "description_placeholder": "Description"
+    },
+    "p5": {
+      "static": "Static",
+      "p5_script": "P5 Script"
+    },
+    "preview": {
+      "title": "Preview",
+      "no_description": "No description"
+    },
+    "select": {
+      "install_new": "Install New"
+    }
+  },
+  "renderer": {
+    "install_button": "Install",
+    "add_custom": "Add Custom Renderer",
+    "installed": "Installed Renderers",
+    "available": "Available Renderers",
+    "all_installed": "All known Renderers installed"
+  },
+  "token": {
+    "by": "By",
+    "closes_in": "Closes in",
+    "blocks_remaining": "{blocksRemaining} blocks remaining",
+    "closed_at_block": "Closed at block {untilBlock}",
+    "you_own": "You own {ownedBalance} {tokens}",
+    "mint_timeline": "Mint Timeline",
+    "artist_mint": "Artist Mint",
+    "load_more": "Load more",
+    "blocks_ago": "{blocks} blocks ago",
+    "loading_mint_history": "Loading Mint History...",
+    "view": "View"
+  },
+  "transaction_flow": {
+    "view_on_etherscan": "View on Etherscan",
+    "cancel": "Cancel"
+  },
+  "create": {
+    "title": "Create New",
+    "note": {
+      "start": "Note: This should be a small file, preferably a simple SVG like",
+      "link_text": "this one (273 bytes)",
+      "end": "Try to make it less than 10kb."
+    },
+    "preview": {
+      "token": "Token",
+      "no_description": "No description"
+    },
+    "form": {
+      "title_placeholder": "Title",
+      "symbol_placeholder": "Symbol",
+      "description_placeholder": "Description",
+      "deploy_button": "Deploy"
+    }
+  }
+}

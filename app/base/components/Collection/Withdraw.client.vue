@@ -21,7 +21,7 @@
     <template #start="{ start }">
       <Button @click="start">
         <Icon type="withdraw" />
-        <span>Withdraw ({{ balance.value }} {{ balance.format }})</span>
+        <span>{{ $t('collection.withdraw')}} ({{ balance.value }} {{ balance.format }})</span>
       </Button>
     </template>
   </TransactionFlow>

@@ -1,7 +1,7 @@
 <template>
   <Button v-if="! file" type="button" @click="() => open()">
     <Icon type="image" />
-    <span>Choose file</span>
+    <span>{{ $t('choose_file') }}</span>
   </Button>
   <FormGroup v-else>
     <Button type="button" disabled>

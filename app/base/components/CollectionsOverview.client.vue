@@ -10,19 +10,19 @@
   </section>
   <section v-else-if="! loading" class="collections-overview-empty">
     <template v-if="isMe">
-      <p>It looks like you haven't deployed any collections.</p>
+      <p>{{ $t('collections_overview.no_collections') }}</p>
       <div>
         <Button :to="{ name: `id-create`, params: { id } }">
           <Icon type="plus" />
-          <span>Create Your First</span>
+          <span>{{ $t('collections_overview.create_first') }}</span>
         </Button>
       </div>
     </template>
     <template v-else>
-      <p>It looks like this account hasn't deployed any collections.</p>
+      <p>{{ $t('collections_overview.no_collections_other') }}</p>
     </template>
   </section>
-  <Loading v-if="loading" txt="Querying the blockchain..." />
+  <Loading v-if="loading" :txt="$t('collections_overview.querying_blockchain')" />
 </template>
 
 <script setup>

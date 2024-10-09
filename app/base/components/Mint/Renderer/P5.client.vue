@@ -3,8 +3,8 @@
 
     <Tabs initial="base">
       <template #menu="{ active, select }">
-        <Button @click="select('base')" :class="{ active: active === 'base' }">Static</Button>
-        <Button @click="select('script')" :class="{ active: active === 'script' }">P5 Script</Button>
+        <Button @click="select('base')" :class="{ active: active === 'base' }">{{ $t('mint.p5.static') }}</Button>
+        <Button @click="select('script')" :class="{ active: active === 'script' }">{{ $t('mint.p5.p5_script') }}</Button>
       </template>
       <template #content="{ active }">
         <MintRendererBase v-show="active === 'base'" decouple-artifact />

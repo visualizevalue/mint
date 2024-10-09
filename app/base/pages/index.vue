@@ -10,7 +10,7 @@
           </template>
         </Connect>
         <template #fallback>
-          <Button>Connect</Button>
+          <Button>{{ $t('connect_button') }}</Button>
         </template>
       </ClientOnly>
     </header>

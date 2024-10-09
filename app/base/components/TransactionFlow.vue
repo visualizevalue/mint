@@ -19,15 +19,15 @@
 
     <Button v-if="step === 'waiting'" :to="txLink" target="_blank" class="block-explorer">
       <Icon type="loader" class="spin" />
-      <span>View on Etherscan</span>
+      <span>{{ $t('transaction_flow.view_on_etherscan') }}</span>
     </Button>
 
     <Actions v-if="step === 'chain'">
-      <Button @click="cancel" class="secondary">Cancel</Button>
+      <Button @click="cancel" class="secondary">{{ $t('transaction_flow.cancel') }}</Button>
     </Actions>
 
     <Actions v-if="step === 'confirm' || step === 'error'">
-      <Button @click="cancel" class="secondary">Cancel</Button>
+      <Button @click="cancel" class="secondary">{{ $t('transaction_flow.cancel') }}</Button>
       <Button @click="() => initializeRequest()">{{ text.action[step] || 'Execute' }}</Button>
     </Actions>
   </Modal>

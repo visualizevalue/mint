@@ -6,7 +6,7 @@
       </figure>
       <div class="text">
         <div>
-          <h1>{{ collection.name || 'Unnamed Collection' }} <small v-if="collection.symbol">({{ collection.symbol }})</small></h1>
+          <h1>{{ collection.name || $t('collection.unnamed') }} <small v-if="collection.symbol">({{ collection.symbol }})</small></h1>
           <p v-if="collection.description">
             <ExpandableText :text="collection.description" />
           </p>
@@ -15,13 +15,13 @@
         <div v-if="id">
           <p>
             <span>
-              By <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
+              {{ $t('collection.by') }} <NuxtLink :to="{ name: 'id', params: { id } }">{{ store.displayName(id) }}</NuxtLink>
             </span>
             <span>
-              {{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }}
+              {{ collection.latestTokenId }} {{ $t('tokens', Number(collection.latestTokenId)) }}
             </span>
             <span>
-              Created at Block {{ collection.initBlock }}
+              {{ $t('collection.created_at_block')}} {{ collection.initBlock }}
             </span>
           </p>
         </div>

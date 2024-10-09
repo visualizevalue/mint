@@ -1,7 +1,7 @@
 <template>
   <Button :to="{ name: `id-create`, params: { id } }">
     <Icon type="add" />
-    <span>Collection</span>
+    <span>{{ $t('profile.add_collection_button') }}</span>
   </Button>
 </template>
 

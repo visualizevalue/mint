@@ -6,7 +6,7 @@
 
     <Loading v-if="loading" />
     <div v-if="! tokens.length && !loading" >
-      <p>No tokens yet</p>
+      <p>{{ $('collection.no_tokens')}}</p>
     </div>
   </slot>
 </template>

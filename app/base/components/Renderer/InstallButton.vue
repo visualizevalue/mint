@@ -1,5 +1,5 @@
 <template>
-  <Button @click="install">Install</Button>
+  <Button @click="install">{{ $t('renderer.install_button')}}</Button>
   <TransactionFlow
     ref="txFlow"
     :request="installRequest"

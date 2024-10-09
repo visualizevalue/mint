@@ -15,16 +15,17 @@
         <FormSelectFile ref="select" @change="setArtifact" />
         <p v-if="! isSmall" class="muted">
           <small>
-            Note: This should be a small file, prefferably an SVG like <a href="https://presence.art/tokens/perspective.svg" target="_blank">this one (810 bytes)</a>.
-            If it is larger than what we can store within one transaction, the token creation will be split up into multiple transactions.
+            {{ $t('mint.base.note.start') }}
+            <a href="https://presence.art/tokens/perspective.svg" target="_blank">{{ $t('mint.base.note.link_text') }}</a>.
+            {{ $t('mint.base.note.end') }}
           </small>
         </p>
       </div>
       <FormInput v-else-if="mode === 'ipfs'" v-model="ipfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
       <FormInput v-else-if="mode === 'ar'" v-model="arTxId" placeholder="TX ID (frV...)" prefix="ar://" required />
 
-      <FormInput v-model="name" placeholder="Title" required />
-      <FormInput v-model="description" placeholder="Description" />
+      <FormInput v-model="name" :placeholder="$t('mint.base.title_placeholder')" required />
+      <FormInput v-model="description" :placeholder="$t('mint.base.description_placeholder')" />
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
     <img :src="artist.avatar || avatar" :alt="name" />
     <h1 @click="() => ! hideAddress && copy(address)">
       <span>{{ name }}</span>
-      <small v-if="copied">copied...</small>
+      <small v-if="copied">{{ $t('profile.address_copied') }}</small>
       <small v-else-if="! hideAddress">{{ shortAddress(address) }}</small>
     </h1>
     <p v-if="description">{{ description }}</p>

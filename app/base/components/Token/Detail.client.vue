@@ -25,10 +25,10 @@
         <header class="title">
           <h1>{{ token.name }} <small>#{{ token.tokenId }}</small></h1>
           <p v-if="token.description">
-            <ExpandableText :text="token.description" :length="95" expand-text="Read More" />
+            <ExpandableText :text="token.description" :length="95" :expand-text="$t('read_more')" :collapse-text="$t('collapse')" />
           </p>
           <p v-if="collection" class="artist">
-            By <NuxtLink :to="{ name: 'id', params: { id: collection.owner } }">{{ store.displayName(collection.owner) }}</NuxtLink>
+            {{ $t('token.by') }} <NuxtLink :to="{ name: 'id', params: { id: collection.owner } }">{{ store.displayName(collection.owner) }}</NuxtLink>
           </p>
         </header>
 
@@ -47,9 +47,12 @@
         </div>
 
         <div class="mint-status">
-          <p v-if="mintOpen">{{ blocksRemaining }} blocks remaining</p>
-          <p v-else-if="currentBlock">Closed at block {{ token.untilBlock }}</p>
-          <p v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
+          <p v-if="mintOpen">{{ $t('token.blocks_remaining', { blocksRemaining }) }}</p>
+          <p v-else-if="currentBlock">{{ $t('token.closed_at_block', { untilBlock: token.untilBlock }) }}</p>
+          <p v-if="ownedBalance">
+            {{ $t('token.you_own', { ownedBalance }) }} 
+            {{ $t('tokens', Number(ownedBalance)) }}
+          </p>
         </div>
 
         <TokenMintTimeline :token="token" :collection="collection" class="network-mints" />

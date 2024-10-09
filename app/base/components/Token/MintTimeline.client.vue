@@ -1,7 +1,7 @@
 <template>
   <section class="token-mint-timeline">
     <slot :mints="mints" :loading="loading">
-      <h1>Mint Timeline</h1>
+      <h1>{{ $t('token.mint_timeline') }}</h1>
 
       <template v-if="currentBlock">
       <TokenMintTimelineVirtualScroller
@@ -13,7 +13,7 @@
             <Account :address="collection.owner" class="account" />
 
             <span class="amount">1<span>×</span></span>
-            <span class="price">Artist Mint</span>
+            <span class="price">{{ $t('token.artist_mint')}}</span>
 
             <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - mintedAtBlock" /></span>
 
@@ -28,10 +28,10 @@
       </template>
 
       <div v-if="! backfillComplete" v-show="! loading" ref="loadMore" class="load-more">
-        <Button @click="backfill">Load more</Button>
+        <Button @click="backfill">{{ $t('token.load_more')}}</Button>
       </div>
 
-      <Loading v-if="loading || ! currentBlock" txt="Loading Mint History..." />
+      <Loading v-if="loading || ! currentBlock" :txt="$t('token.loading_mint_history')" />
     </slot>
   </section>
 </template>

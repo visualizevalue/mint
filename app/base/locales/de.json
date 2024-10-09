@@ -1,0 +1,107 @@
+{
+  "connect_button": "Verbinden",
+  "mint_button": "Mint",
+  "read_more": "Mehr anzeigen",
+  "collapse": "Einklappen",
+  "tokens": "Token | Tokens",
+  "blocks": "Block | Blöcke",
+  "choose_file": "Datei auswählen",
+  "popover": {
+    "mint_pricing": "Mint-Preisgestaltung",
+    "pricing_info": "Artefakte werden basierend auf den Ethereum-Netzwerkgebühren zum Zeitpunkt des Sammelns bepreist.",
+    "network_fees": "Netzwerkgebühren (Gasgebühren) sind ein wesentlicher Bestandteil der Sicherung und des Betriebs dezentraler Blockchains.",
+    "artist_reward": "Die Kosten für die Speicherung und Sicherung des Objekts im Netzwerk spiegeln sich in der Vergütung des Künstlers wider und schaffen eine direkte Verbindung zwischen dem Netzwerkwert und der Künstlerbelohnung.",
+    "gas_price": "Gaspreis",
+    "cost_to_mint": "Mintkosten",
+    "ethereum_fee": "Ethereum-Gebühr (50%)",
+    "artist_compensation": "Künstlervergütung (50%)",
+    "mint_price": "Mintpreis",
+    "mint_more_info": "Das Prägen von mehr als einem erhöht nicht die Ethereum-Gebühr, was zu einer höheren Künstlervergütung führt.",
+    "amount": "Menge",
+    "eth_fee": "Ethereum-Gebühr",
+    "artist_comp": "Künstlervergütung"
+  },
+  "profile": {
+    "address_copied": "kopiert...",
+    "edit_button": "Profil bearbeiten",
+    "add_collection_button": "Kollektion",
+    "your_collections": "Ihre Kollektionen"
+  },
+  "collections_overview": {
+    "no_collections": "Es sieht so aus, als hätten Sie noch keine Kollektionen erstellt.",
+    "create_first": "Erstellen Sie Ihre Erste",
+    "no_collections_other": "Es sieht so aus, als hätte dieser Account noch keine Kollektionen erstellt.",
+    "querying_blockchain": "Blockchain wird abgefragt..."
+  },
+  "collection": {
+    "unnamed": "Unbenannte Kollektion",
+    "created_at_block": "Erstellt im Block",
+    "by": "Von",
+    "no_tokens": "Keine Tokens bisher.",
+    "withdraw": "Auszahlen"
+  },
+  "mint": {
+    "base": {
+      "note": {
+        "start": "Hinweis: Dies sollte eine kleine Datei sein, vorzugsweise eine SVG wie",
+        "link_text": "diese (810 Bytes)",
+        "end": "Wenn sie größer ist als das, was wir in einer Transaktion speichern können, wird die Token-Erstellung auf mehrere Transaktionen aufgeteilt."
+      },
+      "title_placeholder": "Titel",
+      "description_placeholder": "Beschreibung"
+    },
+    "p5": {
+      "static": "Statisch",
+      "p5_script": "P5 Skript"
+    },
+    "preview": {
+      "title": "Vorschau",
+      "no_description": "Keine Beschreibung"
+    },
+    "select": {
+      "install_new": "Neuen Installieren"
+    }
+  },
+  "renderer": {
+    "install_button": "Installieren",
+    "add_custom": "Eigenen Renderer hinzufügen",
+    "installed": "Installierte Renderer",
+    "available": "Zu Verfügung stehende Renderer",
+    "all_installed": "Alle bekannten Renderer installiert"
+  },
+  "token": {
+    "by": "Von",
+    "closes_in": "Schließt in",
+    "blocks_remaining": "{blocksRemaining} Blöcke verbleibend",
+    "closed_at_block": "Geschlossen bei Block {untilBlock}",
+    "you_own": "Sie besitzen {ownedBalance} {token}",
+    "mint_timeline": "Mint Verlauf",
+    "artist_mint": "Künstler Mint",
+    "load_more": "Mehr laden",
+    "blocks_ago": "vor {blocks} Blöcken",
+    "loading_mint_history": "Mint Geschichte laden...",
+    "view": "Anzeigen"
+  },
+  "transaction_flow": {
+    "view_on_etherscan": "Auf Etherscan anzeigen",
+    "cancel": "Abbrechen"
+  },
+  "create": {
+    "title": "Neue Kollektion erstellen",
+    "note": {
+      "start": "Hinweis: Dies sollte eine kleine Datei sein, vorzugsweise eine einfache SVG wie",
+      "link_text": "diese (273 Bytes)",
+      "end": "Versuchen Sie, sie unter 10kb zu halten."
+    },
+    "preview": {
+      "token": "Token",
+      "no_description": "Keine Beschreibung"
+    },
+    "form": {
+      "title_placeholder": "Titel",
+      "symbol_placeholder": "Symbol",
+      "description_placeholder": "Beschreibung",
+      "deploy_button": "Kollektion veröffentlichen"
+    }
+  }
+}
