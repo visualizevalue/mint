@@ -137,7 +137,7 @@ a border when scrolling down.
 
 ```vue
 <template>
-  <AppHeader
+  <BaseAppHeader
     :style="{
       borderColor: y > 10 ? 'var(--border-color)' : 'transparent'
     }"
@@ -145,6 +145,7 @@ a border when scrolling down.
 </template>
 
 <script setup>
+import { default as BaseAppHeader } from '@base/components/AppHeader.vue'
 import { useWindowScroll } from '@vueuse/core'
 
 const { y } = useWindowScroll()
@@ -154,17 +155,18 @@ const { y } = useWindowScroll()
   .app-header {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: var(--background-semi);
-    backdrop-filter: var(--blur);
-    padding: var(--ui-padding-y) var(--ui-padding-x) !important;
-
-    border-bottom: var(--border);
-    border-color: transparent;
-    transition: border-color var(--speed);
+    /* ... */
   }
 </style>
 ```
+
+> [!TIP]
+> Note we can import the base component using `@base/components/...` because we set it up as an alias in our `nuxt.config.ts`.
+> ```ts
+>  alias: {
+>    '@base': '@visualizevalue/mint-app-base',
+>  }
+> ```
 
 ## Add new components
 
@@ -173,8 +175,8 @@ the application. The Zinc theme adds a `ToggleDarkMode.vue` component
 which changes the color scheme of the site and stores
 the current selection in localStorage.
 
-We register both the sticky application header and the new dark mode
-toggle in the root `app.vue` file by simply overriding it.
+We register the new dark mode toggle in the root `app.vue` file
+by simply overriding it.
 
 ::: code-group
 
@@ -213,7 +215,7 @@ onMounted(() => {
 ```vue{9} [app.vue]
 <template>
   <div>
-    <StickyAppHeader />
+    <AppHeader />
 
     <main>
       <NuxtPage />

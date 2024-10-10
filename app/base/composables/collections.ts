@@ -3,7 +3,7 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 5
+export const CURRENT_STATE_VERSION = 6
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
@@ -256,11 +256,11 @@ export const useOnchainStore = () => {
               }),
             ])
 
-            this.collections[address].renderers.push({
+            this.collections[address].renderers[index] = {
               address: rendererAddress.toLowerCase() as `0x${string}`,
               name,
               version,
-            })
+            }
 
             index ++
           } catch (e) {
@@ -320,7 +320,7 @@ export const useOnchainStore = () => {
           console.info(`Fetching token #${tokenId}`)
 
           const [data, untilBlock] = await Promise.all([
-            mintContract.read.uri([tokenId], { gas: 10_000_000_000 }) as Promise<string>,
+            mintContract.read.uri([tokenId], { gas: 100_000_000_000 }) as Promise<string>,
             mintContract.read.mintOpenUntil([tokenId]) as Promise<bigint>,
           ])
 
@@ -332,7 +332,9 @@ export const useOnchainStore = () => {
             collection: address,
             name: metadata.name,
             description: metadata.description,
-            artifact: metadata.image,
+            image: metadata.image,
+            animationUrl: metadata.animation_url,
+            scriptUrl: metadata.script_url,
             untilBlock,
             mintsBackfilledUntilBlock: 0n,
             mintsFetchedUntilBlock: 0n,
@@ -340,7 +342,9 @@ export const useOnchainStore = () => {
           }
 
           this.collections[address].tokens[`${token.tokenId}`] = token
-        } catch (e) { }
+        } catch (e) {
+          console.error(e)
+        }
       },
 
       async fetchTokenBalance (token: Token, address: `0x${string}`) {

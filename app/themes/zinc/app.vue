@@ -1,6 +1,6 @@
 <template>
   <div>
-    <StickyAppHeader />
+    <AppHeader />
 
     <main>
       <NuxtPage />

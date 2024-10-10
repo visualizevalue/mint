@@ -1,0 +1,18 @@
+{
+    "name": "@visualizevalue/mint-app-example-base",
+    "version": "0.0.2",
+    "type": "module",
+    "scripts": {
+        "build": "nuxi build",
+        "dev": "nuxi dev",
+        "generate": "nuxi generate",
+        "preview": "nuxi preview",
+        "postinstall": "nuxi prepare"
+    },
+    "devDependencies": {
+        "nuxt": "^3.13.2"
+    },
+    "dependencies": {
+        "@visualizevalue/mint-app-base": "@visualizevalue/mint-app-base@latest"
+    }
+}

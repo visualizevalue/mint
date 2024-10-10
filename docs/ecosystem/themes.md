@@ -10,16 +10,3 @@ An example is running on [base.mint.jalil.cc](https://base.mint.jalil.cc).
 
 ![The Zinc Theme](../assets/zinc-theme.png)
 The main example theme running on [mint.jalil.cc](https://mint.jalil.cc) and [networked.art](https://networked.art).
-
-## Punkism
-
-TBI
-
-## Pepe
-
-TBI
-
-## Scapes
-
-TBI
-

@@ -29,6 +29,24 @@
 }
 
 /**
+* TABS
+*/
+.tabs {
+  > .button {
+    &.active {
+      background: var(--background);
+    }
+  }
+}
+
+/**
+* EDITOR
+*/
+.mint-preview {
+  top: calc(var(--size-7) + var(--spacer)*3) !important;
+}
+
+/**
 * PRICE MODAL
 */
 
@@ -74,11 +92,14 @@
 .token-overview-card {
 
   .image,
-  img {
+  .embed,
+  img,
+  iframe {
     border-radius: var(--border-radius);
   }
 
-  img {
+  img,
+  iframe {
     border: var(--border);
   }
 }

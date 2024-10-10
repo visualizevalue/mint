@@ -4,7 +4,7 @@
 
     <div>
       <RendererOverviewCard
-        v-for="renderer of collection.renderers"
+        v-for="renderer of installedRenderers"
         :renderer="renderer"
       />
     </div>
@@ -38,19 +38,21 @@
 </template>
 
 <script setup>
-const { collection } = defineProps(['collection'])
+const props = defineProps(['collection'])
 
 const appConfig = useAppConfig()
 const store = useOnchainStore()
 
+const installedRenderers = computed(() => props.collection.renderers)
+
 const availableRenderers = computed(
   () => appConfig.knownRenderers.filter(r =>
-    !collection.renderers.map(cr => cr.address).includes(r.address)
+    !installedRenderers.value.map(cr => cr.address).includes(r.address)
   )
 )
 
 onMounted(() => {
-  store.fetchCollectionRenderers(collection.address)
+  store.fetchCollectionRenderers(props.collection.address)
 })
 </script>
 

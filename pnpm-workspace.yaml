@@ -1,7 +1,7 @@
 packages:
   - 'app/base'
-  - 'app/example'
   - 'app/themes/*'
+  - 'app/examples/*'
   - 'contracts'
   - 'docs'
   - 'utils'

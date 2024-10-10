@@ -2,11 +2,9 @@
   <div class="mint-renderer-base">
     <Actions>
       <select class="select choose-mode" v-model="mode">
-        <option value="file" title="Data URI Encoded File Upload">DATA-URI</option>
-        <option value="ipfs" title="Interplanetary File System">IPFS</option>
-        <option value="ar" title="Arweave">ARWEAVE</option>
-        <option value="http" title="Hypertext Transfer Protocol" disabled>HTTP</option>
-        <option value="svg" title="Scalable Vector Graphic" disabled>SVG</option>
+        <option value="file" title="Data URI Encoded File Upload">Onchain Artifact</option>
+        <option value="ipfs" title="Interplanetary File System">IPFS Identifier</option>
+        <option value="ar" title="Arweave">Arweave Transaction</option>
       </select>
     </Actions>
 

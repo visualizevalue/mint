@@ -26,6 +26,7 @@ const ICONS = {
   'image': '🏞️',
   'link': '🔗',
   'loader': '⏳',
+  'maximize': '⛶',
   'times': '✖️',
   'trash': '🗑️',
   'twitter': '🐦',

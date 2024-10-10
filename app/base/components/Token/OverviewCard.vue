@@ -34,7 +34,8 @@
             </p>
             <p v-else class="closed-at">{{ $t('token.closed_at_block') }} {{ token.untilBlock }}</p>
           </header>
-          <Image v-if="token.artifact" :src="token.artifact" :alt="token.name" />
+          <Embed v-if="token.animationUrl" :src="token.animationUrl" />
+          <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
           <ImageVoid v-else />
           <CardLink :to="{
             name: 'id-collection-tokenId',

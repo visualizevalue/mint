@@ -133,6 +133,14 @@ other collections on the landing page?
 
 ## 4. Generate production code and deploy your application
 
+There are two ways of running the application: On a node server
+or as a static website running purely in the browser.
+
+For most applications, the static hosting variant will be sufficient.
+
+For this, set `ssr: false` in your `nuxt.config.ts` or set your
+`NUXT_SSR` environment variable to `false`.
+
 In order to generate the application code, run
 
 ```bash
@@ -142,6 +150,9 @@ pnpm run generate
 This builds the static assets into the `.output` directory.
 You can host these files on any static file server you like
 and it should just work.
+
+> [!TIP]
+> For more info on deployment options, check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/deployment).
 
 While building your custom theme like this is great, what if we want to
 share our theme with others for them to use it as well?

@@ -37,7 +37,7 @@ describe.skip('P5Renderer', () => {
       '',
       toByteArray(encodedArtifact),
       1,
-      19n,
+      0n,
     ])).to.be.fulfilled
 
     // @ts-ignore

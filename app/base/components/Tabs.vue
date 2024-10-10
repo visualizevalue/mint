@@ -17,20 +17,24 @@ const select = k => active.value = k
 
 <style>
 .tabs {
-  border-bottom: var(--border);
   padding: 0 var(--size-1);
   margin: 0;
   display: flex;
   gap: var(--size-1);
 
-  > Button {
-    /* border-bottom-color: transparent; */
+  > .button {
     margin-bottom: calc(-1 * var(--border-width));
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
     &.active {
       border-color: var(--border-color);
       border-bottom-color: var(--background);
     }
+  }
+
+  .tabs-content {
+    border-top: var(--border);
   }
 }
 </style>

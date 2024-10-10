@@ -67,6 +67,7 @@ select {
 
 .form-item {
   border: var(--border);
+  border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   background: var(--background);

@@ -1,11 +1,12 @@
 <template>
   <div class="code-editor">
     <CodeMirror
+      ref="cmRef"
       :value="modelValue"
       :options="cmOptions"
-      height="100%"
       :placeholder="placeholder"
       @change="$emit('update:modelValue', $event)"
+      height="100%"
       original-style
     />
   </div>
@@ -16,7 +17,6 @@ import CodeMirror from 'codemirror-editor-vue3'
 import 'codemirror/addon/display/placeholder.js'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
 import 'codemirror/mode/javascript/javascript.js'
-// import 'codemirror/theme/ayu-mirage.css'
 
 const props = defineProps({
   modelValue: String,
@@ -25,16 +25,26 @@ const props = defineProps({
     type: String,
     default: 'text/javascript'
   },
+  theme: {
+    type: String,
+    default: 'default'
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
 const cmOptions = computed(() => ({
   mode: props.mode,
-  // theme: 'ayu-mirage',
+  theme: props.theme,
   indentUnit: 2,
   tabSize: 2,
   indentWithTab: false
 }))
+
+const cmRef = ref()
+
+defineExpose({
+  cmRef,
+})
 </script>
 
 <style scoped>

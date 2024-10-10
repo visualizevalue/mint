@@ -1,16 +1,18 @@
 <template>
   <article class="mint-preview">
+    <Embed v-if="animationUrl" :src="animationUrl" />
+
     <div class="static">
       <Image v-if="image" :src="image" :alt="$t('mint.preview.title')" />
       <ImagePreview v-else />
     </div>
 
-    <Embed v-if="animationUrl" :src="animationUrl" />
-
-    <h1 :class="{ '': !name }">{{ name || $t('tokens') }}</h1>
-    <p :class="{ '': !description }">
-      {{ description || $t('mint.preview.no_description') }}
-    </p>
+    <div class="text">
+      <h1 :class="{ '': !name }">{{ name || $t('tokens') }}</h1>
+      <p :class="{ '': !description }">
+        {{ description || $t('mint.preview.no_description') }}
+      </p>
+    </div>
   </article>
 </template>
 
@@ -20,8 +22,23 @@ const { image, animationUrl, name, description } = useCreateMintData()
 
 <style scoped>
 .mint-preview {
-  height: 100%;
-  place-content: center;
+  position: sticky;
+  top: var(--spacer);
+  height: min-content;
+  place-content: start center;
+  border-radius: var(--card-border-radius);
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  gap: var(--spacer);
+
+  > * {
+    grid-column: span 2;
+  }
+
+  .embed {
+    border-radius: var(--card-border-radius);
+    border: var(--border);
+  }
 
   svg {
     box-shadow: var(--border-shadow);
@@ -29,18 +46,22 @@ const { image, animationUrl, name, description } = useCreateMintData()
 
   .image,
   svg {
-    margin-bottom: var(--spacer-sm);
+    border-radius: var(--card-border-radius);
     width: 100%;
   }
 
-  .static {
-    &:has(+ .embed) {
-      width: 30%;
-    }
+  .text {
+    height: 100%;
+    align-content: center;
   }
 
-  .embed {
-    margin: var(--spacer-sm) 0;
+  &:has(.embed) {
+    > .static {
+      grid-column: 1;
+    }
+    > .text {
+      grid-column: 2;
+    }
   }
 
   h1 {

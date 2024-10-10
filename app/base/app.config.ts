@@ -4,7 +4,7 @@ export default defineAppConfig({
       component: 'P5',
       name: 'P5 Renderer',
       version: 1n,
-      address: '0x6a08e806c7ad85b4f4720e76fdd8219a364b710e',
+      address: '0xf6f1f8ea7bbc82a3b3da6fba1c24408e7a9a8fab',
       description: 'Allows using P5 scripts as the artifact content'
     },
   ],

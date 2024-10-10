@@ -13,13 +13,14 @@ const { component } = useCreateMintRendererComponent(props.collection)
 
 <template>
   <div class="mint-detail">
-    <MintSelectRenderer :collection="collection" class="borderless" />
+    <Actions class="borderless">
+      <MintSelectRenderer :collection="collection" />
+      <MintAction :collection="collection" />
+    </Actions>
 
     <MintPreview />
 
     <component :is="components[component]" class="card" />
-
-    <MintAction :collection="collection" />
   </div>
 </template>
 
@@ -33,9 +34,14 @@ const { component } = useCreateMintRendererComponent(props.collection)
     padding: var(--spacer);
   }
 
+  > menu {
+    justify-content: space-between;
+  }
+
   @media (--md) {
     grid-template-columns: 40% 1fr;
 
+    > menu,
     .mint-select-renderer {
       grid-column: span 2;
     }

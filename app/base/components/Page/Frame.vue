@@ -33,9 +33,9 @@ watch(props, () => updateBreadcrumbs())
   &.inset {
     gap: var(--spacer);
     padding: var(--spacer);
-    overflow-x: hidden;
 
     > *:not(.borderless) {
+      border-radius: var(--card-border-radius);
       border: var(--border);
       padding: var(--spacer);
     }
