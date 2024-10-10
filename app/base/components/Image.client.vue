@@ -90,6 +90,7 @@ article.image {
     width: 100%;
     opacity: 0;
     transition: all var(--speed);
+    image-rendering: pixelated;
   }
 
   &:not(.loaded) {
