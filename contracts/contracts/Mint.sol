@@ -153,7 +153,7 @@ contract Mint is ERC1155 {
         emit NewMint(tokenId, unitPrice, amount, msg.sender);
     }
 
-    /// @notice Check until which block a mint is open.
+    /// @notice Check until when a mint is open.
     function mintOpenUntil(uint tokenId) public view returns (uint) {
         return tokens[tokenId].mintedAt + MINT_DURATION;
     }
