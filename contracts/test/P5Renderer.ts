@@ -9,7 +9,7 @@ import { baseFixture, itemMintedFixture } from './fixtures'
 // Need to test on mainnet fork for this to work...
 // `FORK_MAINNET=true hh test test/P5Renderer.ts`
 describe.skip('P5Renderer', () => {
-  it('should expose the name an version', async () => {
+  it('should expose the name of a version', async () => {
     await loadFixture(baseFixture)
 
     const renderer = await hre.viem.deployContract('P5Renderer', [])
