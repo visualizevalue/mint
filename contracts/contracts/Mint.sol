@@ -29,8 +29,8 @@ contract Mint is ERC1155 {
     /// @notice Ethereum block height of when this collection was created.
     uint public initBlock;
 
-    /// @notice Each mint is open for 24 hours (7200 ethereum blocks).
-    uint constant MINT_BLOCKS = 7200;
+    /// @notice Each mint is open for 24 hours.
+    uint constant MINT_DURATION = 24 hours;
 
     /// @dev Emitted when a collector mints a token.
     event NewMint(uint indexed tokenId, uint unitPrice, uint amount, address minter);
@@ -83,8 +83,7 @@ contract Mint is ERC1155 {
         // Set the inial renderer
         renderers.push(renderer);
 
-        // Seting the initialization block height prevents reinitialization
-        // and is used for 24h mint window checks.
+        // Setting the initialization block height prevents reinitialization
         initBlock = block.number;
 
         _transferOwnership(owner);
@@ -96,7 +95,7 @@ contract Mint is ERC1155 {
         string  calldata tokenDescription,
         bytes[] calldata tokenArtifact,
         uint32  tokenRenderer,
-        uint192 tokenData
+        uint160 tokenData
     ) public onlyOwner {
         if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
 
@@ -106,7 +105,7 @@ contract Mint is ERC1155 {
 
         token.name        = tokenName;
         token.description = tokenDescription;
-        token.blocks      = uint32(block.number - initBlock);
+        token.endsAt      = uint64(block.timestamp + MINT_DURATION);
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
 
@@ -147,7 +146,7 @@ contract Mint is ERC1155 {
         uint mintPrice = unitPrice * amount;
         if (mintPrice > msg.value) revert MintPriceNotMet();
 
-        if (mintOpenUntil(tokenId) < block.number) revert MintClosed();
+        if (mintOpenUntil(tokenId) < block.timestamp) revert MintClosed();
 
         _mint(msg.sender, tokenId, amount, "");
 
@@ -156,7 +155,7 @@ contract Mint is ERC1155 {
 
     /// @notice Check until which block a mint is open.
     function mintOpenUntil(uint tokenId) public view returns (uint) {
-        return initBlock + tokens[tokenId].blocks + MINT_BLOCKS;
+        return tokens[tokenId].endsAt;
     }
 
     /// @notice Lets the artist register a new renderer to use for future mints.
