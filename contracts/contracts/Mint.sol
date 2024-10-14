@@ -105,7 +105,7 @@ contract Mint is ERC1155 {
 
         token.name        = tokenName;
         token.description = tokenDescription;
-        token.endsAt      = uint64(block.timestamp + MINT_DURATION);
+        token.mintedAt    = uint64(block.timestamp);
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
 
@@ -155,7 +155,7 @@ contract Mint is ERC1155 {
 
     /// @notice Check until which block a mint is open.
     function mintOpenUntil(uint tokenId) public view returns (uint) {
-        return tokens[tokenId].endsAt;
+        return tokens[tokenId].mintedAt + MINT_DURATION;
     }
 
     /// @notice Lets the artist register a new renderer to use for future mints.

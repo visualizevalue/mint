@@ -6,6 +6,6 @@ struct Token {
     string  description; // token description
     address[] artifact; // artifact pointers (image/artwork) data
     uint32  renderer;  // index of renderer contract address
-    uint64  endsAt;   // delta since contract<>token creation
-    uint160 data;    // optional data for the renderer
+    uint64  mintedAt; // timestamp of token creation
+    uint160 data;    // optional data for renderers
 }
