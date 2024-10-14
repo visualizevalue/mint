@@ -85,7 +85,7 @@ function create(
 
     token.name        = tokenName;
     token.description = tokenDescription;
-    token.blocks      = uint32(block.number - initBlock);
+    token.mintedAt    = uint64(block.timestamp);
     token.renderer    = tokenRenderer;
     token.data        = tokenData;
 
@@ -148,8 +148,8 @@ struct Token {
     string  description; // token description
     address[] artifact; // artifact pointers (image/artwork) data
     uint32  renderer;  // index of renderer contract address
-    uint32  blocks;   // delta since contract<>token creation
-    uint192 data;    // optional data for the renderer
+    uint64  mintedAt; // timestamp of token creation
+    uint160 data;    // optional data for renderers
 }
 
 /// @notice Holds the metadata for each token within this collection.
@@ -189,16 +189,16 @@ function artifact (uint tokenId) public view returns (bytes memory content) {
 Tokens are open to be minted for 7200 blocks (24 hours) after token creation.
 
 ```solidity
-/// @notice Each mint is open for 24 hours (7200 ethereum blocks).
-uint constant MINT_BLOCKS = 7200;
+uint constant MINT_DURATION = 24 hours;
 ```
 
 Client interfaces can query until which a mint stays open via the
 `mintOpenUntil` helper.
+
 ```solidity
-/// @notice Check until which block a mint is open.
+/// @notice Check until when a mint is open.
 function mintOpenUntil(uint tokenId) public view returns (uint) {
-    return initBlock + tokens[tokenId].blocks + MINT_BLOCKS;
+    return tokens[tokenId].mintedAt + MINT_DURATION;
 }
 ```
 
@@ -214,7 +214,7 @@ function mint(uint tokenId, uint amount) external payable {
     uint mintPrice = unitPrice * amount;
     if (mintPrice > msg.value) revert MintPriceNotMet();
 
-    if (mintOpenUntil(tokenId) < block.number) revert MintClosed();
+    if (mintOpenUntil(tokenId) < block.timestamp) revert MintClosed();
 
     _mint(msg.sender, tokenId, amount, "");
 
