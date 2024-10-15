@@ -55,7 +55,7 @@
 
         <div class="mint-status">
           <p v-if="mintOpen">{{ blocksRemaining }} blocks remaining</p>
-          <p v-else-if="currentBlock">Closed at block {{ token.untilBlock }}</p>
+          <p v-else-if="currentBlock">Closed at block {{ token.mintedBlock + BLOCKS_PER_DAY }}</p>
           <p v-if="ownedBalance">You own {{ ownedBalance }} {{ pluralize('token', Number(ownedBalance)) }}</p>
         </div>
 
