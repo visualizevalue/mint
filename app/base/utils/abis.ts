@@ -45,17 +45,16 @@ export const MINT_ABI = parseAbi([
   'event URI(string value, uint256 indexed id)',
   'event Withdrawal(uint256 amount)',
   'function acceptOwnership()',
-  'function artifact(uint256 tokenId) view returns (bytes content)',
   'function balanceOf(address account, uint256 id) view returns (uint256)',
   'function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])',
   'function burn(address account, uint256 tokenId, uint256 amount)',
   'function contractURI() view returns (string)',
-  'function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)',
+  'function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint128 tokenData)',
+  'function get(uint256 tokenId) view returns (string name, string description, address[] artifact, uint32 renderer, uint32 mintedBlock, uint64 closeAt, uint128 data)',
   'function init(string contractName, string contractSymbol, string contractDescription, bytes[] contractImage, address renderer, address owner)',
   'function initBlock() view returns (uint256)',
   'function isApprovedForAll(address account, address operator) view returns (bool)',
   'function latestTokenId() view returns (uint256)',
-  'function metadata() view returns (string name, string symbol, string description)',
   'function mint(uint256 tokenId, uint256 amount) payable',
   'function mintOpenUntil(uint256 tokenId) view returns (uint256)',
   'function owner() view returns (address)',
@@ -68,7 +67,6 @@ export const MINT_ABI = parseAbi([
   'function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)',
   'function setApprovalForAll(address operator, bool approved)',
   'function supportsInterface(bytes4 interfaceId) view returns (bool)',
-  'function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)',
   'function transferOwnership(address newOwner)',
   'function uri(uint256 tokenId) view returns (string)',
   'function version() view returns (uint256)',
@@ -76,7 +74,10 @@ export const MINT_ABI = parseAbi([
 ])
 
 export const RENDERER_ABI = parseAbi([
-  'function name() external pure returns (string memory)',
-  'function version() external pure returns (uint version)',
+  'function name() pure returns (string)',
+  'function version() pure returns (uint256)',
+  'function uri(uint256 tokenId, (string name, string description, address[] artifact, uint32 renderer, uint32 mintedBlock, uint64 closeAt, uint128 data) token) view returns (string)',
+  'function animationURI(uint256, (string name, string description, address[] artifact, uint32 renderer, uint32 mintedBlock, uint64 closeAt, uint128 data)) pure returns (string)',
+  'function imageURI(uint256, (string name, string description, address[] artifact, uint32 renderer, uint32 mintedBlock, uint64 closeAt, uint128 data) token) view returns (string)',
 ])
 
