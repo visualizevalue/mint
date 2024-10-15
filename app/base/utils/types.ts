@@ -44,10 +44,10 @@ export interface Token {
   tokenId: bigint
   name: string
   description: string
-  image: string,
-  animationUrl?: string,
-  scriptUrl?: string,
-  untilBlock: bigint
+  image: string
+  animationUrl?: string
+  closeAt: bigint
+  mintedBlock: bigint
   mintsFetchedUntilBlock: bigint
   mintsBackfilledUntilBlock: bigint
   mints: MintEvent[]

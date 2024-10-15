@@ -15,7 +15,7 @@
             <span class="amount">1<span>×</span></span>
             <span class="price">Artist Mint</span>
 
-            <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - mintedAtBlock" /></span>
+            <span class="time-ago"><BlocksTimeAgo v-if="currentBlock" :blocks="currentBlock - token.mintedBlock" /></span>
 
             <span class="links">
               <NuxtLink :to="`${config.public.blockExplorer}/nft/${token.collection}/${token.tokenId}`" target="_blank">
@@ -51,8 +51,7 @@ const { token, collection } = defineProps({
 const state = useOnchainStore()
 
 const mints = computed(() => state.tokenMints(token.collection, token.tokenId))
-const mintedAtBlock = computed(() => token.untilBlock - MINT_BLOCKS)
-const backfillComplete = computed(() => token.mintsBackfilledUntilBlock <= mintedAtBlock.value)
+const backfillComplete = computed(() => token.mintsBackfilledUntilBlock <= token.mintedBlock)
 
 const loading = ref(true)
 const loadMore = ref()
