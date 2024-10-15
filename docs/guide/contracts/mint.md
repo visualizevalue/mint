@@ -65,7 +65,7 @@ and use to propagate a list of renderers to choose from during token creation.
 In order to create new artifacts, artists call the `create` function on the
 Mint contract, specifying the token `name`, `description`, `artifact` contents,
 the desired token `renderer` (by its index in the aforementioned renderer list)
-and finally the remaining `192` bits for storing arbitrary data
+and finally the remaining `128` bits for storing arbitrary data
 that is later passed to the token metadata renderer.
 
 ```solidity
@@ -75,7 +75,7 @@ function create(
     string  calldata tokenDescription,
     bytes[] calldata tokenArtifact,
     uint32  tokenRenderer,
-    uint192 tokenData
+    uint128 tokenData
 ) public onlyOwner {
     if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
 
@@ -85,7 +85,8 @@ function create(
 
     token.name        = tokenName;
     token.description = tokenDescription;
-    token.blocks      = uint32(block.number - initBlock);
+    token.mintedBlock = uint32(block.number);
+    token.closeAt     = uint64(block.timestamp + MINT_DURATION);
     token.renderer    = tokenRenderer;
     token.data        = tokenData;
 
@@ -139,17 +140,18 @@ to `clear` previously written data and start from scratch.
 
 Token data is encoded into and stored in a `Token` struct onchain and kept
 track of in the `tokens` getter. Each token writes 3 + N(artifact) slots
-to the EVM storage. As mentioned earlier, the remaining 192 bits
+to the EVM storage. As mentioned earlier, the remaining 128 bits
 are optional and can be used to pass custom data to renderers.
 
 ```solidity
 struct Token {
-    string  name;         // token name
-    string  description; // token description
-    address[] artifact; // artifact pointers (image/artwork) data
-    uint32  renderer;  // index of renderer contract address
-    uint32  blocks;   // delta since contract<>token creation
-    uint192 data;    // optional data for the renderer
+    string  name;            // token name
+    string  description;    // token description
+    address[] artifact;    // artifact pointers (image/artwork) data
+    uint32  renderer;     // index of renderer contract address
+    uint32  mintedBlock; // delta init <> created block
+    uint64  closeAt;    // timestamp of mint completion
+    uint128 data;      // optional data for renderers
 }
 
 /// @notice Holds the metadata for each token within this collection.
@@ -189,16 +191,16 @@ function artifact (uint tokenId) public view returns (bytes memory content) {
 Tokens are open to be minted for 7200 blocks (24 hours) after token creation.
 
 ```solidity
-/// @notice Each mint is open for 24 hours (7200 ethereum blocks).
-uint constant MINT_BLOCKS = 7200;
+uint constant MINT_DURATION = 24 hours;
 ```
 
 Client interfaces can query until which a mint stays open via the
 `mintOpenUntil` helper.
+
 ```solidity
-/// @notice Check until which block a mint is open.
+/// @notice Check until when a mint is open.
 function mintOpenUntil(uint tokenId) public view returns (uint) {
-    return initBlock + tokens[tokenId].blocks + MINT_BLOCKS;
+    return tokens[tokenId].mintedAt + MINT_DURATION;
 }
 ```
 
@@ -214,7 +216,7 @@ function mint(uint tokenId, uint amount) external payable {
     uint mintPrice = unitPrice * amount;
     if (mintPrice > msg.value) revert MintPriceNotMet();
 
-    if (mintOpenUntil(tokenId) < block.number) revert MintClosed();
+    if (mintOpenUntil(tokenId) < block.timestamp) revert MintClosed();
 
     _mint(msg.sender, tokenId, amount, "");
 
@@ -278,7 +280,7 @@ The ABI specific to the Mint protocol:
   "event Withdrawal(uint256 amount)",
   "function artifact(uint256 tokenId) view returns (bytes content)",
   "function burn(address account, uint256 tokenId, uint256 amount)",
-  "function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)",
+  "function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint128 tokenData)",
   "function initBlock() view returns (uint256)",
   "function latestTokenId() view returns (uint256)",
   "function metadata() view returns (string name, string symbol, string description)",
@@ -287,7 +289,7 @@ The ABI specific to the Mint protocol:
   "function prepareArtifact(uint256 tokenId, bytes[] tokenArtifact, bool clear)",
   "function registerRenderer(address renderer) returns (uint256)",
   "function renderers(uint256) view returns (address)",
-  "function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)",
+  "function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint64 endsAt, uint128 data)",
   "function uri(uint256 tokenId) view returns (string)",
   "function version() view returns (uint256)",
   "function withdraw()"
@@ -330,7 +332,7 @@ its public getters and methods. Check the full ABI below.
   "function balanceOfBatch(address[] accounts, uint256[] ids) view returns (uint256[])",
   "function burn(address account, uint256 tokenId, uint256 amount)",
   "function contractURI() view returns (string)",
-  "function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint192 tokenData)",
+  "function create(string tokenName, string tokenDescription, bytes[] tokenArtifact, uint32 tokenRenderer, uint128 tokenData)",
   "function init(string contractName, string contractSymbol, string contractDescription, bytes[] contractImage, address renderer, address owner)",
   "function initBlock() view returns (uint256)",
   "function isApprovedForAll(address account, address operator) view returns (bool)",
@@ -348,11 +350,12 @@ its public getters and methods. Check the full ABI below.
   "function safeTransferFrom(address from, address to, uint256 id, uint256 value, bytes data)",
   "function setApprovalForAll(address operator, bool approved)",
   "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-  "function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 blocks, uint192 data)",
+  "function tokens(uint256) view returns (string name, string description, uint32 renderer, uint32 mintedBlock, uint64 closeAt, uint128 data)",
   "function transferOwnership(address newOwner)",
   "function uri(uint256 tokenId) view returns (string)",
   "function version() view returns (uint256)",
   "function withdraw()"
 ]
 ```
+
 :::

@@ -3,7 +3,7 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 6
+export const CURRENT_STATE_VERSION = 7
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
@@ -301,7 +301,7 @@ export const useOnchainStore = () => {
       },
 
       async fetchToken (address: `0x${string}`, id: number | string | bigint) {
-        const client = getPublicClient($wagmi, { chainId })
+        const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const mintContract = getContract({
           address,
           abi: MINT_ABI,
@@ -319,23 +319,28 @@ export const useOnchainStore = () => {
         try {
           console.info(`Fetching token #${tokenId}`)
 
-          const [data, untilBlock] = await Promise.all([
+          const [data, dataUri, closeAt] = await Promise.all([
+            mintContract.read.get([tokenId]) as Promise<[string, string, `0x${string}`[], bigint, bigint, bigint, bigint]>,
             mintContract.read.uri([tokenId], { gas: 100_000_000_000 }) as Promise<string>,
             mintContract.read.mintOpenUntil([tokenId]) as Promise<bigint>,
           ])
 
-          const json = Buffer.from(data.substring(29), `base64`).toString()
+          const [ name, description, _artifact, _renderer, mintedBlock, _closeAt, _extraData ] = data
+
+          const json = Buffer.from(dataUri.substring(29), `base64`).toString()
           const metadata = JSON.parse(json)
 
           const token: Token = {
             tokenId,
             collection: address,
-            name: metadata.name,
-            description: metadata.description,
+            name,
+            description,
             image: metadata.image,
             animationUrl: metadata.animation_url,
-            scriptUrl: metadata.script_url,
-            untilBlock,
+
+            mintedBlock: BigInt(`${mintedBlock}`), // Force bigint
+            closeAt,
+
             mintsBackfilledUntilBlock: 0n,
             mintsFetchedUntilBlock: 0n,
             mints: []
@@ -366,13 +371,13 @@ export const useOnchainStore = () => {
       },
 
       async fetchTokenMints (token: Token) {
+        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
         const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const currentBlock = await client.getBlockNumber()
-        const mintedAtBlock = token.untilBlock - MINT_BLOCKS
-        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
+        const untilBlock = token.mintedBlock + BLOCKS_PER_DAY
 
         // We want to sync until now, or when the mint closed
-        const toBlock = currentBlock > token.untilBlock ? token.untilBlock : currentBlock
+        const toBlock = currentBlock > untilBlock ? untilBlock : currentBlock
 
         if (token.mintsFetchedUntilBlock >= toBlock) {
           return console.info(`mints for #${token.tokenId} already fetched`)
@@ -383,9 +388,9 @@ export const useOnchainStore = () => {
         const maxRangeBlock = toBlock - MAX_BLOCK_RANGE
         const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock // If we've already fetched
           ? token.mintsFetchedUntilBlock + 1n // we want to continue where we left off
-          : maxRangeBlock > mintedAtBlock // Otherwise we'll go back as far as possible
+          : maxRangeBlock > token.mintedBlock // Otherwise we'll go back as far as possible
             ? maxRangeBlock // (to our max range)
-            : mintedAtBlock // (or all the way to when the token minted)
+            : token.mintedBlock // (or all the way to when the token minted)
 
         // Load mints in range
         this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock))
@@ -400,17 +405,16 @@ export const useOnchainStore = () => {
       },
 
       async backfillTokenMints (token: Token) {
-        const mintedAtBlock = token.untilBlock - MINT_BLOCKS
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
         // If we've backfilled all the way;
-        if (storedToken.mintsBackfilledUntilBlock <= mintedAtBlock) return
+        if (storedToken.mintsBackfilledUntilBlock <= token.mintedBlock) return
 
         // We want to fetch the tokens up until where we stopped backfilling (excluding the last block)
         const toBlock = storedToken.mintsBackfilledUntilBlock - 1n
 
         // We want to fetch until our max range (5000), or until when the token minted
-        const fromBlock = toBlock - MAX_BLOCK_RANGE > mintedAtBlock ? toBlock - MAX_BLOCK_RANGE : mintedAtBlock
+        const fromBlock = toBlock - MAX_BLOCK_RANGE > token.mintedBlock ? toBlock - MAX_BLOCK_RANGE : token.mintedBlock
         console.info(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
 
         // Finally, we update our database

@@ -13,7 +13,7 @@ const props = defineProps({
   blocks: BigInt,
 })
 
-const seconds = computed(() => blocksToSeconds(props.blocks))
+const seconds = computed(() => Number(blocksToSeconds(props.blocks)))
 const minutes = computed(() => Math.floor(seconds.value / 60))
 const hours = computed(() => Math.floor(minutes.value / 60))
 const days = computed(() => Math.floor(hours.value / 24))

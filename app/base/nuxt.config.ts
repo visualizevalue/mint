@@ -20,7 +20,7 @@ export default defineNuxtConfig({
       creatorAddress: '',
       defaultAvatar: '/icons/opepen.svg',
       description: 'To mint is a human right.',
-      factoryAddress: '0x0Eb7fB145e697B7e82711BeEFff195F2d7b66cdd',
+      factoryAddress: '0xdc27b70874E36f00290Bd588D5B31AD510ca88a5',
       platformUrl: 'https://networked.art',
       rpc1: 'https://ethereum-sepolia.rpc.subquery.network/public',
       rpc2: 'https://ethereum-sepolia-rpc.publicnode.com',

@@ -27,11 +27,12 @@ export async function baseFixture() {
 export async function factoryFixture() {
   const { owner, publicClient } = await loadFixture(baseFixture)
 
-  const { factory: factoryProxy } = await hre.ignition.deploy(FactoryModule)
+  const { factory: factoryProxy, artifactReader } = await hre.ignition.deploy(FactoryModule)
 
   const factory = await hre.viem.getContractAt('FactoryV1', factoryProxy.address)
 
   return {
+    artifactReader,
     factory,
     owner,
     publicClient,
@@ -39,7 +40,7 @@ export async function factoryFixture() {
 }
 
 export async function collectionFixture() {
-  const { factory, owner, publicClient } = await loadFixture(factoryFixture)
+  const { artifactReader, factory, owner, publicClient } = await loadFixture(factoryFixture)
 
   const hash = await factory.write.clone([
     'VV Mints',
@@ -52,6 +53,7 @@ export async function collectionFixture() {
   const mint = await hre.viem.getContractAt('Mint', createdEvents[0].args.contractAddress as `0x${string}`)
 
   return {
+    artifactReader,
     mint,
     factory,
     owner,
@@ -60,7 +62,7 @@ export async function collectionFixture() {
 }
 
 export async function itemMintedFixture() {
-  const { mint, factory, owner, publicClient } = await loadFixture(collectionFixture)
+  const { artifactReader, mint, factory, owner, publicClient } = await loadFixture(collectionFixture)
 
   await mint.write.create([
     'VVM1',
@@ -71,6 +73,7 @@ export async function itemMintedFixture() {
   ])
 
   return {
+    artifactReader,
     mint,
     factory,
     owner,
@@ -79,7 +82,7 @@ export async function itemMintedFixture() {
 }
 
 export async function itemPreparedFixture() {
-  const { mint, factory, owner, publicClient } = await loadFixture(itemMintedFixture)
+  const { artifactReader, mint, factory, owner, publicClient } = await loadFixture(itemMintedFixture)
 
   const largeArtifact = [...new Array(3000)]
     .map(_ => `Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, maxime iste! Rerum, ipsam facilis aut placeat, laboriosam ex adipisci accusantium debitis corporis eaque voluptatem sequi quod pariatur officiis dignissimos obcaecati!`)
@@ -97,6 +100,7 @@ export async function itemPreparedFixture() {
   }
 
   return {
+    artifactReader,
     mint,
     factory,
     owner,

@@ -1,6 +1,6 @@
 import { getAddress, fromHex, parseGwei, zeroAddress } from 'viem'
 import hre from 'hardhat'
-import { loadFixture, mine } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
+import { loadFixture, mine, time } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { toByteArray } from '@visualizevalue/mint-utils'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
@@ -259,7 +259,7 @@ describe('Mint', () => {
     it('prevents buying an artifact after the mint has closed', async () => {
       const { mint } = await loadFixture(itemMintedFixture)
 
-      await mine(7200n)
+      await time.increase(86_400)
 
       // We mint another token in the meantime to make sure we're checking against the actual token creation
       await mint.write.create(
@@ -323,26 +323,16 @@ describe('Mint', () => {
       expect(data.image).to.equal(TOKEN_TIME)
     })
 
-    it('exposes the token artifact', async () => {
-      const { mint } = await loadFixture(collectionFixture)
-
-      await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0, 0n ])
-
-      const data = await mint.read.artifact([1n])
-
-      expect(fromHex(data, 'string')).to.equal(`BAR`)
-    })
-
-    it('calculates the mint end block correctly', async () => {
+    it('calculates the mint end timestamp correctly', async () => {
       const { mint, publicClient } = await loadFixture(collectionFixture)
 
       const hash = await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0, 0n ])
       await publicClient.waitForTransactionReceipt({ hash })
 
-      const untilBlock = await mint.read.mintOpenUntil([await mint.read.latestTokenId()])
-      const currentBlock = await publicClient.getBlockNumber()
+      const until = await mint.read.mintOpenUntil([await mint.read.latestTokenId()])
+      const currentBlock = await publicClient.getBlock()
 
-      expect(currentBlock + 7200n).to.equal(untilBlock)
+      expect(currentBlock.timestamp + 86_400n).to.equal(until)
     })
 
     it('shows the correct token owner / balance', async () => {
@@ -363,4 +353,81 @@ describe('Mint', () => {
     })
 
   })
+
+  describe('Withdrawals', async () => {
+
+    it('prevents non owners from withdrawing the contract balance', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
+        '0x2540be400', // 10 gwei
+      ])
+
+      const value = parseGwei((60000n * 10n * 10n).toString())
+
+      await mint.write.mint(
+        [1n, 10n],
+        {
+          value,
+          account: JALIL,
+        }
+      )
+
+      await expect(mint.write.withdraw({ account: JALIL }))
+        .to.be.revertedWithCustomError(mint, 'OwnableUnauthorizedAccount')
+    })
+
+    it('allows owners to withdraw the contract balance', async () => {
+      const { mint, owner } = await loadFixture(itemMintedFixture)
+
+      await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
+        '0x2540be400', // 10 gwei
+      ])
+
+      const value = parseGwei((60000n * 10n * 10n).toString())
+
+      await mint.write.mint(
+        [1n, 10n],
+        {
+          value,
+          account: JALIL,
+        }
+      )
+
+      const tx = mint.write.withdraw({ account: owner.account })
+
+      // await expect(tx).to.emit(mint, 'Withdrawal').withArgs(value)
+      await expect(tx).to.changeEtherBalance(owner, value)
+    })
+
+  })
+
+  describe('Ownership', async () => {
+
+    it('exposes the owner of a collection', async () => {
+      const { mint, owner } = await loadFixture(itemMintedFixture)
+
+      expect((await mint.read.owner()).toLowerCase()).to.equal(owner.account.address)
+    })
+
+    it('prevents non owners to transfer ownership', async () => {
+      const { mint } = await loadFixture(itemMintedFixture)
+
+      await expect(mint.write.transferOwnership([JALIL], { account: JALIL }))
+        .to.be.revertedWithCustomError(mint, 'OwnableUnauthorizedAccount')
+    })
+
+    it('allows owners to transfer ownership', async () => {
+      const { mint, owner } = await loadFixture(itemMintedFixture)
+
+      await expect(mint.write.transferOwnership([JALIL], { account: owner.account }))
+        .to.emit(mint, 'OwnershipTransferStarted')
+
+
+      await expect(mint.write.acceptOwnership({ account: JALIL }))
+        .to.emit(mint, 'OwnershipTransferred')
+    })
+
+  })
+
 })

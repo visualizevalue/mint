@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import { Strings   } from "@openzeppelin/contracts/utils/Strings.sol";
-import { Base64    } from "@openzeppelin/contracts/utils/Base64.sol";
+import { Strings        } from "@openzeppelin/contracts/utils/Strings.sol";
+import { Base64         } from "@openzeppelin/contracts/utils/Base64.sol";
 import { IScriptyBuilderV2,
          HTMLRequest,
          HTMLTagType,
-         HTMLTag } from "scripty.sol/contracts/scripty/interfaces/IScriptyBuilderV2.sol";
-import { IRenderer } from "./../interfaces/IRenderer.sol";
-import { Token     } from "./../types/Token.sol";
+         HTMLTag        } from "scripty.sol/contracts/scripty/interfaces/IScriptyBuilderV2.sol";
+import { IRenderer      } from "./../interfaces/IRenderer.sol";
+import { ArtifactReader } from "./../libraries/ArtifactReader.sol";
+import { Token          } from "./../types/Token.sol";
 
 contract P5Renderer is IRenderer {
     address constant private ethfsFileStorage = 0x8FAA1AAb9DA8c75917C43Fb24fDdb513edDC3245;
@@ -25,15 +26,14 @@ contract P5Renderer is IRenderer {
         return 1;
     }
 
-    /// @notice Generate the JSON medata for a given token.
+    /// @notice Generate the JSON metadata for a given token.
     ///         We expect the static preview image and P5 script
     //          to both be encoded in the artifact data.
     function uri (
         uint tokenId,
-        Token calldata token,
-        bytes memory artifact
+        Token calldata token
     ) external view returns (string memory) {
-        (string memory image, string memory script) = abi.decode(artifact, (string, string));
+        (string memory image, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
 
         bytes memory dataURI = abi.encodePacked(
             '{',
@@ -54,13 +54,27 @@ contract P5Renderer is IRenderer {
         );
     }
 
+    /// @notice Generate the preview image URI.
+    function imageURI (uint, Token calldata token) external view returns (string memory) {
+        (string memory image,) = abi.decode(ArtifactReader.get(token), (string, string));
+
+        return image;
+    }
+
+    /// @notice Generate the animation URI.
+    function animationURI (uint, Token calldata token) external view returns (string memory) {
+        (, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
+
+        return generateHtml(token.name, script);
+    }
+
     /// @dev Generates the HTML for a given token script.
-    function generateHtml (string memory name, string memory script) internal view returns (bytes memory) {
+    function generateHtml (string memory title, string memory script) internal view returns (string memory) {
         HTMLTag[] memory headTags = new HTMLTag[](2);
 
         // Name the file
         headTags[0].tagOpen = "<title>";
-        headTags[0].tagContent = bytes(name);
+        headTags[0].tagContent = bytes(title);
         headTags[0].tagClose = "</title>";
 
         // Add base styles
@@ -89,7 +103,7 @@ contract P5Renderer is IRenderer {
         htmlRequest.headTags = headTags;
         htmlRequest.bodyTags = bodyTags;
 
-        return IScriptyBuilderV2(scriptyBuilder).getEncodedHTML(htmlRequest);
+        return string(IScriptyBuilderV2(scriptyBuilder).getEncodedHTML(htmlRequest));
     }
 
 }

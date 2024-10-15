@@ -17,7 +17,7 @@ contract MockRenderer is IRenderer {
     }
 
 
-    function uri (uint, Token calldata token, bytes memory) external pure returns (string memory) {
+    function uri (uint, Token calldata token) external pure returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"foo": "bar",',
@@ -31,6 +31,14 @@ contract MockRenderer is IRenderer {
                 Base64.encode(dataURI)
             )
         );
+    }
+
+    function imageURI (uint, Token calldata) external pure returns (string memory) {
+        return "void";
+    }
+
+    function animationURI (uint, Token calldata) external pure returns (string memory) {
+        return "void";
     }
 
 }

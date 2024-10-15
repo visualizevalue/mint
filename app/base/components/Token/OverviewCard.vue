@@ -32,7 +32,7 @@
             <p v-if="mintOpen" class="closes-in">
               {{ $t('token.closes_in') }} {{ blocksRemaining }} {{ $t('blocks', Number(blocksRemaining)) }}
             </p>
-            <p v-else class="closed-at">{{ $t('token.closed_at_block') }} {{ token.untilBlock }}</p>
+            <p v-else class="closed-at">{{ $t('token.closed_at_block') }} {{ token.mintedBlock + BLOCKS_PER_DAY }}</p>
           </header>
           <Embed v-if="token.animationUrl" :src="token.animationUrl" />
           <Image v-else-if="token.image" :src="token.image" :alt="token.name" />

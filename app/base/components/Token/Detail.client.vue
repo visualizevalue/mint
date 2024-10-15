@@ -55,7 +55,10 @@
 
         <div class="mint-status">
           <p v-if="mintOpen">{{ $t('token.blocks_remaining', { blocksRemaining }) }}</p>
-          <p v-else-if="currentBlock">{{ $t('token.closed_at_block', { untilBlock: token.untilBlock }) }}</p>
+          <p v-else-if="currentBlock">
+            {{ $t('token.closed_at_block')}}  
+            {{ token.mintedBlock + BLOCKS_PER_DAY }}
+          </p>
           <p v-if="ownedBalance">
             {{ $t('token.you_own', { ownedBalance }) }} 
             {{ $t('tokens', Number(ownedBalance)) }}

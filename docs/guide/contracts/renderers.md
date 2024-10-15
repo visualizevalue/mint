@@ -48,12 +48,13 @@ interface IRenderer {
 
 ```solidity [Token.sol]
 struct Token {
-    string  name;         // token name
-    string  description; // token description
-    address[] artifact; // artifact pointers (image/artwork) data
-    uint32  renderer;  // index of renderer contract address
-    uint32  blocks;   // delta since contract<>token creation
-    uint192 data;    // optional data for the renderer
+    string  name;            // token name
+    string  description;    // token description
+    address[] artifact;    // artifact pointers (image/artwork) data
+    uint32  renderer;     // index of renderer contract address
+    uint32  mintedBlock; // delta init <> created block
+    uint64  closeAt;    // timestamp of mint completion
+    uint128 data;      // optional data for renderers
 }
 ```
 
@@ -111,7 +112,7 @@ Also note how the renderer exposes both a `script_url` with just the artists' p5
 and the complete `animation_url` with the entire encoded html page.
 
 ```solidity {9}
-/// @notice Generate the JSON medata for a given token.
+/// @notice Generate the JSON metadata for a given token.
 ///         We expect the static preview image and P5 script
 //          to both be encoded in the artifact data.
 function uri (
