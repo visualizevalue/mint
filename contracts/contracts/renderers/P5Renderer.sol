@@ -26,7 +26,7 @@ contract P5Renderer is IRenderer {
         return 1;
     }
 
-    /// @notice Generate the JSON medata for a given token.
+    /// @notice Generate the JSON metadata for a given token.
     ///         We expect the static preview image and P5 script
     //          to both be encoded in the artifact data.
     function uri (

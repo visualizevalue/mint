@@ -112,7 +112,7 @@ Also note how the renderer exposes both a `script_url` with just the artists' p5
 and the complete `animation_url` with the entire encoded html page.
 
 ```solidity {9}
-/// @notice Generate the JSON medata for a given token.
+/// @notice Generate the JSON metadata for a given token.
 ///         We expect the static preview image and P5 script
 //          to both be encoded in the artifact data.
 function uri (
