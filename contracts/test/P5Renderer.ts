@@ -12,16 +12,25 @@ describe.skip('P5Renderer', () => {
   it('should expose the name of a version', async () => {
     await loadFixture(baseFixture)
 
-    const renderer = await hre.viem.deployContract('P5Renderer', [])
+    const artifactReader = await hre.viem.deployContract('ArtifactReader', [])
+    const renderer = await hre.viem.deployContract('P5Renderer', [], {
+      libraries: {
+        ArtifactReader: artifactReader.address,
+      }
+    })
 
     expect(await renderer.read.name()).to.equal('P5 Renderer')
     expect(await renderer.read.version()).to.equal(1)
   })
 
   it('allows minting (and reading) artifacts', async () => {
-    const { mint } = await loadFixture(itemMintedFixture)
+    const { artifactReader, mint } = await loadFixture(itemMintedFixture)
 
-    const p5Renderer = await hre.viem.deployContract('P5Renderer', [])
+    const p5Renderer = await hre.viem.deployContract('P5Renderer', [], {
+      libraries: {
+        ArtifactReader: artifactReader.address,
+      }
+    })
 
     await expect(mint.write.registerRenderer([p5Renderer.address]))
       .to.emit(mint, 'NewRenderer')
@@ -52,9 +61,13 @@ describe.skip('P5Renderer', () => {
   })
 
   it('should expose the image URI', async () => {
-    const { mint } = await loadFixture(itemMintedFixture)
+    const { artifactReader, mint } = await loadFixture(itemMintedFixture)
 
-    const p5Renderer = await hre.viem.deployContract('P5Renderer', [])
+    const p5Renderer = await hre.viem.deployContract('P5Renderer', [], {
+      libraries: {
+        ArtifactReader: artifactReader.address,
+      }
+    })
     await mint.write.registerRenderer([p5Renderer.address])
 
     const encodedArtifact = encodeAbiParameters(
@@ -70,22 +83,21 @@ describe.skip('P5Renderer', () => {
       0n,
     ])
 
-    const tokenData = await mint.read.tokens([2n])
-    const artifact = await mint.read.artifact([2n])
+    const tokenData = await mint.read.get([2n])
     const token = {
       name: tokenData[0],
       description: tokenData[1],
-      artifact: [zeroAddress],
-      renderer: tokenData[2],
-      mintedBlock: tokenData[3],
-      closeAt: tokenData[4],
-      data: tokenData[5],
+      artifact: tokenData[2],
+      renderer: tokenData[3],
+      mintedBlock: tokenData[4],
+      closeAt: tokenData[5],
+      data: tokenData[6],
     }
 
-    const imageUri = await p5Renderer.read.imageURI([2n, token, artifact])
+    const imageUri = await p5Renderer.read.imageURI([2n, token])
     expect(imageUri).to.equal(P5_HELLO_WORLD_IMG)
 
-    const animationUri = await p5Renderer.read.animationURI([2n, token, artifact])
+    const animationUri = await p5Renderer.read.animationURI([2n, token])
     expect(animationUri).to.equal(P5_HELLO_WORLD_HTML_URL)
   })
 

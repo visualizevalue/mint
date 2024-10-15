@@ -1,16 +1,16 @@
 import hre from 'hardhat'
-import { zeroAddress } from 'viem'
 import { expect } from 'chai'
 import { loadFixture } from '@nomicfoundation/hardhat-network-helpers'
-import { baseFixture, itemMintedFixture } from './fixtures'
+import { itemMintedFixture } from './fixtures'
 import { TOKEN_TIME } from './constants'
 
 describe('Renderer', async () => {
 
   it('should expose the name and version', async () => {
-    await loadFixture(baseFixture)
+    const { mint } = await loadFixture(itemMintedFixture)
 
-    const renderer = await hre.viem.deployContract('Renderer')
+    const rendererAddress = await mint.read.renderers([0n])
+    const renderer = await hre.viem.getContractAt('Renderer', rendererAddress)
 
     expect(await renderer.read.name()).to.equal('Base Renderer')
     expect(await renderer.read.version()).to.equal(1)
@@ -22,19 +22,18 @@ describe('Renderer', async () => {
     const rendererAddress = await mint.read.renderers([0n])
     const renderer = await hre.viem.getContractAt('Renderer', rendererAddress)
 
-    const tokenData = await mint.read.tokens([1n])
-    const artifact = await mint.read.artifact([1n])
+    const tokenData = await mint.read.get([1n])
     const token = {
       name: tokenData[0],
       description: tokenData[1],
-      artifact: [zeroAddress],
-      renderer: tokenData[2],
-      mintedBlock: tokenData[3],
-      closeAt: tokenData[4],
-      data: tokenData[5],
+      artifact: tokenData[2],
+      renderer: tokenData[3],
+      mintedBlock: tokenData[4],
+      closeAt: tokenData[5],
+      data: tokenData[6],
     }
 
-    const uri = await renderer.read.uri([1n, token, artifact])
+    const uri = await renderer.read.uri([1n, token])
     const json = Buffer.from(uri.substring(29), `base64`).toString()
     const data = JSON.parse(json)
 
@@ -49,19 +48,18 @@ describe('Renderer', async () => {
     const rendererAddress = await mint.read.renderers([0n])
     const renderer = await hre.viem.getContractAt('Renderer', rendererAddress)
 
-    const tokenData = await mint.read.tokens([1n])
-    const artifact = await mint.read.artifact([1n])
+    const tokenData = await mint.read.get([1n])
     const token = {
       name: tokenData[0],
       description: tokenData[1],
-      artifact: [zeroAddress],
-      renderer: tokenData[2],
-      mintedBlock: tokenData[3],
-      closeAt: tokenData[4],
-      data: tokenData[5],
+      artifact: tokenData[2],
+      renderer: tokenData[3],
+      mintedBlock: tokenData[4],
+      closeAt: tokenData[5],
+      data: tokenData[6],
     }
 
-    const uri = await renderer.read.imageURI([1n, token, artifact])
+    const uri = await renderer.read.imageURI([1n, token])
     expect(uri).to.equal(TOKEN_TIME)
   })
 
@@ -71,19 +69,18 @@ describe('Renderer', async () => {
     const rendererAddress = await mint.read.renderers([0n])
     const renderer = await hre.viem.getContractAt('Renderer', rendererAddress)
 
-    const tokenData = await mint.read.tokens([1n])
-    const artifact = await mint.read.artifact([1n])
+    const tokenData = await mint.read.get([1n])
     const token = {
       name: tokenData[0],
       description: tokenData[1],
-      artifact: [zeroAddress],
-      renderer: tokenData[2],
-      mintedBlock: tokenData[3],
-      closeAt: tokenData[4],
-      data: tokenData[5],
+      artifact: tokenData[2],
+      renderer: tokenData[3],
+      mintedBlock: tokenData[4],
+      closeAt: tokenData[5],
+      data: tokenData[6],
     }
 
-    const uri = await renderer.read.animationURI([1n, token, artifact])
+    const uri = await renderer.read.animationURI([1n, token])
     expect(uri).to.equal('')
   })
 
