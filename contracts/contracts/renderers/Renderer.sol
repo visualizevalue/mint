@@ -19,6 +19,7 @@ contract Renderer is IRenderer {
         return 1;
     }
 
+    /// @notice Render the metadata URI of the token.
     function uri (uint tokenId, Token calldata token, bytes memory artifact) external pure returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             '{',
@@ -35,6 +36,16 @@ contract Renderer is IRenderer {
                 Base64.encode(dataURI)
             )
         );
+    }
+
+    /// @notice Render the image URI of the token.
+    function imageURI (uint, Token calldata, bytes memory artifact) external pure returns (string memory) {
+        return string(artifact);
+    }
+
+    /// @notice The base renderer doesn't have an animation.
+    function animationURI (uint, Token calldata, bytes memory) external pure returns (string memory) {
+        return "";
     }
 
 }

@@ -54,13 +54,31 @@ contract P5Renderer is IRenderer {
         );
     }
 
+    /// @notice Generate the preview image URI.
+    function imageURI (uint, Token calldata, bytes memory artifact) external pure returns (string memory) {
+        (string memory image,) = abi.decode(artifact, (string, string));
+
+        return image;
+    }
+
+    /// @notice Generate the animation URI.
+    function animationURI (
+        uint,
+        Token calldata token,
+        bytes memory artifact
+    ) external view returns (string memory) {
+        (, string memory script) = abi.decode(artifact, (string, string));
+
+        return generateHtml(token.name, script);
+    }
+
     /// @dev Generates the HTML for a given token script.
-    function generateHtml (string memory name, string memory script) internal view returns (bytes memory) {
+    function generateHtml (string memory title, string memory script) internal view returns (string memory) {
         HTMLTag[] memory headTags = new HTMLTag[](2);
 
         // Name the file
         headTags[0].tagOpen = "<title>";
-        headTags[0].tagContent = bytes(name);
+        headTags[0].tagContent = bytes(title);
         headTags[0].tagClose = "</title>";
 
         // Add base styles
@@ -89,7 +107,7 @@ contract P5Renderer is IRenderer {
         htmlRequest.headTags = headTags;
         htmlRequest.bodyTags = bodyTags;
 
-        return IScriptyBuilderV2(scriptyBuilder).getEncodedHTML(htmlRequest);
+        return string(IScriptyBuilderV2(scriptyBuilder).getEncodedHTML(htmlRequest));
     }
 
 }

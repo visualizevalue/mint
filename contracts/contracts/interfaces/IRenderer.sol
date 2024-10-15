@@ -9,4 +9,8 @@ interface IRenderer {
     function version () external pure returns (uint version);
 
     function uri (uint tokenId, Token calldata token, bytes memory artifact) external view returns (string memory);
+
+    function imageURI (uint tokenId, Token calldata token, bytes memory artifact) external view returns (string memory);
+
+    function animationURI (uint tokenId, Token calldata token, bytes memory artifact) external view returns (string memory);
 }

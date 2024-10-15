@@ -33,4 +33,12 @@ contract MockRenderer is IRenderer {
         );
     }
 
+    function imageURI (uint, Token calldata, bytes memory) external pure returns (string memory) {
+        return "void";
+    }
+
+    function animationURI (uint, Token calldata, bytes memory) external pure returns (string memory) {
+        return "void";
+    }
+
 }

@@ -1,4 +1,4 @@
-import { getAddress, encodeAbiParameters } from 'viem'
+import { getAddress, encodeAbiParameters, zeroAddress } from 'viem'
 import hre from 'hardhat'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { toByteArray } from '@visualizevalue/mint-utils'
@@ -49,6 +49,44 @@ describe.skip('P5Renderer', () => {
     expect(data.image).to.equal(P5_HELLO_WORLD_IMG)
     expect(data.script_url).to.equal(P5_HELLO_WORLD_SCRIPT_URL)
     expect(data.animation_url).to.equal(P5_HELLO_WORLD_HTML_URL)
+  })
+
+  it('should expose the image URI', async () => {
+    const { mint } = await loadFixture(itemMintedFixture)
+
+    const p5Renderer = await hre.viem.deployContract('P5Renderer', [])
+    await mint.write.registerRenderer([p5Renderer.address])
+
+    const encodedArtifact = encodeAbiParameters(
+      [ { type: 'string', name: 'image' }, { type: 'string', name: 'script' } ],
+      [ P5_HELLO_WORLD_IMG, P5_HELLO_WORLD_SCRIPT ],
+    )
+
+    await mint.write.create([
+      'Hello World',
+      '',
+      toByteArray(encodedArtifact),
+      1,
+      0n,
+    ])
+
+    const tokenData = await mint.read.tokens([2n])
+    const artifact = await mint.read.artifact([2n])
+    const token = {
+      name: tokenData[0],
+      description: tokenData[1],
+      artifact: [zeroAddress],
+      renderer: tokenData[2],
+      mintedBlock: tokenData[3],
+      closeAt: tokenData[4],
+      data: tokenData[5],
+    }
+
+    const imageUri = await p5Renderer.read.imageURI([2n, token, artifact])
+    expect(imageUri).to.equal(P5_HELLO_WORLD_IMG)
+
+    const animationUri = await p5Renderer.read.animationURI([2n, token, artifact])
+    expect(animationUri).to.equal(P5_HELLO_WORLD_HTML_URL)
   })
 
 })
