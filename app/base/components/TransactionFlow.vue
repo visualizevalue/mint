@@ -59,6 +59,10 @@ const props = defineProps({
     type: Number,
     default: 2_000,
   },
+  delayAutoclose: {
+    type: Number,
+    default: 2_000,
+  },
   skipConfirmation: Boolean,
   autoCloseSuccess: Boolean,
 })
@@ -146,7 +150,6 @@ const initializeRequest = async (request = cachedRequest.value) => {
     waiting.value = true
     const [receiptObject] = await Promise.all([
       waitForTransactionReceipt($wagmi, { hash: tx.value }),
-      delay(6_000),
     ])
     await delay(props.delayAfter)
     receipt.value = receiptObject
@@ -165,7 +168,7 @@ const initializeRequest = async (request = cachedRequest.value) => {
   waiting.value = false
 
   if (props.autoCloseSuccess && step.value === 'complete') {
-    await delay(2_000)
+    await delay(props.delayAutoclose)
     open.value = false
     await delay(300) // Animations...
   }
