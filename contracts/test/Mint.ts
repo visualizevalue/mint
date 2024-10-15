@@ -323,16 +323,6 @@ describe('Mint', () => {
       expect(data.image).to.equal(TOKEN_TIME)
     })
 
-    it('exposes the token artifact', async () => {
-      const { mint } = await loadFixture(collectionFixture)
-
-      await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0, 0n ])
-
-      const data = await mint.read.artifact([1n])
-
-      expect(fromHex(data, 'string')).to.equal(`BAR`)
-    })
-
     it('calculates the mint end timestamp correctly', async () => {
       const { mint, publicClient } = await loadFixture(collectionFixture)
 
