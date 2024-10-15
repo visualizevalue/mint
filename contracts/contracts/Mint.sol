@@ -95,7 +95,7 @@ contract Mint is ERC1155 {
         string  calldata tokenDescription,
         bytes[] calldata tokenArtifact,
         uint32  tokenRenderer,
-        uint160 tokenData
+        uint128 tokenData
     ) public onlyOwner {
         if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
 
@@ -105,7 +105,8 @@ contract Mint is ERC1155 {
 
         token.name        = tokenName;
         token.description = tokenDescription;
-        token.mintedAt    = uint64(block.timestamp);
+        token.mintedBlock = uint32(block.number);
+        token.closeAt     = uint64(block.timestamp + MINT_DURATION);
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
 
@@ -155,7 +156,7 @@ contract Mint is ERC1155 {
 
     /// @notice Check until when a mint is open.
     function mintOpenUntil(uint tokenId) public view returns (uint) {
-        return tokens[tokenId].mintedAt + MINT_DURATION;
+        return tokens[tokenId].closeAt;
     }
 
     /// @notice Lets the artist register a new renderer to use for future mints.
