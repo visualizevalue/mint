@@ -4,5 +4,7 @@
   "Factory#FactoryV1": "0xC58dd265F2149669FA450B044Cde1C9b573De68d",
   "Factory#Renderer": "0xf1D846838f8a52Dd968aeD70AC26aFD45503e5c5",
   "Factory#Mint": "0x3F7f6C4d84E6d75E747d13b971D277bCbf46D7Bc",
-  "Factory#Factory": "0xdc27b70874E36f00290Bd588D5B31AD510ca88a5"
+  "Factory#Factory": "0xdc27b70874E36f00290Bd588D5B31AD510ca88a5",
+  "P5Renderer#ArtifactReader": "0xf74bCdf3fabbE352aE0344e2af5c811840e1fc01",
+  "P5Renderer#P5Renderer": "0xE7bBCB8AAa9fD0Acb720c24B4C44FAd521BA621f"
 }
