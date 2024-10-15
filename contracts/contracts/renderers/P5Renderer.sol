@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import { Strings   } from "@openzeppelin/contracts/utils/Strings.sol";
-import { Base64    } from "@openzeppelin/contracts/utils/Base64.sol";
+import { Strings        } from "@openzeppelin/contracts/utils/Strings.sol";
+import { Base64         } from "@openzeppelin/contracts/utils/Base64.sol";
 import { IScriptyBuilderV2,
          HTMLRequest,
          HTMLTagType,
-         HTMLTag } from "scripty.sol/contracts/scripty/interfaces/IScriptyBuilderV2.sol";
-import { IRenderer } from "./../interfaces/IRenderer.sol";
-import { Token     } from "./../types/Token.sol";
+         HTMLTag        } from "scripty.sol/contracts/scripty/interfaces/IScriptyBuilderV2.sol";
+import { IRenderer      } from "./../interfaces/IRenderer.sol";
+import { ArtifactReader } from "./../libraries/ArtifactReader.sol";
+import { Token          } from "./../types/Token.sol";
 
 contract P5Renderer is IRenderer {
     address constant private ethfsFileStorage = 0x8FAA1AAb9DA8c75917C43Fb24fDdb513edDC3245;
@@ -30,10 +31,9 @@ contract P5Renderer is IRenderer {
     //          to both be encoded in the artifact data.
     function uri (
         uint tokenId,
-        Token calldata token,
-        bytes memory artifact
+        Token calldata token
     ) external view returns (string memory) {
-        (string memory image, string memory script) = abi.decode(artifact, (string, string));
+        (string memory image, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
 
         bytes memory dataURI = abi.encodePacked(
             '{',
@@ -55,19 +55,15 @@ contract P5Renderer is IRenderer {
     }
 
     /// @notice Generate the preview image URI.
-    function imageURI (uint, Token calldata, bytes memory artifact) external pure returns (string memory) {
-        (string memory image,) = abi.decode(artifact, (string, string));
+    function imageURI (uint, Token calldata token) external view returns (string memory) {
+        (string memory image,) = abi.decode(ArtifactReader.get(token), (string, string));
 
         return image;
     }
 
     /// @notice Generate the animation URI.
-    function animationURI (
-        uint,
-        Token calldata token,
-        bytes memory artifact
-    ) external view returns (string memory) {
-        (, string memory script) = abi.decode(artifact, (string, string));
+    function animationURI (uint, Token calldata token) external view returns (string memory) {
+        (, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
 
         return generateHtml(token.name, script);
     }
