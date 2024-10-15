@@ -90,4 +90,4 @@ function getCreatorCollections(address creator) external view returns (address[]
 ## Factory Deployments
 
 - Mainnet: `0x`
-- Sepolia: [`0x9B47a8351a080ef055aB81E863CF67F3bdCA8365`](https://sepolia.etherscan.io/address/0x9B47a8351a080ef055aB81E863CF67F3bdCA8365)
+- Sepolia: [`0xdc27b70874E36f00290Bd588D5B31AD510ca88a5`](https://sepolia.etherscan.io/address/0xdc27b70874E36f00290Bd588D5B31AD510ca88a5)
