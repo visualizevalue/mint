@@ -7,7 +7,12 @@ const FactoryModule = buildModule('Factory', (m) => {
 
   // Prepare base contracts
   const contractMetadata = m.contract('ContractMetadata')
-  const renderer = m.contract('Renderer')
+  const artifactReader = m.contract('ArtifactReader')
+  const renderer = m.contract('Renderer', [], {
+    libraries: {
+      ArtifactReader: artifactReader,
+    }
+  })
   const mint = m.contract('Mint', [], {
     libraries: {
       ContractMetadata: contractMetadata,
@@ -30,7 +35,10 @@ const FactoryModule = buildModule('Factory', (m) => {
     renderer,
   ])
 
-  return { factory }
+  return {
+    artifactReader,
+    factory
+  }
 })
 
 export default FactoryModule
