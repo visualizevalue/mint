@@ -26,3 +26,16 @@ task('export:abi:mint', 'Exports an abi in its human readable form')
 
     console.log(formatAbi(mint.abi))
   })
+
+task('export:abi:renderer', 'Exports an abi in its human readable form')
+  .setAction(async (_, hre) => {
+    const artifactReader = await hre.viem.deployContract('ArtifactReader', [])
+
+    const mint = await hre.viem.deployContract('Renderer', [], {
+      libraries: {
+        ArtifactReader: artifactReader.address
+      }
+    })
+
+    console.log(formatAbi(mint.abi))
+  })
