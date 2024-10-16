@@ -22,14 +22,17 @@ const { image, animationUrl, name, description } = useCreateMintData()
 
 <style scoped>
 .mint-preview {
-  position: sticky;
-  top: var(--spacer);
   height: min-content;
   place-content: start center;
   border-radius: var(--card-border-radius);
   display: grid;
   grid-template-columns: 20% 1fr;
   gap: var(--spacer);
+
+  @media (--md) {
+    position: sticky;
+    top: var(--spacer);
+  }
 
   > * {
     grid-column: span 2;
