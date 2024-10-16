@@ -29,8 +29,10 @@
               <span>{{ token.name }} <span class="token-id">#{{ token.tokenId }}</span></span>
               <span v-if="token.description" class="description">{{ shortString(token.description, 60, 30) }}</span>
             </h1>
-            <p v-if="mintOpen" class="closes-in">Closes in {{ blocksRemaining }} {{ pluralize('block', Number(blocksRemaining))}}</p>
-            <p v-else class="closed-at">Closed at block {{ token.mintedBlock + BLOCKS_PER_DAY }}</p>
+            <p v-if="mintOpen" class="closes-in">
+              {{ $t('token.closes_in') }} {{ blocksRemaining }} {{ $t('blocks', Number(blocksRemaining)) }}
+            </p>
+            <p v-else class="closed-at">{{ $t('token.closed_at_block') }} {{ token.mintedBlock + BLOCKS_PER_DAY }}</p>
           </header>
           <Embed v-if="token.animationUrl" :src="token.animationUrl" />
           <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
@@ -38,7 +40,7 @@
           <CardLink :to="{
             name: 'id-collection-tokenId',
             params: { id: collection.owner, collection: token.collection, tokenId: `${token.tokenId}` }
-          }">View {{ token.name }}</CardLink>
+          }">{{ $t('token.view')}} {{ token.name }}</CardLink>
         </div>
         <footer>
           <MintTokenBar
@@ -53,7 +55,9 @@
               minted,
             }"
           />
-          <p class="muted" v-if="ownedBalance">You own {{ ownedBalance }} "{{ token.name }}" {{ pluralize('token', Number(ownedBalance)) }}</p>
+          <p class="muted" v-if="ownedBalance">
+            {{ $t('token.you_own', { ownedBalance: ownedBalance, token: token.name }) }} {{ $t('tokens', Number(ownedBalance)) }}
+          </p>
         </footer>
       </slot>
     </article>

@@ -3,14 +3,14 @@
     <Embed v-if="animationUrl" :src="animationUrl" />
 
     <div class="static">
-      <Image v-if="image" :src="image" alt="Preview" />
+      <Image v-if="image" :src="image" :alt="$t('mint.preview.title')" />
       <ImagePreview v-else />
     </div>
 
     <div class="text">
-      <h1 :class="{ '': !name }">{{ name || 'Token' }}</h1>
+      <h1 :class="{ '': !name }">{{ name || $t('tokens') }}</h1>
       <p :class="{ '': !description }">
-        {{ description || 'No description' }}
+        {{ description || $t('mint.preview.no_description') }}
       </p>
     </div>
   </article>

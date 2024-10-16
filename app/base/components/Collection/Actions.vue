@@ -6,7 +6,7 @@
       id="mint-new"
     >
       <Icon type="add" />
-      <span>Mint</span>
+      <span>{{ $t('mint_button') }}</span>
     </Button>
   </menu>
 </template>

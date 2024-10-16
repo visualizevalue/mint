@@ -6,11 +6,11 @@
         <Button
           @click="select('base')"
           :class="{ active: active === 'base' }"
-        >Static</Button>
+        >{{ $t('mint.p5.static') }}</Button>
         <Button
           @click="select('script')"
           :class="{ active: active === 'script' }"
-        >P5 Script</Button>
+        >{{ $t('mint.p5.p5_script') }}</Button>
       </template>
 
       <template #content="{ active }">

@@ -13,7 +13,7 @@
         </div>
 
         <div class="details">
-          <p>{{ collection.latestTokenId }} {{ pluralize('token', Number(collection.latestTokenId)) }} · Created at Block {{ collection.initBlock }}</p>
+          <p>{{ collection.latestTokenId }} {{ $t('tokens', Number(collection.latestTokenId)) }} · {{ $t('collection.created_at_block')}} {{ collection.initBlock }}</p>
         </div>
       </div>
 

@@ -3,21 +3,18 @@
     <template #trigger><MintGasPrice :mint-count="2" /></template>
     <template #content>
       <div class="prose">
-        <h1>Mint Pricing</h1>
-        <p>Artifacts are priced based on the Ethereum network fees at the time of collecting.</p>
-        <p>Network fees (Gas fees) are an essential component of securing and running decentralized blockchains.</p>
-        <p>
-          The cost to store and secure the object on the network is mirrored as compensation to the artist,
-          creating a direct link between network value and creator reward.
-        </p>
+        <h1>{{ $t('popover.mint_pricing')}}</h1>
+        <p>{{ $t('popover.pricing_info')}}</p>
+        <p>{{ $t('popover.network_fees')}}</p>
+        <p>{{ $t('popover.artist_reward') }}</p>
         <table>
           <tbody>
             <tr>
-              <td>Gas price</td>
+              <td>{{ $t('popover.gas_price') }}</td>
               <td><GasPrice /></td>
             </tr>
             <tr>
-              <td>Cost to mint</td>
+              <td>{{ $t('popover.cost_to_mint') }}</td>
               <td>
                 <span>
                   60.000 gas * <GasPrice />
@@ -25,29 +22,26 @@
               </td>
             </tr>
             <tr>
-              <td>Ethereum fee (50%)</td>
+              <td>{{ $t('popover.ethereum_fee') }}</td>
               <td><MintGasPrice /></td>
             </tr>
             <tr>
-              <td>Artist <abbr title="Artist Compensation">comp.</abbr> (50%)</td>
+              <td>{{ $t('popover.artist_comp') }} (50%)</td>
               <td><MintGasPrice /></td>
             </tr>
             <tr>
-              <td>Mint price</td>
+              <td>{{ $t('popover.mint_price') }}</td>
               <td><MintGasPrice :mint-count="2" /></td>
             </tr>
           </tbody>
         </table>
-        <p>
-          Mints of more than one don't increase the Ethereum fee, resulting in higher
-          artist compensation.
-        </p>
+        <p>{{ $t('popover.mint_more_info') }}</p>
         <table>
           <thead>
             <tr>
-              <th>Amount</th>
-              <th>Ethereum fee</th>
-              <th>Artist <abbr title="Artist Compensation">comp.</abbr></th>
+              <th>{{ $t('popover.amount') }}</th>
+              <th>{{ $t('popover.eth_fee')}}</th>
+              <th>{{  $t('popover.artist_comp') }}</th>
             </tr>
           </thead>
           <tbody>

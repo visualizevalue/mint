@@ -1,6 +1,6 @@
 <template>
   <Actions class="borderless">
-    <Button @click="mint">Mint</Button>
+    <Button @click="mint">{{ $t('mint_button') }}</Button>
   </Actions>
 
   <TransactionFlow

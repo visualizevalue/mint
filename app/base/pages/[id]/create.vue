@@ -3,7 +3,7 @@
     <PageFrame
       :title="[
         {
-          text: `Create New`
+          text: $t('create.title')
         }
       ]"
       class="inset"
@@ -15,11 +15,11 @@
           <ImagePreview v-else />
         </div>
         <h1>
-          <span :class="{ '': !title }">{{ title || 'Token' }}</span>
+          <span :class="{ '': !title }">{{ title || $t('create.preview.token') }}</span>
           <small :class="{ '': !symbol }">{{ symbol || '$T' }}</small>
         </h1>
         <p :class="{ '': !description }">
-          {{ description || 'No description' }}
+          {{ description || $t('create.preview.no_description') }}
         </p>
       </article>
 
@@ -54,19 +54,19 @@
               <div>
                 <FormSelectFile @change="setImage" />
                 <p v-if="! isSmall" class="muted">
-                  <small>Note: This should be a small file, prefferably a simple SVG like <a :href="`${base}example-contract-icon.svg`" target="_blank">this one (273 bytes)</a>. Try to make it less than 10kb.</small>
+                  <small> {{ $t('create.note.start') }} <a :href="`${base}example-contract-icon.svg`" target="_blank">{{ $t('create.note.link_text') }}</a>. {{ $t('create.note.end') }}</small>
                 </p>
               </div>
               <FormGroup>
-                <FormInput v-model="title" placeholder="Title" required class="title" />
-                <FormInput v-model="symbol" placeholder="Symbol" required />
+                <FormInput v-model="title" :placeholder="$t('create.form.title_placeholder')" required class="title" />
+                <FormInput v-model="symbol" :placeholder="$t('create.form.symbol_placeholder')" required />
               </FormGroup>
-              <FormInput v-model="description" placeholder="Description" />
+              <FormInput v-model="description" :placeholder="$t('create.form.description_placeholder')" />
             </div>
 
             <Actions>
               <Button type="submit">
-                Deploy
+                {{ $t('create.form.deploy_button') }}
               </Button>
             </Actions>
           </form>

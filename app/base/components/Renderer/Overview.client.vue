@@ -1,6 +1,6 @@
 <template>
   <section class="renderers" id="installed-renderers">
-    <h1>Installed Renderers</h1>
+    <h1>{{ $t('renderer.installed') }}</h1>
 
     <div>
       <RendererOverviewCard
@@ -11,7 +11,7 @@
   </section>
 
   <section class="renderers" id="available-renderers">
-    <h1>Available Renderers</h1>
+    <h1>{{ $t('renderer.available') }}</h1>
 
     <div v-if="availableRenderers.length">
       <RendererOverviewCard
@@ -30,7 +30,7 @@
     </div>
 
     <div v-if="! availableRenderers.length" class="empty">
-      <p>All known Renderers installed</p>
+      <p>{{ $t('renderer.all_installed') }}</p>
     </div>
 
     <RendererInstallCustom :collection="collection" />

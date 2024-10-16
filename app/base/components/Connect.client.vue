@@ -1,6 +1,6 @@
 <template>
   <Button v-if="showConnect" @click="chooseModalOpen = true" :class="class">
-    <slot>Connect</slot>
+    <slot>{{ $t('connect_button') }}</slot>
   </Button>
   <slot v-else name="connected">
     <Account :address="address" />

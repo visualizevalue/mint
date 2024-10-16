@@ -1,6 +1,6 @@
 <template>
   <article class="install-custom-renderer">
-    <h1>Add Custom Renderer</h1>
+    <h1>{{ $t('renderer.add_custom')}}</h1>
     <FormInput v-model="rendererAddressInput" placeholder="0x..." />
 
     <Loading v-if="loading" />
