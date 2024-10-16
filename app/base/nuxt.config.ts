@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
   ],
 
   runtimeConfig: {
@@ -113,10 +113,6 @@ export default defineNuxtConfig({
 
   piniaPersistedstate: {
     storage: 'localStorage'
-  },
-
-  i18n: {
-    vueI18n: './i18n.config.ts'
   },
 
   compatibilityDate: '2024-08-14',
