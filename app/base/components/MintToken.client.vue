@@ -54,9 +54,10 @@ const priceFeed = usePriceFeedStore()
 
 const { data: currentBlock } = useBlockNumber({ chainId: config.public.chainId })
 const blocksRemaining = computed(() => props.token.mintedBlock + 7200n - (currentBlock.value || 0n))
-const mintOpen = computed(() => currentBlock.value && blocksRemaining.value > 0n)
-const secondsRemaining = computed(() => props.token.closeAt - BigInt(nowInSeconds()))
+const now = useNow()
 const until = computed(() => props.token.closeAt)
+const secondsRemaining = computed(() => until.value - BigInt(now.value))
+const mintOpen = computed(() => secondsRemaining.value > 0)
 
 const mintCount = computed(() => props.mintCount)
 const { price, displayPrice } = useMintPrice(mintCount)
