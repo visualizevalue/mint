@@ -9,6 +9,7 @@
       currentBlock,
       blocksRemaining,
       secondsRemaining,
+      countDownStr,
       until,
       transactionFlowConfig: {
         title: {
@@ -58,6 +59,7 @@ const now = useNow()
 const until = computed(() => props.token.closeAt)
 const secondsRemaining = computed(() => until.value - BigInt(now.value))
 const mintOpen = computed(() => secondsRemaining.value > 0)
+const { str: countDownStr } = useCountDown(secondsRemaining)
 
 const mintCount = computed(() => props.mintCount)
 const { price, displayPrice } = useMintPrice(mintCount)

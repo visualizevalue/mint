@@ -24,7 +24,7 @@
         minted,
         mintOpen,
         currentBlock,
-        blocksRemaining,
+        countDownStr,
         transactionFlowConfig
       }"
     >
@@ -54,13 +54,12 @@
         </div>
 
         <div class="mint-status">
-          <p v-if="mintOpen">{{ $t('token.blocks_remaining', { blocksRemaining }) }}</p>
+          <p v-if="mintOpen">{{ $t('token.closes_in', { time: countDownStr }) }}</p>
           <p v-else-if="currentBlock">
-            {{ $t('token.closed_at_block')}}  
-            {{ token.mintedBlock + BLOCKS_PER_DAY }}
+            {{ $t('token.closed_ago', { time: countDownStr })}}
           </p>
           <p v-if="ownedBalance">
-            {{ $t('token.you_own', { ownedBalance }) }} 
+            {{ $t('token.you_own', { ownedBalance }) }}
             {{ $t('tokens', Number(ownedBalance)) }}
           </p>
         </div>

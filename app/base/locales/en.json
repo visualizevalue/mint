@@ -71,9 +71,8 @@
   },
   "token": {
     "by": "By",
-    "closes_in": "Closes in",
-    "blocks_remaining": "{blocksRemaining} blocks remaining",
-    "closed_at_block": "Closed at block",
+    "closes_in": "Closes in {time}",
+    "closed_ago": "Closed {time} ago",
     "you_own": "You own {ownedBalance} {tokens}",
     "mint_timeline": "Mint Timeline",
     "artist_mint": "Artist Mint",

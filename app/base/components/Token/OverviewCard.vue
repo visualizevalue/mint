@@ -9,6 +9,8 @@
       minted,
       mintOpen,
       blocksRemaining,
+      secondsRemaining,
+      countDownStr,
       transactionFlowConfig
     }"
   >
@@ -20,6 +22,8 @@
         :mintRequest="mintRequest"
         :minted="minted"
         :mintOpen="mintOpen"
+        :secondsRemaining="secondsRemaining"
+        :countDownStr="countDownStr"
         :blocksRemaining="blocksRemaining"
         :transactionFlowConfig="transactionFlowConfig"
       >
@@ -29,10 +33,7 @@
               <span>{{ token.name }} <span class="token-id">#{{ token.tokenId }}</span></span>
               <span v-if="token.description" class="description">{{ shortString(token.description, 60, 30) }}</span>
             </h1>
-            <p v-if="mintOpen" class="closes-in">
-              {{ $t('token.closes_in') }} {{ blocksRemaining }} {{ $t('blocks', Number(blocksRemaining)) }}
-            </p>
-            <p v-else class="closed-at">{{ $t('token.closed_at_block') }} {{ token.mintedBlock + BLOCKS_PER_DAY }}</p>
+            <p v-if="mintOpen" class="closes-in">{{ $t('token.closes_in', { time: countDownStr }) }}</p>
           </header>
           <Embed v-if="token.animationUrl" :src="token.animationUrl" />
           <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
@@ -65,6 +66,8 @@
 </template>
 
 <script setup lang="ts">
+import CountDownUntil from '../CountDownUntil.vue';
+
 const { token } = defineProps<{
   token: Token
 }>()
