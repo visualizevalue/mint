@@ -1,7 +1,7 @@
 import { getAddress, fromHex, parseGwei, zeroAddress } from 'viem'
 import hre from 'hardhat'
 import { loadFixture, mine, time } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
-import { toByteArray } from '@visualizevalue/mint-utils'
+import { toByteArray, encodeTokenMetadata } from '@visualizevalue/mint-utils'
 import { expect } from 'chai'
 import { JALIL, TOKEN_TIME } from './constants'
 import { collectionFixture, itemMintedFixture, itemPreparedFixture } from './fixtures'
@@ -16,8 +16,10 @@ describe('Mint', () => {
       const address = getAddress(owner.account.address)
 
       await expect(mint.write.create([
-        'VVM1',
-        'Lorem Ipsum dolor sit amet.',
+        encodeTokenMetadata(
+          'VVM1',
+          'Lorem Ipsum dolor sit amet.'
+        ),
         toByteArray(TOKEN_TIME),
         0,
         0n,
@@ -30,8 +32,10 @@ describe('Mint', () => {
       const address = getAddress(owner.account.address)
 
       await expect(mint.write.create([
-        'VVM1',
-        'Lorem Ipsum dolor sit amet.',
+        encodeTokenMetadata(
+          'VVM1',
+          'Lorem Ipsum dolor sit amet.'
+        ),
         toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
         0,
         0n,
@@ -44,8 +48,10 @@ describe('Mint', () => {
       const address = getAddress(owner.account.address)
 
       await expect(mint.write.create([
-        'VVM2',
-        'Lorem Ipsum dolor sit amet.',
+        encodeTokenMetadata(
+          'VVM2',
+          'Lorem Ipsum dolor sit amet.'
+        ),
         toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
         0,
         0n,
@@ -63,8 +69,10 @@ describe('Mint', () => {
 
       await expect(mint.write.create(
         [
-          'VVM2',
-          'Lorem Ipsum dolor sit amet.',
+          encodeTokenMetadata(
+            'VVM2',
+            'Lorem Ipsum dolor sit amet.'
+          ),
           toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
           0,
           0n,
@@ -76,7 +84,7 @@ describe('Mint', () => {
     it('prepare a large artifact across multiple transactions', async () => {
       const { mint, largeArtifact } = await loadFixture(itemPreparedFixture)
 
-      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0, 0n ])
+      await mint.write.create([ encodeTokenMetadata('PREPARED', ''), toByteArray(''), 0, 0n ])
 
       // @ts-ignore
       const dataURI = await mint.read.uri([2n], { gas: 1_000_000_000 })
@@ -97,7 +105,7 @@ describe('Mint', () => {
         ],
       )).to.be.fulfilled
 
-      await mint.write.create([ 'PREPARED', '', toByteArray(''), 0, 0n ])
+      await mint.write.create([ encodeTokenMetadata('PREPARED', ''), toByteArray(''), 0, 0n ])
 
       const dataURI = await mint.read.uri([2n]) as string
       const json = Buffer.from(dataURI.substring(29), `base64`).toString()
@@ -111,8 +119,10 @@ describe('Mint', () => {
 
       await expect(mint.write.create(
         [
-          'VVM2',
-          'Lorem Ipsum dolor sit amet.',
+          encodeTokenMetadata(
+            'VVM2',
+            'Lorem Ipsum dolor sit amet.'
+          ),
           toByteArray('ipfs://qmy3zdkwrqnwqenczocdrr3xgqfxjxmgefup4htqenbvwo'),
           0,
           0n,
@@ -131,8 +141,10 @@ describe('Mint', () => {
 
       await expect(mint.write.create(
         [
-          'VVM2',
-          'Lorem Ipsum dolor sit amet.',
+          encodeTokenMetadata(
+            'VVM2',
+            'Lorem Ipsum dolor sit amet.'
+          ),
           [],
           0,
           0n,
@@ -169,8 +181,7 @@ describe('Mint', () => {
         .withArgs(getAddress(mockRenderer.address), 1n)
 
       await expect(mint.write.create([
-        'mock',
-        '',
+        encodeTokenMetadata('mock', ''),
         toByteArray('void'),
         1,
         19n,
@@ -264,8 +275,10 @@ describe('Mint', () => {
       // We mint another token in the meantime to make sure we're checking against the actual token creation
       await mint.write.create(
         [
-          'VVM2',
-          'Lorem Ipsum dolor sit amet.',
+          encodeTokenMetadata(
+            'VVM2',
+            'Lorem Ipsum dolor sit amet.'
+          ),
           [],
           0,
           0n,
@@ -326,7 +339,7 @@ describe('Mint', () => {
     it('calculates the mint end timestamp correctly', async () => {
       const { mint, publicClient } = await loadFixture(collectionFixture)
 
-      const hash = await mint.write.create([ 'FOO', '', toByteArray('BAR'), 0, 0n ])
+      const hash = await mint.write.create([ encodeTokenMetadata('FOO', ''), toByteArray('BAR'), 0, 0n ])
       await publicClient.waitForTransactionReceipt({ hash })
 
       const until = await mint.read.mintOpenUntil([await mint.read.latestTokenId()])

@@ -91,8 +91,7 @@ contract Mint is ERC1155 {
 
     /// @notice Lets the artist create a new token.
     function create(
-        string  calldata tokenName,
-        string  calldata tokenDescription,
+        bytes calldata tokenMetadata,
         bytes[] calldata tokenArtifact,
         uint32  tokenRenderer,
         uint128 tokenData
@@ -103,12 +102,13 @@ contract Mint is ERC1155 {
 
         Token storage token = tokens[latestTokenId];
 
-        token.name        = tokenName;
-        token.description = tokenDescription;
         token.mintedBlock = uint32(block.number);
         token.closeAt     = uint64(block.timestamp + MINT_DURATION);
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
+
+        // Write the token metadata to storage.
+        token.metadata = SSTORE2.write(tokenMetadata);
 
         if (tokenArtifact.length > 0) {
             // Clear previously prepared artifact data.
@@ -141,8 +141,7 @@ contract Mint is ERC1155 {
 
     /// @notice Get the bare token data for a given id.
     function get(uint tokenId) external view returns (
-        string memory name,
-        string memory description,
+        address metadata,
         address[] memory artifact,
         uint32 renderer,
         uint32 mintedBlock,
@@ -152,8 +151,7 @@ contract Mint is ERC1155 {
         Token storage token = tokens[tokenId];
 
         return (
-            token.name,
-            token.description,
+            token.metadata,
             token.artifact,
             token.renderer,
             token.mintedBlock,

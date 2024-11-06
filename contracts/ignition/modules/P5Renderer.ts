@@ -2,11 +2,11 @@ import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import FactoryModule from './Factory'
 
 const P5RendererModule = buildModule('P5Renderer', (m) => {
-  const { artifactReader } = m.useModule(FactoryModule)
+  const { storageReader } = m.useModule(FactoryModule)
 
   const renderer = m.contract('P5Renderer', [], {
     libraries: {
-      ArtifactReader: artifactReader,
+      StorageReader: storageReader,
     }
   })
 

@@ -1,6 +1,6 @@
 import { parseEther } from 'viem'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
-import { chunkArray, toByteArray } from '@visualizevalue/mint-utils'
+import { chunkArray, toByteArray, encodeTokenMetadata } from '@visualizevalue/mint-utils'
 import hre from 'hardhat'
 import { ICON, JALIL, TOKEN_TIME } from './constants'
 import FactoryModule from '../ignition/modules/Factory'
@@ -65,8 +65,10 @@ export async function itemMintedFixture() {
   const { artifactReader, mint, factory, owner, publicClient } = await loadFixture(collectionFixture)
 
   await mint.write.create([
-    'VVM1',
-    'Lorem Ipsum dolor sit amet.',
+    encodeTokenMetadata(
+      'VVM1',
+      'Lorem Ipsum dolor sit amet.'
+    ),
     toByteArray(TOKEN_TIME),
     0,
     0n,

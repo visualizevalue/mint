@@ -7,10 +7,11 @@ const FactoryModule = buildModule('Factory', (m) => {
 
   // Prepare base contracts
   const contractMetadata = m.contract('ContractMetadata')
-  const artifactReader = m.contract('ArtifactReader')
+  const storageReader = m.contract('StorageReader')
   const renderer = m.contract('Renderer', [], {
     libraries: {
-      ArtifactReader: artifactReader,
+      StorageReader: storageReader,
+
     }
   })
   const mint = m.contract('Mint', [], {
@@ -36,7 +37,7 @@ const FactoryModule = buildModule('Factory', (m) => {
   ])
 
   return {
-    artifactReader,
+    storageReader,
     factory
   }
 })

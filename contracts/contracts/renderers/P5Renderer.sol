@@ -8,7 +8,7 @@ import { IScriptyBuilderV2,
          HTMLTagType,
          HTMLTag        } from "scripty.sol/contracts/scripty/interfaces/IScriptyBuilderV2.sol";
 import { IRenderer      } from "./../interfaces/IRenderer.sol";
-import { ArtifactReader } from "./../libraries/ArtifactReader.sol";
+import { StorageReader } from "./../libraries/StorageReader.sol";
 import { Token          } from "./../types/Token.sol";
 
 contract P5Renderer is IRenderer {
@@ -33,16 +33,17 @@ contract P5Renderer is IRenderer {
         uint tokenId,
         Token calldata token
     ) external view returns (string memory) {
-        (string memory image, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
+        (string memory name, string memory description) = StorageReader.getMetadata(token);
+        (string memory image, string memory script) = abi.decode(StorageReader.getArtifact(token), (string, string));
 
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"id": "', Strings.toString(tokenId), '",',
-                '"name": "', token.name, '",',
-                '"description": "', token.description, '",',
+                '"name": "', name, '",',
+                '"description": "', description, '",',
                 '"image": "', image, '",',
                 '"script_url": "data:text/javascript;base64,', Base64.encode(bytes(script)), '",',
-                '"animation_url": "', generateHtml(token.name, script), '"',
+                '"animation_url": "', generateHtml(name, script), '"',
             '}'
         );
 
@@ -56,16 +57,17 @@ contract P5Renderer is IRenderer {
 
     /// @notice Generate the preview image URI.
     function imageURI (uint, Token calldata token) external view returns (string memory) {
-        (string memory image,) = abi.decode(ArtifactReader.get(token), (string, string));
+        (string memory image,) = abi.decode(StorageReader.getArtifact(token), (string, string));
 
         return image;
     }
 
     /// @notice Generate the animation URI.
     function animationURI (uint, Token calldata token) external view returns (string memory) {
-        (, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
+        (string memory name, ) = StorageReader.getMetadata(token);
+        (, string memory script) = abi.decode(StorageReader.getArtifact(token), (string, string));
 
-        return generateHtml(token.name, script);
+        return generateHtml(name, script);
     }
 
     /// @dev Generates the HTML for a given token script.

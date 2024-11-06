@@ -2,8 +2,7 @@
 pragma solidity ^0.8.24;
 
 struct Token {
-    string  name;            // token name
-    string  description;    // token description
+    address   metadata;     // token name and description
     address[] artifact;    // artifact pointers (image/artwork) data
     uint32  renderer;     // index of renderer contract address
     uint32  mintedBlock; // creation block height of the token
