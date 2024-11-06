@@ -24,13 +24,12 @@ describe('Renderer', async () => {
 
     const tokenData = await mint.read.get([1n])
     const token = {
-      name: tokenData[0],
-      description: tokenData[1],
-      artifact: tokenData[2],
-      renderer: tokenData[3],
-      mintedBlock: tokenData[4],
-      closeAt: tokenData[5],
-      data: tokenData[6],
+      metadata: tokenData[0],
+      artifact: tokenData[1],
+      renderer: tokenData[2],
+      mintedBlock: tokenData[3],
+      closeAt: tokenData[4],
+      data: tokenData[5],
     }
 
     const uri = await renderer.read.uri([1n, token])
@@ -50,13 +49,12 @@ describe('Renderer', async () => {
 
     const tokenData = await mint.read.get([1n])
     const token = {
-      name: tokenData[0],
-      description: tokenData[1],
-      artifact: tokenData[2],
-      renderer: tokenData[3],
-      mintedBlock: tokenData[4],
-      closeAt: tokenData[5],
-      data: tokenData[6],
+      metadata: tokenData[0],
+      artifact: tokenData[1],
+      renderer: tokenData[2],
+      mintedBlock: tokenData[3],
+      closeAt: tokenData[4],
+      data: tokenData[5],
     }
 
     const uri = await renderer.read.imageURI([1n, token])
@@ -71,13 +69,12 @@ describe('Renderer', async () => {
 
     const tokenData = await mint.read.get([1n])
     const token = {
-      name: tokenData[0],
-      description: tokenData[1],
-      artifact: tokenData[2],
-      renderer: tokenData[3],
-      mintedBlock: tokenData[4],
-      closeAt: tokenData[5],
-      data: tokenData[6],
+      metadata: tokenData[0],
+      artifact: tokenData[1],
+      renderer: tokenData[2],
+      mintedBlock: tokenData[3],
+      closeAt: tokenData[4],
+      data: tokenData[5],
     }
 
     const uri = await renderer.read.animationURI([1n, token])
