@@ -149,7 +149,7 @@ struct Token {
     string  description;    // token description
     address[] artifact;    // artifact pointers (image/artwork) data
     uint32  renderer;     // index of renderer contract address
-    uint32  mintedBlock; // delta init <> created block
+    uint32  mintedBlock; // creation block height of the token
     uint64  closeAt;    // timestamp of mint completion
     uint128 data;      // optional data for renderers
 }
@@ -188,7 +188,7 @@ function artifact (uint tokenId) public view returns (bytes memory content) {
 
 ## Purchasing Tokens
 
-Tokens are open to be minted for 7200 blocks (24 hours) after token creation.
+Tokens are open to be minted for 24 hours after token creation.
 
 ```solidity
 uint constant MINT_DURATION = 24 hours;

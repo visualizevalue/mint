@@ -29,20 +29,21 @@ function artifact (uint tokenId) public view returns (bytes memory content) {
 ```
 
 All renderers have to implement the simple `IRenderer` interface.
-They receive the `tokenId`, the `token` metadata (name, description, ...)
-and the resolved `artifact` data.
+They receive the `tokenId`, the `token` metadata (name, description, ...).
 
 ::: code-group
 
 ```solidity [IRenderer.sol]
 interface IRenderer {
+    function name () external pure returns (string memory);
 
-    function uri (
-        uint tokenId,
-        Token calldata token,
-        bytes memory artifact
-    ) external view returns (string memory)
+    function version () external pure returns (uint version);
 
+    function uri (uint tokenId, Token calldata token) external view returns (string memory);
+
+    function imageURI (uint tokenId, Token calldata token) external view returns (string memory);
+
+    function animationURI (uint tokenId, Token calldata token) external view returns (string memory);
 }
 ```
 
@@ -52,7 +53,7 @@ struct Token {
     string  description;    // token description
     address[] artifact;    // artifact pointers (image/artwork) data
     uint32  renderer;     // index of renderer contract address
-    uint32  mintedBlock; // delta init <> created block
+    uint32  mintedBlock; // creation block height of the token
     uint64  closeAt;    // timestamp of mint completion
     uint128 data;      // optional data for renderers
 }
@@ -71,7 +72,10 @@ artifact data as a blob.
 ```solidity
 contract Renderer is IRenderer {
 
-    function uri (uint tokenId, Token calldata token, bytes memory artifact) external pure returns (string memory) {
+    /// @notice Render the metadata URI of the token.
+    function uri (uint tokenId, Token calldata token) external view returns (string memory) {
+        bytes memory artifact = ArtifactReader.get(token);
+
         bytes memory dataURI = abi.encodePacked(
             '{',
                 '"id": "', Strings.toString(tokenId), '",',
