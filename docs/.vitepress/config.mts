@@ -69,6 +69,10 @@ export default defineConfig({
           link: '/guide/faq/'
         },
         {
+          text: 'Terms and Conditions',
+          link: '/terms-and-conditions'
+        },
+        {
           text: 'Ecosystem',
           link: '/ecosystem/artists'
         },

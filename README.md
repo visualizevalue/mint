@@ -20,3 +20,7 @@ between network value and creator reward.
 
 ## 2. Browse the code
 
+---
+
+- [Terms and Conditions](./docs/terms-and-conditions.md)
+
