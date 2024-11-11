@@ -59,6 +59,9 @@ contract Mint is ERC1155 {
     /// @dev Thrown when trying to create a token with a non existent renderer assigned.
     error NonExistentRenderer();
 
+    /// @dev Thrown when the withdrawal fails.
+    error WithdrawalFailed();
+
     /// @notice Initializes the collection contract.
     function init(
         string calldata contractName,
@@ -194,9 +197,12 @@ contract Mint is ERC1155 {
 
     /// @notice Lets the artist withdraw the contract balance.
     function withdraw() external onlyOwner {
-        payable(owner()).transfer(address(this).balance);
+        uint balance = address(this).balance;
 
-        emit Withdrawal(address(this).balance);
+        (bool success, ) = payable(owner()).call{value: balance}("");
+        if (! success) revert WithdrawalFailed();
+
+        emit Withdrawal(balance);
     }
 
     /// @notice Get the metadata for a given token id.

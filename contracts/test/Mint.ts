@@ -356,7 +356,7 @@ describe('Mint', () => {
 
   describe('Withdrawals', async () => {
 
-    it('prevents non owners from withdrawing the contract balance', async () => {
+    it('prevents non-owners from withdrawing the contract balance', async () => {
       const { mint } = await loadFixture(itemMintedFixture)
 
       await hre.network.provider.send('hardhat_setNextBlockBaseFeePerGas', [
@@ -394,10 +394,18 @@ describe('Mint', () => {
         }
       )
 
-      const tx = mint.write.withdraw({ account: owner.account })
+      await expect(mint.write.withdraw({ account: owner.account })).to.changeEtherBalance(owner, value)
 
-      // await expect(tx).to.emit(mint, 'Withdrawal').withArgs(value)
-      await expect(tx).to.changeEtherBalance(owner, value)
+      await mint.write.mint(
+        [1n, 10n],
+        {
+          value,
+          account: JALIL,
+        }
+      )
+
+      await expect(mint.write.withdraw({ account: owner.account }))
+        .to.emit(mint, 'Withdrawal').withArgs(value)
     })
 
   })
