@@ -1,6 +1,6 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import { toByteArray } from '@visualizevalue/mint-utils'
-import { ICON } from '../../test/constants'
+import { LOGO } from '../../test/constants'
 
 const FactoryModule = buildModule('Factory', (m) => {
   const owner = m.getAccount(0)
@@ -19,7 +19,7 @@ const FactoryModule = buildModule('Factory', (m) => {
     },
     after: [contractMetadata, renderer]
   })
-  m.call(mint, 'init', ['VV Mint', 'VVM', '', toByteArray(ICON), renderer, owner])
+  m.call(mint, 'init', ['Mint', 'MINT', '', toByteArray(LOGO), renderer, owner])
 
   // Deploy the initial Factory implementation
   const factoryV1 = m.contract('FactoryV1', [], {
