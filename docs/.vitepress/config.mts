@@ -117,6 +117,10 @@ export default defineConfig({
 
     search: {
       provider: 'local',
-    }
+    },
+
+    footer: {
+      message: 'Released under the MIT License. <a href="./terms-and-conditions">Terms of Service</a>',
+    },
   }
 })
