@@ -120,7 +120,7 @@ export default defineConfig({
     },
 
     footer: {
-      message: 'Released under the MIT License. <a href="./terms-and-conditions">Terms of Service</a>',
+      message: 'Released under the MIT License. <a href="./terms-and-conditions">Terms and Conditions</a> apply.',
     },
   }
 })
