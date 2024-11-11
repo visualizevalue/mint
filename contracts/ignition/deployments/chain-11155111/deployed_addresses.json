@@ -1,10 +1,8 @@
 {
-  "Factory#ArtifactReader": "0x5e5007B43689c16D177B086520B288F210354279",
-  "Factory#ContractMetadata": "0x1e4b2AA77593284f444E15b9f2adFD3C3bf08D8B",
-  "Factory#FactoryV1": "0xC58dd265F2149669FA450B044Cde1C9b573De68d",
-  "Factory#Renderer": "0xf1D846838f8a52Dd968aeD70AC26aFD45503e5c5",
-  "Factory#Mint": "0x3F7f6C4d84E6d75E747d13b971D277bCbf46D7Bc",
-  "Factory#Factory": "0xdc27b70874E36f00290Bd588D5B31AD510ca88a5",
-  "P5Renderer#ArtifactReader": "0xf74bCdf3fabbE352aE0344e2af5c811840e1fc01",
-  "P5Renderer#P5Renderer": "0xE7bBCB8AAa9fD0Acb720c24B4C44FAd521BA621f"
+  "Factory#ArtifactReader": "0x281A75Aa1b2b513F2b10C8e58a74cCc5Bbe39FF4",
+  "Factory#ContractMetadata": "0xeA805c9dcaaC9385089b04E723b7644E64bc6eB1",
+  "Factory#FactoryV1": "0x1268168b147F46426bbD9882548F65D96B7FAD04",
+  "Factory#Renderer": "0x901603B81aae5eb2A1Dc3cEc77280bF6e4727bfE",
+  "Factory#Mint": "0x5808B1Dd321fdf4F762fd71ee902Ee19073Dd78C",
+  "Factory#Factory": "0x750C5a6CFD40C9CaA48C31D87AC2a26101Acd517"
 }
