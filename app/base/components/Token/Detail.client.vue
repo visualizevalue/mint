@@ -25,6 +25,7 @@
         mintOpen,
         currentBlock,
         countDownStr,
+        blocksRemaining,
         transactionFlowConfig
       }"
     >
@@ -54,7 +55,9 @@
         </div>
 
         <div class="mint-status">
-          <p v-if="mintOpen">{{ $t('token.closes_in', { time: countDownStr }) }}</p>
+          <p v-if="mintOpen">
+            <TokenMintOpen :blocks="blocksRemaining" :time="countDownStr" />
+          </p>
           <p v-else-if="currentBlock">
             {{ $t('token.closed_ago', { time: countDownStr })}}
           </p>
