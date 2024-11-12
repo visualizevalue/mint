@@ -46,7 +46,7 @@ export default defineNuxtPlugin(nuxtApp => {
     }),
     ssr: true,
     transports: {
-      [mainnet.id]: http(), // TODO: replace this with custom transports on mainnet deployment
+      [mainnet.id]: transports,
       [sepolia.id]: transports,
       [holesky.id]: transports,
       [localhost.id]: transports,

@@ -77,7 +77,7 @@
     "mint_timeline": "Mint Timeline",
     "artist_mint": "Artist Mint",
     "load_more": "Load more",
-    "blocks_ago": "{blocks} blocks ago",
+    "blocks_ago": "just now | one block ago | {blocks} blocks ago",
     "loading_mint_history": "Loading Mint History...",
     "view": "View"
   },

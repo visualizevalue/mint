@@ -66,8 +66,6 @@
 </template>
 
 <script setup lang="ts">
-import CountDownUntil from '../CountDownUntil.vue';
-
 const { token } = defineProps<{
   token: Token
 }>()

@@ -3,7 +3,7 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 7
+export const CURRENT_STATE_VERSION = 8
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
