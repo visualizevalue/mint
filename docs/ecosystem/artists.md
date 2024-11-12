@@ -2,9 +2,8 @@
 
 Known artists using the Mint protocol
 
-TBI
+## Visualize Value
 
-<!-- ## Visualize Value -->
-<!---->
-<!-- ![Visualize Value](../assets/artists/vv.png) -->
-<!-- [sepolia.mint.vv.xyz](https://sepolia.mint.vv.xyz) -->
+![Visualize Value](../assets/artists/vv.png)
+[mint.vv.xyz](https://mint.vv.xyz)
+
