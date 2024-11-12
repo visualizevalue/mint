@@ -38,7 +38,9 @@ const isMe = useIsMeCheck(id)
 const { loading } = useLoadArtistData(id)
 const collections = computed(() => isMe.value
   ? store.forArtist(id.value)
-  : store.forArtistOnlyMinted(id.value)
+  // TODO: Swap again
+  // : store.forArtistOnlyMinted(id.value)
+  : store.forArtist(id.value)
 )
 
 // Force update collections with no mints
