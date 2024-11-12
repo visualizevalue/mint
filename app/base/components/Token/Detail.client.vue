@@ -74,8 +74,6 @@
 </template>
 
 <script setup lang="ts">
-import ExpandableText from '../ExpandableText.vue'
-
 const { token } = defineProps<{
   token: Token
 }>()
