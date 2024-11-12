@@ -65,7 +65,7 @@ const formattedPrice = computed(() => props.mint && customFormatEther(props.mint
     }
 
     @container (min-width: 24rem) {
-      grid-template-columns: 6rem 3rem 1fr 1fr 2rem;
+      grid-template-columns: max(6rem, 40%) 3rem 1fr 1fr 2rem;
       gap: var(--spacer);
 
       .account {
