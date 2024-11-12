@@ -1,0 +1,8 @@
+:root {
+
+  --alert-info-color: var(--color);
+  --alert-info-background-color: transparent;
+  --alert-info-border-color: var(--muted);
+
+}
+

@@ -9,14 +9,19 @@
       class="inset"
     >
 
+      <Alert dismiss="create-new-collection-info">
+        <h1>{{ $t('create.alert_new.title') }}</h1>
+        <p>{{ $t('create.alert_new.text') }}</p>
+      </Alert>
+
       <article class="preview">
         <div class="visual">
           <Image v-if="image" :src="image" alt="Preview" />
           <ImagePreview v-else />
         </div>
         <h1>
-          <span :class="{ '': !title }">{{ title || $t('create.preview.token') }}</span>
-          <small :class="{ '': !symbol }">{{ symbol || '$T' }}</small>
+          <span :class="{ '': !title }">{{ title || $t('create.preview.collection') }}</span>
+          <small :class="{ '': !symbol }">{{ symbol || '$SYM' }}</small>
         </h1>
         <p :class="{ '': !description }">
           {{ description || $t('create.preview.no_description') }}

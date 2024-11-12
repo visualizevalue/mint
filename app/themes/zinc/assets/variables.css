@@ -31,7 +31,12 @@
   * COLORS
   */
   --primary:  var(--color);
-  --muted: var(--gray-z-6);
+  --muted:    var(--gray-z-6);
+  --blue-900: #1e3a8a;
+  --blue-800: #1e40af;
+  --blue-600: #2563eb;
+  --blue-300: #7dd3fc;
+  --blue-200: #bae6fd;
 
   /*
   * FONTS
@@ -60,5 +65,9 @@
   --button-background-highlight: var(--gray-z-3);
   --card-background-highlight: var(--gray-z-3);
   --breadcrumb-background-highlight: var(--gray-z-3);
+
+  --alert-info-background-color: var(--blue-200);
+  --alert-info-border-color: var(--blue-300);
+  --alert-info-color: var(--blue-800);
 }
 

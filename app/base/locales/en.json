@@ -87,12 +87,17 @@
   },
   "create": {
     "title": "Create New",
+    "alert_new": {
+      "title": "Create New Collection",
+      "text": "Note this just creates the collection smart contract. You'll be able to mint individual artifacts within the collection after collection deployment."
+    },
     "note": {
       "start": "Note: This should be a small file, preferably a simple SVG like",
       "link_text": "this one (273 bytes)",
       "end": "Try to make it less than 10kb."
     },
     "preview": {
+      "collection": "Collection",
       "token": "Token",
       "no_description": "No description"
     },
