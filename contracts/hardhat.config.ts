@@ -44,7 +44,6 @@ const config: HardhatUserConfig = {
   networks: {
     mainnet: {
       url: process.env.MAINNET_URL || "",
-      accounts: ACCOUNT_PRVKEYS,
       ledgerAccounts: LEDGER_ACCOUNTS,
     },
     sepolia: {
@@ -66,7 +65,7 @@ const config: HardhatUserConfig = {
     enabled: process.env.REPORT_GAS !== undefined,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
     currency: 'USD',
-    gasPrice: 42,
+    gasPrice: 2,
   },
   contractSizer: {
     alphaSort: true,
