@@ -15,16 +15,16 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      blockExplorer: 'https://sepolia.etherscan.io',
+      blockExplorer: 'https://etherscan.io',
       chainId: 1337,
       creatorAddress: '',
       defaultAvatar: '/icons/opepen.svg',
       description: 'To mint is a human right.',
-      factoryAddress: '0x750C5a6CFD40C9CaA48C31D87AC2a26101Acd517',
+      factoryAddress: '0xd717Fe677072807057B03705227EC3E3b467b670',
       platformUrl: 'https://networked.art',
-      rpc1: 'https://ethereum-sepolia.rpc.subquery.network/public',
-      rpc2: 'https://ethereum-sepolia-rpc.publicnode.com',
-      rpc3: 'https://1rpc.io/sepolia',
+      rpc1: 'https://eth.llamarpc.com',
+      rpc2: 'https://ethereum-rpc.publicnode.com',
+      rpc3: 'https://eth.drpc.org',
       title: 'Mint',
       walletConnectProjectId: '',
     }
