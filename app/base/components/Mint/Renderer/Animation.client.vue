@@ -9,7 +9,7 @@
     </Actions>
 
     <div>
-      <label>
+      <label class="form-label">
         <span>Image</span>
 
         <FormInput v-if="mode === 'ipfs'" v-model="imageIpfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
@@ -26,13 +26,13 @@
         </div>
       </label>
 
-      <label>
+      <label class="form-label">
         <span>Animation</span>
 
         <FormInput v-if="mode === 'ipfs'" v-model="animationIpfsCid" placeholder="CID (qmx...)" prefix="ipfs://" required />
         <FormInput v-else-if="mode === 'ar'" v-model="animationArTxId" placeholder="TX ID (frV...)" prefix="ar://" required />
         <div v-else-if="mode === 'file'">
-          <FormSelectFile ref="animationSelect" @change="setAnimationArtifact" />
+          <FormSelectFile ref="animationSelect" @change="setAnimationArtifact" accept="video/*" />
           <p v-if="! animationIsSmall" class="muted">
             <small>
               {{ $t('mint.base.note.start') }}

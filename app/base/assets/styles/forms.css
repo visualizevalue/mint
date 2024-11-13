@@ -124,22 +124,25 @@ select.select:--highlight {
 form {
   display: grid;
   gap: var(--spacer);
+}
 
-  label {
+form label,
+label.form-label,
+label:has(.form-item) {
+  font-family: var(--ui-font-family);
+  font-size: var(--ui-font-size);
+  text-transform: var(--text-transform-ui);
+  margin: var(--size-2) 0;
+  transition: all var(--speed);
+  display: grid;
+  gap: var(--size-2);
+
+  > span:first-child {
     display: block;
-    font-family: var(--ui-font-family);
-    text-transform: var(--text-transform-ui);
-    margin: var(--size-2) 0;
-    color: var(--muted);
-    transition: all var(--speed);
+  }
 
-    > span:first-child {
-      display: block;
-      margin: 0 0 var(--size-2) 0
-    }
-
-    &:hover {
-      color: var(--color);
-    }
+  &:hover {
+    color: var(--color);
   }
 }
+

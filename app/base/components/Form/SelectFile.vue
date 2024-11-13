@@ -20,12 +20,19 @@
 <script setup lang="ts">
 import { useFileDialog } from '@vueuse/core'
 
+const props = defineProps({
+  accept: {
+    type: String,
+    default: 'image/*'
+  }
+})
+
 const emit = defineEmits<{
   change: [file: File|null|undefined]
 }>()
 
 const { files, open, reset, onChange } = useFileDialog({
-  accept: 'image/*',
+  accept: props.accept,
   multiple: false,
 })
 
