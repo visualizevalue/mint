@@ -43,13 +43,14 @@ export const useCreateMintData = () => {
 // Expose the mint component based on the selected renderer
 export const useCreateMintRendererComponent = (collection: Collection) => {
   const appConfig = useAppConfig()
+  const mainChainId = useMainChainId()
   const rendererAddress: Ref<string | null> = computed(() => {
     if (! collection.renderers?.length) return null
 
     return collection.renderers[renderer.value].address.toLowerCase()
   })
 
-  const component = computed(() => appConfig.knownRenderers
+  const component = computed(() => appConfig.knownRenderers[mainChainId]
     .find((r) =>
       r.address.toLowerCase() === rendererAddress.value
     )?.component || 'Base'

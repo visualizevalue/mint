@@ -42,11 +42,12 @@ const props = defineProps(['collection'])
 
 const appConfig = useAppConfig()
 const store = useOnchainStore()
+const mainChainId = useMainChainId()
 
 const installedRenderers = computed(() => props.collection.renderers)
 
 const availableRenderers = computed(
-  () => appConfig.knownRenderers.filter(r =>
+  () => appConfig.knownRenderers[mainChainId].filter(r =>
     !installedRenderers.value.map(cr => cr.address).includes(r.address)
   )
 )
