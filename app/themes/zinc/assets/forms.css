@@ -1,0 +1,7 @@
+label:has(.form-item),
+label.form-label {
+  > span {
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-md);
+  }
+}
