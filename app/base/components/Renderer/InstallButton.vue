@@ -33,7 +33,7 @@ const { collection, renderer } = defineProps(['collection', 'renderer'])
 const store = useOnchainStore()
 const chainId = useMainChainId()
 
-const installRequest = computed(() => async () => {
+const installRequest = computed(() => () => {
   return writeContract($wagmi, {
     abi: MINT_ABI,
     chainId,
