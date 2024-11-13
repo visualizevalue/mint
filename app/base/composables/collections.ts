@@ -276,7 +276,7 @@ export const useOnchainStore = () => {
           address,
           functionName: 'latestTokenId',
           chainId,
-        })
+        }) as Promise<bigint>
 
         const collection = this.collection(address)
 
