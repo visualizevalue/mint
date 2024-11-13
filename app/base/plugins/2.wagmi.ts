@@ -6,6 +6,7 @@ import type { CustomTransport, Transport } from 'viem'
 
 export default defineNuxtPlugin(nuxtApp => {
   const title = nuxtApp.$config.public.title || 'Mint'
+  const mainChainId = nuxtApp.$config.public.chainId
 
   const connectors: CreateConnectorFn[] = [
     injected(),
@@ -46,7 +47,11 @@ export default defineNuxtPlugin(nuxtApp => {
     }),
     ssr: true,
     transports: {
-      [mainnet.id]: transports,
+      [mainnet.id]: mainChainId == 1
+        // Use configured transports if we're on mainnet
+        ? transports
+        // Default to viem public rpc if not on mainnet
+        : http(),
       [sepolia.id]: transports,
       [holesky.id]: transports,
       [localhost.id]: transports,
