@@ -20,7 +20,6 @@ services:
       - NUXT_PUBLIC_RPC1=${APP_RPC1}
       - NUXT_PUBLIC_RPC2=${APP_RPC2}
       - NUXT_PUBLIC_RPC3=${APP_RPC3}
-      - NPM_TOKEN=${NPM_TOKEN}
       - NODE_ENV=production
 
 networks:

@@ -13,7 +13,7 @@ WORKDIR /mint
 # Copy package.json files
 COPY contracts/package.json ./contracts/
 COPY app/base/package.json ./app/base/
-COPY app/example/package.json ./app/example/
+COPY app/examples/starter-zinc/package.json ./app/examples/starter-zinc/
 COPY app/themes/zinc/package.json ./app/themes/zinc/
 COPY utils/package.json ./utils/
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
@@ -25,8 +25,8 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 # Build
-RUN pnpm -F @visualizevalue/mint-app-example build
+RUN pnpm -F @visualizevalue/mint-app-example-zinc build
 
-WORKDIR /mint/app/example
+WORKDIR /mint/app/examples/starter-zinc
 EXPOSE 3000
 CMD [ "node", ".output/server/index.mjs" ]
