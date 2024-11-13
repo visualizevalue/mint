@@ -93,7 +93,7 @@
     },
     "note": {
       "start": "Note: This should be a small file, preferably a simple SVG like",
-      "link_text": "this one (273 bytes)",
+      "link_text": "this one (153 bytes)",
       "end": "Try to make it less than 10kb."
     },
     "preview": {
