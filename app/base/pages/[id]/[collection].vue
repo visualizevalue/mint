@@ -5,6 +5,7 @@
 
 <script setup>
 const route = useRoute()
+const id = useArtistId()
 const address = computed(() => route.params.collection.toLowerCase())
 
 const store = useOnchainStore()
@@ -17,7 +18,7 @@ const load = async () => {
   try {
     collection.value = await store.fetchCollection(address.value)
 
-    if (collection.value?.owner !== route.params.id) {
+    if (collection.value?.owner !== id.value) {
       throw new Error('Invalid owner')
     }
   } catch (e) {
