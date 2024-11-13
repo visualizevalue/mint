@@ -48,7 +48,7 @@ contract AnimationRenderer is IRenderer {
         return image;
     }
 
-    /// @notice The base renderer doesn't have an animation.
+    /// @notice Expose the animation URI of the token.
     function animationURI (uint, Token calldata token) external view returns (string memory) {
         (,string memory animation) = abi.decode(ArtifactReader.get(token), (string, string));
 
