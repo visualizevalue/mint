@@ -15,7 +15,7 @@ Minted artifacts are open to be collected for 24 hours after creation.
 
 Prices are tied 1:1 to the network (gas) cost of a mint on Ethereum.
 50% of the proceeds go to the artist, 50% is burned as per the rules
-of the Ethereum network. Creators can support the artist by minting
+of the Ethereum network. Collectors can support the artist by minting
 multiple of the token, which decreases this ratio in favor of the
 artist. There are no third parties or protocol fees.
 
