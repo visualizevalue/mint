@@ -16,6 +16,10 @@ const load = async () => {
 
   try {
     collection.value = await store.fetchCollection(address.value)
+
+    if (collection.value?.owner !== route.params.id) {
+      throw new Error('Invalid owner')
+    }
   } catch (e) {
     navigateTo({ name: 'id' }, { replace: true })
   }
