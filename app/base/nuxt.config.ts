@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       blockExplorer: 'https://etherscan.io',
-      chainId: 1337,
+      chainId: 1,
       creatorAddress: '',
       defaultAvatar: '/icons/opepen.svg',
       description: 'To mint is a human right.',
