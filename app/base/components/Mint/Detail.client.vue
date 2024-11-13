@@ -1,8 +1,10 @@
 <script setup>
+import Animation from './Renderer/Animation.client.vue'
 import Base from './Renderer/Base.client.vue'
 import P5 from './Renderer/P5.client.vue'
 
 const components = {
+  Animation,
   Base,
   P5,
 }
