@@ -3,7 +3,12 @@
     class="embed"
     @touchmove.stop.prevent="() => null"
   >
+    <video v-if="isPlayable" autoplay muted playsinline loop crossorigin="anonymous" >
+      <source :src="src" :type="mediaType">
+      Your browser does not support the video tag.
+    </video>
     <iframe
+      v-else
       ref="frame"
       frameborder="0"
       :src="src"
@@ -12,8 +17,30 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
+
+async function fetchMediaType(url: string): Promise<string | null> {
+  try {
+    // Send a HEAD request to get only the headers
+    const response = await fetch(url, { method: 'HEAD' })
+
+    // Check if the request was successful
+    if (!response.ok) {
+      console.error(`Failed to fetch media type. Status: ${response.status}`)
+      return null
+    }
+
+    // Get the Content-Type header
+    const contentType = response.headers.get('Content-Type')
+
+    // Return the media type or null if unavailable
+    return contentType ? contentType.split(';')[0] : null
+  } catch (error) {
+    console.error(`Error fetching media type: ${error}`)
+    return null
+  }
+}
 
 const props = defineProps({
   src: String,
@@ -21,8 +48,15 @@ const props = defineProps({
 
 // Update on input change
 const src = ref(props.src)
-watch(props, () => {
+const mediaType = ref()
+const isPlayable = computed(() => {
+  if (! mediaType.value) return false
+  return document.createElement('video').canPlayType(mediaType.value) !== ""
+})
+
+watchEffect(async () => {
   src.value = props.src
+  mediaType.value = await fetchMediaType(src.value)
 })
 
 // Force reload on resize
