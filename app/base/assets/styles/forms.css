@@ -121,6 +121,24 @@ select.select:--highlight {
   }
 }
 
+.radio.form-group {
+  display: flex;
+  gap: var(--spacer-sm);
+
+  input {
+    width: min-content;
+
+    &:not(:first-of-type) {
+      margin-left: var(--spacer-sm);
+    }
+  }
+
+  label,
+  input {
+    display: inline;
+  }
+}
+
 form {
   display: grid;
   gap: var(--spacer);

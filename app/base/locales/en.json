@@ -105,6 +105,12 @@
             "title_placeholder": "Title",
             "symbol_placeholder": "Symbol",
             "description_placeholder": "Description",
+            "deploy_method": {
+                "create": "Create",
+                "clone": "Clone",
+                "note_create": "Deploying a completely independent Mint collection means creating a new contract instance with its own unique code, which is more expensive upfront. This initial deployment cost is higher than that of a proxy clone, but it offers a small saving on each individual mint or interaction. This is because each call is directed straight to the contract without the intermediary steps required by a proxy, reducing gas usage for repetitive transactions.",
+                "note_clone": "When using a proxy contract clone, the deployment cost is lower since it reuses the logic of the Mint collection contract template. The proxy contract points to the original contract for its code, making deployment cheaper than a fresh contract creation. However, this setup may lead to slightly higher costs on individual interactions, like minting, as each call involves additional steps to interact with the proxy."
+            },
             "deploy_button": "Deploy"
         }
     }

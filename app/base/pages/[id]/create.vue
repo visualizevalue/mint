@@ -67,6 +67,20 @@
                 <FormInput v-model="symbol" :placeholder="$t('create.form.symbol_placeholder')" required />
               </FormGroup>
               <FormInput v-model="description" :placeholder="$t('create.form.description_placeholder')" />
+
+              <hr>
+
+              <div class="creation-type">
+                <div class="radio form-group">
+                  <input type="radio" id="creation-type-create" value="create" v-model="creationType" />
+                  <label for="creation-type-create">Create</label>
+
+                  <input type="radio" id="creation-type-clone" value="clone" v-model="creationType" />
+                  <label for="creation-type-clone">Clone</label>
+                </div>
+                <p v-if="creationType === 'create'">{{ $t('create.form.deploy_method.note_create') }}</p>
+                <p v-else>{{ $t('create.form.deploy_method.note_clone') }}</p>
+              </div>
             </div>
 
             <Actions>
@@ -92,6 +106,7 @@ const image = ref('')
 const title = ref('')
 const symbol = ref('')
 const description = ref('')
+const creationType = ref('create')
 
 const { $wagmi } = useNuxtApp()
 const id = useArtistId()
@@ -112,7 +127,7 @@ const deployRequest = computed(() => async () => {
     abi: FACTORY_ABI,
     chainId,
     address: config.public.factoryAddress,
-    functionName: 'create',
+    functionName: creationType.value,
     args: [
       title.value,
       symbol.value,
@@ -183,6 +198,12 @@ form {
         width: 100%;
       }
     }
+  }
+}
+
+.creation-type {
+  p {
+    font-size: var(--font-sm);
   }
 }
 </style>
