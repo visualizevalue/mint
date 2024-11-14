@@ -9,13 +9,13 @@ export default defineAppConfig({
         address: '0x32b8ffa14e7f77c252b6d43bec5498fcef2b205f',
         description: 'Allows using P5 scripts as the artifact content'
       },
-      // {
-      //   component: 'Animation',
-      //   name: 'Animation Renderer',
-      //   version: 1n,
-      //   address: '', // TODO: Deploy...
-      //   description: 'Allows linking to both an image and an animation url'
-      // },
+      {
+        component: 'Animation',
+        name: 'Animation Renderer',
+        version: 1n,
+        address: '0xcb681409046e45e6187ec2205498e4adbe19749c',
+        description: 'Allows linking to both an image and an animation url'
+      },
     ],
     // Sepolia
     11155111: [
