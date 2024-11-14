@@ -1,0 +1,7 @@
+{
+    "$global": {
+    },
+    "AnimationRenderer": {
+        "artifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd"
+    }
+}

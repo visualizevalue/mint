@@ -1,4 +1,7 @@
 {
-    "Factory": {
+    "$global": {
+    },
+    "AnimationRenderer": {
+        "artifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4"
     }
 }

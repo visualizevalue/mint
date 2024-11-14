@@ -2,7 +2,7 @@ import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import FactoryModule from './Factory'
 
 const AnimationRendererModule = buildModule('AnimationRenderer', (m) => {
-  const { artifactReader } = m.useModule(FactoryModule)
+  const artifactReader = m.contractAt('ArtifactReader', m.getParameter('artifactReader'))
 
   const renderer = m.contract('AnimationRenderer', [], {
     libraries: {

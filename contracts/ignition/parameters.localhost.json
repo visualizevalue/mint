@@ -1,4 +1,7 @@
 {
-    "Factory": {
+    "$global": {
+    },
+    "AnimationRenderer": {
+        "artifactReader": ""
     }
 }

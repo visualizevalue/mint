@@ -5,5 +5,7 @@
   "Factory#Renderer": "0xE5d2DA253C7d4b7609afCe15332Bb1A1Fb461D09",
   "Factory#Mint": "0x2b52b3F1C22319B9ddC78Ac40844f9B2800FBa8E",
   "Factory#Factory": "0xd717Fe677072807057B03705227EC3E3b467b670",
-  "P5Renderer#P5Renderer": "0x32B8Ffa14e7F77c252b6D43BEC5498FCef2b205F"
+  "P5Renderer#P5Renderer": "0x32B8Ffa14e7F77c252b6D43BEC5498FCef2b205F",
+  "AnimationRenderer#ArtifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd",
+  "AnimationRenderer#AnimationRenderer": "0xcb681409046E45E6187EC2205498e4adBE19749c"
 }
