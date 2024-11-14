@@ -2,7 +2,7 @@ export const useSubdomain = () => useState<string|null>('subdomain', () => null)
 
 export const useArtistScope = () => {
   const subdomain = useSubdomain()
-  const creatorAddress = useRuntimeConfig().public.creatorAddress
+  const creatorAddress = useRuntimeConfig().public.creatorAddress?.toLowerCase()
 
   return creatorAddress || subdomain.value
 }
