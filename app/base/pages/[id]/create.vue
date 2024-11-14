@@ -73,10 +73,10 @@
               <div class="creation-type">
                 <div class="radio form-group">
                   <input type="radio" id="creation-type-create" value="create" v-model="creationType" />
-                  <label for="creation-type-create">Create</label>
+                  <label for="creation-type-create">{{ $t('create.form.deploy_method.create') }}</label>
 
                   <input type="radio" id="creation-type-clone" value="clone" v-model="creationType" />
-                  <label for="creation-type-clone">Clone</label>
+                  <label for="creation-type-clone">{{ $t('create.form.deploy_method.clone') }}</label>
                 </div>
                 <p v-if="creationType === 'create'">{{ $t('create.form.deploy_method.note_create') }}</p>
                 <p v-else>{{ $t('create.form.deploy_method.note_clone') }}</p>
