@@ -9,16 +9,16 @@ Let's do this now!
 ## 1. Create a new Nuxt application
 
 In your terminal, navigate to the folder you want to initialize
-the project in, and run the following command:
+the project in, and run the following command and go through the prompts:
 
 ```bash
-pnpm dlx nuxi@latest init <app-name>
+npx nuxi@latest init <app-name>
 ```
 
 Once done, you can run your local Nuxt app like so:
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 ## 2. Extend the base application
@@ -26,7 +26,7 @@ pnpm dev
 First we need to install the base Mint application.
 
 ```bash
-pnpm add -D @visualizevalue/mint-app-base
+npm install @visualizevalue/mint-app-base
 ```
 
 In order to start using the base application as our starting point,
@@ -52,7 +52,7 @@ rm app.vue
 ```
 
 Run the application in development mode now!
-Execute `pnpm dev` in your terminal to start/restart the app.
+Execute `npm run dev` in your terminal to start/restart the app.
 
 You'll realize that if you connect to the site with different wallets,
 that you can use the app from all of these wallets. Let's remove that functionality
@@ -69,11 +69,15 @@ creator wallet address:
 NUXT_PUBLIC_CREATOR_ADDRESS=0xc8f8e2F59Dd95fF67c3d39109ecA2e2A017D4c8a
 ```
 
-Restart your development server by running `pnpm dev` and
+Restart your development server by running `npm run dev` and
 open the application in your browser. You'll see that this new
 version will always show your creator address, regardless with
 which account you're logged in. Also, it will only allow you (the creator)
 to deploy new collections or to mint new tokens.
+
+If you want to learn to adjust styles yourself, continue below.
+If you want to just get going quickly with a theme,
+check out the ["Using Themes"](../themes/using-themes.md) section.
 
 ## 3. Adjust some styling
 

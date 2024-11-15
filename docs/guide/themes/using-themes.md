@@ -2,7 +2,7 @@
 
 Using themes in your own apps is very simple.
 
-First make sure you have a base app running. Follow ["Running your own app"](../app/extend)
+First make sure you have a base app running. Follow ["Extending The Base App"](../app/extend)
 steps 1 and 2 to get started.
 
 Then install the theme you want to use:

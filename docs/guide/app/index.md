@@ -51,3 +51,4 @@ As an example for a filled out ENS profile, check out [brantly.eth](https://app.
 - Artist Scoped SPA (Zinc Theme): [mint.jalil.cc](https://mint.jalil.cc)
 - Artist Scoped SPA (Base Theme): [base.mint.jalil.cc](https://base.mint.jalil.cc)
 - General Purpose Node Application (Zinc Theme): [networked.art](https://networked.art)
+

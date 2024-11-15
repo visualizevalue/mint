@@ -50,8 +50,8 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Base Application', link: '/guide/app/' },
-            { text: 'Run Your Own', link: '/guide/app/run-your-own' },
-            { text: 'Extend Base', link: '/guide/app/extend' },
+            { text: 'Extend Base App', link: '/guide/app/extend' },
+            { text: 'App Development', link: '/guide/app/app-development' },
           ]
         },
         {

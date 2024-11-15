@@ -1,4 +1,8 @@
-# Run The Example Application
+# Application Development
+
+This chapter will get you set up with the main dev environment and is directed towards developers.
+
+Clone the [Git Repository](https://github.com/visualizevalue/mint) to get started.
 
 ## In a Docker container (2min)
 
@@ -8,7 +12,8 @@ Note for this to work you need to have [Docker](https://www.docker.com) installe
 
 ### Build and run the application
 
-Please set your environment variables in an `.env` file in the project root.
+Please set your environment variables in an `.env` file in the project root. The example environment
+uses the Sepolia testnet deployment of the protocol.
 
 ```sh
 cp .env.example .env
@@ -40,7 +45,7 @@ There are two versions of the application available to play with:
 Set the application specific `.env` variables in the application.
 
 ```sh
-cp app/base/.env.example app/base/.env # or in app/example
+cp app/base/.env.example app/base/.env
 ```
 
 Install the packages:
@@ -63,4 +68,6 @@ the preferred way to build a custom version of the app since it
 comes with drawbacks when maintaining it over the long term.
 
 Let's look at our preferred way to customize Mint applications –
-extending the base application via "Layers".
+extending the base application in a more reusable fashion in the next chapter
+on themes.
+
