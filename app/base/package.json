@@ -36,7 +36,7 @@
     },
     "devDependencies": {
         "@types/codemirror": "^5.60.15",
-        "nuxt": "^3.13.2",
+        "nuxt": "^3.14.159",
         "typescript": "^5.5.4"
     }
 }
