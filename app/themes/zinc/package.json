@@ -1,7 +1,7 @@
 {
   "name": "@visualizevalue/mint-theme-zinc",
   "type": "module",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "./nuxt.config.ts",
   "scripts": {
     "dev": "nuxi dev .playground",
