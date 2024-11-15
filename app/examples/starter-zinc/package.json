@@ -10,7 +10,7 @@
         "postinstall": "nuxi prepare"
     },
     "devDependencies": {
-        "nuxt": "^3.13.2"
+        "nuxt": "^3.14.159"
     },
     "dependencies": {
         "@visualizevalue/mint-app-base": "@visualizevalue/mint-app-base@latest",
