@@ -37,7 +37,7 @@ select {
   position: relative;
   line-height: 0;
   width: 100%;
-  background: var(--background);
+  background: var(--button-background);
   padding: var(--ui-padding-y) var(--ui-padding-x);
   text-transform: none;
 
