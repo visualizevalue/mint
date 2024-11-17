@@ -11,7 +11,7 @@ select {
   transition: all var(--speed);
   line-height: var(--ui-line-height);
   border-radius: var(--button-border-radius);
-  background: var(--background-background);
+  background: var(--button-background);
   padding: var(--ui-padding-y) var(--ui-padding-x);
   user-select: none;
 
