@@ -333,8 +333,16 @@ export const useOnchainStore = () => {
 
           const [ name, description, _artifact, _renderer, mintedBlock, _closeAt, _extraData ] = data
 
-          const json = Buffer.from(dataUri.substring(29), `base64`).toString()
-          const metadata = JSON.parse(json)
+          let metadata
+          try {
+            const json = Buffer.from(dataUri.substring(29), `base64`).toString()
+            metadata = JSON.parse(json)
+          } catch (e) {
+            metadata = {
+              image: '',
+              animationUrl: '',
+            }
+          }
 
           const token: Token = {
             tokenId,
