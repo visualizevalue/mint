@@ -322,6 +322,9 @@ export const useOnchainStore = () => {
         // Normalize token ID
         const tokenId = BigInt(id)
 
+        // Default (empty) metadata
+        let metadata = {}
+
         try {
           console.info(`Fetching token #${tokenId}`)
 
@@ -342,6 +345,7 @@ export const useOnchainStore = () => {
               image: '',
               animationUrl: '',
             }
+            console.warn(`Parsing data uri failed`, e)
           }
 
           const token: Token = {
