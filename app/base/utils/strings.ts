@@ -28,3 +28,6 @@ export const extractURLs = (str: string) => {
     urls: str.match(urlPattern),
   }
 }
+
+// Replace special characters with their escaped counterparts
+export const sanitizeForJson = (input: string): string => JSON.stringify(input).slice(1, -1)

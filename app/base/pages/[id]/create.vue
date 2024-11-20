@@ -129,9 +129,9 @@ const deployRequest = computed(() => async () => {
     address: config.public.factoryAddress,
     functionName: creationType.value,
     args: [
-      title.value,
-      symbol.value,
-      description.value,
+      sanitizeForJson(title.value),
+      sanitizeForJson(symbol.value),
+      sanitizeForJson(description.value),
       toByteArray(image.value),
     ],
   })

@@ -116,8 +116,8 @@ export const useCreateMintFlow = (collection: Collection, txFlow: Ref) => {
         address: collection.address,
         functionName: 'create',
         args: [
-          name.value,
-          description.value,
+          sanitizeForJson(name.value),
+          sanitizeForJson(description.value),
           multiTransactionPrepare ? [] : artifactByteArray,
           renderer.value,
           0n, // Additional Data
