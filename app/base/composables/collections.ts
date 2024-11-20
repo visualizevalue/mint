@@ -44,6 +44,7 @@ export const useOnchainStore = () => {
           return this.artist(address).collections
             .map(c => state.collections[c])
             .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1)
+            .filter(c => !!c)
         }
       },
       forArtistOnlyMinted () {
@@ -204,24 +205,29 @@ export const useOnchainStore = () => {
           }) as Promise<GetBalanceReturnType>,
         ])
 
-        const json = Buffer.from(data.substring(29), `base64`).toString()
-        const metadata = JSON.parse(json)
-
         const artist = owner.toLowerCase() as `0x${string}`
+        const json = Buffer.from(data.substring(29), `base64`).toString()
 
-        return await this.addCollection({
-          image: metadata.image,
-          name: metadata.name,
-          symbol: metadata.symbol,
-          description: metadata.description,
-          address,
-          initBlock,
-          latestTokenId,
-          owner: artist,
-          tokens: {},
-          balance: balance.value,
-          renderers: [],
-        })
+        try {
+          const metadata = JSON.parse(json)
+
+          return await this.addCollection({
+            image: metadata.image,
+            name: metadata.name,
+            symbol: metadata.symbol,
+            description: metadata.description,
+            address,
+            initBlock,
+            latestTokenId,
+            owner: artist,
+            tokens: {},
+            balance: balance.value,
+            renderers: [],
+          })
+        } catch (e) {
+          console.warn(`Error parsing collection`, e)
+          this.artists[artist].collections = this.artists[artist].collections.filter(c => c !== address)
+        }
       },
 
       async fetchCollectionBalance (address: `0x${string}`) {
