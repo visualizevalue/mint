@@ -30,14 +30,23 @@ export const collection = onchainTable('collections', (t) => ({
   latest_token_id: t.bigint(),
 }))
 
-export const artifact = onchainTable('artifacts', (t) => ({
-  id: t.bigint().primaryKey(),
-  collection: t.hex(),
-  name: t.text(),
-  description: t.text(),
-  image: t.text(),
-  animation_url: t.text(),
-}))
+export const artifact = onchainTable(
+  'artifacts',
+  (t) => ({
+    collection: t.hex(),
+    id: t.bigint(),
+    name: t.text(),
+    description: t.text(),
+    image: t.text(),
+    animation_url: t.text(),
+    supply: t.bigint(),
+  }),
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.collection, table.id],
+    }),
+  }),
+)
 
 export const ownership = onchainTable(
   'ownerships',
@@ -64,7 +73,8 @@ export const mint = onchainTable(
     log_index: t.integer(),
     timestamp: t.bigint(),
     gas_used: t.bigint(),
-    gas_fee: t.bigint(),
+    gas_price: t.bigint(), // The price per gas
+    gas_fee: t.bigint(), // The total fee
     amount: t.bigint(),
     unit_price: t.bigint(),
     price: t.bigint(),
@@ -135,6 +145,21 @@ export const artifactsRelations = relations(artifact, ({ many, one }) => ({
   transfers: many(transfer, {
     fields: [transfer.artifact],
     references: [artifact.id],
+  }),
+}))
+
+export const ownershipRelations = relations(ownership, ({ one }) => ({
+  account: one(account, {
+    fields: [ownership.account],
+    references: [account.address],
+  }),
+  collection: one(collection, {
+    fields: [ownership.collection],
+    references: [collection.address],
+  }),
+  artifact: one(artifact, {
+    fields: [ownership.collection, ownership.artifact],
+    references: [artifact.collection, artifact.id],
   }),
 }))
 
