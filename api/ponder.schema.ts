@@ -1,4 +1,8 @@
-import { onchainTable, relations } from '@ponder/core'
+import { onchainTable, primaryKey, relations } from '@ponder/core'
+
+// ===========================================================================
+//                                   MODELS
+// ===========================================================================
 
 export const account = onchainTable('accounts', (t) => ({
   address: t.hex().primaryKey(),
@@ -17,10 +21,10 @@ export const collection = onchainTable('collections', (t) => ({
   address: t.hex().primaryKey(),
   artist: t.hex(),
   owner: t.hex(),
-  name: t.text(),
   image: t.text(),
+  name: t.text(),
+  symbol: t.text(),
   description: t.text(),
-  icon: t.text(),
   init_block: t.bigint(),
   total_supply: t.bigint(),
   latest_token_id: t.bigint(),
@@ -35,15 +39,67 @@ export const artifact = onchainTable('artifacts', (t) => ({
   animation_url: t.text(),
 }))
 
-export type EventType = 'NewMint'|'TransferSingle'|'TransferBatch'
-export const event = onchainTable('events', (t) => ({
-  id: t.bigint().primaryKey(),
-  type: t.text().$type<EventType>(),
-  artifact: t.bigint(),
-  from: t.hex(),
-  to: t.hex(),
-  amount: t.bigint(),
-}))
+export const ownership = onchainTable(
+  'ownerships',
+  (t) => ({
+    account: t.hex(),
+    collection: t.hex(),
+    artifact: t.bigint(),
+    balance: t.bigint(),
+  }),
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.account, table.collection, table.artifact],
+    }),
+  }),
+)
+
+export const mint = onchainTable(
+  'mints',
+  (t) => ({
+    collection: t.hex(), // The collection address
+    artifact: t.bigint(), // The Token ID
+    hash: t.hex(),
+    block_number: t.bigint(),
+    log_index: t.integer(),
+    timestamp: t.bigint(),
+    gas_used: t.bigint(),
+    gas_fee: t.bigint(),
+    amount: t.bigint(),
+    unit_price: t.bigint(),
+    price: t.bigint(),
+    account: t.hex(),
+  }),
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.hash, table.block_number, table.log_index],
+    }),
+  }),
+)
+
+export const transfer = onchainTable(
+  'transfers',
+  (t) => ({
+    collection: t.hex(), // The collection address
+    artifact: t.bigint(), // The Token ID
+    hash: t.hex(),
+    block_number: t.bigint(),
+    log_index: t.integer(),
+    timestamp: t.bigint(),
+    from: t.hex(),
+    to: t.hex(),
+    amount: t.bigint(),
+  }),
+  (table) => ({
+    pk: primaryKey({
+      columns: [table.hash, table.block_number, table.log_index],
+    }),
+  }),
+)
+
+// ===========================================================================
+//                                 RELATIONS
+// ===========================================================================
 
 export const accountRelations = relations(account, ({ many, one }) => ({
   collections: many(collection, {
@@ -72,15 +128,26 @@ export const artifactsRelations = relations(artifact, ({ many, one }) => ({
     fields: [artifact.collection],
     references: [collection.address],
   }),
-  events: many(event, {
-    fields: [event.artifact],
+  mints: many(mint, {
+    fields: [mint.artifact],
+    references: [artifact.id],
+  }),
+  transfers: many(transfer, {
+    fields: [transfer.artifact],
     references: [artifact.id],
   }),
 }))
 
-export const eventsRelations = relations(event, ({ one }) => ({
+export const mintRelations = relations(mint, ({ one }) => ({
   artifact: one(artifact, {
-    fields: [event.artifact],
+    fields: [mint.artifact],
+    references: [artifact.id],
+  }),
+}))
+
+export const transferRelations = relations(transfer, ({ one }) => ({
+  artifact: one(artifact, {
+    fields: [transfer.artifact],
     references: [artifact.id],
   }),
 }))
