@@ -1,6 +1,19 @@
 import { onchainTable, relations } from '@ponder/core'
 
-export const collections = onchainTable('collections', (t) => ({
+export const account = onchainTable('accounts', (t) => ({
+  address: t.hex().primaryKey(),
+  ens: t.text(),
+}))
+
+export const profile = onchainTable('profiles', (t) => ({
+  ens: t.text().primaryKey(),
+  avatar: t.text(),
+  description: t.text(),
+  links: t.jsonb().$type<{ [key: string]: string }>(),
+  last_updated: t.bigint(),
+}))
+
+export const collection = onchainTable('collections', (t) => ({
   address: t.hex().primaryKey(),
   artist: t.hex(),
   owner: t.hex(),
@@ -13,7 +26,7 @@ export const collections = onchainTable('collections', (t) => ({
   latest_token_id: t.bigint(),
 }))
 
-export const artifacts = onchainTable('artifacts', (t) => ({
+export const artifact = onchainTable('artifacts', (t) => ({
   id: t.bigint().primaryKey(),
   collection: t.hex(),
   name: t.text(),
@@ -23,7 +36,7 @@ export const artifacts = onchainTable('artifacts', (t) => ({
 }))
 
 export type EventType = 'NewMint'|'TransferSingle'|'TransferBatch'
-export const events = onchainTable('events', (t) => ({
+export const event = onchainTable('events', (t) => ({
   id: t.bigint().primaryKey(),
   type: t.text().$type<EventType>(),
   artifact: t.bigint(),
@@ -32,28 +45,43 @@ export const events = onchainTable('events', (t) => ({
   amount: t.bigint(),
 }))
 
-export const collectionsRelations = relations(collections, ({ many }) => ({
-  artifacts: many(artifacts, {
-    fields: [artifacts.collection],
-    references: [collections.address],
-  })
-}))
-
-export const artifactsRelations = relations(artifacts, ({ many, one }) => ({
-  collection: one(collections, {
-    fields: [artifacts.collection],
-    references: [collections.address],
+export const accountRelations = relations(account, ({ many, one }) => ({
+  collections: many(collection, {
+    fields: [collection.artist],
+    references: [account.address],
   }),
-  events: many(events, {
-    fields: [events.artifact],
-    references: [artifacts.id],
+  profile: one(profile, {
+    fields: [account.ens],
+    references: [profile.ens],
   }),
 }))
 
-export const eventsRelations = relations(events, ({ one }) => ({
-  artifact: one(artifacts, {
-    fields: [events.artifact],
-    references: [artifacts.id],
+export const collectionsRelations = relations(collection, ({ many, one }) => ({
+  artist: one(account, {
+    fields: [collection.artist],
+    references: [account.address],
+  }),
+  artifacts: many(artifact, {
+    fields: [artifact.collection],
+    references: [collection.address],
+  }),
+}))
+
+export const artifactsRelations = relations(artifact, ({ many, one }) => ({
+  collection: one(collection, {
+    fields: [artifact.collection],
+    references: [collection.address],
+  }),
+  events: many(event, {
+    fields: [event.artifact],
+    references: [artifact.id],
+  }),
+}))
+
+export const eventsRelations = relations(event, ({ one }) => ({
+  artifact: one(artifact, {
+    fields: [event.artifact],
+    references: [artifact.id],
   }),
 }))
 
