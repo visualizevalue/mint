@@ -14,12 +14,10 @@ export default createConfig({
     mainnet: {
       chainId: 1,
       transport: http(process.env.PONDER_RPC_URL_1),
-      // disableCache: true,
     },
     // sepolia: {
     //   chainId: 11155111,
     //   transport: http(process.env.PONDER_RPC_URL_11155111),
-    //   // disableCache: true,
     // },
   },
   contracts: {
@@ -37,6 +35,7 @@ export default createConfig({
         event: mintFactoryEvent,
         parameter: 'contract',
       },
+      includeTransactionReceipts: true,
       startBlock: 21167599,
     },
   },
