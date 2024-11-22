@@ -9,6 +9,7 @@ export const MINT_BLOCKS = BLOCKS_PER_DAY
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
+  const appConfig = useAppConfig()
   const chainId = useMainChainId()
 
   return defineStore('onchainStore', {
@@ -241,13 +242,13 @@ export const useOnchainStore = () => {
         let index = renderers.length
         while (true) {
           try {
-            const rendererAddress = await readContract($wagmi, {
+            const rendererAddress = (await readContract($wagmi, {
               abi: MINT_ABI,
               address,
               functionName: 'renderers',
               args: [BigInt(index)],
               chainId,
-            })
+            }))?.toLowerCase() as `0x${string}`
 
             const rendererArgs = { abi: RENDERER_ABI, address: rendererAddress, chainId }
 
@@ -263,9 +264,11 @@ export const useOnchainStore = () => {
             ])
 
             this.collections[address].renderers[index] = {
-              address: rendererAddress.toLowerCase() as `0x${string}`,
+              address: rendererAddress,
               name,
               version,
+              // Enrich with configured renderer data
+              ...appConfig.knownRenderers[chainId].find(r => r.address === rendererAddress)
             }
 
             index ++

@@ -8,7 +8,10 @@
         v-for="( renderer, index ) in collection.renderers"
         :value="index"
         :title="renderer.name"
-      >{{ renderer.name }}</option>
+        :disabled="renderer.deprecated"
+      >
+        {{ renderer.name }} {{ renderer.version > 1 ? `V${renderer.version}` : ''}}
+      </option>
       <option disabled>----</option>
       <option value="new">{{ $t('mint.select.install_new') }}</option>
     </select>

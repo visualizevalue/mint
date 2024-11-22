@@ -48,7 +48,8 @@ const installedRenderers = computed(() => props.collection.renderers)
 
 const availableRenderers = computed(
   () => appConfig.knownRenderers[mainChainId].filter(r =>
-    !installedRenderers.value.map(cr => cr.address).includes(r.address)
+    !installedRenderers.value.map(cr => cr.address).includes(r.address) &&
+    !r.deprecated
   )
 )
 

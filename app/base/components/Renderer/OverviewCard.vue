@@ -1,7 +1,11 @@
 <template>
   <article class="renderer-overview-card">
     <div class="details">
-      <h1>{{ renderer.name }} <small>v{{ renderer.version }}</small></h1>
+      <h1>
+        <span>{{ renderer.name }}</span>
+        <small> v{{ renderer.version }}</small>
+        <small v-if="renderer.deprecated" class="deprecated"> [DEPRECATED]</small>
+      </h1>
       <p v-if="renderer.description">{{ renderer.description }}</p>
       <p class="address">{{ renderer.address }}</p>
     </div>
@@ -27,6 +31,10 @@ article {
 
   .address {
     color: var(--muted);
+  }
+
+  .deprecated {
+    color: var(--error);
   }
 }
 </style>
