@@ -327,10 +327,14 @@ export const useOnchainStore = () => {
 
         try {
           console.info(`Fetching token #${tokenId}`)
+          const currentBlock = await client.getBlock()
 
           const [data, dataUri] = await Promise.all([
             mintContract.read.get([tokenId]) as Promise<[string, string, `0x${string}`[], bigint, bigint, bigint, bigint]>,
-            mintContract.read.uri([tokenId], { gas: 100_000_000_000 }) as Promise<string>,
+            mintContract.read.uri([tokenId], {
+              gas: 100_000_000_000,
+              gasPrice: currentBlock.baseFeePerGas,
+            }) as Promise<string>,
           ])
 
           const [ _name, _description, _artifact, _renderer, mintedBlock, closeAt, _extraData ] = data
