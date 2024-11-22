@@ -7,6 +7,7 @@ import { onchainTable, primaryKey, relations } from '@ponder/core'
 export const account = onchainTable('accounts', (t) => ({
   address: t.hex().primaryKey(),
   ens: t.text(),
+  ens_updated_at: t.bigint(),
 }))
 
 export const profile = onchainTable('profiles', (t) => ({
@@ -14,7 +15,7 @@ export const profile = onchainTable('profiles', (t) => ({
   avatar: t.text(),
   description: t.text(),
   links: t.jsonb().$type<{ [key: string]: string }>(),
-  last_updated: t.bigint(),
+  updated_at: t.bigint(),
 }))
 
 export const collection = onchainTable('collections', (t) => ({
@@ -102,7 +103,7 @@ export const transfer = onchainTable(
   }),
   (table) => ({
     pk: primaryKey({
-      columns: [table.hash, table.block_number, table.log_index],
+      columns: [table.collection, table.artifact, table.hash, table.block_number, table.log_index],
     }),
   }),
 )

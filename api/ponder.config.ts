@@ -5,10 +5,6 @@ import { http } from 'viem'
 import { FactoryAbi } from './abis/FactoryAbi'
 import { MintAbi } from './abis/MintAbi'
 
-const mintFactoryEvent = parseAbiItem(
-  'event Created(address indexed owner, address contract)',
-)
-
 export default createConfig({
   networks: {
     mainnet: {
@@ -32,7 +28,7 @@ export default createConfig({
       abi: MintAbi,
       factory: {
         address: '0xd717Fe677072807057B03705227EC3E3b467b670',
-        event: mintFactoryEvent,
+        event: parseAbiItem('event Created(address indexed owner, address contract)'),
         parameter: 'contract',
       },
       includeTransactionReceipts: true,
