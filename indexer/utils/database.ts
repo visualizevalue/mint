@@ -10,12 +10,13 @@ export async function getAccount (address, { client, db }) {
 
   const now = nowInSeconds()
   if (data.ens_updated_at + ONE_DAY < now) {
-    setTimeout(async () => {
-      console.info(`Update ens: ${address}`)
+    try {
       const ens = (await client.getEnsName({ address })) || ''
 
       data = await db.update(account, { address }).set({ ens, ens_updated_at: now })
-    })
+    } catch (e) {
+      console.warn(`Ran into an issue fetching/saving the ENS record for ${address}`)
+    }
   } else {
     console.info(`Skip ens update: ${address}, ${data.ens}`)
   }
