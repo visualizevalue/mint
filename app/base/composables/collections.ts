@@ -306,7 +306,7 @@ export const useOnchainStore = () => {
         return this.tokens(address)
       },
 
-      async fetchToken (address: `0x${string}`, id: number | string | bigint) {
+      async fetchToken (address: `0x${string}`, id: number | string | bigint, tries?: number = 0) {
         const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const mintContract = getContract({
           address,
@@ -328,13 +328,12 @@ export const useOnchainStore = () => {
         try {
           console.info(`Fetching token #${tokenId}`)
 
-          const [data, dataUri, closeAt] = await Promise.all([
+          const [data, dataUri] = await Promise.all([
             mintContract.read.get([tokenId]) as Promise<[string, string, `0x${string}`[], bigint, bigint, bigint, bigint]>,
             mintContract.read.uri([tokenId], { gas: 100_000_000_000 }) as Promise<string>,
-            mintContract.read.mintOpenUntil([tokenId]) as Promise<bigint>,
           ])
 
-          const [ name, description, _artifact, _renderer, mintedBlock, _closeAt, _extraData ] = data
+          const [ _name, _description, _artifact, _renderer, mintedBlock, closeAt, _extraData ] = data
 
           let metadata
           try {
@@ -342,6 +341,8 @@ export const useOnchainStore = () => {
             metadata = JSON.parse(json)
           } catch (e) {
             metadata = {
+              name: '',
+              description: '',
               image: '',
               animationUrl: '',
             }
@@ -351,8 +352,8 @@ export const useOnchainStore = () => {
           const token: Token = {
             tokenId,
             collection: address,
-            name,
-            description,
+            name: metadata.name,
+            description: metadata.description,
             image: metadata.image,
             animationUrl: metadata.animation_url,
 
@@ -366,7 +367,13 @@ export const useOnchainStore = () => {
 
           this.collections[address].tokens[`${token.tokenId}`] = token
         } catch (e) {
-          console.error(e)
+          // Retry 3 times
+          if (tries < 3) {
+            console.info(`Retrying fetching data ${tries + 1}`)
+            return await this.fetchToken(address, id, tries + 1)
+          } else {
+            // TODO: Handle impossible to load token
+          }
         }
       },
 
