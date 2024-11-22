@@ -6,17 +6,18 @@ import { parseJson } from './json'
 import { ONE_DAY, nowInSeconds } from './time'
 
 export async function getAccount (address, { client, db }) {
-  let data = await db.find(account, { address })
-
-  if (! data) {
-    data = await db.insert(account).values({ address, ens_updated_at: 0n }).onConflictDoNothing()
-  }
+  let data = await db.insert(account).values({ address, ens: '', ens_updated_at: 0n }).onConflictDoNothing()
 
   const now = nowInSeconds()
-  if (! data.ens || data.ens_updated_at + ONE_DAY < now) {
-    const ens = await client.getEnsName({ address })
+  if (data.ens_updated_at + ONE_DAY < now) {
+    setTimeout(async () => {
+      console.info(`Update ens: ${address}`)
+      const ens = (await client.getEnsName({ address })) || ''
 
-    data = await db.update(account, { address }).set({ ens, ens_updated_at: now })
+      data = await db.update(account, { address }).set({ ens, ens_updated_at: now })
+    })
+  } else {
+    console.info(`Skip ens update: ${address}, ${data.ens}`)
   }
 
   return data

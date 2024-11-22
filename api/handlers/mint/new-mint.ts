@@ -1,9 +1,10 @@
 import { mint } from '../../ponder.schema'
+import { getAccount } from '../../utils/database'
 
 const onNewMint = async ({ event, context }) => {
-  const { client, db } = context
+  await getAccount(event.args.minter, context)
 
-  await db
+  await context.db
     .insert(mint)
     .values({
       collection: event.log.address,
@@ -21,11 +22,6 @@ const onNewMint = async ({ event, context }) => {
       account: event.args.minter,
     })
     .onConflictDoNothing()
-
-  // // maybe update collector account
-  //
-  // const ens = await client.getEnsName({ address: event.args.minter })
-  // await db.insert(account).values({ address: artist, ens }).onConflictDoUpdate({ ens })
 }
 
 export default onNewMint
