@@ -1,8 +1,8 @@
 packages:
-  - 'api'
   - 'app/base'
   - 'app/themes/*'
   - 'app/examples/*'
   - 'contracts'
   - 'docs'
+  - 'indexer'
   - 'utils'
