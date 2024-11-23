@@ -34,7 +34,7 @@ ponder.on('Factory:Created', async ({ event, context }) => {
   await db.insert(collection).values({ address, ...data }).onConflictDoUpdate(data)
 
   // Save / update artist profile
-  const accountData = await getAccount(artist, context)
+  const accountData = await getAccount(artist, context, { fetch_ens: true })
   if (accountData.ens) await saveProfile(accountData.ens, context)
 })
 
