@@ -2,7 +2,7 @@ import { mint } from '../../ponder.schema'
 import { getAccount } from '../../utils/database'
 
 const onNewMint = async ({ event, context }) => {
-  await getAccount(event.args.minter, context)
+  await getAccount(event.args.minter, context, { fetch_ens: process.env.FETCH_COLLECTOR_ENS === 'true' })
 
   await context.db
     .insert(mint)

@@ -5,11 +5,13 @@ import { publicClient } from './client'
 import { parseJson } from './json'
 import { ONE_DAY, nowInSeconds } from './time'
 
-export async function getAccount (address, { client, db }) {
+export async function getAccount (address, { client, db }, { fetch_ens } = { fetch_ens: false }) {
   let data = await db.insert(account).values({ address, ens: '', ens_updated_at: 0n }).onConflictDoNothing()
 
+  if (! fetch_ens) return data
+
   const now = nowInSeconds()
-  if (data.ens_updated_at + ONE_DAY < now) {
+  if ((data.ens_updated_at || 0n) + ONE_DAY < now) {
     try {
       const ens = (await client.getEnsName({ address })) || ''
 
