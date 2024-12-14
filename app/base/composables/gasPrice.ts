@@ -7,10 +7,11 @@ let priceWatcher: WatchStopHandle|null = null
 const price: Ref<bigint> = ref(0n)
 export const useGasPrice = () => {
   const config = useConfig()
-  const { data: blockNumber } = useBlockNumber()
+  const runtimeConfig = useRuntimeConfig()
+  const { data: blockNumber } = useBlockNumber({ chainId: runtimeConfig.public.chainId })
 
   const updatePrice = async () => {
-    price.value = await getGasPrice(config)
+    price.value = await getGasPrice(config, { chainId: runtimeConfig.public.chainId })
   }
 
   if (! priceWatcher) {
