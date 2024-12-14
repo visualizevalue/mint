@@ -90,4 +90,6 @@ function getCreatorCollections(address creator) external view returns (address[]
 ## Factory Deployments
 
 - Mainnet: [`0xd717Fe677072807057B03705227EC3E3b467b670`](https://etherscan.io/address/0xd717Fe677072807057B03705227EC3E3b467b670)
+- Optimism [`0xF79BFf74CE07d3aaE21c3Bb1988e7BDb4E31ABeb`](https://optimistic.etherscan.io/address/0xF79BFf74CE07d3aaE21c3Bb1988e7BDb4E31ABeb#code)
 - Sepolia: [`0x750C5a6CFD40C9CaA48C31D87AC2a26101Acd517`](https://sepolia.etherscan.io/address/0x750C5a6CFD40C9CaA48C31D87AC2a26101Acd517)
+- Holesky: [`0x445654af956500b600AdC4c1897Cc587FD5E17BB`](https://holesky.etherscan.io/address/0x445654af956500b600AdC4c1897Cc587FD5E17BB)

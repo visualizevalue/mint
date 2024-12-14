@@ -1,6 +1,6 @@
 import { VueQueryPlugin } from '@tanstack/vue-query'
 import { http, cookieStorage, createConfig, createStorage, WagmiPlugin, fallback, type Config, type CreateConnectorFn } from '@wagmi/vue'
-import { mainnet, sepolia, holesky, localhost } from '@wagmi/vue/chains'
+import { mainnet, sepolia, holesky, localhost, optimism } from '@wagmi/vue/chains'
 import { coinbaseWallet, injected, metaMask, walletConnect } from '@wagmi/vue/connectors'
 import type { CustomTransport, Transport } from 'viem'
 
@@ -37,7 +37,7 @@ export default defineNuxtPlugin(nuxtApp => {
   const transports = fallback(transportDefinitions)
 
   const wagmiConfig: Config = createConfig({
-    chains: [mainnet, sepolia, holesky, localhost],
+    chains: [mainnet, optimism, sepolia, holesky, localhost],
     batch: {
       multicall: true,
     },
@@ -52,6 +52,7 @@ export default defineNuxtPlugin(nuxtApp => {
         ? transports
         // Default to viem public rpc if not on mainnet
         : http(),
+      [optimism.id]: transports,
       [sepolia.id]: transports,
       [holesky.id]: transports,
       [localhost.id]: transports,
