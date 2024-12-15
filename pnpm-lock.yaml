@@ -8,37 +8,6 @@ importers:
 
   .: {}
 
-  api:
-    dependencies:
-      '@ponder/core':
-        specifier: ^0.7.6
-        version: 0.7.7(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
-      abitype:
-        specifier: ^0.10.2
-        version: 0.10.3(typescript@5.6.2)
-      hono:
-        specifier: ^4.5.0
-        version: 4.6.11
-      jsonrepair:
-        specifier: ^3.10.0
-        version: 3.10.0
-      viem:
-        specifier: ^2.21.3
-        version: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
-    devDependencies:
-      '@types/node':
-        specifier: ^20.10.0
-        version: 20.17.6
-      eslint:
-        specifier: ^8.54.0
-        version: 8.57.1
-      eslint-config-ponder:
-        specifier: ^0.7.6
-        version: 0.7.7(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)
-      typescript:
-        specifier: ^5.3.2
-        version: 5.6.2
-
   app/base:
     dependencies:
       '@csstools/postcss-global-data':
@@ -73,7 +42,7 @@ importers:
         version: 2.13.5(@tanstack/query-core@5.56.2)(immer@10.0.2)(react@18.3.1)(typescript@5.5.4)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))
       '@wagmi/vue':
         specifier: ^0.0.40
-        version: 0.0.40(@tanstack/query-core@5.56.2)(@tanstack/vue-query@5.52.0(vue@3.5.13(typescript@5.5.4)))(bufferutil@4.0.8)(immer@10.0.2)(ioredis@5.4.1)(nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3))(react-dom@18.3.1(react@18.3.1))(react-native@0.75.2(@babel/core@7.26.0)(@babel/preset-env@7.25.4(@babel/core@7.26.0))(bufferutil@4.0.8)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@18.3.1)(rollup@4.27.3)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))(vue@3.5.13(typescript@5.5.4))
+        version: 0.0.40(@tanstack/query-core@5.56.2)(@tanstack/vue-query@5.52.0(vue@3.5.13(typescript@5.5.4)))(bufferutil@4.0.8)(immer@10.0.2)(ioredis@5.4.1)(nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3))(react-dom@18.3.1(react@18.3.1))(react-native@0.75.2(@babel/core@7.26.0)(@babel/preset-env@7.25.4(@babel/core@7.26.0))(bufferutil@4.0.8)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@18.3.1)(rollup@4.27.3)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))(vue@3.5.13(typescript@5.5.4))
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -113,7 +82,7 @@ importers:
         version: 5.60.15
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3)
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -126,7 +95,7 @@ importers:
     devDependencies:
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3)
 
   app/examples/starter-base:
     dependencies:
@@ -136,7 +105,7 @@ importers:
     devDependencies:
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
 
   app/examples/starter-zinc:
     dependencies:
@@ -149,7 +118,7 @@ importers:
     devDependencies:
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
 
   app/themes/zinc:
     dependencies:
@@ -165,7 +134,7 @@ importers:
         version: link:../../base
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
 
   contracts:
     dependencies:
@@ -257,6 +226,37 @@ importers:
       vitepress:
         specifier: ^1.3.4
         version: 1.3.4(@algolia/client-search@4.24.0)(@types/node@22.7.4)(axios@1.7.5)(change-case@5.4.4)(idb-keyval@6.2.1)(postcss@8.4.49)(qrcode@1.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(search-insights@2.17.2)(terser@5.34.0)(typescript@5.6.2)
+
+  indexer:
+    dependencies:
+      abitype:
+        specifier: ^0.10.2
+        version: 0.10.3(typescript@5.6.2)
+      hono:
+        specifier: ^4.5.0
+        version: 4.6.11
+      jsonrepair:
+        specifier: ^3.10.0
+        version: 3.10.0
+      ponder:
+        specifier: ^0.8.3
+        version: 0.8.3(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      viem:
+        specifier: ^2.21.3
+        version: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
+    devDependencies:
+      '@types/node':
+        specifier: ^20.10.0
+        version: 20.17.6
+      eslint:
+        specifier: ^8.54.0
+        version: 8.57.1
+      eslint-config-ponder:
+        specifier: ^0.7.6
+        version: 0.7.7(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)
+      typescript:
+        specifier: ^5.3.2
+        version: 5.6.2
 
   utils:
     dependencies:
@@ -2771,6 +2771,7 @@ packages:
 
   '@pinia-plugin-persistedstate/nuxt@1.2.1':
     resolution: {integrity: sha512-q8s+4aQW/AjBMyeqLL48/qzBR5lcgnvvf1525ovNuKf6Wl9CsoLjPKh/5X8vNoKGwSow4gP7lVmdYPQRypgjgg==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@pinia/nuxt': ^0.5.0
 
@@ -2784,20 +2785,8 @@ packages:
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
-  '@ponder/core@0.7.7':
-    resolution: {integrity: sha512-cni0EUfDcFmVAbmGH9qW5mjS7UI92lN2996AXcm0TzdbXyPNccFSHL/vl+rGw0lzokfMLuKY4E2CbciMdWJJ6A==}
-    engines: {node: '>=18.14'}
-    hasBin: true
-    peerDependencies:
-      hono: '>=4.5'
-      typescript: '>=5.0.4'
-      viem: '>=2'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
-  '@ponder/utils@0.2.2':
-    resolution: {integrity: sha512-8+JsJNGIf5FFwZlC02zP6kHtbAs7BUYluSx0GDhK8b2VDRmA4y9AJU7VoBIc0mnwKdBUOVLi9yQ6iDZBR4NLoQ==}
+  '@ponder/utils@0.2.3':
+    resolution: {integrity: sha512-QdlRXrn48nRM/QxNHRffO3PnIFvUf9qHE+rXSut44r74E4iiq9UrIPMhSMyCbJN68yU4QyTupZ/qpqE5PNAo8A==}
     peerDependencies:
       typescript: '>=5.0.4'
       viem: '>=2'
@@ -5223,14 +5212,15 @@ packages:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
 
-  drizzle-orm@0.34.1:
-    resolution: {integrity: sha512-t+zCwyWWt8xTqtYV4doE/xYmT7hpv1L8pQ66zddEz+3VWyedBBtctjMAp22mAJPfyWurRQXUJ1nrTtqLq+DqNA==}
+  drizzle-orm@0.36.4:
+    resolution: {integrity: sha512-1OZY3PXD7BR00Gl61UUOFihslDldfH4NFRH2MbP54Yxi0G/PKn4HfO65JYZ7c16DeP3SpM3Aw+VXVG9j6CRSXA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
-      '@electric-sql/pglite': '>=0.1.1'
+      '@electric-sql/pglite': '>=0.2.0'
       '@libsql/client': '>=0.10.0'
-      '@neondatabase/serverless': '>=0.1'
+      '@libsql/client-wasm': '>=0.10.0'
+      '@neondatabase/serverless': '>=0.10.0'
       '@op-engineering/op-sqlite': '>=2'
       '@opentelemetry/api': ^1.4.1
       '@planetscale/database': '>=1'
@@ -5244,7 +5234,7 @@ packages:
       '@xata.io/client': '*'
       better-sqlite3: '>=7'
       bun-types: '*'
-      expo-sqlite: '>=13.2.0'
+      expo-sqlite: '>=14.0.0'
       knex: '*'
       kysely: '*'
       mysql2: '>=2'
@@ -5262,6 +5252,8 @@ packages:
       '@electric-sql/pglite':
         optional: true
       '@libsql/client':
+        optional: true
+      '@libsql/client-wasm':
         optional: true
       '@neondatabase/serverless':
         optional: true
@@ -5598,6 +5590,7 @@ packages:
 
   ethereumjs-abi@0.6.8:
     resolution: {integrity: sha512-Tx0r/iXI6r+lRsdvkFDlut0N08jWMnKRZ6Gkq+Nmw75lZe4e6o3EkSnkaBP5NF6+m5PTGAr9JP43N3LyeoglsA==}
+    deprecated: This library has been deprecated and usage is discouraged.
 
   ethereumjs-util@6.2.1:
     resolution: {integrity: sha512-W2Ktez4L01Vexijrm5EB6w7dg4n/TgpoYU4avuT5T3Vmnw/eCRtiBrJfQYS/DCSvDIOLn2k57GcHdeBcgVxAqw==}
@@ -7314,9 +7307,6 @@ packages:
   obliterator@2.0.4:
     resolution: {integrity: sha512-lgHwxlxV1qIg1Eap7LgIeoBWIMFibOjbrYPIPJZcI1mmGAI2m3lNYpK12Y+GBdPQ0U1hRwSord7GIaawz962qQ==}
 
-  obuf@1.1.2:
-    resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
-
   ofetch@1.3.4:
     resolution: {integrity: sha512-KLIET85ik3vhEfS+3fDlc/BAZiAp+43QEC/yCo5zkNoY2YaKvNkOaFr/6wCFgFH1kuYQM5pMNi0Tg8koiIemtw==}
 
@@ -7554,9 +7544,6 @@ packages:
   pg-connection-string@2.7.0:
     resolution: {integrity: sha512-PI2W9mv53rXJQEOb8xNR8lH7Hr+EKa6oJa38zsK0S/ky2er16ios1wLKhZyxzD7jUReiWokc9WK5nxSnC7W1TA==}
 
-  pg-copy-streams@6.0.6:
-    resolution: {integrity: sha512-Z+Dd2C2NIDTsjyFKmc6a9QLlpM8tjpERx+43RSx0WmL7j3uNChERi3xSvZUL0hWJ1oRUn4S3fhyt3apdSrTyKQ==}
-
   pg-int8@1.0.1:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
@@ -7672,6 +7659,18 @@ packages:
   pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
+
+  ponder@0.8.3:
+    resolution: {integrity: sha512-3lQg+0Oi4OzQsieaxP03HvzEK0yBv6fXKE42AzrW8d8xqG0BQGZYRPsAIxZ0Qd5FHeywauPEmxTqK0DdfxK1hg==}
+    engines: {node: '>=18.14'}
+    hasBin: true
+    peerDependencies:
+      hono: '>=4.5'
+      typescript: '>=5.0.4'
+      viem: '>=2'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   pony-cause@2.1.11:
     resolution: {integrity: sha512-M7LhCsdNbNgiLYiP4WjsfLUuFmCfnjdF6jKe2R9NKl4WFN+HZPGHJZ9lnLP7f9ZnKe3U9nuWD0szirmj+migUg==}
@@ -10055,7 +10054,7 @@ snapshots:
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
       js-tokens: 4.0.0
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   '@babel/compat-data@7.25.4': {}
 
@@ -10094,7 +10093,7 @@ snapshots:
       '@babel/traverse': 7.25.9
       '@babel/types': 7.26.0
       convert-source-map: 2.0.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -10192,7 +10191,7 @@ snapshots:
       '@babel/core': 7.26.0
       '@babel/helper-compilation-targets': 7.25.9
       '@babel/helper-plugin-utils': 7.25.9
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -11122,7 +11121,7 @@ snapshots:
       '@babel/parser': 7.25.4
       '@babel/template': 7.25.0
       '@babel/types': 7.25.4
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -11134,7 +11133,7 @@ snapshots:
       '@babel/parser': 7.25.6
       '@babel/template': 7.25.0
       '@babel/types': 7.25.6
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -11146,7 +11145,7 @@ snapshots:
       '@babel/parser': 7.26.2
       '@babel/template': 7.25.9
       '@babel/types': 7.26.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -11737,7 +11736,7 @@ snapshots:
   '@eslint/config-array@0.18.0':
     dependencies:
       '@eslint/object-schema': 2.1.4
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -11746,7 +11745,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       espree: 9.6.1
       globals: 13.24.0
       ignore: 5.3.2
@@ -11760,7 +11759,7 @@ snapshots:
   '@eslint/eslintrc@3.1.0':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       espree: 10.2.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -12008,7 +12007,7 @@ snapshots:
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -12063,7 +12062,7 @@ snapshots:
       '@intlify/shared': 9.14.1
       '@rollup/pluginutils': 5.1.0(rollup@4.27.3)
       '@vue/compiler-sfc': 3.5.6
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       fast-glob: 3.3.2
       js-yaml: 4.1.0
       json5: 2.2.3
@@ -12165,7 +12164,7 @@ snapshots:
 
   '@kwsites/file-exists@1.1.1':
     dependencies:
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -12355,7 +12354,7 @@ snapshots:
       bufferutil: 4.0.8
       cross-fetch: 4.0.0
       date-fns: 2.30.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eciesjs: 0.3.20
       eventemitter2: 6.4.9
       readable-stream: 3.6.2
@@ -12383,7 +12382,7 @@ snapshots:
       '@types/dom-screen-wake-lock': 1.0.3
       bowser: 2.11.0
       cross-fetch: 4.0.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eciesjs: 0.3.20
       eth-rpc-errors: 4.0.3
       eventemitter2: 6.4.9
@@ -12415,7 +12414,7 @@ snapshots:
     dependencies:
       '@ethereumjs/tx': 4.2.0
       '@types/debug': 4.1.12
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       semver: 7.6.3
       superstruct: 1.0.4
     transitivePeerDependencies:
@@ -12428,7 +12427,7 @@ snapshots:
       '@noble/hashes': 1.4.0
       '@scure/base': 1.1.7
       '@types/debug': 4.1.12
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       pony-cause: 2.1.11
       semver: 7.6.3
       uuid: 9.0.1
@@ -12442,7 +12441,7 @@ snapshots:
       '@noble/hashes': 1.4.0
       '@scure/base': 1.1.7
       '@types/debug': 4.1.12
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       pony-cause: 2.1.11
       semver: 7.6.3
       uuid: 9.0.1
@@ -12606,7 +12605,7 @@ snapshots:
 
   '@nomicfoundation/hardhat-ethers@3.0.7(ethers@6.13.2(bufferutil@4.0.8)(utf-8-validate@5.0.10))(hardhat@2.22.9(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@22.7.4)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10))':
     dependencies:
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       ethers: 6.13.2(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       hardhat: 2.22.9(bufferutil@4.0.8)(ts-node@10.9.2(@types/node@22.7.4)(typescript@5.5.4))(typescript@5.5.4)(utf-8-validate@5.0.10)
       lodash.isequal: 4.5.0
@@ -13237,7 +13236,7 @@ snapshots:
       '@nuxt/kit': 3.13.2(magicast@0.3.5)(rollup@4.27.3)(webpack-sources@3.2.3)
       '@rollup/plugin-yaml': 4.1.2(rollup@4.27.3)
       '@vue/compiler-sfc': 3.5.6
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       defu: 6.1.4
       estree-walker: 3.0.3
       is-https: 4.0.0
@@ -13381,91 +13380,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@ponder/core@0.7.7(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))':
-    dependencies:
-      '@babel/code-frame': 7.24.7
-      '@commander-js/extra-typings': 12.1.0(commander@12.1.0)
-      '@electric-sql/pglite': 0.2.13
-      '@escape.tech/graphql-armor-max-aliases': 2.6.0
-      '@escape.tech/graphql-armor-max-depth': 2.4.0
-      '@escape.tech/graphql-armor-max-tokens': 2.5.0
-      '@hono/node-server': 1.13.3(hono@4.6.11)
-      '@ponder/utils': 0.2.2(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
-      abitype: 0.10.3(typescript@5.6.2)
-      commander: 12.1.0
-      conf: 12.0.0
-      dataloader: 2.2.2
-      detect-package-manager: 3.0.2
-      dotenv: 16.4.5
-      drizzle-orm: 0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1)
-      glob: 10.4.5
-      graphql: 16.9.0
-      graphql-yoga: 5.10.3(graphql@16.9.0)
-      hono: 4.6.11
-      http-terminator: 3.2.0
-      ink: 4.4.1(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10)
-      kysely: 0.26.3
-      kysely-pglite: 0.6.1(@electric-sql/pglite@0.2.13)(kysely@0.26.3)(pg@8.13.1)
-      pg: 8.13.1
-      pg-connection-string: 2.7.0
-      pg-copy-streams: 6.0.6
-      picocolors: 1.1.0
-      pino: 8.21.0
-      prom-client: 15.1.3
-      react: 18.3.1
-      stacktrace-parser: 0.1.10
-      viem: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
-      vite: 5.0.7(@types/node@20.17.6)(terser@5.34.0)
-      vite-node: 1.0.2(@types/node@20.17.6)(terser@5.34.0)
-      vite-tsconfig-paths: 4.3.1(typescript@5.6.2)(vite@5.0.7(@types/node@20.17.6)(terser@5.34.0))
-    optionalDependencies:
-      typescript: 5.6.2
-    transitivePeerDependencies:
-      - '@aws-sdk/client-rds-data'
-      - '@cloudflare/workers-types'
-      - '@libsql/client'
-      - '@libsql/kysely-libsql'
-      - '@neondatabase/serverless'
-      - '@op-engineering/op-sqlite'
-      - '@opentelemetry/api'
-      - '@planetscale/database'
-      - '@prisma/client'
-      - '@tediousjs/connection-string'
-      - '@tidbcloud/serverless'
-      - '@types/better-sqlite3'
-      - '@types/node'
-      - '@types/pg'
-      - '@types/react'
-      - '@types/sql.js'
-      - '@vercel/postgres'
-      - '@xata.io/client'
-      - better-sqlite3
-      - bufferutil
-      - bun-types
-      - expo-sqlite
-      - knex
-      - kysely-bun-worker
-      - less
-      - lightningcss
-      - mysql2
-      - pg-native
-      - postgres
-      - prisma
-      - react-devtools-core
-      - sass
-      - sass-embedded
-      - sql.js
-      - sqlite3
-      - stylus
-      - sugarss
-      - supports-color
-      - tarn
-      - tedious
-      - terser
-      - utf-8-validate
-      - zod
-
-  '@ponder/utils@0.2.2(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))':
+  '@ponder/utils@0.2.3(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))':
     dependencies:
       viem: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
     optionalDependencies:
@@ -14081,7 +13996,7 @@ snapshots:
     dependencies:
       '@noble/curves': 1.6.0
       '@noble/hashes': 1.5.0
-      '@scure/base': 1.1.7
+      '@scure/base': 1.1.9
 
   '@scure/bip39@1.1.1':
     dependencies:
@@ -14452,7 +14367,7 @@ snapshots:
       '@typescript-eslint/type-utils': 6.21.0(eslint@8.57.1)(typescript@5.6.2)
       '@typescript-eslint/utils': 6.21.0(eslint@8.57.1)(typescript@5.6.2)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eslint: 8.57.1
       graphemer: 1.4.0
       ignore: 5.3.2
@@ -14470,7 +14385,7 @@ snapshots:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.6.2)
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eslint: 8.57.1
     optionalDependencies:
       typescript: 5.6.2
@@ -14486,7 +14401,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.6.2)
       '@typescript-eslint/utils': 6.21.0(eslint@8.57.1)(typescript@5.6.2)
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       eslint: 8.57.1
       ts-api-utils: 1.4.0(typescript@5.6.2)
     optionalDependencies:
@@ -14500,7 +14415,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/visitor-keys': 6.21.0
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
@@ -15037,7 +14952,7 @@ snapshots:
       - immer
       - react
 
-  '@wagmi/vue@0.0.40(@tanstack/query-core@5.56.2)(@tanstack/vue-query@5.52.0(vue@3.5.13(typescript@5.5.4)))(bufferutil@4.0.8)(immer@10.0.2)(ioredis@5.4.1)(nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3))(react-dom@18.3.1(react@18.3.1))(react-native@0.75.2(@babel/core@7.26.0)(@babel/preset-env@7.25.4(@babel/core@7.26.0))(bufferutil@4.0.8)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@18.3.1)(rollup@4.27.3)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))(vue@3.5.13(typescript@5.5.4))':
+  '@wagmi/vue@0.0.40(@tanstack/query-core@5.56.2)(@tanstack/vue-query@5.52.0(vue@3.5.13(typescript@5.5.4)))(bufferutil@4.0.8)(immer@10.0.2)(ioredis@5.4.1)(nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3))(react-dom@18.3.1(react@18.3.1))(react-native@0.75.2(@babel/core@7.26.0)(@babel/preset-env@7.25.4(@babel/core@7.26.0))(bufferutil@4.0.8)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@18.3.1)(rollup@4.27.3)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))(vue@3.5.13(typescript@5.5.4))':
     dependencies:
       '@tanstack/vue-query': 5.52.0(vue@3.5.13(typescript@5.5.4))
       '@wagmi/connectors': 5.1.8(@wagmi/core@2.13.4(@tanstack/query-core@5.56.2)(immer@10.0.2)(react@18.3.1)(typescript@5.5.4)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)))(bufferutil@4.0.8)(ioredis@5.4.1)(react-dom@18.3.1(react@18.3.1))(react-native@0.75.2(@babel/core@7.26.0)(@babel/preset-env@7.25.4(@babel/core@7.26.0))(bufferutil@4.0.8)(react@18.3.1)(typescript@5.5.4)(utf-8-validate@5.0.10))(react@18.3.1)(rollup@4.27.3)(typescript@5.5.4)(utf-8-validate@5.0.10)(viem@2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10))
@@ -15045,7 +14960,7 @@ snapshots:
       viem: 2.20.0(bufferutil@4.0.8)(typescript@5.5.4)(utf-8-validate@5.0.10)
       vue: 3.5.13(typescript@5.5.4)
     optionalDependencies:
-      nuxt: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3)
+      nuxt: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3)
       typescript: 5.5.4
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -15458,14 +15373,9 @@ snapshots:
     dependencies:
       acorn: 8.14.0
 
-  acorn-jsx@5.3.2(acorn@8.12.1):
-    dependencies:
-      acorn: 8.12.1
-
   acorn-jsx@5.3.2(acorn@8.14.0):
     dependencies:
       acorn: 8.14.0
-    optional: true
 
   acorn-walk@8.3.3:
     dependencies:
@@ -15481,7 +15391,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -16424,10 +16334,10 @@ snapshots:
 
   dayjs@1.11.13: {}
 
-  db0@0.2.1(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1)):
+  db0@0.2.1(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1)):
     optionalDependencies:
       '@electric-sql/pglite': 0.2.13
-      drizzle-orm: 0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1)
+      drizzle-orm: 0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1)
 
   death@1.1.0: {}
 
@@ -16590,7 +16500,7 @@ snapshots:
 
   dotenv@16.4.5: {}
 
-  drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1):
+  drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1):
     optionalDependencies:
       '@electric-sql/pglite': 0.2.13
       '@opentelemetry/api': 1.9.0
@@ -16668,7 +16578,7 @@ snapshots:
   engine.io-client@6.5.4(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       '@socket.io/component-emitter': 3.1.2
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       engine.io-parser: 5.2.3
       ws: 8.17.1(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       xmlhttprequest-ssl: 2.0.0
@@ -16867,7 +16777,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -16911,7 +16821,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       escape-string-regexp: 4.0.0
       eslint-scope: 8.1.0
       eslint-visitor-keys: 4.1.0
@@ -16948,8 +16858,8 @@ snapshots:
 
   espree@9.6.1:
     dependencies:
-      acorn: 8.12.1
-      acorn-jsx: 5.3.2(acorn@8.12.1)
+      acorn: 8.14.0
+      acorn-jsx: 5.3.2(acorn@8.14.0)
       eslint-visitor-keys: 3.4.3
 
   esprima@2.7.3: {}
@@ -17941,7 +17851,7 @@ snapshots:
     dependencies:
       '@ioredis/commands': 1.2.0
       cluster-key-slot: 1.1.2
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       denque: 2.1.0
       lodash.defaults: 4.2.0
       lodash.isarguments: 3.1.0
@@ -18932,7 +18842,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  nitropack@2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.5.4)(webpack-sources@3.2.3):
+  nitropack@2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.5.4)(webpack-sources@3.2.3):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@netlify/functions': 2.8.2
@@ -18956,7 +18866,7 @@ snapshots:
       cookie-es: 1.2.2
       croner: 9.0.0
       crossws: 0.3.1
-      db0: 0.2.1(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))
+      db0: 0.2.1(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 9.0.0
@@ -19026,7 +18936,7 @@ snapshots:
       - uWebSockets.js
       - webpack-sources
 
-  nitropack@2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.6.2)(webpack-sources@3.2.3):
+  nitropack@2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.6.2)(webpack-sources@3.2.3):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@netlify/functions': 2.8.2
@@ -19050,7 +18960,7 @@ snapshots:
       cookie-es: 1.2.2
       croner: 9.0.0
       crossws: 0.3.1
-      db0: 0.2.1(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))
+      db0: 0.2.1(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 9.0.0
@@ -19210,7 +19120,7 @@ snapshots:
 
   nuxi@3.15.0: {}
 
-  nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3):
+  nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.5.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.5.4)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(webpack-sources@3.2.3):
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/devtools': 1.6.1(bufferutil@4.0.8)(rollup@4.27.3)(utf-8-validate@5.0.10)(vite@5.4.3(@types/node@22.5.4)(terser@5.34.0))(vue@3.5.13(typescript@5.5.4))(webpack-sources@3.2.3)
@@ -19247,7 +19157,7 @@ snapshots:
       magic-string: 0.30.13
       mlly: 1.7.3
       nanotar: 0.1.1
-      nitropack: 2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.5.4)(webpack-sources@3.2.3)
+      nitropack: 2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.5.4)(webpack-sources@3.2.3)
       nuxi: 3.15.0
       nypm: 0.3.12
       ofetch: 1.4.1
@@ -19325,7 +19235,7 @@ snapshots:
       - webpack-sources
       - xml2js
 
-  nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3):
+  nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3):
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/devtools': 1.6.1(bufferutil@4.0.8)(rollup@4.27.3)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(vue@3.5.13(typescript@5.6.2))(webpack-sources@3.2.3)
@@ -19362,7 +19272,7 @@ snapshots:
       magic-string: 0.30.13
       mlly: 1.7.3
       nanotar: 0.1.1
-      nitropack: 2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.6.2)(webpack-sources@3.2.3)
+      nitropack: 2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.6.2)(webpack-sources@3.2.3)
       nuxi: 3.15.0
       nypm: 0.3.12
       ofetch: 1.4.1
@@ -19440,7 +19350,7 @@ snapshots:
       - webpack-sources
       - xml2js
 
-  nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3):
+  nuxt@3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3):
     dependencies:
       '@nuxt/devalue': 2.0.2
       '@nuxt/devtools': 1.6.1(bufferutil@4.0.8)(rollup@4.27.3)(utf-8-validate@5.0.10)(vue@3.5.13(typescript@5.6.2))(webpack-sources@3.2.3)
@@ -19477,7 +19387,7 @@ snapshots:
       magic-string: 0.30.13
       mlly: 1.7.3
       nanotar: 0.1.1
-      nitropack: 2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.34.1(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.6.2)(webpack-sources@3.2.3)
+      nitropack: 2.10.4(@electric-sql/pglite@0.2.13)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(idb-keyval@6.2.1)(typescript@5.6.2)(webpack-sources@3.2.3)
       nuxi: 3.15.0
       nypm: 0.3.12
       ofetch: 1.4.1
@@ -19586,8 +19496,6 @@ snapshots:
   object-assign@4.1.1: {}
 
   obliterator@2.0.4: {}
-
-  obuf@1.1.2: {}
 
   ofetch@1.3.4:
     dependencies:
@@ -19870,10 +19778,6 @@ snapshots:
 
   pg-connection-string@2.7.0: {}
 
-  pg-copy-streams@6.0.6:
-    dependencies:
-      obuf: 1.1.2
-
   pg-int8@1.0.1: {}
 
   pg-pool@3.7.0(pg@8.13.1):
@@ -19995,6 +19899,90 @@ snapshots:
   pluralize@8.0.0: {}
 
   pngjs@5.0.0: {}
+
+  ponder@0.8.3(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@commander-js/extra-typings': 12.1.0(commander@12.1.0)
+      '@electric-sql/pglite': 0.2.13
+      '@escape.tech/graphql-armor-max-aliases': 2.6.0
+      '@escape.tech/graphql-armor-max-depth': 2.4.0
+      '@escape.tech/graphql-armor-max-tokens': 2.5.0
+      '@hono/node-server': 1.13.3(hono@4.6.11)
+      '@ponder/utils': 0.2.3(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      abitype: 0.10.3(typescript@5.6.2)
+      commander: 12.1.0
+      conf: 12.0.0
+      dataloader: 2.2.2
+      detect-package-manager: 3.0.2
+      dotenv: 16.4.5
+      drizzle-orm: 0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1)
+      glob: 10.4.5
+      graphql: 16.9.0
+      graphql-yoga: 5.10.3(graphql@16.9.0)
+      hono: 4.6.11
+      http-terminator: 3.2.0
+      ink: 4.4.1(bufferutil@4.0.8)(react@18.3.1)(utf-8-validate@5.0.10)
+      kysely: 0.26.3
+      kysely-pglite: 0.6.1(@electric-sql/pglite@0.2.13)(kysely@0.26.3)(pg@8.13.1)
+      pg: 8.13.1
+      pg-connection-string: 2.7.0
+      picocolors: 1.1.1
+      pino: 8.21.0
+      prom-client: 15.1.3
+      react: 18.3.1
+      stacktrace-parser: 0.1.10
+      viem: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
+      vite: 5.0.7(@types/node@20.17.6)(terser@5.34.0)
+      vite-node: 1.0.2(@types/node@20.17.6)(terser@5.34.0)
+      vite-tsconfig-paths: 4.3.1(typescript@5.6.2)(vite@5.0.7(@types/node@20.17.6)(terser@5.34.0))
+    optionalDependencies:
+      typescript: 5.6.2
+    transitivePeerDependencies:
+      - '@aws-sdk/client-rds-data'
+      - '@cloudflare/workers-types'
+      - '@libsql/client'
+      - '@libsql/client-wasm'
+      - '@libsql/kysely-libsql'
+      - '@neondatabase/serverless'
+      - '@op-engineering/op-sqlite'
+      - '@opentelemetry/api'
+      - '@planetscale/database'
+      - '@prisma/client'
+      - '@tediousjs/connection-string'
+      - '@tidbcloud/serverless'
+      - '@types/better-sqlite3'
+      - '@types/node'
+      - '@types/pg'
+      - '@types/react'
+      - '@types/sql.js'
+      - '@vercel/postgres'
+      - '@xata.io/client'
+      - better-sqlite3
+      - bufferutil
+      - bun-types
+      - expo-sqlite
+      - knex
+      - kysely-bun-worker
+      - less
+      - lightningcss
+      - mysql2
+      - pg-native
+      - postgres
+      - prisma
+      - react-devtools-core
+      - sass
+      - sass-embedded
+      - sql.js
+      - sqlite3
+      - stylus
+      - sugarss
+      - supports-color
+      - tarn
+      - tedious
+      - terser
+      - utf-8-validate
+      - zod
 
   pony-cause@2.1.11: {}
 
@@ -21039,7 +21027,7 @@ snapshots:
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -21082,7 +21070,7 @@ snapshots:
   socket.io-client@4.7.5(bufferutil@4.0.8)(utf-8-validate@5.0.10):
     dependencies:
       '@socket.io/component-emitter': 3.1.2
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       engine.io-client: 6.5.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       socket.io-parser: 4.2.4
     transitivePeerDependencies:
@@ -21093,7 +21081,7 @@ snapshots:
   socket.io-parser@4.2.4:
     dependencies:
       '@socket.io/component-emitter': 3.1.2
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -21319,7 +21307,7 @@ snapshots:
       css-tree: 2.3.1
       css-what: 6.1.0
       csso: 5.0.5
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   system-architecture@0.1.0: {}
 
@@ -21809,7 +21797,7 @@ snapshots:
     dependencies:
       browserslist: 4.24.2
       escalade: 3.2.0
-      picocolors: 1.1.0
+      picocolors: 1.1.1
 
   uqr@0.1.2: {}
 
@@ -21978,10 +21966,10 @@ snapshots:
   vite-node@1.0.2(@types/node@20.17.6)(terser@5.34.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       pathe: 1.1.2
-      picocolors: 1.1.0
-      vite: 5.4.5(@types/node@20.17.6)(terser@5.34.0)
+      picocolors: 1.1.1
+      vite: 5.4.11(@types/node@20.17.6)(terser@5.34.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -21996,7 +21984,7 @@ snapshots:
   vite-node@2.1.5(@types/node@22.5.4)(terser@5.34.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       es-module-lexer: 1.5.4
       pathe: 1.1.2
       vite: 5.4.11(@types/node@22.5.4)(terser@5.34.0)
@@ -22014,7 +22002,7 @@ snapshots:
   vite-node@2.1.5(@types/node@22.7.4)(terser@5.34.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       es-module-lexer: 1.5.4
       pathe: 1.1.2
       vite: 5.4.11(@types/node@22.7.4)(terser@5.34.0)
@@ -22077,7 +22065,7 @@ snapshots:
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.0(rollup@4.27.3)
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       error-stack-parser-es: 0.1.5
       fs-extra: 11.2.0
       open: 10.1.0
@@ -22095,7 +22083,7 @@ snapshots:
     dependencies:
       '@antfu/utils': 0.7.10
       '@rollup/pluginutils': 5.1.0(rollup@4.27.3)
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       error-stack-parser-es: 0.1.5
       fs-extra: 11.2.0
       open: 10.1.0
@@ -22141,7 +22129,7 @@ snapshots:
 
   vite-tsconfig-paths@4.3.1(typescript@5.6.2)(vite@5.0.7(@types/node@20.17.6)(terser@5.34.0)):
     dependencies:
-      debug: 4.3.7(supports-color@9.4.0)
+      debug: 4.3.7(supports-color@8.1.1)
       globrex: 0.1.2
       tsconfck: 3.1.4(typescript@5.6.2)
     optionalDependencies:
@@ -22153,7 +22141,17 @@ snapshots:
   vite@5.0.7(@types/node@20.17.6)(terser@5.34.0):
     dependencies:
       esbuild: 0.19.12
-      postcss: 8.4.47
+      postcss: 8.4.49
+      rollup: 4.27.3
+    optionalDependencies:
+      '@types/node': 20.17.6
+      fsevents: 2.3.3
+      terser: 5.34.0
+
+  vite@5.4.11(@types/node@20.17.6)(terser@5.34.0):
+    dependencies:
+      esbuild: 0.21.5
+      postcss: 8.4.49
       rollup: 4.22.5
     optionalDependencies:
       '@types/node': 20.17.6
@@ -22187,16 +22185,6 @@ snapshots:
       rollup: 4.21.0
     optionalDependencies:
       '@types/node': 22.5.4
-      fsevents: 2.3.3
-      terser: 5.34.0
-
-  vite@5.4.5(@types/node@20.17.6)(terser@5.34.0):
-    dependencies:
-      esbuild: 0.21.5
-      postcss: 8.4.47
-      rollup: 4.21.0
-    optionalDependencies:
-      '@types/node': 20.17.6
       fsevents: 2.3.3
       terser: 5.34.0
 
