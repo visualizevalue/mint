@@ -1,4 +1,4 @@
-import { onchainTable, primaryKey, relations } from '@ponder/core'
+import { onchainTable, primaryKey, relations } from 'ponder'
 
 // ===========================================================================
 //                                   MODELS

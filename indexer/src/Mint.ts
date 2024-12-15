@@ -1,5 +1,5 @@
 import { zeroAddress } from 'viem'
-import { ponder } from '@/generated'
+import { ponder } from 'ponder:registry'
 import { artifact, collection, ownership, mint, transfer } from '../ponder.schema'
 import onNewMint from '../handlers/mint/new-mint'
 import { onTransferSingle, onTransferBatch } from '../handlers/mint/transfer'

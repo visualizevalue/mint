@@ -1,4 +1,4 @@
-import { ponder } from '@/generated'
+import { ponder } from 'ponder:registry'
 import { account, collection } from '../ponder.schema'
 import { parseJson } from '../utils/json'
 import { getAccount, saveProfile } from '../utils/database'
