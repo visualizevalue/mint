@@ -1,4 +1,4 @@
-import { mint } from '../../ponder.schema'
+import { mint } from 'ponder:schema'
 import { getAccount } from '../../utils/database'
 
 const onNewMint = async ({ event, context }) => {

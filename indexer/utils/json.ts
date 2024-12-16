@@ -10,7 +10,7 @@ export const parseJson = <T>(input: string): T|object => {
   try {
     parsed = JSON.parse(jsonrepair(input))
   } catch (e) {
-    console.warn(`Bad JSON: `, e?.message || e)
+    console.warn(`Bad JSON: `, e?.message || e, input)
   }
 
   return parsed

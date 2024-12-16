@@ -1,16 +1,16 @@
 import { ponder } from 'ponder:registry'
-import { account, collection } from '../ponder.schema'
+import { account, collection } from 'ponder:schema'
 import { parseJson } from '../utils/json'
 import { getAccount, saveProfile } from '../utils/database'
+import { MintAbi } from '../abis/MintAbi'
 
 ponder.on('Factory:Created', async ({ event, context }) => {
   const { client, db } = context
-  const { Mint } = context.contracts
   const artist = event.args.ownerAddress
   const address = event.args.contractAddress
 
   const contractUri = await client.readContract({
-    abi: Mint.abi,
+    abi: MintAbi,
     address,
     functionName: 'contractURI',
     args: [],

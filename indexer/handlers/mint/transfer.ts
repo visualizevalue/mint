@@ -1,18 +1,10 @@
 import { getArtifact, getCollection, createArtifact, computeTransfer } from '../../utils/database'
 
-
 export const onTransferSingle = async ({ event, context }) => {
   const collectionAddress = event.log.address
   const id = event.args.id
 
-  // Ensure the collection exists
-  await getCollection(collectionAddress, context)
-
-  // Keep track of the artifact
-  await getArtifact(collectionAddress, id, context)
-
-  // Handle the actual transfer
-  await computeTransfer({
+  const data = {
     address: collectionAddress,
     id,
     hash: event.transaction.hash,
@@ -22,7 +14,14 @@ export const onTransferSingle = async ({ event, context }) => {
     from: event.args.from,
     to: event.args.to,
     amount: event.args.value,
-  }, context)
+  }
+
+  // Handle the actual transfer
+  try {
+    await computeTransfer(data, context)
+  } catch (e) {
+    console.error('Error in onTransferSingle – ignoring', e, data)
+  }
 }
 
 export const onTransferBatch = async ({ event, context }) => {
@@ -32,7 +31,7 @@ export const onTransferBatch = async ({ event, context }) => {
   const values = event.args.values
 
   for (let idx = 0; idx < ids.length; idx++) {
-    await computeTransfer({
+    const data = {
       address: collectionAddress,
       id: ids[idx],
       hash: event.transaction.hash,
@@ -42,7 +41,13 @@ export const onTransferBatch = async ({ event, context }) => {
       from: event.args.from,
       to: event.args.to,
       amount: values[idx],
-    }, context)
+    }
+
+    try {
+      await computeTransfer(data, context)
+    } catch (e) {
+      console.error('Error in onTransferBatch – ignoring', e, data)
+    }
   }
 }
 

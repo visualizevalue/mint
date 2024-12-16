@@ -1,12 +1,15 @@
 import { zeroAddress } from 'viem'
 import { normalize } from 'viem/ens'
-import { account, artifact, collection, profile, ownership, transfer } from '../ponder.schema'
-import { publicClient } from './client'
+import { account, artifact, collection, profile, ownership, transfer } from 'ponder:schema'
 import { parseJson } from './json'
 import { ONE_DAY, nowInSeconds } from './time'
 
 export async function getAccount (address, { client, db }, { fetch_ens } = { fetch_ens: false }) {
-  let data = await db.insert(account).values({ address, ens: '', ens_updated_at: 0n }).onConflictDoNothing()
+  let data = await db.find(account, { address })
+
+  if (! data) {
+    data = await db.insert(account).values({ address, ens: '', ens_updated_at: 0n })
+  }
 
   if (! fetch_ens) return data
 
@@ -30,7 +33,7 @@ export async function getCollection (address, { db }) {
   let data = await db.find(collection, { address })
 
   if (! data) {
-    data = await db.insert(collection).values({ address }).onConflictDoNothing()
+    data = await db.insert(collection).values({ address })
   }
 
   return data
@@ -82,17 +85,17 @@ export async function createArtifact (collection, id, { client, db, contracts })
     .onConflictDoNothing()
 }
 
-export async function saveProfile (ens, { db }) {
+export async function saveProfile (ens, { client, db }) {
   if (! ens) return
 
   try {
     const [avatar, description, url, email, twitter, github] = await Promise.all([
-      publicClient.getEnsAvatar({ name: normalize(ens) }),
-      publicClient.getEnsText({ name: ens, key: 'description' }),
-      publicClient.getEnsText({ name: ens, key: 'url' }),
-      publicClient.getEnsText({ name: ens, key: 'email' }),
-      publicClient.getEnsText({ name: ens, key: 'com.twitter' }),
-      publicClient.getEnsText({ name: ens, key: 'com.github' }),
+      client.getEnsAvatar({ name: normalize(ens) }),
+      client.getEnsText({ name: ens, key: 'description' }),
+      client.getEnsText({ name: ens, key: 'url' }),
+      client.getEnsText({ name: ens, key: 'email' }),
+      client.getEnsText({ name: ens, key: 'com.twitter' }),
+      client.getEnsText({ name: ens, key: 'com.github' }),
     ])
 
     const data = {
@@ -129,6 +132,12 @@ export const computeTransfer = async (
 ) => {
   const { client, db } = context
 
+  // Ensure the collection exists
+  await getCollection(address, context)
+
+  // Keep track of the artifact
+  await getArtifact(address, id, context)
+
   // Store the Transfer
   await db
     .insert(transfer)
@@ -152,6 +161,9 @@ export const computeTransfer = async (
 
     await db.update(collection, { address })
             .set((row) => ({ total_supply: row.total_supply + amount }))
+    // await db.insert(collection)
+    //   .values({ address, total_supply: amount })
+    //   .onConflictDoUpdate((row) => ({ total_supply: row.total_supply + amount }))
   }
 
   // New Burn - Decrease the token supply
@@ -180,6 +192,10 @@ export const computeTransfer = async (
   if (from !== zeroAddress) {
     await db.update(ownership, { account: from, collection: address, artifact: id })
             .set((row) => ({ balance: row.balance -= amount }))
+
+    // await db.insert(ownership)
+    //         .values({ account: from, collection: address, artifact: id })
+    //         .onConflictDoUpdate((row) => ({ balance: row.balance -= amount }))
   }
 }
 

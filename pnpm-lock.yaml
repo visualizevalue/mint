@@ -239,8 +239,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.0
       ponder:
-        specifier: ^0.8.3
-        version: 0.8.3(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+        specifier: ^0.8.4
+        version: 0.8.4(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
       viem:
         specifier: ^2.21.3
         version: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
@@ -7660,8 +7660,8 @@ packages:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
 
-  ponder@0.8.3:
-    resolution: {integrity: sha512-3lQg+0Oi4OzQsieaxP03HvzEK0yBv6fXKE42AzrW8d8xqG0BQGZYRPsAIxZ0Qd5FHeywauPEmxTqK0DdfxK1hg==}
+  ponder@0.8.4:
+    resolution: {integrity: sha512-Dp5+TDoyzMPeGkkrYY76NNhVjr9U+Jxe+XnDF41Ji3ey8rmSOdnJVW/2PckPQR6nkfVqYX4rnHYHSPa8tj9Ttw==}
     engines: {node: '>=18.14'}
     hasBin: true
     peerDependencies:
@@ -8771,6 +8771,7 @@ packages:
 
   sudo-prompt@9.2.1:
     resolution: {integrity: sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   superjson@2.2.1:
     resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
@@ -19900,7 +19901,7 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  ponder@0.8.3(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
+  ponder@0.8.4(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
     dependencies:
       '@babel/code-frame': 7.26.2
       '@commander-js/extra-typings': 12.1.0(commander@12.1.0)

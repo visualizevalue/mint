@@ -13,7 +13,7 @@
     "abitype": "^0.10.2",
     "hono": "^4.5.0",
     "jsonrepair": "^3.10.0",
-    "ponder": "^0.8.3",
+    "ponder": "^0.8.4",
     "viem": "^2.21.3"
   },
   "devDependencies": {
