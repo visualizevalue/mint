@@ -95,7 +95,7 @@ importers:
     devDependencies:
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
 
   app/examples/starter-base:
     dependencies:
@@ -105,7 +105,7 @@ importers:
     devDependencies:
       nuxt:
         specifier: ^3.14.159
-        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(webpack-sources@3.2.3)
+        version: 3.14.1592(@electric-sql/pglite@0.2.13)(@parcel/watcher@2.4.1)(@types/node@22.7.4)(bufferutil@4.0.8)(drizzle-orm@0.36.4(@electric-sql/pglite@0.2.13)(@opentelemetry/api@1.9.0)(kysely@0.26.3)(pg@8.13.1)(react@18.3.1))(eslint@9.10.0(jiti@2.4.0))(idb-keyval@6.2.1)(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.3)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(vite@5.4.11(@types/node@22.7.4)(terser@5.34.0))(webpack-sources@3.2.3)
 
   app/examples/starter-zinc:
     dependencies:
@@ -239,8 +239,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.0
       ponder:
-        specifier: ^0.8.4
-        version: 0.8.4(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+        specifier: ^0.8.7
+        version: 0.8.7(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
       viem:
         specifier: ^2.21.3
         version: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
@@ -252,8 +252,8 @@ importers:
         specifier: ^8.54.0
         version: 8.57.1
       eslint-config-ponder:
-        specifier: ^0.7.6
-        version: 0.7.7(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)
+        specifier: ^0.8.4
+        version: 0.8.6(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)
       typescript:
         specifier: ^5.3.2
         version: 5.6.2
@@ -5475,8 +5475,8 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
 
-  eslint-config-ponder@0.7.7:
-    resolution: {integrity: sha512-y+BU+VybZgYBrzN7J8K/A/M4VTs/a5tlA3UfOlbXgWR37CNdHGfZjIhCe4FmSuvJPcJbBNCk4TRDKHsHt28gsw==}
+  eslint-config-ponder@0.8.6:
+    resolution: {integrity: sha512-heY+QGwS3gB6Lz4e+LZD8qUd9o02MBdiejs0Dld96UYmVRHlGwtBiMz6+WJayrvhP15dj6ee+iKrx5vmB9mV5Q==}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^6.3.0
       '@typescript-eslint/parser': ^6.3.0
@@ -7660,8 +7660,8 @@ packages:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
 
-  ponder@0.8.4:
-    resolution: {integrity: sha512-Dp5+TDoyzMPeGkkrYY76NNhVjr9U+Jxe+XnDF41Ji3ey8rmSOdnJVW/2PckPQR6nkfVqYX4rnHYHSPa8tj9Ttw==}
+  ponder@0.8.7:
+    resolution: {integrity: sha512-QCwh1J0aWYCjEAuWUMVGkPVknqngZJWaQ/pierWvGVwtJKXUE0qKjdhd1lciZ7MkwVQNoy3+Z3qMmmBDq3dZ0w==}
     engines: {node: '>=18.14'}
     hasBin: true
     peerDependencies:
@@ -12460,7 +12460,7 @@ snapshots:
       '@motionone/easing': 10.18.0
       '@motionone/types': 10.17.1
       '@motionone/utils': 10.18.0
-      tslib: 2.6.3
+      tslib: 2.7.0
 
   '@motionone/dom@10.18.0':
     dependencies:
@@ -12469,7 +12469,7 @@ snapshots:
       '@motionone/types': 10.17.1
       '@motionone/utils': 10.18.0
       hey-listen: 1.0.8
-      tslib: 2.6.3
+      tslib: 2.7.0
 
   '@motionone/easing@10.18.0':
     dependencies:
@@ -12485,7 +12485,7 @@ snapshots:
   '@motionone/svelte@10.16.4':
     dependencies:
       '@motionone/dom': 10.18.0
-      tslib: 2.6.3
+      tslib: 2.7.0
 
   '@motionone/types@10.17.1': {}
 
@@ -12493,12 +12493,12 @@ snapshots:
     dependencies:
       '@motionone/types': 10.17.1
       hey-listen: 1.0.8
-      tslib: 2.6.3
+      tslib: 2.7.0
 
   '@motionone/vue@10.16.4':
     dependencies:
       '@motionone/dom': 10.18.0
-      tslib: 2.6.3
+      tslib: 2.7.0
 
   '@netlify/functions@2.8.2':
     dependencies:
@@ -16743,7 +16743,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-ponder@0.7.7(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1):
+  eslint-config-ponder@0.8.6(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1):
     dependencies:
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2)
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.1)(typescript@5.6.2)
@@ -19901,7 +19901,7 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  ponder@0.8.4(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
+  ponder@0.8.7(@opentelemetry/api@1.9.0)(@types/node@20.17.6)(bufferutil@4.0.8)(hono@4.6.11)(terser@5.34.0)(typescript@5.6.2)(utf-8-validate@5.0.10)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
     dependencies:
       '@babel/code-frame': 7.26.2
       '@commander-js/extra-typings': 12.1.0(commander@12.1.0)

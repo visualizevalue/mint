@@ -22,18 +22,21 @@ export default createConfig({
       network: 'mainnet',
       abi: FactoryAbi,
       address: '0xd717Fe677072807057B03705227EC3E3b467b670',
-      startBlock: 21167599,
+      // startBlock: 21167599,
+      startBlock: 21175200,
     },
     Mint: {
       abi: MintAbi,
       network: 'mainnet',
+      // address: '0xBA1901b542Aa58f181F7ae18eD6Cd79FdA779C62',
       factory: factory({
         address: '0xd717Fe677072807057B03705227EC3E3b467b670',
         event: parseAbiItem('event Created(address indexed ownerAddress, address contractAddress)'),
         parameter: 'contractAddress',
       }),
       includeTransactionReceipts: true,
-      startBlock: 21167600,
+      // startBlock: 21167599,
+      startBlock: 21175200,
     },
   },
 })

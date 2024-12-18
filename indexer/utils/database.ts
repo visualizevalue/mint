@@ -8,7 +8,9 @@ export async function getAccount (address, { client, db }, { fetch_ens } = { fet
   let data = await db.find(account, { address })
 
   if (! data) {
-    data = await db.insert(account).values({ address, ens: '', ens_updated_at: 0n })
+    data = await db.insert(account)
+      .values({ address, ens: '', ens_updated_at: 0n })
+      .onConflictDoNothing()
   }
 
   if (! fetch_ens) return data
@@ -33,7 +35,12 @@ export async function getCollection (address, { db }) {
   let data = await db.find(collection, { address })
 
   if (! data) {
-    data = await db.insert(collection).values({ address })
+    console.log('getCollection coll not found', address)
+    data = await db.insert(collection)
+      .values({ address })
+      .onConflictDoNothing()
+  } else {
+    console.info('getCollection coll found')
   }
 
   return data
