@@ -36,6 +36,7 @@ const props = defineProps({
   },
 })
 
+const config = useRuntimeConfig()
 const {
   artifact,
   image,
@@ -60,15 +61,10 @@ const setArtifact = async (file) => {
   }
 }
 watch(ipfsCid, () => {
-  const validated = validateCID(ipfsCid.value)
-  if (! validated) {
-    image.value = ''
-  } else {
-    image.value = ipfsToHttpURI(`ipfs://${validated}`)
-  }
+  image.value = getValidIpfsURI(ipfsCid.value)
 })
 watch(arTxId, () => {
-  image.value = `https://arweave.net/${arTxId.value}`
+  image.value = getValidArweaveURI(arTxId.value)
 })
 watch(mode, () => image.value = '')
 

@@ -1,13 +1,24 @@
-export const ipfsToHttpURI = (url: string, gateway: string = 'https://ipfs.io/ipfs/') => url.replace('ipfs://', gateway)
+type UrlValidationConfig = {
+  ipfsGateway?: string,
+  arweaveGateway?: string,
+}
 
-export const validateURI = (url: string) => {
+export const validateURI = (url: string, config: UrlValidationConfig = {}) => {
   if (! url || ! url.length) return false
 
   let validated = url.trim()
 
   // Normalize protocol
-  if (! validated.startsWith('https://')) validated = `https://${validated}`
-  if (! validated.startsWith('http')) validated = `http://${validated}`
+  // if (validated.startsWith('ipfs://') || validated.contains('ipfs')) {
+  if (validated.indexOf('ipfs') > -1) {
+    validated = ipfsToHttpURI(validated, config.ipfsGateway)
+  }
+  if (validated.startsWith('ar://')) {
+    validated = arweaveToHttpURI(validated, config.arweaveGateway)
+  }
+  if (! validated.startsWith('data:') && ! validated.startsWith('http')) {
+    validated = `https://${validated}`
+  }
 
   // Check url validity
   try {

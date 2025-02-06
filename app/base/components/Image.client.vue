@@ -20,6 +20,7 @@
 <script setup>
 import { vIntersectionObserver } from '@vueuse/components'
 
+const config = useRuntimeConfig()
 const props = defineProps({
   src: String,
   alt: String,
@@ -46,7 +47,7 @@ const loadImage = ([{ isIntersecting }]) => {
 
   if (! props.src) return
 
-  uri.value = props.src
+  uri.value = validateURI(props.src, config.public)
 }
 watch(() => props.src, () => loadImage([{ isIntersecting: true }]))
 

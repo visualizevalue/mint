@@ -25,6 +25,8 @@ export default defineNuxtConfig({
       rpc1: 'https://eth.llamarpc.com',
       rpc2: 'https://ethereum-rpc.publicnode.com',
       rpc3: 'https://eth.drpc.org',
+      ipfsGateway: 'https://ipfs.io/ipfs/',
+      arweaveGateway: 'https://arweave.net/',
       title: 'Mint',
       walletConnectProjectId: '',
     }

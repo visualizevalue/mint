@@ -42,12 +42,13 @@ async function fetchMediaType(url: string): Promise<string | null> {
   }
 }
 
+const config = useRuntimeConfig()
 const props = defineProps({
   src: String,
 })
 
 // Update on input change
-const src = ref(props.src)
+const src = ref()
 const mediaType = ref()
 const isPlayable = computed(() => {
   if (! mediaType.value) return false
@@ -55,7 +56,7 @@ const isPlayable = computed(() => {
 })
 
 watchEffect(async () => {
-  src.value = props.src
+  src.value = validateURI(props.src, config.public)
   mediaType.value = await fetchMediaType(src.value)
 })
 

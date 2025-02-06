@@ -50,6 +50,7 @@
 </template>
 
 <script setup>
+const config = useRuntimeConfig()
 const {
   artifact,
   image,
@@ -92,28 +93,18 @@ const setAnimationArtifact = async (file) => {
 }
 
 watch(imageIpfsCid, () => {
-  const validated = validateCID(imageIpfsCid.value)
-  if (! validated) {
-    image.value = ''
-  } else {
-    image.value = ipfsToHttpURI(`ipfs://${validated}`)
-  }
+  image.value = getValidIpfsURI(imageIpfsCid.value)
 })
 watch(imageArTxId, () => {
-  image.value = `https://arweave.net/${imageArTxId.value}`
+  image.value = getValidArweaveURI(imageArTxId.value)
 })
 watch(mode, () => image.value = '')
 
 watch(animationIpfsCid, () => {
-  const validated = validateCID(animationIpfsCid.value)
-  if (! validated) {
-    animationUrl.value = ''
-  } else {
-    animationUrl.value = ipfsToHttpURI(`ipfs://${validated}`)
-  }
+  animationUrl.value = getValidIpfsURI(animationIpfsCid.value)
 })
 watch(animationArTxId, () => {
-  animationUrl.value = `https://arweave.net/${animationArTxId.value}`
+  animationUrl.value = getValidArweaveURI(animationArTxId.value)
 })
 watch(mode, () => {
   image.value = ''
