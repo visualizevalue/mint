@@ -67,7 +67,7 @@ const { price, displayPrice } = useMintPrice(mintCount)
 const mintRequest = computed(() => async () => {
   const count = BigInt(props.mintCount)
 
-  const priceWithBlockBuffer = price.value * 105n / 100n
+  const priceWithBlockBuffer = price.value * 110n / 100n
 
   return writeContract($wagmi, {
     abi: MINT_ABI,
