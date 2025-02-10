@@ -1,6 +1,6 @@
 <template>
   <article class="mint-preview">
-    <Embed v-if="animationUrl" :src="animationUrl" />
+    <Embed v-if="animationUrl" :src="animationUrl" :muted="false" controls />
 
     <div class="static">
       <Image v-if="image" :src="image" :alt="$t('mint.preview.title')" />

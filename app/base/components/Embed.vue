@@ -3,7 +3,15 @@
     class="embed"
     @touchmove.stop.prevent="() => null"
   >
-    <video v-if="isPlayable" autoplay muted playsinline loop crossorigin="anonymous" >
+    <video
+      v-if="isPlayable"
+      :autoplay="autoplay"
+      :loop="loop"
+      :muted="muted"
+      :controls="controls"
+      playsinline
+      crossorigin="anonymous"
+    >
       <source :src="src" :type="mediaType">
       Your browser does not support the video tag.
     </video>
@@ -45,6 +53,22 @@ async function fetchMediaType(url: string): Promise<string | null> {
 const config = useRuntimeConfig()
 const props = defineProps({
   src: String,
+  muted: {
+    type: Boolean,
+    default: true,
+  },
+  loop: {
+    type: Boolean,
+    default: true,
+  },
+  autoplay: {
+    type: Boolean,
+    default: true,
+  },
+  controls: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 // Update on input change
@@ -74,13 +98,17 @@ watch(width, () => {
 <style scoped>
 .embed {
   width: 100%;
-  height: 0;
-  padding-bottom: 100%;
+  min-height: 20vh;
+  aspect-ratio: auto;
+  display: grid;
+  align-items: center;
+  justify-content: center;
   position: relative;
   touch-action: none;
   overflow: hidden;
 
   iframe {
+    aspect-ratio: 1/1;
     width: 100%;
     height: 100%;
     position: absolute;

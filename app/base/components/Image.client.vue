@@ -3,7 +3,6 @@
     class="image"
     :class="{ loaded }"
     @click="$emit('click')"
-    :style="{ padding: `0 0 ${height}` }"
     v-intersection-observer="loadImage"
   >
     <Loading v-if="! loaded" txt=""/>
@@ -31,15 +30,6 @@ const emit = defineEmits(['click', 'loaded'])
 const uri = ref('')
 const loaded = ref(false)
 const imageEl = ref(null)
-const aspectRatio = ref(1)
-const computeAspectRatio = () => {
-  aspectRatio.value = (
-    props.aspectRatio || // The passed aspect ratio
-    (imageEl.value?.naturalWidth / (imageEl.value?.naturalHeight || 1)) || // The natural image element ratio
-    1 // The default square ratio
-  )
-}
-computeAspectRatio()
 const height = computed(() => (1 / aspectRatio.value) * 100 + '%')
 
 const loadImage = ([{ isIntersecting }]) => {
@@ -63,10 +53,9 @@ const imageLoaded = () => {
 article.image {
   overflow: hidden;
   background-color: var(--background);
+  aspect-ratio: auto 1;
   overflow: hidden;
   position: relative;
-  height: 0;
-  padding-bottom: 100%;
   display: flex;
 
   .loader {
@@ -78,17 +67,11 @@ article.image {
   }
 
   img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
     object-fit: contain;
     transform: scale(1.2);
-    width: 100%;
     opacity: 0;
     transition: all var(--speed);
     image-rendering: pixelated;

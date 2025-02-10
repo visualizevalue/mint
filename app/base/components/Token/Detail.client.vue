@@ -2,7 +2,7 @@
   <article class="token-detail">
     <div class="artifact">
       <div>
-        <Embed v-if="token.animationUrl" :src="token.animationUrl" />
+        <Embed v-if="token.animationUrl" :src="token.animationUrl" :muted="false" controls />
         <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
         <ImageVoid v-else />
       </div>
