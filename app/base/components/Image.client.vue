@@ -45,7 +45,6 @@ watch(() => props.src, () => loadImage([{ isIntersecting: true }]))
 const imageLoaded = () => {
   loaded.value = true
   emit('loaded')
-  computeAspectRatio()
 }
 </script>
 
@@ -57,6 +56,7 @@ article.image {
   overflow: hidden;
   position: relative;
   display: flex;
+  container-type: inline-size;
 
   .loader {
     position: absolute;
@@ -68,6 +68,7 @@ article.image {
 
   img {
     width: 100%;
+    width: 100cqw;
     height: auto;
     object-fit: cover;
     object-fit: contain;
