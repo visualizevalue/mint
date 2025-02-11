@@ -22,6 +22,7 @@
         minted,
         mintOpen,
         currentBlock,
+        endBlock,
         countDownStr,
         blocksRemaining,
         transactionFlowConfig
@@ -57,7 +58,7 @@
             <TokenMintOpen :blocks="blocksRemaining" :time="countDownStr" />
           </p>
           <p v-else-if="currentBlock">
-            {{ $t('token.closed_ago', { time: countDownStr })}}
+            {{ $t('token.closed_at_block', { block: endBlock })}}
           </p>
           <p v-if="ownedBalance">
             {{ $t('token.you_own', { ownedBalance }) }}
