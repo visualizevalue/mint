@@ -109,6 +109,7 @@ watch(width, () => {
   video,
   iframe {
     width: 100cqw;
+    max-width: 100cqmin;
     max-height: 100cqmin;
     aspect-ratio: 1/1 auto;
   }
