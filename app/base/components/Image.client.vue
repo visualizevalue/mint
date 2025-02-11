@@ -50,7 +50,6 @@ const imageLoaded = () => {
 
 <style scoped>
 article.image {
-  overflow: hidden;
   background-color: var(--background);
   overflow: hidden;
   position: relative;
@@ -58,6 +57,8 @@ article.image {
   justify-content: center;
   align-items: center;
   container-type: inline-size;
+  width: 100%;
+  max-height: 100cqmin;
 
   .loader {
     position: absolute;
@@ -68,8 +69,8 @@ article.image {
   }
 
   img {
+    max-height: 100cqmin;
     aspect-ratio: 1/1 auto;
-    object-fit: contain;
     transform: scale(1.2);
     opacity: 0;
     transition: all var(--speed);

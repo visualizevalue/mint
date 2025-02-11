@@ -1,11 +1,9 @@
 <template>
   <article class="token-detail">
     <div class="artifact">
-      <div>
-        <Embed v-if="token.animationUrl" :src="token.animationUrl" :muted="false" controls />
-        <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
-        <ImageVoid v-else />
-      </div>
+      <Embed v-if="token.animationUrl" :src="token.animationUrl" :muted="false" controls />
+      <Image v-else-if="token.image" :src="token.image" :alt="token.name" />
+      <ImageVoid v-else />
 
       <Actions>
         <Button :to="{ name: 'id-collection-tokenId-full' }" title="Open">
@@ -110,52 +108,40 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
     --padding-x: 0;
     --padding-top: 0;
     --padding-bottom: 0;
-    --width: 100cqw;
-    --height: 100%;
+    --artifact-width: 100cqw;
+    --artifact-height: 100%;
     --dimension: min(100cqw, 100cqh);
 
     @media (--md) {
-      --width: 50cqw;
-      --height: calc(100cqh - var(--navbar-height));
+      --artifact-width: 50cqw;
       --padding-top: var(--spacer-lg);
       --padding-x: var(--spacer-lg);
       --padding-bottom: calc(var(--spacer-lg) + var(--spacer));
-      --padding-bottom: var(--spacer-lg);
-
-      --dimension: min(
-        calc(var(--width) - var(--padding-x)*2),
-        calc(100cqh - var(--padding-top) - var(--padding-bottom))
-      );
     }
 
     @media (--lg) {
-      --width: 60cqw;
+      --artifact-width: 60cqw;
       --padding-top: var(--spacer-xl);
       --padding-x: var(--spacer-xl);
       --padding-bottom: calc(var(--spacer-xl) + var(--spacer));
     }
 
-    height: var(--height);
-    width: var(--width);
+    width: var(--artifact-width);
+    height: var(--artifact-height);
     padding: var(--padding-top) var(--padding-x) var(--padding-bottom);
     position: relative;
+    container-type: inline-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: var(--border);
 
     @media (--md) {
+      border-bottom: none;
       border-right: var(--border);
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    > *:not(menu) {
-      width: var(--dimension);
-      height: auto;
-      border-bottom: var(--border) !important;
-      transition: transform var(--speed-slow), box-shadow var(--speed-slow);
-
-      @media (--md) {
-        border-bottom: none !important;
-      }
     }
 
     > menu {

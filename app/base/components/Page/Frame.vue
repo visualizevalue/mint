@@ -29,6 +29,7 @@ watch(props, () => updateBreadcrumbs())
   max-width: 100vw;
   display: grid;
   width: 100%;
+  container-type: inline-size;
 
   &.inset {
     gap: var(--spacer);

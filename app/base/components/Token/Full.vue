@@ -1,7 +1,7 @@
 <template>
   <article class="token-full">
     <div class="frame">
-      <Embed v-if="token.animationUrl" :src="token.animationUrl" />
+      <Embed v-if="token.animationUrl" :src="token.animationUrl" :muted="false" controls />
       <Image v-else="token.image" :src="token.image" />
     </div>
 
@@ -41,6 +41,22 @@ article {
 
   > .frame {
     width: calc(min(100vw, 100dvh) - var(--spacer)*2);
+    height: calc(100dvh - var(--spacer)*2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    :deep(> *) {
+      max-height: 100cqh;
+      max-width: 100cqw;
+
+      > img,
+      > video,
+      > iframe {
+        max-height: 100cqh;
+        max-width: 100cqw;
+      }
+    }
   }
 
   > .button {

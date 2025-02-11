@@ -98,18 +98,18 @@ watch(width, () => {
 <style scoped>
 .embed {
   width: 100%;
+  max-height: 100cqmin;
   display: grid;
   align-items: center;
   justify-content: center;
   position: relative;
   touch-action: none;
-  overflow: hidden;
   container-type: inline-size;
 
   video,
   iframe {
-    width: 100%;
     width: 100cqw;
+    max-height: 100cqmin;
     aspect-ratio: 1/1 auto;
   }
 

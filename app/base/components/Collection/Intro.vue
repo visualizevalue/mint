@@ -48,6 +48,7 @@ header.collection-intro {
 
   figure {
     max-width: var(--size-10);
+    container-type: inline-size;
   }
 
   @media (--sm) {
