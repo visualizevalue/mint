@@ -52,10 +52,11 @@ const imageLoaded = () => {
 article.image {
   overflow: hidden;
   background-color: var(--background);
-  aspect-ratio: auto 1;
   overflow: hidden;
   position: relative;
   display: flex;
+  justify-content: center;
+  align-items: center;
   container-type: inline-size;
 
   .loader {
@@ -67,10 +68,7 @@ article.image {
   }
 
   img {
-    width: 100%;
-    width: 100cqw;
-    height: auto;
-    object-fit: cover;
+    aspect-ratio: 1/1 auto;
     object-fit: contain;
     transform: scale(1.2);
     opacity: 0;
