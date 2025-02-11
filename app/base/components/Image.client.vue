@@ -70,8 +70,8 @@ article.image {
   }
 
   img {
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     max-height: 100cqmin;
     aspect-ratio: 1/1 auto;
     transform: scale(1.2);
