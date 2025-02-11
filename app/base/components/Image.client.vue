@@ -72,7 +72,9 @@ article.image {
   img {
     width: 100%;
     height: 100%;
+    max-width: 100cqmin;
     max-height: 100cqmin;
+    object-fit: contain;
     aspect-ratio: 1/1 auto;
     transform: scale(1.2);
     opacity: 0;
