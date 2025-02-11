@@ -5,7 +5,7 @@ export const validateArweaveTx = (tx: string): string|false => {
 export const getValidArweaveURI = (tx: string): string => {
   const validated = validateArweaveTx(tx)
 
-  return validated ? `ipfs://${validated}` : ''
+  return validated ? `ar://${validated}` : ''
 }
 
 export const arweaveToHttpURI = (url: string, gateway: string = 'https://arweave.net/') => url.replace('ar://', gateway)
