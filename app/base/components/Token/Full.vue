@@ -45,6 +45,7 @@ article {
     display: flex;
     justify-content: center;
     align-items: center;
+    container-type: size;
 
     :deep(> *) {
       max-height: 100cqh;

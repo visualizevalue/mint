@@ -110,7 +110,6 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
     --padding-bottom: 0;
     --artifact-width: 100cqw;
     --artifact-height: 100%;
-    --dimension: min(100cqw, 100cqh);
 
     @media (--md) {
       --artifact-width: 50cqw;
@@ -142,6 +141,7 @@ const ownedBalance = computed(() => collection.value && store.tokenBalance(colle
       display: flex;
       justify-content: center;
       align-items: center;
+      container-type: size;
     }
 
     > menu {

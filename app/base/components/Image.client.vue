@@ -58,7 +58,8 @@ article.image {
   align-items: center;
   container-type: inline-size;
   width: 100%;
-  max-height: 100cqmin;
+  height: 100%;
+  max-height: 100cqh;
 
   .loader {
     position: absolute;
@@ -69,6 +70,8 @@ article.image {
   }
 
   img {
+    width: auto;
+    height: auto;
     max-height: 100cqmin;
     aspect-ratio: 1/1 auto;
     transform: scale(1.2);
