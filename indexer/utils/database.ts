@@ -113,10 +113,10 @@ export async function saveProfile(ens: string, { client, db }: Context) {
       avatar: avatar || '',
       description: description || '',
       links: {
-        url,
-        email,
-        twitter,
-        github,
+        url: url || '',
+        email: email || '',
+        twitter: twitter || '',
+        github: github || '',
       },
       updated_at: BigInt(Date.now()),
     }
