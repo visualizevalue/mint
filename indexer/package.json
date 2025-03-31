@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "ponder dev",
         "start": "ponder start",
-        "codegen": "ponder codegen",
+        "codegen": "ponder codegen && pnpm format",
         "db": "ponder db",
         "serve": "ponder serve",
         "format": "prettier --write .",
