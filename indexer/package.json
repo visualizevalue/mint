@@ -9,11 +9,12 @@
         "db": "ponder db",
         "serve": "ponder serve",
         "format": "prettier --write .",
-        "typecheck": "tsc"
+        "typecheck": "tsc && pnpm format"
     },
     "dependencies": {
         "abitype": "^0.10.2",
         "hono": "^4.5.0",
+        "jsonrepair": "^3.12.0",
         "ponder": "^0.10.6",
         "viem": "^2.21.3"
     },

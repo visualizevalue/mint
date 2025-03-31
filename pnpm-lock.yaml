@@ -235,6 +235,9 @@ importers:
       hono:
         specifier: ^4.5.0
         version: 4.7.5
+      jsonrepair:
+        specifier: ^3.12.0
+        version: 3.12.0
       ponder:
         specifier: ^0.10.6
         version: 0.10.6(@opentelemetry/api@1.9.0)(@types/node@20.17.28)(hono@4.7.5)(terser@5.34.0)(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
@@ -6496,6 +6499,10 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
+  jsonrepair@3.12.0:
+    resolution: {integrity: sha512-SWfjz8SuQ0wZjwsxtSJ3Zy8vvLg6aO/kxcp9TWNPGwJKgTZVfhNEQBMk/vPOpYCDFWRxD6QWuI6IHR1t615f0w==}
+    hasBin: true
+
   jsonschema@1.4.1:
     resolution: {integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==}
 
@@ -12301,13 +12308,13 @@ snapshots:
   '@motionone/easing@10.18.0':
     dependencies:
       '@motionone/utils': 10.18.0
-      tslib: 2.7.0
+      tslib: 2.8.1
 
   '@motionone/generators@10.18.0':
     dependencies:
       '@motionone/types': 10.17.1
       '@motionone/utils': 10.18.0
-      tslib: 2.7.0
+      tslib: 2.8.1
 
   '@motionone/svelte@10.16.4':
     dependencies:
@@ -17867,6 +17874,8 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  jsonrepair@3.12.0: {}
 
   jsonschema@1.4.1: {}
 
