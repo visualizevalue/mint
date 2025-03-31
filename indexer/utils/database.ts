@@ -1,14 +1,23 @@
 import { zeroAddress } from 'viem'
 import { normalize } from 'viem/ens'
-import { account, artifact, collection, profile, ownership, transfer } from '../ponder.schema'
-import { publicClient } from './client'
+import { type Context, type Event } from 'ponder:registry'
+import { account, artifact, collection, profile, ownership, transfer } from 'ponder:schema'
 import { parseJson } from './json'
 import { ONE_DAY, nowInSeconds } from './time'
+import { Metadata } from './types'
 
-export async function getAccount (address, { client, db }, { fetch_ens } = { fetch_ens: false }) {
-  let data = await db.insert(account).values({ address, ens: '', ens_updated_at: 0n }).onConflictDoNothing()
+export async function getAccount(
+  address: `0x${string}`,
+  { client, db }: Context,
+  { fetch_ens } = { fetch_ens: false },
+) {
+  let data = await db
+    .insert(account)
+    .values({ address, ens: '', ens_updated_at: 0n })
+    .onConflictDoNothing()
 
-  if (! fetch_ens) return data
+  if (!fetch_ens) return data
+  if (!data) return data
 
   const now = nowInSeconds()
   if ((data.ens_updated_at || 0n) + ONE_DAY < now) {
@@ -26,28 +35,32 @@ export async function getAccount (address, { client, db }, { fetch_ens } = { fet
   return data
 }
 
-export async function getCollection (address, { db }) {
+export async function getCollection(address: `0x${string}`, { db }: Context) {
   let data = await db.find(collection, { address })
 
-  if (! data) {
+  if (!data) {
     data = await db.insert(collection).values({ address }).onConflictDoNothing()
   }
 
   return data
 }
 
-export async function getArtifact (collection, id, context) {
+export async function getArtifact(collection: `0x${string}`, id: bigint, context: Context) {
   let data = await context.db.find(artifact, { collection, id })
 
-  if (! data) {
+  if (!data) {
     data = await createArtifact(collection, id, context)
   }
 
   return data
 }
 
-export async function createArtifact (collection, id, { client, db, contracts }) {
-  let metadata = {
+export async function createArtifact(
+  collection: `0x${string}`,
+  id: bigint,
+  { client, db, contracts }: Context,
+) {
+  let metadata: Metadata = {
     name: '',
     description: '',
     image: '',
@@ -62,9 +75,10 @@ export async function createArtifact (collection, id, { client, db, contracts })
     })
 
     const json = Buffer.from(uri.substring(29), `base64`).toString()
-    const data = parseJson(json)
-    Object.keys(data).forEach(key => {
-      metadata[key] = data[key]
+    const data: Metadata = parseJson<Metadata>(json) || metadata
+    const keys = Object.keys(metadata) as (keyof Metadata)[]
+    keys.forEach((key) => {
+      metadata[key] = data[key] as string
     })
   } catch (e) {
     console.warn(`Fetching metadata for ${collection}:${id} failed.`, e)
@@ -82,17 +96,17 @@ export async function createArtifact (collection, id, { client, db, contracts })
     .onConflictDoNothing()
 }
 
-export async function saveProfile (ens, { db }) {
-  if (! ens) return
+export async function saveProfile(ens: string, { client, db }: Context) {
+  if (!ens) return
 
   try {
     const [avatar, description, url, email, twitter, github] = await Promise.all([
-      publicClient.getEnsAvatar({ name: normalize(ens) }),
-      publicClient.getEnsText({ name: ens, key: 'description' }),
-      publicClient.getEnsText({ name: ens, key: 'url' }),
-      publicClient.getEnsText({ name: ens, key: 'email' }),
-      publicClient.getEnsText({ name: ens, key: 'com.twitter' }),
-      publicClient.getEnsText({ name: ens, key: 'com.github' }),
+      client.getEnsAvatar({ name: normalize(ens) }),
+      client.getEnsText({ name: ens, key: 'description' }),
+      client.getEnsText({ name: ens, key: 'url' }),
+      client.getEnsText({ name: ens, key: 'email' }),
+      client.getEnsText({ name: ens, key: 'com.twitter' }),
+      client.getEnsText({ name: ens, key: 'com.github' }),
     ])
 
     const data = {
@@ -107,7 +121,10 @@ export async function saveProfile (ens, { db }) {
       updated_at: BigInt(Date.now()),
     }
 
-    await db.insert(profile).values({ ens, ...data }).onConflictDoUpdate(data)
+    await db
+      .insert(profile)
+      .values({ ens, ...data })
+      .onConflictDoUpdate(data)
   } catch (e) {
     console.warn(`Error fetching profile:`, e)
   }
@@ -124,11 +141,19 @@ export const computeTransfer = async (
     from,
     to,
     amount,
+  }: {
+    address: `0x${string}`
+    id: bigint
+    hash: `0x${string}`
+    block_number: bigint
+    log_index: number
+    timestamp: bigint
+    from: `0x${string}`
+    to: `0x${string}`
+    amount: bigint
   },
-  context
+  { db }: Context,
 ) => {
-  const { client, db } = context
-
   // Store the Transfer
   await db
     .insert(transfer)
@@ -147,20 +172,24 @@ export const computeTransfer = async (
 
   // New Mint - Increase the token supply
   if (from === zeroAddress) {
-    await db.update(artifact, { collection: address, id })
-            .set((row) => ({ supply: row.supply + amount }))
+    await db
+      .update(artifact, { collection: address, id })
+      .set((row: typeof artifact.$inferSelect) => ({ supply: (row.supply ?? 0n) + amount }))
 
-    await db.update(collection, { address })
-            .set((row) => ({ total_supply: row.total_supply + amount }))
+    await db.update(collection, { address }).set((row: typeof collection.$inferSelect) => ({
+      total_supply: (row.total_supply ?? 0n) + amount,
+    }))
   }
 
   // New Burn - Decrease the token supply
   if (to === zeroAddress) {
-    await db.update(artifact, { collection: address, id })
-            .set((row) => ({ supply: row.supply - amount }))
+    await db
+      .update(artifact, { collection: address, id })
+      .set((row: typeof artifact.$inferSelect) => ({ supply: (row.supply ?? 0n) - amount }))
 
-    await db.update(collection, { address })
-            .set((row) => ({ total_supply: row.total_supply - amount }))
+    await db.update(collection, { address }).set((row: typeof collection.$inferSelect) => ({
+      total_supply: (row.total_supply ?? 0n) - amount,
+    }))
   }
 
   // Add the balance to the recipient
@@ -173,13 +202,15 @@ export const computeTransfer = async (
         artifact: id,
         balance: amount,
       })
-      .onConflictDoUpdate((row) => ({ balance: row.balance += amount }))
+      .onConflictDoUpdate((row: typeof ownership.$inferInsert) => ({
+        balance: (row.balance ?? 0n) + amount,
+      }))
   }
 
   // Subtract the balance from the sender
   if (from !== zeroAddress) {
-    await db.update(ownership, { account: from, collection: address, artifact: id })
-            .set((row) => ({ balance: row.balance -= amount }))
+    await db
+      .update(ownership, { account: from, collection: address, artifact: id })
+      .set((row: typeof ownership.$inferSelect) => ({ balance: (row.balance ?? 0n) - amount }))
   }
 }
-

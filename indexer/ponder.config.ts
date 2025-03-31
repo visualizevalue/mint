@@ -1,5 +1,6 @@
-import { createConfig, factory } from 'ponder'
 import { parseAbiItem } from 'abitype'
+import { createConfig, factory } from 'ponder'
+
 import { fallback, http } from 'viem'
 
 import { FactoryAbi } from './abis/FactoryAbi'
@@ -30,7 +31,7 @@ export default createConfig({
     Mint: {
       network: 'mainnet',
       abi: MintAbi,
-      factory: factory({
+      address: factory({
         address: '0xd717Fe677072807057B03705227EC3E3b467b670',
         event: parseAbiItem('event Created(address indexed owner, address contract)'),
         parameter: 'contract',

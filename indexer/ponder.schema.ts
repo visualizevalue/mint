@@ -103,7 +103,13 @@ export const transfer = onchainTable(
   }),
   (table) => ({
     pk: primaryKey({
-      columns: [table.collection, table.artifact, table.hash, table.block_number, table.log_index],
+      columns: [
+        table.collection,
+        table.artifact,
+        table.hash,
+        table.block_number,
+        table.log_index,
+      ],
     }),
   }),
 )
@@ -113,10 +119,7 @@ export const transfer = onchainTable(
 // ===========================================================================
 
 export const accountRelations = relations(account, ({ many, one }) => ({
-  collections: many(collection, {
-    fields: [collection.artist],
-    references: [account.address],
-  }),
+  collections: many(collection),
   profile: one(profile, {
     fields: [account.ens],
     references: [profile.ens],
@@ -128,10 +131,7 @@ export const collectionsRelations = relations(collection, ({ many, one }) => ({
     fields: [collection.artist],
     references: [account.address],
   }),
-  artifacts: many(artifact, {
-    fields: [artifact.collection],
-    references: [collection.address],
-  }),
+  artifacts: many(artifact),
 }))
 
 export const artifactsRelations = relations(artifact, ({ many, one }) => ({
@@ -139,14 +139,8 @@ export const artifactsRelations = relations(artifact, ({ many, one }) => ({
     fields: [artifact.collection],
     references: [collection.address],
   }),
-  mints: many(mint, {
-    fields: [mint.artifact],
-    references: [artifact.id],
-  }),
-  transfers: many(transfer, {
-    fields: [transfer.artifact],
-    references: [artifact.id],
-  }),
+  mints: many(mint),
+  transfers: many(transfer),
 }))
 
 export const ownershipRelations = relations(ownership, ({ one }) => ({
@@ -177,4 +171,3 @@ export const transferRelations = relations(transfer, ({ one }) => ({
     references: [artifact.id],
   }),
 }))
-
