@@ -1,6 +1,12 @@
 import { ponder } from 'ponder:registry'
-import { mint } from 'ponder:schema'
-import { getAccount, getArtifact, getCollection, computeTransfer } from '../utils/database'
+import { artifact, mint } from 'ponder:schema'
+import {
+  computeTransfer,
+  getAccount,
+  getArtifact,
+  getCollection,
+  saveProfile,
+} from '../utils/database'
 
 ponder.on('Mint:NewMint', async ({ event, context }) => {
   await getAccount(event.args.minter, context, {
@@ -28,19 +34,26 @@ ponder.on('Mint:NewMint', async ({ event, context }) => {
 })
 
 ponder.on('Mint:TransferSingle', async ({ event, context }) => {
-  const collectionAddress = event.log.address
+  const collection = event.log.address
   const id = event.args.id
 
+  // If the artifact is a new mint, update the artist account
+  if (!(await context.db.find(artifact, { collection, id }))) {
+    const artist = event.args.to
+    const accountData = await getAccount(artist, context, { fetch_ens: true })
+    if (accountData?.ens) await saveProfile(accountData.ens, context)
+  }
+
   // Ensure the collection exists
-  await getCollection(collectionAddress, context)
+  await getCollection(collection, context)
 
   // Keep track of the artifact
-  await getArtifact(collectionAddress, id, context)
+  await getArtifact(collection, id, context)
 
   // Handle the actual transfer
   await computeTransfer(
     {
-      address: collectionAddress,
+      address: collection,
       id,
       hash: event.transaction.hash,
       block_number: event.block.number,
@@ -55,14 +68,14 @@ ponder.on('Mint:TransferSingle', async ({ event, context }) => {
 })
 
 ponder.on('Mint:TransferBatch', async ({ event, context }) => {
-  const collectionAddress = event.log.address
+  const collection = event.log.address
   const ids = event.args.ids
   const values = event.args.values
 
   for (let idx = 0; idx < ids.length; idx++) {
     await computeTransfer(
       {
-        address: collectionAddress,
+        address: collection,
         id: ids[idx] as bigint,
         hash: event.transaction.hash,
         block_number: event.block.number,
