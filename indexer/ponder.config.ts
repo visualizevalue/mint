@@ -1,7 +1,7 @@
 import { parseAbiItem } from 'abitype'
 import { createConfig, factory } from 'ponder'
 
-import { fallback, http } from 'viem'
+import { http } from 'viem'
 
 import { FactoryAbi } from './abis/FactoryAbi'
 import { MintAbi } from './abis/MintAbi'
@@ -10,11 +10,7 @@ export default createConfig({
   networks: {
     mainnet: {
       chainId: 1,
-      transport: fallback([
-        http(process.env.PONDER_RPC_URL_1_1),
-        http(process.env.PONDER_RPC_URL_1_2),
-        http(process.env.PONDER_RPC_URL_1_3),
-      ]),
+      transport: http(process.env.PONDER_RPC_URL_1),
     },
     // sepolia: {
     //   chainId: 11155111,
