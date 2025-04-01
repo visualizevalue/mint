@@ -1,0 +1,62 @@
+{
+    "id": "d735ea3d-14ea-4570-a166-5b46ed4ffcf4",
+    "prevId": "00000000-0000-0000-0000-000000000000",
+    "version": "7",
+    "dialect": "postgresql",
+    "tables": {
+        "offchain.profiles": {
+            "name": "profiles",
+            "schema": "offchain",
+            "columns": {
+                "address": {
+                    "name": "address",
+                    "type": "varchar(42)",
+                    "primaryKey": true,
+                    "notNull": true
+                },
+                "ens": {
+                    "name": "ens",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "data": {
+                    "name": "data",
+                    "type": "jsonb",
+                    "primaryKey": false,
+                    "notNull": false
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp",
+                    "primaryKey": false,
+                    "notNull": false
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {
+                "profiles_ens_unique": {
+                    "name": "profiles_ens_unique",
+                    "nullsNotDistinct": false,
+                    "columns": ["ens"]
+                }
+            },
+            "policies": {},
+            "checkConstraints": {},
+            "isRLSEnabled": false
+        }
+    },
+    "enums": {},
+    "schemas": {},
+    "sequences": {},
+    "roles": {},
+    "policies": {},
+    "views": {},
+    "_meta": {
+        "columns": {},
+        "schemas": {},
+        "tables": {}
+    }
+}
