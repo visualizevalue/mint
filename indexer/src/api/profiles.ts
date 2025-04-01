@@ -8,11 +8,12 @@ import { ONE_MONTH } from '../../utils/time'
 
 const client = publicClients[1]
 
-// TODO: Consider reverting if account has never interacted with mint
 /**
  * API endpoint to retrieve profile information for an Ethereum address.
  * Returns cached profile if available and not older than a month,
  * otherwise fetches fresh data from ENS.
+ *
+ * TODO: Consider reverting if account has never interacted with mint
  */
 export const getProfile = async (c: Context) => {
   const address = c.req.param('address') as `0x${string}`
