@@ -1,17 +1,9 @@
 import { ponder } from 'ponder:registry'
-import { artifact, mint } from 'ponder:schema'
-import {
-  computeTransfer,
-  getAccount,
-  getArtifact,
-  getCollection,
-  saveProfile,
-} from '../utils/database'
+import { mint } from 'ponder:schema'
+import { computeTransfer, getAccount, getArtifact, getCollection } from '../utils/database'
 
 ponder.on('Mint:NewMint', async ({ event, context }) => {
-  await getAccount(event.args.minter, context, {
-    fetch_ens: process.env.FETCH_COLLECTOR_ENS === 'true',
-  })
+  await getAccount(event.args.minter, context)
 
   await context.db
     .insert(mint)
@@ -36,13 +28,6 @@ ponder.on('Mint:NewMint', async ({ event, context }) => {
 ponder.on('Mint:TransferSingle', async ({ event, context }) => {
   const collection = event.log.address
   const id = event.args.id
-
-  // If the artifact is a new mint, update the artist account
-  if (!(await context.db.find(artifact, { collection, id }))) {
-    const artist = event.args.to
-    const accountData = await getAccount(artist, context, { fetch_ens: true })
-    if (accountData?.ens) await saveProfile(accountData.ens, context)
-  }
 
   // Ensure the collection exists
   await getCollection(collection, context)

@@ -1,7 +1,7 @@
 import { ponder } from 'ponder:registry'
 import { collection } from 'ponder:schema'
 import { parseJson } from '../utils/json'
-import { getAccount, saveProfile } from '../utils/database'
+import { getAccount } from '../utils/database'
 import { ContractMetadata } from '../utils/types'
 
 ponder.on('Factory:Created', async ({ event, context }) => {
@@ -42,7 +42,6 @@ ponder.on('Factory:Created', async ({ event, context }) => {
     .values({ address, ...data })
     .onConflictDoUpdate(data)
 
-  // Save / update artist profile
-  const accountData = await getAccount(artist, context, { fetch_ens: true })
-  if (accountData?.ens) await saveProfile(accountData.ens, context)
+  // Ensure artist is stored
+  await getAccount(artist, context)
 })

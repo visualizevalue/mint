@@ -6,16 +6,6 @@ import { onchainTable, primaryKey, relations } from 'ponder'
 
 export const account = onchainTable('accounts', (t) => ({
   address: t.hex().primaryKey(),
-  ens: t.text(),
-  ens_updated_at: t.bigint(),
-}))
-
-export const profile = onchainTable('profiles', (t) => ({
-  ens: t.text().primaryKey(),
-  avatar: t.text(),
-  description: t.text(),
-  links: t.jsonb().$type<{ [key: string]: string }>(),
-  updated_at: t.bigint(),
 }))
 
 export const collection = onchainTable('collections', (t) => ({
@@ -118,12 +108,8 @@ export const transfer = onchainTable(
 //                                 RELATIONS
 // ===========================================================================
 
-export const accountRelations = relations(account, ({ many, one }) => ({
+export const accountRelations = relations(account, ({ many }) => ({
   collections: many(collection),
-  profile: one(profile, {
-    fields: [account.ens],
-    references: [profile.ens],
-  }),
 }))
 
 export const collectionsRelations = relations(collection, ({ many, one }) => ({

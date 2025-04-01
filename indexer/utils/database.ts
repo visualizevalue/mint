@@ -1,38 +1,11 @@
 import { zeroAddress } from 'viem'
-import { normalize } from 'viem/ens'
-import { type Context, type Event } from 'ponder:registry'
-import { account, artifact, collection, profile, ownership, transfer } from 'ponder:schema'
+import { type Context } from 'ponder:registry'
+import { account, artifact, collection, ownership, transfer } from 'ponder:schema'
 import { parseJson } from './json'
-import { ONE_DAY, nowInSeconds } from './time'
 import { Metadata } from './types'
 
-export async function getAccount(
-  address: `0x${string}`,
-  { client, db }: Context,
-  { fetch_ens } = { fetch_ens: false },
-) {
-  let data = await db
-    .insert(account)
-    .values({ address, ens: '', ens_updated_at: 0n })
-    .onConflictDoNothing()
-
-  if (!fetch_ens) return data
-  if (!data) return data
-
-  const now = nowInSeconds()
-  if ((data.ens_updated_at || 0n) + ONE_DAY < now) {
-    try {
-      const ens = (await client.getEnsName({ address })) || ''
-
-      data = await db.update(account, { address }).set({ ens, ens_updated_at: now })
-    } catch (e) {
-      console.warn(`Ran into an issue fetching/saving the ENS record for ${address}`)
-    }
-  } else {
-    console.info(`Skip ens update: ${address}, ${data.ens}`)
-  }
-
-  return data
+export async function getAccount(address: `0x${string}`, { db }: Context) {
+  return await db.insert(account).values({ address }).onConflictDoNothing()
 }
 
 export async function getCollection(address: `0x${string}`, { db }: Context) {
@@ -94,40 +67,6 @@ export async function createArtifact(
       supply: 0n,
     })
     .onConflictDoNothing()
-}
-
-export async function saveProfile(ens: string, { client, db }: Context) {
-  if (!ens) return
-
-  try {
-    const [avatar, description, url, email, twitter, github] = await Promise.all([
-      client.getEnsAvatar({ name: normalize(ens) }),
-      client.getEnsText({ name: ens, key: 'description' }),
-      client.getEnsText({ name: ens, key: 'url' }),
-      client.getEnsText({ name: ens, key: 'email' }),
-      client.getEnsText({ name: ens, key: 'com.twitter' }),
-      client.getEnsText({ name: ens, key: 'com.github' }),
-    ])
-
-    const data = {
-      avatar: avatar || '',
-      description: description || '',
-      links: {
-        url: url || '',
-        email: email || '',
-        twitter: twitter || '',
-        github: github || '',
-      },
-      updated_at: BigInt(Date.now()),
-    }
-
-    await db
-      .insert(profile)
-      .values({ ens, ...data })
-      .onConflictDoUpdate(data)
-  } catch (e) {
-    console.warn(`Error fetching profile:`, e)
-  }
 }
 
 export const computeTransfer = async (
