@@ -1,4 +1,4 @@
-import { timestamp, index, jsonb, pgSchema, text, varchar } from 'drizzle-orm/pg-core'
+import { timestamp, jsonb, pgSchema, text, varchar } from 'drizzle-orm/pg-core'
 
 export const offchainSchema = pgSchema('offchain')
 

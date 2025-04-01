@@ -2,12 +2,13 @@ import { publicClients } from 'ponder:api'
 import { eq } from 'drizzle-orm'
 import { normalize } from 'viem/ens'
 import { type Context } from 'hono'
-import { db as offchainDb, profile } from '../offchain'
+import { db } from '../offchain'
+import { profile } from '../offchain/schema'
 
 const client = publicClients[1]
 
 const fetchProfile = async (address: `0x${string}`) =>
-  await offchainDb.query.profile.findFirst({
+  await db.query.profile.findFirst({
     where: eq(profile.address, address),
   })
 
@@ -58,7 +59,7 @@ export const getProfile = async (c: Context) => {
     data,
     updated_at: new Date(),
   }
-  await offchainDb
+  await db
     .insert(profile)
     .values({
       address,
