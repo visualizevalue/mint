@@ -1,5 +1,5 @@
 {
-  "id": "51de88b9-e108-4931-b27f-f467cd89101a",
+  "id": "d735ea3d-14ea-4570-a166-5b46ed4ffcf4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -18,35 +18,33 @@
           "name": "ens",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "data": {
           "name": "data",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         }
       },
-      "indexes": {
-        "ens_idx": {
-          "name": "ens_idx",
-          "columns": [
-            {
-              "expression": "ens",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "profiles_ens_unique": {
+          "name": "profiles_ens_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "ens"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

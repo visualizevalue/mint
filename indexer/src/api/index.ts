@@ -12,8 +12,8 @@ const app = new Hono()
 app.use('/sql/*', client({ db: ponderDb, schema }))
 app.use('/', graphql({ db: ponderDb, schema }))
 
-// Extended GraphQL endpoint with merged schema
-app.use('/extended-graphql', graphql({ db: offchainDb, schema: runtimeSchema }))
+// // Extended GraphQL endpoint with merged schema
+// app.use('/extended-graphql', graphql({ db: offchainDb, schema: runtimeSchema }))
 
 // Profile endpoint
 app.get('/profiles/:address', getProfile)

@@ -1,34 +1,27 @@
-import { db as ponderDb, publicClients } from 'ponder:api'
-import schema from 'ponder:schema'
-import { eq, replaceBigInts } from 'ponder'
+import { publicClients } from 'ponder:api'
+import { eq } from 'drizzle-orm'
 import { normalize } from 'viem/ens'
 import { type Context } from 'hono'
 import { db as offchainDb, profile } from '../offchain'
 
 const client = publicClients[1]
 
-export const getProfile = async (c: Context) => {
-  const address = c.req.param('address') as `0x${string}`
-
-  // Get account data from ponder
-  const account = await ponderDb.query.account.findFirst({
-    where: eq(schema.account.address, address),
-  })
-  // TODO: Consider reverting if account has never interacted with mint
-
-  // First check if we have a profile in the offchain database
-  const offchainProfile = await offchainDb.query.profile.findFirst({
+const fetchProfile = async (address: `0x${string}`) =>
+  await offchainDb.query.profile.findFirst({
     where: eq(profile.address, address),
   })
 
-  if (offchainProfile) {
-    // Return cached profile data if it exists
-    return c.json(replaceBigInts({ 
-      ...account, 
-      ens: offchainProfile.ens,
-      ...(offchainProfile.data || {})
-    }, String))
-  }
+// TODO: Consider reverting if account has never interacted with mint
+export const getProfile = async (c: Context) => {
+  const address = c.req.param('address') as `0x${string}`
+
+  // First check if we have a profile in the offchain database
+  let cachedProfile = await fetchProfile(address)
+
+  // Return cached profile data if it exists
+  if (cachedProfile) return c.json(cachedProfile)
+
+  const ens = (await client.getEnsName({ address })) || null
 
   // Fallback to fetching ENS data
   const data = {
@@ -40,10 +33,7 @@ export const getProfile = async (c: Context) => {
       twitter: '',
       github: '',
     },
-    updated_at: BigInt(Date.now()),
   }
-
-  const ens = (await client.getEnsName({ address })) || ''
 
   if (ens) {
     const [avatar, description, url, email, twitter, github] = await Promise.all([
@@ -60,20 +50,24 @@ export const getProfile = async (c: Context) => {
     data.links.email = email || ''
     data.links.twitter = twitter || ''
     data.links.github = github || ''
-
-    // Store the profile in the offchain database for future requests
-    await offchainDb.insert(profile).values({
-      address,
-      ens,
-      data,
-    }).onConflictDoUpdate({
-      target: profile.address,
-      set: {
-        ens,
-        data,
-      }
-    })
   }
 
-  return c.json(replaceBigInts({ ...account, ens, ...data }, String))
+  // Store the profile in the offchain database for future requests
+  const insertData = {
+    ens,
+    data,
+    updated_at: new Date(),
+  }
+  await offchainDb
+    .insert(profile)
+    .values({
+      address,
+      ...insertData,
+    })
+    .onConflictDoUpdate({
+      target: profile.address,
+      set: insertData,
+    })
+
+  return c.json(cachedProfile)
 }

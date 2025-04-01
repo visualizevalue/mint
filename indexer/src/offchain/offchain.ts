@@ -1,4 +1,4 @@
-import { index, jsonb, pgSchema, text, varchar } from 'drizzle-orm/pg-core'
+import { timestamp, index, jsonb, pgSchema, text, varchar } from 'drizzle-orm/pg-core'
 
 export const offchainSchema = pgSchema('offchain')
 
@@ -6,16 +6,9 @@ export const offchainSchema = pgSchema('offchain')
 // This type is only for drizzle-kit migrations
 const drizzleHex = () => varchar('address', { length: 42 })
 
-export const profile = offchainSchema.table(
-  'profiles',
-  {
-    address: drizzleHex().primaryKey(),
-    ens: text().notNull(),
-    data: jsonb(),
-  },
-  (table) => {
-    return {
-      ensIdx: index('ens_idx').on(table.ens)
-    }
-  },
-)
+export const profile = offchainSchema.table('profiles', {
+  address: drizzleHex().primaryKey(),
+  ens: text().unique(),
+  data: jsonb(),
+  updated_at: timestamp(),
+})
