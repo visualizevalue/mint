@@ -15,7 +15,7 @@ app.use('/', graphql({ db: ponderDb, schema }))
 // app.use('/', graphql({ db: offchainDb, schema: runtimeSchema }))
 
 // Profile endpoints
-app.get('/profiles/:address', getProfile)
-app.post('/profiles/:address', forceUpdateProfile)
+app.get('/profiles/:id', getProfile)
+app.post('/profiles/:id', forceUpdateProfile)
 
 export default app
