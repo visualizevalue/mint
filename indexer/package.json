@@ -9,13 +9,16 @@
         "db": "ponder db",
         "serve": "ponder serve",
         "format": "prettier --write .",
-        "typecheck": "tsc && pnpm format"
+        "typecheck": "tsc && pnpm format",
+        "drizzle:generate": "drizzle-kit generate",
+        "drizzle:push": "drizzle-kit push:pg"
     },
     "dependencies": {
         "abitype": "^0.10.2",
         "drizzle-orm": "^0.41.0",
         "hono": "^4.5.0",
         "jsonrepair": "^3.12.0",
+        "pg": "^8.13.1",
         "ponder": "^0.10.6",
         "viem": "^2.21.3"
     },
