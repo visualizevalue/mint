@@ -34,8 +34,21 @@ export const getProfile = async (c: Context) => {
   await updateProfile(address)
 
   // Fetch the updated profile
-  const updatedProfile = await fetchProfile(address)
-  return c.json(updatedProfile)
+  return c.json(await fetchProfile(address))
+}
+
+/**
+ * API endpoint to force update a profile regardless of cache status.
+ * Fetches fresh data from ENS and updates the database.
+ */
+export const forceUpdateProfile = async (c: Context) => {
+  const address = c.req.param('address') as `0x${string}`
+
+  // Update the profile data (fetch from ENS)
+  await updateProfile(address)
+
+  // Fetch and return the updated profile
+  return c.json(await fetchProfile(address))
 }
 
 /**

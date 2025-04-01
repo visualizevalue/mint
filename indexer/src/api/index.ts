@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { client, graphql } from 'ponder'
 import { db as ponderDb } from 'ponder:api'
 import schema from 'ponder:schema'
-import { getProfile } from './profiles'
+import { getProfile, forceUpdateProfile } from './profiles'
 
 const app = new Hono()
 
@@ -11,9 +11,11 @@ app.use('/sql/*', client({ db: ponderDb, schema }))
 app.use('/', graphql({ db: ponderDb, schema }))
 
 // // Extended GraphQL endpoint with merged schema
+// TODO: Would be nice to merge the schemas and enable this via graphql
 // app.use('/', graphql({ db: offchainDb, schema: runtimeSchema }))
 
-// Profile endpoint
+// Profile endpoints
 app.get('/profiles/:address', getProfile)
+app.post('/profiles/:address', forceUpdateProfile)
 
 export default app
