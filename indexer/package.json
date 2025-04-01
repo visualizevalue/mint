@@ -11,6 +11,7 @@
         "format": "prettier --write .",
         "typecheck": "tsc && pnpm format",
         "drizzle:generate": "drizzle-kit generate",
+        "drizzle:migrate": "drizzle-kit migrate",
         "drizzle:push": "drizzle-kit push"
     },
     "dependencies": {
