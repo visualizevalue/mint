@@ -24,7 +24,9 @@ type ProfileResult = {
  * TODO: Consider reverting if account has never interacted with mint
  */
 export const getProfile = async (c: Context) => {
-  const result = await resolveProfile(c.req.param('id'))
+  // Get ID parameter and normalize if needed
+  const identifier = c.req.param('id')
+  const result = await resolveProfile(identifier)
 
   if (!result.address) {
     return c.json({ error: 'Invalid address or ENS name' }, 400)
@@ -45,7 +47,9 @@ export const getProfile = async (c: Context) => {
  * Fetches fresh data from ENS and updates the database.
  */
 export const forceUpdateProfile = async (c: Context) => {
-  const result = await resolveProfile(c.req.param('id'))
+  // Get ID parameter and normalize if needed
+  const identifier = c.req.param('id')
+  const result = await resolveProfile(identifier)
 
   if (!result.address) {
     return c.json({ error: 'Invalid address or ENS name' }, 400)
@@ -67,7 +71,7 @@ async function resolveProfile(identifier: string): Promise<ProfileResult> {
 
   // For Ethereum addresses
   if (isAddress(identifier)) {
-    const address = identifier as `0x${string}`
+    const address = identifier.toLowerCase() as `0x${string}`
     const cachedProfile = await fetchProfile(address)
 
     // If we have a cached profile, extract ENS name and check freshness
@@ -87,13 +91,15 @@ async function resolveProfile(identifier: string): Promise<ProfileResult> {
 
   // For ENS names
   try {
+    // Normalize ENS name to lowercase
+    const normalizedEns = identifier.toLowerCase()
     // First check if we have this ENS name in the database
-    const cachedProfile = await fetchProfile(identifier)
+    const cachedProfile = await fetchProfile(normalizedEns)
 
     if (cachedProfile) {
       return {
         address: cachedProfile.address as `0x${string}`,
-        ensName: identifier,
+        ensName: normalizedEns,
         cachedProfile,
         isFresh: isFresh(cachedProfile.updated_at),
       }
@@ -101,9 +107,22 @@ async function resolveProfile(identifier: string): Promise<ProfileResult> {
 
     // If no profile in database, resolve the ENS name on-chain
     const address = await client.getEnsAddress({
-      name: normalize(identifier),
+      name: normalize(normalizedEns),
     })
-    return { address, ensName: identifier, cachedProfile: null, isFresh: false }
+
+    // If address is null, throw an error to get into the catch block
+    if (!address) {
+      throw new Error(`No address found for ENS name ${normalizedEns}`)
+    }
+
+    // Ensure address is lowercase
+    const normalizedAddress = address.toLowerCase() as `0x${string}`
+    return {
+      address: normalizedAddress,
+      ensName: normalizedEns,
+      cachedProfile: null,
+      isFresh: false,
+    }
   } catch (error) {
     return { address: null, ensName: null, cachedProfile: null, isFresh: false }
   }
@@ -121,18 +140,31 @@ function isFresh(timestamp: Date | string | null): boolean {
 /**
  * Retrieves a profile from the database by Ethereum address or ENS name.
  */
-const fetchProfile = async (identifier: string) =>
-  await db.query.profile.findFirst({
-    where: or(eq(profile.address, identifier), eq(profile.ens, identifier)),
+const fetchProfile = async (identifier: string) => {
+  // If identifier looks like an address, ensure it's lowercase
+  const normalizedIdentifier = isAddress(identifier) ? identifier.toLowerCase() : identifier
+
+  return await db.query.profile.findFirst({
+    where: or(
+      eq(profile.address, normalizedIdentifier),
+      eq(profile.ens, normalizedIdentifier),
+    ),
   })
+}
 
 /**
  * Updates or creates a profile for an Ethereum address.
  * Fetches ENS data if available and stores it in the database.
  */
 const updateProfile = async (address: `0x${string}`, providedEns: string | null = null) => {
-  // Use provided ENS name or look it up
-  const ens = providedEns || (await client.getEnsName({ address })) || null
+  // Ensure address is lowercase
+  const normalizedAddress = address.toLowerCase() as `0x${string}`
+
+  // Use provided ENS name or look it up, ensuring it's lowercase
+  let ens = providedEns || (await client.getEnsName({ address: normalizedAddress })) || null
+  if (ens) {
+    ens = ens.toLowerCase()
+  }
 
   // Initialize empty profile data structure
   const data = {
@@ -177,7 +209,7 @@ const updateProfile = async (address: `0x${string}`, providedEns: string | null 
   await db
     .insert(profile)
     .values({
-      address,
+      address: normalizedAddress,
       ...insertData,
     })
     .onConflictDoUpdate({
