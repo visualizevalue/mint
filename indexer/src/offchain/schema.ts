@@ -1,18 +1,10 @@
-import { relations } from 'drizzle-orm'
-import * as offchainSchema from './offchain'
+import { timestamp, jsonb, pgSchema, text } from 'drizzle-orm/pg-core'
 
-// For drizzle-kit, we only expose the offchain schema
-// This allows drizzle-kit to only generate migrations for offchain tables
-export const { profile } = offchainSchema
+const schema = pgSchema('offchain')
 
-export const profileRelations = relations(offchainSchema.profile, ({ one }) => ({
-  account: one(profile, {
-    fields: [offchainSchema.profile.address],
-    references: [offchainSchema.profile.address], // Self-reference as placeholder
-  }),
-}))
-
-export const schema = {
-  ...offchainSchema,
-  profileRelations,
-}
+export const profile = schema.table('profiles', {
+  address: text().primaryKey(),
+  ens: text().unique(),
+  data: jsonb(),
+  updated_at: timestamp(),
+})

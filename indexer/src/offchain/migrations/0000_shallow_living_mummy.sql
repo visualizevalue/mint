@@ -1,5 +1,5 @@
 CREATE TABLE "offchain"."profiles" (
-	"address" varchar(42) PRIMARY KEY NOT NULL,
+	"address" text PRIMARY KEY NOT NULL,
 	"ens" text,
 	"data" jsonb,
 	"updated_at" timestamp,

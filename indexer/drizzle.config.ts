@@ -10,6 +10,4 @@ export default defineConfig({
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
-  // Only generate migrations for the offchain schema
-  schemaFilter: ['offchain_*'],
 })
