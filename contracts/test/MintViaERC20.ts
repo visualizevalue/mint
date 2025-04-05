@@ -379,4 +379,32 @@ describe('MintViaERC20', function () {
     // Token should exist and have the right ID
     expect(await mintViaERC20.read.latestTokenId()).to.equal(BigInt(futureTokenId))
   })
+
+  it('rejects zero address as payment token during token creation', async function () {
+    const { mintViaERC20 } = await loadFixture(fixture)
+
+    // Try to create a token with zero address as payment token
+    await expect(
+      mintViaERC20.write.create([
+        'Invalid Token',
+        'Token with zero address payment',
+        toByteArray(TOKEN_TIME),
+        0,
+        0n,
+        '0x0000000000000000000000000000000000000000', // Zero address
+        parseUnits('10', 18),
+      ]),
+    ).to.be.revertedWithCustomError(mintViaERC20, 'InvalidPaymentToken')
+  })
+
+  it('rejects zero address in withdrawal function', async function () {
+    const { mintViaERC20, owner } = await loadFixture(fixture)
+
+    // Try to withdraw from zero address
+    await expect(
+      mintViaERC20.write.withdraw([
+        '0x0000000000000000000000000000000000000000', // Zero address
+      ]),
+    ).to.be.revertedWithCustomError(mintViaERC20, 'InvalidPaymentToken')
+  })
 })

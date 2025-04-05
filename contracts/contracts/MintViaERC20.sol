@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import { ERC1155               } from "./ERC1155.sol";
 import { IERC20                } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { SafeERC20             } from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import { IRenderer             } from "./interfaces/IRenderer.sol";
 import { ContractMetadata      } from "./libraries/ContractMetadata.sol";
 import { SSTORE2               } from "./libraries/SSTORE2.sol";
@@ -11,6 +12,7 @@ import { Token                 } from "./types/Token.sol";
 /// @notice To mint is a human right, with ERC20 tokens.
 /// @author Visualize Value
 contract MintViaERC20 is ERC1155 {
+    using SafeERC20 for IERC20;
 
     /// @notice Inaugural.
     uint public constant version = 1;
@@ -69,6 +71,9 @@ contract MintViaERC20 is ERC1155 {
     /// @dev Thrown when the ERC20 transfer fails.
     error ERC20TransferFailed();
 
+    /// @dev Thrown when payment token is invalid (zero address).
+    error InvalidPaymentToken();
+
     /// @notice Initializes the collection contract.
     function init(
         string calldata contractName,
@@ -110,6 +115,7 @@ contract MintViaERC20 is ERC1155 {
         uint256 price
     ) public onlyOwner {
         if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
+        if (paymentToken == address(0)) revert InvalidPaymentToken();
 
         ++ latestTokenId;
 
@@ -196,9 +202,8 @@ contract MintViaERC20 is ERC1155 {
         PaymentConfig storage config = payments[tokenId];
         uint mintPrice = config.price * amount;
 
-        // Transfer ERC20 tokens from the sender to this contract
-        bool success = IERC20(config.token).transferFrom(msg.sender, address(this), mintPrice);
-        if (!success) revert ERC20TransferFailed();
+        // Transfer ERC20 tokens from the sender to this contract using SafeERC20
+        IERC20(config.token).safeTransferFrom(msg.sender, address(this), mintPrice);
 
         _mint(msg.sender, tokenId, amount, "");
     }
@@ -220,11 +225,12 @@ contract MintViaERC20 is ERC1155 {
 
     /// @notice Lets the artist withdraw specific ERC20 tokens from the contract.
     function withdraw(address token) external onlyOwner {
+        if (token == address(0)) revert InvalidPaymentToken();
         uint balance = IERC20(token).balanceOf(address(this));
         if (balance == 0) return;
 
-        bool success = IERC20(token).transfer(owner(), balance);
-        if (!success) revert WithdrawalFailed();
+        // Use SafeERC20 for transfer
+        IERC20(token).safeTransfer(owner(), balance);
 
         emit Withdrawal(token, balance);
     }
