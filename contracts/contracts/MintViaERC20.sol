@@ -42,9 +42,6 @@ contract MintViaERC20 is ERC1155 {
     /// @notice Payment configuration for each token
     mapping(uint => PaymentConfig) public payments;
 
-    /// @dev Emitted when a collector mints a token.
-    event NewMint(uint indexed tokenId, address paymentToken, uint price, uint amount, address minter);
-
     /// @dev Emitted when the artist registers a new Renderer contract.
     event NewRenderer(address indexed renderer, uint indexed index);
 
@@ -186,7 +183,7 @@ contract MintViaERC20 is ERC1155 {
     /// @notice Get the payment configuration for a token.
     function getPaymentConfig(uint tokenId) external view returns (address token, uint256 price) {
         if (tokenId > latestTokenId) revert NonExistentToken();
-        
+
         PaymentConfig storage config = payments[tokenId];
         return (config.token, config.price);
     }
@@ -198,14 +195,12 @@ contract MintViaERC20 is ERC1155 {
 
         PaymentConfig storage config = payments[tokenId];
         uint mintPrice = config.price * amount;
-        
+
         // Transfer ERC20 tokens from the sender to this contract
         bool success = IERC20(config.token).transferFrom(msg.sender, address(this), mintPrice);
         if (!success) revert ERC20TransferFailed();
-        
+
         _mint(msg.sender, tokenId, amount, "");
-        
-        emit NewMint(tokenId, config.token, config.price, amount, msg.sender);
     }
 
     /// @notice Check until when a mint is open.
