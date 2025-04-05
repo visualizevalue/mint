@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import { ERC1155               } from "./ERC1155.sol";
-import { IERC20                } from "./interfaces/IERC20.sol";
+import { IERC20                } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { IRenderer             } from "./interfaces/IRenderer.sol";
 import { ContractMetadata      } from "./libraries/ContractMetadata.sol";
 import { SSTORE2               } from "./libraries/SSTORE2.sol";
@@ -33,20 +33,23 @@ contract MintViaERC20 is ERC1155 {
     /// @notice Each mint is open for 24 hours.
     uint constant MINT_DURATION = 24 hours;
 
-    /// @notice The ERC20 token used for payment.
-    address public paymentToken;
+    /// @notice Payment configuration for tokens
+    struct PaymentConfig {
+        address token;  // ERC20 token address
+        uint256 price;  // Price in the token's smallest unit
+    }
 
-    /// @notice Price for each token in the collection.
-    mapping(uint => uint256) public prices;
+    /// @notice Payment configuration for each token
+    mapping(uint => PaymentConfig) public payments;
 
     /// @dev Emitted when a collector mints a token.
-    event NewMint(uint indexed tokenId, uint price, uint amount, address minter);
+    event NewMint(uint indexed tokenId, address paymentToken, uint price, uint amount, address minter);
 
     /// @dev Emitted when the artist registers a new Renderer contract.
     event NewRenderer(address indexed renderer, uint indexed index);
 
     /// @dev Emitted when the artist withdraws tokens from the contract.
-    event Withdrawal(uint amount);
+    event Withdrawal(address indexed token, uint amount);
 
     /// @dev Thrown on the attempt to reinitialize the contract.
     error Initialized();
@@ -76,8 +79,7 @@ contract MintViaERC20 is ERC1155 {
         string calldata contractDescription,
         bytes[] calldata contractImage,
         address renderer,
-        address owner,
-        address _paymentToken
+        address owner
     ) external {
         if (initBlock > 0) revert Initialized();
 
@@ -94,22 +96,20 @@ contract MintViaERC20 is ERC1155 {
         // Set the initial renderer
         renderers.push(renderer);
 
-        // Set payment token
-        paymentToken = _paymentToken;
-
         // Setting the initialization block height prevents reinitialization
         initBlock = block.number;
 
         _transferOwnership(owner);
     }
 
-    /// @notice Lets the artist create a new token.
+    /// @notice Lets the artist create a new token with ERC20 payment.
     function create(
         string  calldata tokenName,
         string  calldata tokenDescription,
         bytes[] calldata tokenArtifact,
         uint32  tokenRenderer,
         uint128 tokenData,
+        address paymentToken,
         uint256 price
     ) public onlyOwner {
         if (renderers.length < tokenRenderer + 1) revert NonExistentRenderer();
@@ -125,8 +125,11 @@ contract MintViaERC20 is ERC1155 {
         token.renderer    = tokenRenderer;
         token.data        = tokenData;
 
-        // Set price for this token
-        prices[latestTokenId] = price;
+        // Set payment config for this token
+        payments[latestTokenId] = PaymentConfig({
+            token: paymentToken,
+            price: price
+        });
 
         if (tokenArtifact.length > 0) {
             // Clear previously prepared artifact data.
@@ -180,21 +183,29 @@ contract MintViaERC20 is ERC1155 {
         );
     }
 
+    /// @notice Get the payment configuration for a token.
+    function getPaymentConfig(uint tokenId) external view returns (address token, uint256 price) {
+        if (tokenId > latestTokenId) revert NonExistentToken();
+        
+        PaymentConfig storage config = payments[tokenId];
+        return (config.token, config.price);
+    }
+
     /// @notice Lets collectors purchase a token during its mint window.
     function mint(uint tokenId, uint amount) external {
         if (tokenId > latestTokenId) revert NonExistentToken();
         if (mintOpenUntil(tokenId) < block.timestamp) revert MintClosed();
 
-        uint price = prices[tokenId];
-        uint mintPrice = price * amount;
-
+        PaymentConfig storage config = payments[tokenId];
+        uint mintPrice = config.price * amount;
+        
         // Transfer ERC20 tokens from the sender to this contract
-        bool success = IERC20(paymentToken).transferFrom(msg.sender, address(this), mintPrice);
+        bool success = IERC20(config.token).transferFrom(msg.sender, address(this), mintPrice);
         if (!success) revert ERC20TransferFailed();
-
+        
         _mint(msg.sender, tokenId, amount, "");
-
-        emit NewMint(tokenId, price, amount, msg.sender);
+        
+        emit NewMint(tokenId, config.token, config.price, amount, msg.sender);
     }
 
     /// @notice Check until when a mint is open.
@@ -212,15 +223,15 @@ contract MintViaERC20 is ERC1155 {
         return index;
     }
 
-    /// @notice Lets the artist withdraw tokens from the contract.
-    function withdraw() external onlyOwner {
-        uint balance = IERC20(paymentToken).balanceOf(address(this));
+    /// @notice Lets the artist withdraw specific ERC20 tokens from the contract.
+    function withdraw(address token) external onlyOwner {
+        uint balance = IERC20(token).balanceOf(address(this));
         if (balance == 0) return;
 
-        bool success = IERC20(paymentToken).transfer(owner(), balance);
+        bool success = IERC20(token).transfer(owner(), balance);
         if (!success) revert WithdrawalFailed();
 
-        emit Withdrawal(balance);
+        emit Withdrawal(token, balance);
     }
 
     /// @notice Get the metadata for a given token id.
