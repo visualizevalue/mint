@@ -60,7 +60,7 @@ export const usePriceFeedStore = () => {
           this.ethUSDRaw = answer
           this.lastUpdated = nowInSeconds()
         } catch (error) {
-          console.error('Error fetching price:', error)
+          console.warn('Error fetching price:', error)
         }
 
         return this.ethUSD
