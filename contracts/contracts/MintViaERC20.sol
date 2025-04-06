@@ -47,6 +47,9 @@ contract MintViaERC20 is ERC1155 {
     /// @dev Emitted when the artist registers a new Renderer contract.
     event NewRenderer(address indexed renderer, uint indexed index);
 
+    /// @dev Emitted when a collector mints a token. Price arg used for UI backwards compat.
+    event NewMint(uint indexed tokenId, uint mintPrice, uint amount, address minter);
+
     /// @dev Emitted when the artist withdraws tokens from the contract.
     event Withdrawal(address indexed token, uint amount);
 
@@ -206,6 +209,8 @@ contract MintViaERC20 is ERC1155 {
         IERC20(config.token).safeTransferFrom(msg.sender, address(this), mintPrice);
 
         _mint(msg.sender, tokenId, amount, "");
+
+        emit NewMint(tokenId, mintPrice, amount, msg.sender);
     }
 
     /// @notice Check until when a mint is open.
