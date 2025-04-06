@@ -117,5 +117,9 @@ export default defineNuxtConfig({
     storage: 'localStorage'
   },
 
+  i18n: {
+    restructureDir: false,
+  },
+
   compatibilityDate: '2024-08-14',
 })
