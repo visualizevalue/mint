@@ -118,7 +118,7 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    restructureDir:false,
+    restructureDir: false,
   },
 
   compatibilityDate: '2024-08-14',
