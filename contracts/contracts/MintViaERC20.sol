@@ -15,7 +15,7 @@ contract MintViaERC20 is ERC1155 {
     using SafeERC20 for IERC20;
 
     /// @notice Inaugural.
-    uint public constant version = 1;
+    uint public constant version = 11001000110000;
 
     /// @notice Holds information about this collection.
     ContractMetadata.Data private metadata;
