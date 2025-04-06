@@ -11,5 +11,6 @@
   "FactoryERC20Mints#ArtifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4",
   "FactoryERC20Mints#ContractMetadata": "0xeA805c9dcaaC9385089b04E723b7644E64bc6eB1",
   "FactoryERC20Mints#Renderer": "0x901603B81aae5eb2A1Dc3cEc77280bF6e4727bfE",
-  "FactoryERC20Mints#FactoryERC20Mints": "0xc835f64C844dC5Dc621679A875bdC6677c180F16"
+  "FactoryERC20Mints#FactoryERC20Mints": "0x8e4b3Bc653a57Fa6Ff396b3fe959FD49Aa13F29a",
+  "FactoryERC20Mints#MintViaERC20": "0xCBf1eCc33E1e94dBdDDF91ee9cDaC51a23d6709b"
 }
