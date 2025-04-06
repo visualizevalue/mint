@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@csstools/postcss-global-data": "^2.1.1",
-        "@nuxtjs/i18n": "^8.5.5",
+        "@nuxtjs/i18n": "^9.5.2",
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
         "@pinia/nuxt": "^0.5.3",
         "@tanstack/vue-query": ">=5.45.0",
