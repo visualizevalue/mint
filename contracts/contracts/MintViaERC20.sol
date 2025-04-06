@@ -14,7 +14,7 @@ import { Token                 } from "./types/Token.sol";
 contract MintViaERC20 is ERC1155 {
     using SafeERC20 for IERC20;
 
-    /// @notice Inaugural.
+    /// @notice Inaugural ERC20 version
     uint public constant version = 11001000110000;
 
     /// @notice Holds information about this collection.

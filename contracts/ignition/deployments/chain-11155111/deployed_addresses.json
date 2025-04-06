@@ -7,5 +7,9 @@
   "Factory#Factory": "0x750C5a6CFD40C9CaA48C31D87AC2a26101Acd517",
   "P5Renderer#P5Renderer": "0xfaDF2fB2F8a15Fc830c176B71D2c905E95f4169e",
   "P5RendererV2#ArtifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4",
-  "P5RendererV2#P5RendererV2": "0x55B69A4f2DB99417c1B211151181ED48B39df438"
+  "P5RendererV2#P5RendererV2": "0x55B69A4f2DB99417c1B211151181ED48B39df438",
+  "FactoryERC20Mints#ArtifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4",
+  "FactoryERC20Mints#ContractMetadata": "0xeA805c9dcaaC9385089b04E723b7644E64bc6eB1",
+  "FactoryERC20Mints#Renderer": "0x901603B81aae5eb2A1Dc3cEc77280bF6e4727bfE",
+  "FactoryERC20Mints#FactoryERC20Mints": "0xc835f64C844dC5Dc621679A875bdC6677c180F16"
 }

@@ -6,5 +6,10 @@
     },
     "P5RendererV2": {
         "artifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4"
+    },
+    "FactoryERC20Mints": {
+        "contractMetadata": "0xeA805c9dcaaC9385089b04E723b7644E64bc6eB1",
+        "artifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4",
+        "renderer": "0x901603B81aae5eb2A1Dc3cEc77280bF6e4727bfE"
     }
 }
