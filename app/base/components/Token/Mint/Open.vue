@@ -5,6 +5,6 @@
 <script setup>
 defineProps({
   time: String,
-  blocks: String,
+  blocks: [String, BigInt],
 })
 </script>
