@@ -55,7 +55,7 @@
 
         <div class="mint-status">
           <p v-if="mintOpen">
-            <TokenMintOpen :blocks="blocksRemaining" :time="countDownStr" />
+            <TokenMintOpen :blocks="blocksRemaining?.toString()" :time="countDownStr" />
           </p>
           <p v-else-if="currentBlock">
             {{ $t('token.closed_at_block', { block: endBlock })}}
