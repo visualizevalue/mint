@@ -3,7 +3,7 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 8
+export const CURRENT_STATE_VERSION = 9
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
@@ -176,13 +176,19 @@ export const useOnchainStore = () => {
           return this.collection(address)
         }
 
-        const [data, initBlock, latestTokenId, owner, balance] = await Promise.all([
+        const [data, version, initBlock, latestTokenId, owner, balance] = await Promise.all([
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
             functionName: 'contractURI',
             chainId,
           }) as Promise<string>,
+          readContract($wagmi, {
+            abi: MINT_ABI,
+            address,
+            functionName: 'version',
+            chainId,
+          }) as Promise<bigint>,
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
@@ -216,6 +222,7 @@ export const useOnchainStore = () => {
             image: metadata.image,
             name: metadata.name,
             symbol: metadata.symbol,
+            version,
             description: metadata.description,
             address,
             initBlock,
