@@ -28,6 +28,7 @@ export interface Artist {
 export interface Collection {
   address: `0x${string}`
   owner: `0x${string}`
+  version: bigint,
   image: string
   name: string
   symbol: string
