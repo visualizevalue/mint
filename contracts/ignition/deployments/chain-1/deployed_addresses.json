@@ -9,5 +9,10 @@
   "AnimationRenderer#ArtifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd",
   "AnimationRenderer#AnimationRenderer": "0xcb681409046E45E6187EC2205498e4adBE19749c",
   "P5RendererV2#ArtifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd",
-  "P5RendererV2#P5RendererV2": "0xbF42caBB7D46bFA290dCC6223477c6aFe6a83174"
+  "P5RendererV2#P5RendererV2": "0xbF42caBB7D46bFA290dCC6223477c6aFe6a83174",
+  "FactoryERC20Mints#ArtifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd",
+  "FactoryERC20Mints#ContractMetadata": "0xc1f6a976906283a6ef713ab4439c8e79faf188a3",
+  "FactoryERC20Mints#Renderer": "0xe5d2da253c7d4b7609afce15332bb1a1fb461d09",
+  "FactoryERC20Mints#FactoryERC20Mints": "0xe3C1B523B86DaBC3770B8335ea9A66e696ce9A1b",
+  "FactoryERC20Mints#MintViaERC20": "0xb155242A0256c8cA6e5dEfBf3849FbE9057c72c3"
 }
