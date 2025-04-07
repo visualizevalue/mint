@@ -9,7 +9,7 @@ import { ContractMetadata      } from "./libraries/ContractMetadata.sol";
 import { SSTORE2               } from "./libraries/SSTORE2.sol";
 import { Token                 } from "./types/Token.sol";
 
-/// @notice To mint is a human right, with ERC20 tokens.
+/// @notice To mint is a human right.
 /// @author Visualize Value
 contract MintViaERC20 is ERC1155 {
     using SafeERC20 for IERC20;
