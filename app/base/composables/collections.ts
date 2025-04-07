@@ -163,7 +163,7 @@ export const useOnchainStore = () => {
         try {
           await Promise.all(collectionAddresses.map(address => this.fetchCollection(address)))
 
-          this.artists[artist].collections = collectionAddresses
+          this.artists[artist].collections = Array.from(new Set([...this.artists[artist].collections, ...collectionAddresses]))
         } catch (e) {
           console.error(e)
         }
