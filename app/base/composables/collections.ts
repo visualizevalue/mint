@@ -154,11 +154,7 @@ export const useOnchainStore = () => {
           args: [artist],
           chainId,
         })).map((a: `0x${string}`) => a.toLowerCase() as `0x${string}`)
-
-        if (this.artists[artist].collections.length === collectionAddresses.length) {
-          console.info(`Collections fetched already (${collectionAddresses.length} collections)`)
-          return
-        }
+           .filter((a: `0x${string}`) => !this.artists[artist].collections.includes(a))
 
         try {
           await Promise.all(collectionAddresses.map(address => this.fetchCollection(address)))
