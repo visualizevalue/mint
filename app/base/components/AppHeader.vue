@@ -40,6 +40,7 @@ const breadcrumbs = computed(() => {
   return all
 })
 
+const store = useOnchainStore()
 watchEffect(() => {
   if (! isConnected.value) {
     store.clearAllTokenBalances()
