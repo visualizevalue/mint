@@ -387,6 +387,14 @@ export const useOnchainStore = () => {
         }
       },
 
+      clearTokenBalance (token: Token) {
+        this.tokenBalances[token.collection] = {}
+      },
+
+      clearAllTokenBalances () {
+        this.tokenBalances = {}
+      },
+
       async fetchTokenBalance (token: Token, address: `0x${string}`) {
         const client = getPublicClient($wagmi, { chainId })
         const mintContract = getContract({
@@ -396,7 +404,7 @@ export const useOnchainStore = () => {
         })
 
         if (! this.tokenBalances[token.collection]) {
-          this.tokenBalances[token.collection] = {}
+          this.clearTokenBalance(token)
         }
 
         this.tokenBalances[token.collection][`${token.tokenId}`] =

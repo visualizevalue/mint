@@ -39,6 +39,12 @@ const breadcrumbs = computed(() => {
 
   return all
 })
+
+watchEffect(() => {
+  if (! isConnected.value) {
+    store.clearAllTokenBalances()
+  }
+})
 </script>
 
 <style scoped>
