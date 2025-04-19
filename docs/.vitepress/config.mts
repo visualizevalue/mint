@@ -2,8 +2,9 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Mint",
-  description: "An open source internet protocol enabling the creation and collection of digital artifacts on the Ethereum Virtual Machine.",
+  title: 'Mint',
+  description:
+    'An open source internet protocol enabling the creation and collection of digital artifacts on the Ethereum Virtual Machine.',
 
   lang: 'en-US',
 
@@ -31,9 +32,9 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'About Mint', link: '/guide/' },
-            { text: 'What It Is & Isn\'t', link: '/guide/what-it-is' },
+            { text: "What It Is & Isn't", link: '/guide/what-it-is' },
             { text: 'How It Works', link: '/guide/how-it-works' },
-          ]
+          ],
         },
         {
           text: 'Contracts',
@@ -43,7 +44,7 @@ export default defineConfig({
             { text: 'Factory', link: '/guide/contracts/factory' },
             { text: 'Mint', link: '/guide/contracts/mint' },
             { text: 'Renderers', link: '/guide/contracts/renderers' },
-          ]
+          ],
         },
         {
           text: 'App',
@@ -52,7 +53,7 @@ export default defineConfig({
             { text: 'Base Application', link: '/guide/app/' },
             { text: 'Extend Base App', link: '/guide/app/extend' },
             { text: 'App Development', link: '/guide/app/app-development' },
-          ]
+          ],
         },
         {
           text: 'Themes',
@@ -62,19 +63,28 @@ export default defineConfig({
             { text: 'Using Themes', link: '/guide/themes/using-themes' },
             { text: 'Build Themes', link: '/guide/themes/build' },
             { text: 'The Zinc Theme', link: '/guide/themes/zinc' },
-          ]
+          ],
+        },
+        {
+          text: 'Indexer',
+          collapsed: false,
+          items: [
+            { text: 'Mint Indexer', link: '/guide/indexer/' },
+            { text: 'Setup Guide', link: '/guide/indexer/setup' },
+            { text: 'Using the API', link: '/guide/indexer/api-usage' },
+          ],
         },
         {
           text: 'FAQ',
-          link: '/guide/faq/'
+          link: '/guide/faq/',
         },
         {
           text: 'Terms and Conditions',
-          link: '/terms-and-conditions'
+          link: '/terms-and-conditions',
         },
         {
           text: 'Ecosystem',
-          link: '/ecosystem/artists'
+          link: '/ecosystem/artists',
         },
       ],
 
@@ -100,27 +110,40 @@ export default defineConfig({
         {
           text: 'Contracts',
           items: [
-            { text: 'Create Mint Collection', link: '/reference/contracts/create-collections' },
-            { text: 'Read Creator Collections', link: '/reference/contracts/read-creator-collections' },
-            { text: 'Create Artifact', link: '/reference/contracts/create-artifacts' },
-            { text: 'Read Artifact', link: '/reference/contracts/read-artifacts' },
-            { text: 'Purchase Artifacts', link: '/reference/contracts/purchase-artifacts' },
+            {
+              text: 'Create Mint Collection',
+              link: '/reference/contracts/create-collections',
+            },
+            {
+              text: 'Read Creator Collections',
+              link: '/reference/contracts/read-creator-collections',
+            },
+            {
+              text: 'Create Artifact',
+              link: '/reference/contracts/create-artifacts',
+            },
+            {
+              text: 'Read Artifact',
+              link: '/reference/contracts/read-artifacts',
+            },
+            {
+              text: 'Purchase Artifacts',
+              link: '/reference/contracts/purchase-artifacts',
+            },
           ],
         },
       ],
-
     },
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/visualizevalue/mint' }
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/visualizevalue/mint' }],
 
     search: {
       provider: 'local',
     },
 
     footer: {
-      message: 'Released under the MIT License. <a href="./terms-and-conditions">Terms and Conditions</a> apply.',
+      message:
+        'Released under the MIT License. <a href="./terms-and-conditions">Terms and Conditions</a> apply.',
     },
-  }
+  },
 })

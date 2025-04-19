@@ -1,7 +1,7 @@
 import { jsonrepair } from 'jsonrepair'
 
-export const parseJson = <T>(input: string): T|object => {
-  let parsed: T|object = {}
+export const parseJson = <T>(input: string): T | null => {
+  let parsed: T | null = null
 
   try {
     parsed = JSON.parse(input)
@@ -9,7 +9,7 @@ export const parseJson = <T>(input: string): T|object => {
 
   try {
     parsed = JSON.parse(jsonrepair(input))
-  } catch (e) {
+  } catch (e: any) {
     console.warn(`Bad JSON: `, e?.message || e)
   }
 

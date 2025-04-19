@@ -1,7 +1,8 @@
 import { ponder } from 'ponder:registry'
-import { account, collection } from '../ponder.schema'
+import { collection } from 'ponder:schema'
 import { parseJson } from '../utils/json'
-import { getAccount, saveProfile } from '../utils/database'
+import { getAccount } from '../utils/database'
+import { ContractMetadata } from '../utils/types'
 
 ponder.on('Factory:Created', async ({ event, context }) => {
   const { client, db } = context
@@ -17,7 +18,12 @@ ponder.on('Factory:Created', async ({ event, context }) => {
   })
 
   const json = Buffer.from(contractUri.substring(29), `base64`).toString()
-  const metadata = parseJson(json)
+  const metadata = parseJson<ContractMetadata>(json) || {
+    name: '',
+    symbol: '',
+    description: '',
+    image: '',
+  }
 
   const data = {
     name: metadata.name || '',
@@ -31,10 +37,11 @@ ponder.on('Factory:Created', async ({ event, context }) => {
     latest_token_id: 0n,
   }
 
-  await db.insert(collection).values({ address, ...data }).onConflictDoUpdate(data)
+  await db
+    .insert(collection)
+    .values({ address, ...data })
+    .onConflictDoUpdate(data)
 
-  // Save / update artist profile
-  const accountData = await getAccount(artist, context, { fetch_ens: true })
-  if (accountData.ens) await saveProfile(accountData.ens, context)
+  // Ensure artist is stored
+  await getAccount(artist, context)
 })
-

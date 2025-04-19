@@ -1,390 +1,390 @@
 export const FactoryAbi = [
   {
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor"
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "target",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'target',
+        type: 'address',
+      },
     ],
-    name: "AddressEmptyCode",
-    type: "error"
+    name: 'AddressEmptyCode',
+    type: 'error',
   },
   {
     inputs: [],
-    name: "ERC1167FailedCreateClone",
-    type: "error"
+    name: 'ERC1167FailedCreateClone',
+    type: 'error',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "implementation",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'implementation',
+        type: 'address',
+      },
     ],
-    name: "ERC1967InvalidImplementation",
-    type: "error"
+    name: 'ERC1967InvalidImplementation',
+    type: 'error',
   },
   {
     inputs: [],
-    name: "ERC1967NonPayable",
-    type: "error"
+    name: 'ERC1967NonPayable',
+    type: 'error',
   },
   {
     inputs: [],
-    name: "FailedInnerCall",
-    type: "error"
+    name: 'FailedInnerCall',
+    type: 'error',
   },
   {
     inputs: [],
-    name: "InvalidInitialization",
-    type: "error"
+    name: 'InvalidInitialization',
+    type: 'error',
   },
   {
     inputs: [],
-    name: "NotInitializing",
-    type: "error"
+    name: 'NotInitializing',
+    type: 'error',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "owner",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
     ],
-    name: "OwnableInvalidOwner",
-    type: "error"
+    name: 'OwnableInvalidOwner',
+    type: 'error',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "account",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
     ],
-    name: "OwnableUnauthorizedAccount",
-    type: "error"
+    name: 'OwnableUnauthorizedAccount',
+    type: 'error',
   },
   {
     inputs: [],
-    name: "UUPSUnauthorizedCallContext",
-    type: "error"
+    name: 'UUPSUnauthorizedCallContext',
+    type: 'error',
   },
   {
     inputs: [
       {
-        internalType: "bytes32",
-        name: "slot",
-        type: "bytes32"
-      }
+        internalType: 'bytes32',
+        name: 'slot',
+        type: 'bytes32',
+      },
     ],
-    name: "UUPSUnsupportedProxiableUUID",
-    type: "error"
+    name: 'UUPSUnsupportedProxiableUUID',
+    type: 'error',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "ownerAddress",
-        type: "address"
+        internalType: 'address',
+        name: 'ownerAddress',
+        type: 'address',
       },
       {
         indexed: false,
-        internalType: "address",
-        name: "contractAddress",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'contractAddress',
+        type: 'address',
+      },
     ],
-    name: "Created",
-    type: "event"
+    name: 'Created',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: false,
-        internalType: "uint64",
-        name: "version",
-        type: "uint64"
-      }
+        internalType: 'uint64',
+        name: 'version',
+        type: 'uint64',
+      },
     ],
-    name: "Initialized",
-    type: "event"
+    name: 'Initialized',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address"
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
     ],
-    name: "OwnershipTransferStarted",
-    type: "event"
+    name: 'OwnershipTransferStarted',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address"
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
     ],
-    name: "OwnershipTransferred",
-    type: "event"
+    name: 'OwnershipTransferred',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "implementation",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'implementation',
+        type: 'address',
+      },
     ],
-    name: "Upgraded",
-    type: "event"
+    name: 'Upgraded',
+    type: 'event',
   },
   {
     inputs: [],
-    name: "UPGRADE_INTERFACE_VERSION",
+    name: 'UPGRADE_INTERFACE_VERSION',
     outputs: [
       {
-        internalType: "string",
-        name: "",
-        type: "string"
-      }
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "acceptOwnership",
+    name: 'acceptOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "string",
-        name: "name",
-        type: "string"
+        internalType: 'string',
+        name: 'name',
+        type: 'string',
       },
       {
-        internalType: "string",
-        name: "symbol",
-        type: "string"
+        internalType: 'string',
+        name: 'symbol',
+        type: 'string',
       },
       {
-        internalType: "string",
-        name: "description",
-        type: "string"
+        internalType: 'string',
+        name: 'description',
+        type: 'string',
       },
       {
-        internalType: "bytes[]",
-        name: "image",
-        type: "bytes[]"
-      }
+        internalType: 'bytes[]',
+        name: 'image',
+        type: 'bytes[]',
+      },
     ],
-    name: "clone",
+    name: 'clone',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "string",
-        name: "name",
-        type: "string"
+        internalType: 'string',
+        name: 'name',
+        type: 'string',
       },
       {
-        internalType: "string",
-        name: "symbol",
-        type: "string"
+        internalType: 'string',
+        name: 'symbol',
+        type: 'string',
       },
       {
-        internalType: "string",
-        name: "description",
-        type: "string"
+        internalType: 'string',
+        name: 'description',
+        type: 'string',
       },
       {
-        internalType: "bytes[]",
-        name: "image",
-        type: "bytes[]"
-      }
+        internalType: 'bytes[]',
+        name: 'image',
+        type: 'bytes[]',
+      },
     ],
-    name: "create",
+    name: 'create',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "creator",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'creator',
+        type: 'address',
+      },
     ],
-    name: "getCreatorCollections",
+    name: 'getCreatorCollections',
     outputs: [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]"
-      }
+        internalType: 'address[]',
+        name: '',
+        type: 'address[]',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "mint",
-        type: "address"
+        internalType: 'address',
+        name: 'mint',
+        type: 'address',
       },
       {
-        internalType: "address",
-        name: "renderer",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'renderer',
+        type: 'address',
+      },
     ],
-    name: "initialize",
+    name: 'initialize',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "owner",
+    name: 'owner',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "pendingOwner",
+    name: 'pendingOwner',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "proxiableUUID",
+    name: 'proxiableUUID',
     outputs: [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32"
-      }
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "renounceOwnership",
+    name: 'renounceOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "newOwner",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
     ],
-    name: "transferOwnership",
+    name: 'transferOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "newImplementation",
-        type: "address"
+        internalType: 'address',
+        name: 'newImplementation',
+        type: 'address',
       },
       {
-        internalType: "bytes",
-        name: "data",
-        type: "bytes"
-      }
+        internalType: 'bytes',
+        name: 'data',
+        type: 'bytes',
+      },
     ],
-    name: "upgradeToAndCall",
+    name: 'upgradeToAndCall',
     outputs: [],
-    stateMutability: "payable",
-    type: "function"
+    stateMutability: 'payable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "version",
+    name: 'version',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256"
-      }
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    stateMutability: "pure",
-    type: "function"
-  }
+    stateMutability: 'pure',
+    type: 'function',
+  },
 ] as const

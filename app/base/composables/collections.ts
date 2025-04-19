@@ -3,7 +3,7 @@ import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 
-export const CURRENT_STATE_VERSION = 8
+export const CURRENT_STATE_VERSION = 9
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 
@@ -154,16 +154,12 @@ export const useOnchainStore = () => {
           args: [artist],
           chainId,
         })).map((a: `0x${string}`) => a.toLowerCase() as `0x${string}`)
-
-        if (this.artists[artist].collections.length === collectionAddresses.length) {
-          console.info(`Collections fetched already (${collectionAddresses.length} collections)`)
-          return
-        }
+           .filter((a: `0x${string}`) => !this.artists[artist].collections.includes(a))
 
         try {
           await Promise.all(collectionAddresses.map(address => this.fetchCollection(address)))
 
-          this.artists[artist].collections = collectionAddresses
+          this.artists[artist].collections = Array.from(new Set([...this.artists[artist].collections, ...collectionAddresses]))
         } catch (e) {
           console.error(e)
         }
@@ -176,13 +172,19 @@ export const useOnchainStore = () => {
           return this.collection(address)
         }
 
-        const [data, initBlock, latestTokenId, owner, balance] = await Promise.all([
+        const [data, version, initBlock, latestTokenId, owner, balance] = await Promise.all([
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
             functionName: 'contractURI',
             chainId,
           }) as Promise<string>,
+          readContract($wagmi, {
+            abi: MINT_ABI,
+            address,
+            functionName: 'version',
+            chainId,
+          }) as Promise<bigint>,
           readContract($wagmi, {
             abi: MINT_ABI,
             address,
@@ -216,6 +218,7 @@ export const useOnchainStore = () => {
             image: metadata.image,
             name: metadata.name,
             symbol: metadata.symbol,
+            version,
             description: metadata.description,
             address,
             initBlock,
@@ -384,6 +387,14 @@ export const useOnchainStore = () => {
         }
       },
 
+      clearTokenBalance (token: Token) {
+        this.tokenBalances[token.collection] = {}
+      },
+
+      clearAllTokenBalances () {
+        this.tokenBalances = {}
+      },
+
       async fetchTokenBalance (token: Token, address: `0x${string}`) {
         const client = getPublicClient($wagmi, { chainId })
         const mintContract = getContract({
@@ -393,7 +404,7 @@ export const useOnchainStore = () => {
         })
 
         if (! this.tokenBalances[token.collection]) {
-          this.tokenBalances[token.collection] = {}
+          this.clearTokenBalance(token)
         }
 
         this.tokenBalances[token.collection][`${token.tokenId}`] =

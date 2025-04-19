@@ -1,28 +1,40 @@
 {
-  "name": "@visualizevalue/mint-indexer",
-  "type": "module",
-  "scripts": {
-    "dev": "ponder dev",
-    "start": "ponder start",
-    "codegen": "ponder codegen",
-    "serve": "ponder serve",
-    "lint": "eslint .",
-    "typecheck": "tsc"
-  },
-  "dependencies": {
-    "abitype": "^0.10.2",
-    "hono": "^4.5.0",
-    "jsonrepair": "^3.10.0",
-    "ponder": "^0.8.3",
-    "viem": "^2.21.3"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.0",
-    "eslint": "^8.54.0",
-    "eslint-config-ponder": "^0.7.6",
-    "typescript": "^5.3.2"
-  },
-  "engines": {
-    "node": ">=18.14"
-  }
+    "name": "mint-indexer",
+    "version": "0.0.2",
+    "type": "module",
+    "scripts": {
+        "dev": "ponder dev",
+        "start": "ponder start",
+        "codegen": "ponder codegen && pnpm format",
+        "db": "ponder db",
+        "serve": "ponder serve",
+        "format": "prettier --write .",
+        "typecheck": "tsc && pnpm format",
+        "drizzle:generate": "drizzle-kit generate",
+        "drizzle:migrate": "drizzle-kit migrate",
+        "drizzle:push": "drizzle-kit push"
+    },
+    "dependencies": {
+        "abitype": "^0.10.2",
+        "drizzle-orm": "^0.41.0",
+        "hono": "^4.5.0",
+        "jsonrepair": "^3.12.0",
+        "pg": "^8.13.1",
+        "ponder": "^0.10.6",
+        "viem": "^2.21.3"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.0",
+        "@types/pg": "^8.11.11",
+        "dotenv": "^16.4.5",
+        "drizzle-kit": "^0.30.6",
+        "eslint": "^8.54.0",
+        "eslint-config-ponder": "^0.10.6",
+        "prettier": "^3.5.3",
+        "tsx": "^4.19.3",
+        "typescript": "^5.3.2"
+    },
+    "engines": {
+        "node": ">=18.14"
+    }
 }
