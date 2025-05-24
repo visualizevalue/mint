@@ -33,7 +33,7 @@ ponder.on('Mint:TransferSingle', async ({ event, context }) => {
   await getCollection(collection, context)
 
   // Keep track of the artifact
-  await getArtifact(collection, id, context)
+  await getArtifact(collection, id, event.block.timestamp, event.block_number, context)
 
   // Handle the actual transfer
   await computeTransfer(

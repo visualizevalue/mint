@@ -18,11 +18,17 @@ export async function getCollection(address: `0x${string}`, { db }: Context) {
   return data
 }
 
-export async function getArtifact(collection: `0x${string}`, id: bigint, context: Context) {
+export async function getArtifact(
+  collection: `0x${string}`,
+  id: bigint,
+  timestamp: bigint,
+  block: bigint,
+  context: Context,
+) {
   let data = await context.db.find(artifact, { collection, id })
 
   if (!data) {
-    data = await createArtifact(collection, id, context)
+    data = await createArtifact(collection, id, timestamp, block, context)
   }
 
   return data
@@ -31,6 +37,8 @@ export async function getArtifact(collection: `0x${string}`, id: bigint, context
 export async function createArtifact(
   collection: `0x${string}`,
   id: bigint,
+  timestamp: bigint,
+  block: bigint,
   { client, db, contracts }: Context,
 ) {
   let metadata: Metadata = {
@@ -65,6 +73,8 @@ export async function createArtifact(
       id,
       ...metadata,
       supply: 0n,
+      createdBlock: block,
+      createdAt: timestamp,
     })
     .onConflictDoNothing()
 }
