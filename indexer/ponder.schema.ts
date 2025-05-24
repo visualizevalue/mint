@@ -31,6 +31,8 @@ export const artifact = onchainTable(
     image: t.text(),
     animation_url: t.text(),
     supply: t.bigint(),
+    createdAt: t.bigint(),
+    createdBlock: t.bigint(),
   }),
   (table) => ({
     pk: primaryKey({
