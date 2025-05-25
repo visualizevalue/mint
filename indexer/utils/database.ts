@@ -73,8 +73,8 @@ export async function createArtifact(
       id,
       ...metadata,
       supply: 0n,
-      createdBlock: block,
-      createdAt: timestamp,
+      created_block: block,
+      created_at: timestamp,
     })
     .onConflictDoNothing()
 }
