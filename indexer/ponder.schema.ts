@@ -18,6 +18,8 @@ export const collection = onchainTable('collections', (t) => ({
   description: t.text(),
   init_block: t.bigint(),
   total_supply: t.bigint(),
+  created_at: t.bigint(),
+  last_mint_at: t.bigint(),
   latest_token_id: t.bigint(),
 }))
 
@@ -48,6 +50,8 @@ export const ownership = onchainTable(
     collection: t.hex(),
     artifact: t.bigint(),
     balance: t.bigint(),
+    created_at: t.bigint(),
+    updated_at: t.bigint(),
   }),
   (table) => ({
     pk: primaryKey({
