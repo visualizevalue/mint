@@ -1,7 +1,7 @@
 services:
   postgres16_mint:
     image: postgres:16
-    container_name: postgres16
+    container_name: postgres16_mint
     environment:
       POSTGRES_USER: mint
       POSTGRES_PASSWORD: mint
