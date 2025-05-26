@@ -182,7 +182,15 @@ export const computeTransfer = async (
   // Subtract the balance from the sender
   if (from !== zeroAddress) {
     await db
-      .update(ownership, { account: from, collection: address, artifact: id })
-      .set((row: typeof ownership.$inferSelect) => ({ balance: (row.balance ?? 0n) - amount }))
+      .insert(ownership)
+      .values({
+        collection: address,
+        account: to,
+        artifact: id,
+        balance: 0n,
+      })
+      .onConflictDoUpdate((row: typeof ownership.$inferInsert) => ({
+        balance: (row.balance ?? 0n) - amount,
+      }))
   }
 }
