@@ -1,5 +1,5 @@
 import { zeroAddress } from 'viem'
-import { type Context } from 'ponder:registry'
+import { IndexingFunctionArgs, type Context } from 'ponder:registry'
 import { account, artifact, collection, ownership, transfer } from 'ponder:schema'
 import { parseJson } from './json'
 import { Metadata } from './types'
@@ -8,11 +8,19 @@ export async function getAccount(address: `0x${string}`, { db }: Context) {
   return await db.insert(account).values({ address }).onConflictDoNothing()
 }
 
-export async function getCollection(address: `0x${string}`, { db }: Context) {
+export async function getCollection(
+  address: `0x${string}`,
+  { context: { db } }: IndexingFunctionArgs<'Mint:TransferSingle'>,
+) {
   let data = await db.find(collection, { address })
 
   if (!data) {
-    data = await db.insert(collection).values({ address }).onConflictDoNothing()
+    data = await db
+      .insert(collection)
+      .values({
+        address,
+      })
+      .onConflictDoNothing()
   }
 
   return data
@@ -21,21 +29,25 @@ export async function getCollection(address: `0x${string}`, { db }: Context) {
 export async function getArtifact(
   collection: `0x${string}`,
   id: bigint,
-  timestamp: bigint,
-  block: bigint,
-  context: Context,
+  { event, context }: IndexingFunctionArgs<'Mint:TransferSingle'>,
 ) {
   let data = await context.db.find(artifact, { collection, id })
 
   if (!data) {
-    data = await createArtifact(collection, id, timestamp, block, context)
+    data = await createArtifact(
+      collection,
+      id,
+      event.block.timestamp,
+      event.block.number,
+      context,
+    )
   }
 
   return data
 }
 
 export async function createArtifact(
-  collection: `0x${string}`,
+  address: `0x${string}`,
   id: bigint,
   timestamp: bigint,
   block: bigint,
@@ -50,7 +62,7 @@ export async function createArtifact(
   try {
     const uri = await client.readContract({
       abi: contracts.Mint.abi,
-      address: collection,
+      address,
       functionName: 'uri',
       args: [id],
     })
@@ -65,11 +77,21 @@ export async function createArtifact(
     console.warn(`Fetching metadata for ${collection}:${id} failed.`, e)
   }
 
+  // Update the collection
+  await db
+    .insert(collection)
+    .values({
+      address,
+    })
+    .onConflictDoUpdate({
+      updated_at: timestamp,
+    })
+
   // Store artifact
   return await db
     .insert(artifact)
     .values({
-      collection,
+      collection: address,
       id,
       ...metadata,
       supply: 0n,

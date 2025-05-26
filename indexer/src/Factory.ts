@@ -35,6 +35,8 @@ ponder.on('Factory:Created', async ({ event, context }) => {
     init_block: event.block.number,
     total_supply: 0n,
     latest_token_id: 0n,
+    created_at: event.block.timestamp,
+    updated_at: event.block.timestamp,
   }
 
   await db

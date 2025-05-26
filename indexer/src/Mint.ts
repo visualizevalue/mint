@@ -1,4 +1,4 @@
-import { ponder } from 'ponder:registry'
+import { type IndexingFunctionArgs, ponder } from 'ponder:registry'
 import { mint } from 'ponder:schema'
 import { computeTransfer, getAccount, getArtifact, getCollection } from '../utils/database'
 
@@ -30,10 +30,10 @@ ponder.on('Mint:TransferSingle', async ({ event, context }) => {
   const id = event.args.id
 
   // Ensure the collection exists
-  await getCollection(collection, context)
+  await getCollection(collection, { event, context })
 
   // Keep track of the artifact
-  await getArtifact(collection, id, event.block.timestamp, event.block_number, context)
+  await getArtifact(collection, id, { event, context })
 
   // Handle the actual transfer
   await computeTransfer(
