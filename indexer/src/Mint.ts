@@ -1,4 +1,4 @@
-import { type IndexingFunctionArgs, ponder } from 'ponder:registry'
+import { ponder } from 'ponder:registry'
 import { mint } from 'ponder:schema'
 import { computeTransfer, getAccount, getArtifact, getCollection } from '../utils/database'
 
