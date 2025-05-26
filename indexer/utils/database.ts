@@ -83,9 +83,10 @@ export async function createArtifact(
     .values({
       address,
     })
-    .onConflictDoUpdate({
+    .onConflictDoUpdate((row) => ({
       updated_at: timestamp,
-    })
+      latest_token_id: (row.latest_token_id || 0n) + 1n,
+    }))
 
   // Store artifact
   return await db
