@@ -7,9 +7,9 @@ import { FactoryAbi } from './abis/FactoryAbi'
 import { MintAbi } from './abis/MintAbi'
 
 export default createConfig({
-  networks: {
+  chains: {
     mainnet: {
-      chainId: 1,
+      id: 1,
       transport: http(process.env.PONDER_RPC_URL_1),
     },
     // sepolia: {
@@ -19,13 +19,13 @@ export default createConfig({
   },
   contracts: {
     Factory: {
-      network: 'mainnet',
+      chain: 'mainnet',
       abi: FactoryAbi,
       address: '0xd717Fe677072807057B03705227EC3E3b467b670',
       startBlock: 21167599,
     },
     Mint: {
-      network: 'mainnet',
+      chain: 'mainnet',
       abi: MintAbi,
       address: factory({
         address: '0xd717Fe677072807057B03705227EC3E3b467b670',

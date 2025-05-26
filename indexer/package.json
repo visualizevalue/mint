@@ -20,7 +20,7 @@
         "hono": "^4.5.0",
         "jsonrepair": "^3.12.0",
         "pg": "^8.13.1",
-        "ponder": "^0.10.6",
+        "ponder": "^0.11.6",
         "viem": "^2.21.3"
     },
     "devDependencies": {

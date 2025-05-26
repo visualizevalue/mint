@@ -7,7 +7,7 @@ import { db } from '../offchain'
 import { profile } from '../offchain/schema'
 import { ONE_MONTH } from '../../utils/time'
 
-const client = publicClients[1]
+const client = publicClients.mainnet
 
 type ProfileResult = {
   address: `0x${string}` | null
