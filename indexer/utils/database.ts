@@ -173,9 +173,12 @@ export const computeTransfer = async (
         account: to,
         artifact: id,
         balance: amount,
+        created_at: timestamp,
+        updated_at: timestamp,
       })
       .onConflictDoUpdate((row: typeof ownership.$inferInsert) => ({
         balance: (row.balance ?? 0n) + amount,
+        updated_at: timestamp,
       }))
   }
 
@@ -188,9 +191,12 @@ export const computeTransfer = async (
         account: from,
         artifact: id,
         balance: 0n,
+        created_at: timestamp,
+        updated_at: timestamp,
       })
       .onConflictDoUpdate((row: typeof ownership.$inferInsert) => ({
         balance: (row.balance ?? 0n) - amount,
+        updated_at: timestamp,
       }))
   }
 }
