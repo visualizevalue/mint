@@ -185,7 +185,7 @@ export const computeTransfer = async (
       .insert(ownership)
       .values({
         collection: address,
-        account: to,
+        account: from,
         artifact: id,
         balance: 0n,
       })
