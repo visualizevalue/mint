@@ -245,8 +245,8 @@ importers:
         specifier: ^8.13.1
         version: 8.13.1
       ponder:
-        specifier: ^0.11.6
-        version: 0.11.6(@opentelemetry/api@1.9.0)(@types/node@20.17.28)(@types/pg@8.11.11)(gel@2.0.1)(hono@4.7.5)(terser@5.34.0)(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+        specifier: ^0.11.22
+        version: 0.11.22(@opentelemetry/api@1.9.0)(@types/node@20.17.28)(@types/pg@8.11.11)(gel@2.0.1)(hono@4.7.5)(terser@5.34.0)(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
       viem:
         specifier: ^2.21.3
         version: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
@@ -267,8 +267,8 @@ importers:
         specifier: ^8.54.0
         version: 8.57.1
       eslint-config-ponder:
-        specifier: ^0.10.6
-        version: 0.10.6(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)
+        specifier: ^0.11.22
+        version: 0.11.22(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -3182,8 +3182,8 @@ packages:
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
-  '@ponder/utils@0.2.7':
-    resolution: {integrity: sha512-7BcDd8y6Dmi+Bys4D0m+BULH9ug2XZ5Lsa4CwGSsJrY4OIQJerib6TENzTFHGR65XBV1gu9xLct9pMz7RpvAKg==}
+  '@ponder/utils@0.2.8':
+    resolution: {integrity: sha512-eI3ijbE/eLeA4tEYA7QoIDPRsf+qhTKs1oTW33Ik4CaJPmTAxsYN5KZYxQwNqGwOPFHQn60QvAQ7+Ti2n9ql6Q==}
     peerDependencies:
       typescript: '>=5.0.4'
       viem: '>=2'
@@ -5913,8 +5913,8 @@ packages:
     engines: {node: '>=6.0'}
     hasBin: true
 
-  eslint-config-ponder@0.10.6:
-    resolution: {integrity: sha512-RRWbbGBeEM7HefK0vHoXjuvX78bOMStEpqiwKhRkFM7UbuILTNcuKuowv+QC0rZzJAxGSasb5FQrh72WxAfskA==}
+  eslint-config-ponder@0.11.22:
+    resolution: {integrity: sha512-K0FWeZ/NzjAeKih+r/AS3K6hFRtiQ9gcHI4GyLZ+gweUqj7Y1D7aiSbdADcHZErcPMnJOaG5aElPVyva+kTXeA==}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^6.3.0
       '@typescript-eslint/parser': ^6.3.0
@@ -8082,8 +8082,8 @@ packages:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
 
-  ponder@0.11.6:
-    resolution: {integrity: sha512-WZ5r6cC560JGmXuUr36lcIpDdTQ+Nj0HMoXLy0qzFnzzLZCShGgamTtC5bp7/ohUzRF0GbLPVETCZdi5gDPimw==}
+  ponder@0.11.22:
+    resolution: {integrity: sha512-Y2E4RRCT5JKB4G7VGJIR36lUGSEfgq6Vv3aZFE5qnjMNQif7abSHTPkveagZCr9w/GyK2ZNsI2thjCn9v5N6hw==}
     engines: {node: '>=18.14'}
     hasBin: true
     peerDependencies:
@@ -13996,7 +13996,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@ponder/utils@0.2.7(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))':
+  '@ponder/utils@0.2.8(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))':
     dependencies:
       viem: 2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)
     optionalDependencies:
@@ -17492,7 +17492,7 @@ snapshots:
     optionalDependencies:
       source-map: 0.6.1
 
-  eslint-config-ponder@0.10.6(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1):
+  eslint-config-ponder@0.11.22(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2))(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1):
     dependencies:
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.6.2))(eslint@8.57.1)(typescript@5.6.2)
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.1)(typescript@5.6.2)
@@ -20625,7 +20625,7 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  ponder@0.11.6(@opentelemetry/api@1.9.0)(@types/node@20.17.28)(@types/pg@8.11.11)(gel@2.0.1)(hono@4.7.5)(terser@5.34.0)(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
+  ponder@0.11.22(@opentelemetry/api@1.9.0)(@types/node@20.17.28)(@types/pg@8.11.11)(gel@2.0.1)(hono@4.7.5)(terser@5.34.0)(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10)):
     dependencies:
       '@babel/code-frame': 7.26.2
       '@commander-js/extra-typings': 12.1.0(commander@12.1.0)
@@ -20634,7 +20634,7 @@ snapshots:
       '@escape.tech/graphql-armor-max-depth': 2.4.0
       '@escape.tech/graphql-armor-max-tokens': 2.5.0
       '@hono/node-server': 1.13.3(hono@4.7.5)
-      '@ponder/utils': 0.2.7(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
+      '@ponder/utils': 0.2.8(typescript@5.6.2)(viem@2.21.48(bufferutil@4.0.8)(typescript@5.6.2)(utf-8-validate@5.0.10))
       abitype: 0.10.3(typescript@5.6.2)
       ansi-escapes: 7.0.0
       commander: 12.1.0
