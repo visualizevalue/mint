@@ -7,11 +7,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 export default defineNuxtConfig({
   ssr: process.env.NUXT_SSR !== 'false',
 
-  modules: [
-    '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/i18n',
-  ],
+  modules: ['@pinia/nuxt', '@pinia-plugin-persistedstate/nuxt', '@nuxtjs/i18n'],
 
   runtimeConfig: {
     public: {
@@ -22,6 +18,7 @@ export default defineNuxtConfig({
       description: 'To mint is a human right.',
       factoryAddress: '0xd717Fe677072807057B03705227EC3E3b467b670',
       platformUrl: 'https://networked.art',
+      mainnetRpc1: 'https://eth.llamarpc.com',
       rpc1: 'https://eth.llamarpc.com',
       rpc2: 'https://ethereum-rpc.publicnode.com',
       rpc3: 'https://eth.drpc.org',
@@ -29,7 +26,7 @@ export default defineNuxtConfig({
       arweaveGateway: 'https://arweave.net/',
       title: 'Mint',
       walletConnectProjectId: '',
-    }
+    },
   },
 
   app: {
@@ -37,15 +34,11 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
       htmlAttrs: { lang: 'en' },
       title: process.env.NUXT_PUBLIC_TITLE,
-      link: [
-        { rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' },
-      ]
+      link: [{ rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' }],
     },
   },
 
-  css: [
-    join(currentDir, './assets/styles/index.css'),
-  ],
+  css: [join(currentDir, './assets/styles/index.css')],
 
   postcss: {
     plugins: {
@@ -53,7 +46,7 @@ export default defineNuxtConfig({
         files: [
           join(currentDir, './assets/styles/custom-selectors.css'),
           join(currentDir, './assets/styles/custom-media.css'),
-        ]
+        ],
       },
       'postcss-nested': {},
       'postcss-custom-selectors': {},
@@ -62,7 +55,7 @@ export default defineNuxtConfig({
         stage: 3,
         features: {},
       },
-      'autoprefixer': {},
+      autoprefixer: {},
     },
   },
 
@@ -73,16 +66,18 @@ export default defineNuxtConfig({
       config.optimizeDeps.include.push('@visualizevalue/mint-app-base > eventemitter3')
       config.optimizeDeps.include.push('@visualizevalue/mint-app-base > buffer/')
       config.optimizeDeps.include.push('@visualizevalue/mint-app-base > codemirror')
-      config.optimizeDeps.include.push('@visualizevalue/mint-app-base > codemirror-editor-vue3')
-    }
+      config.optimizeDeps.include.push(
+        '@visualizevalue/mint-app-base > codemirror-editor-vue3',
+      )
+    },
   },
 
   nitro: {
     preset: 'node-cluster',
     esbuild: {
       options: {
-        target: 'esnext'
-      }
+        target: 'esnext',
+      },
     },
   },
 
@@ -90,11 +85,7 @@ export default defineNuxtConfig({
     presets: [
       {
         from: '@wagmi/core',
-        imports: [
-          'readContract',
-          'waitForTransactionReceipt',
-          'writeContract',
-        ]
+        imports: ['readContract', 'waitForTransactionReceipt', 'writeContract'],
       },
       {
         from: 'viem',
@@ -108,13 +99,13 @@ export default defineNuxtConfig({
           'encodeAbiParameters',
           'parseAbiParameters',
           'parseAbiParameter',
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
 
   piniaPersistedstate: {
-    storage: 'localStorage'
+    storage: 'localStorage',
   },
 
   i18n: {
