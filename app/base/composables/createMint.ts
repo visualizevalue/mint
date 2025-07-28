@@ -53,7 +53,7 @@ export const useCreateMintRendererComponent = (collection: Collection) => {
   const component = computed(() => appConfig.knownRenderers[mainChainId]
     .find((r) =>
       r.address.toLowerCase() === rendererAddress.value
-    )?.component || 'Base'
+      )?.component || 'Code',
   )
 
   return {

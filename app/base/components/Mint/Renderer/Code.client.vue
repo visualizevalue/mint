@@ -3,10 +3,10 @@
     <Tabs initial="base">
       <template #menu="{ active, select }">
         <Button @click="select('base')" :class="{ active: active === 'base' }">
-          {{ $t('mint.p5.static') }}
+          {{ $t('mint.code.static') }}
         </Button>
         <Button @click="select('script')" :class="{ active: active === 'script' }">
-          {{ $t('mint.p5.script') }}
+          {{ $t('mint.code.script') }}
         </Button>
       </template>
 
