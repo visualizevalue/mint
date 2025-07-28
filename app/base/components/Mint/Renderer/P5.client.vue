@@ -10,7 +10,7 @@
         <Button
           @click="select('script')"
           :class="{ active: active === 'script' }"
-        >{{ $t('mint.p5.p5_script') }}</Button>
+        >{{ $t('mint.p5.script') }}</Button>
       </template>
 
       <template #content="{ active }">

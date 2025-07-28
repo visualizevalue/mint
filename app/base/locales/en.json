@@ -50,9 +50,13 @@
             "title_placeholder": "Title",
             "description_placeholder": "Description"
         },
+        "code": {
+            "static": "Static",
+            "script": "Script"
+        },
         "p5": {
             "static": "Static",
-            "p5_script": "P5 Script"
+            "script": "P5 Script"
         },
         "preview": {
             "title": "Preview",
