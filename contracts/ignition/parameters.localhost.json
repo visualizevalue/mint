@@ -3,5 +3,8 @@
     },
     "AnimationRenderer": {
         "artifactReader": ""
+    },
+    "MarkdownRenderer": {
+        "artifactReader": ""
     }
 }
