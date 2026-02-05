@@ -8,7 +8,7 @@ import { baseFixture, itemMintedFixture } from './fixtures'
 
 // Need to test on mainnet fork for this to work...
 // `FORK_MAINNET=true hh test test/P5RendererV2.ts`
-describe('P5RendererV2', () => {
+describe.skip('P5RendererV2', () => {
   it('should expose the name of a version', async () => {
     await loadFixture(baseFixture)
 
