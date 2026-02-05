@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import hre from 'hardhat'
 import { expect } from 'chai'
 import { loadFixture } from '@nomicfoundation/hardhat-network-helpers'
@@ -19,6 +21,41 @@ Some \`inline code\` and more text.`
 const MARKDOWN_WITH_SPECIAL_CHARS = `# Title <script>alert("xss")</script>
 
 This has & ampersands and <angle brackets>.`
+
+const MARKDOWN_LONG = `# On-Chain Markdown
+
+> To mint is a human right.
+
+## Introduction
+
+This document demonstrates how **markdown content** can be stored entirely on-chain as an NFT artifact. The renderer generates a preview SVG and serves the raw markdown via \`animation_url\`.
+
+## How It Works
+
+1. The artist writes markdown content
+2. The content is stored on-chain via SSTORE2
+3. The renderer generates an SVG preview image
+4. The full markdown is served as a \`data:text/markdown\` URI
+
+## Code Example
+
+\`\`\`solidity
+function mint(string memory content) external {
+    // Store markdown on-chain
+    create("My Post", "A description", toByteArray(content), rendererIndex, 0);
+}
+\`\`\`
+
+## Features
+
+- **On-chain storage** — content lives forever on Ethereum
+- **SVG preview** — generated image for marketplace display
+- **Raw access** — full markdown available via animation_url
+- **Special chars** — handles <html>, "quotes", & ampersands safely
+
+---
+
+*Built with the Visualize Value Mint protocol.*`
 
 describe('MarkdownRenderer', async () => {
   let artifactReader, mint, renderer
@@ -139,4 +176,81 @@ describe('MarkdownRenderer', async () => {
     expect(markdown).to.equal(MARKDOWN_WITH_SPECIAL_CHARS)
   })
 
+})
+
+// Run with: RENDER_OUTPUT=true npx hardhat test test/MarkdownRenderer.ts --grep "render output"
+const describeOutput = process.env.RENDER_OUTPUT ? describe : describe.skip
+describeOutput('MarkdownRenderer render output', async () => {
+  const OUTPUT_DIR = path.join(__dirname, '..', 'test-output', 'markdown-renderer')
+
+  let artifactReader, mint, renderer
+
+  before(async () => {
+    const { artifactReader: ar, mint: m } = await loadFixture(itemMintedFixture)
+
+    artifactReader = ar
+    mint = m
+
+    renderer = await hre.viem.deployContract('MarkdownRenderer', [], {
+      libraries: {
+        ArtifactReader: artifactReader.address,
+      }
+    })
+
+    await mint.write.registerRenderer([renderer.address])
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true })
+  })
+
+  // Token 1 is created by itemMintedFixture, so our tokens start at 2
+  let nextTokenId = 2n
+
+  const examples = [
+    { name: 'short',   title: 'My Post',          description: 'A short post.',              markdown: MARKDOWN },
+    { name: 'special', title: 'Special <Chars>',   description: 'Has special characters.',      markdown: MARKDOWN_WITH_SPECIAL_CHARS },
+    { name: 'long',    title: 'On-Chain Markdown',  description: 'A longer document example.', markdown: MARKDOWN_LONG },
+  ]
+
+  for (const example of examples) {
+    it(`render output: ${example.name}`, async () => {
+      const tokenId = nextTokenId++
+
+      await mint.write.create([
+        example.title,
+        example.description,
+        toByteArray(example.markdown),
+        1,
+        0n,
+      ])
+
+      // Get full token URI via the Mint contract
+      // @ts-ignore
+      const tokenURI = await mint.read.uri([tokenId], { gas: 1_000_000_000 })
+
+      // Decode JSON metadata
+      const json = Buffer.from(tokenURI.substring(29), 'base64').toString()
+      const metadata = JSON.parse(json)
+
+      // Write token URI JSON
+      fs.writeFileSync(
+        path.join(OUTPUT_DIR, `${example.name}.json`),
+        JSON.stringify(metadata, null, 2),
+      )
+
+      // Write SVG preview image
+      const svg = Buffer.from(metadata.image.substring(26), 'base64').toString()
+      fs.writeFileSync(
+        path.join(OUTPUT_DIR, `${example.name}.svg`),
+        svg,
+      )
+
+      // Write decoded markdown
+      const md = Buffer.from(metadata.animation_url.substring(26), 'base64').toString()
+      fs.writeFileSync(
+        path.join(OUTPUT_DIR, `${example.name}.md`),
+        md,
+      )
+
+      console.log(`      → ${OUTPUT_DIR}/${example.name}.{json,svg,md}`)
+    })
+  }
 })
