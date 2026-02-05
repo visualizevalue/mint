@@ -41,6 +41,11 @@ header {
   background: var(--card-background);
   backdrop-filter: var(--blur);
 
+  h1,
+  p {
+    word-break: break-word;
+  }
+
   h1 {
     font-size: var(--font-lg);
     overflow-wrap: break-word;
