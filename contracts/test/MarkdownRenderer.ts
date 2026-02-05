@@ -66,7 +66,7 @@ describe('MarkdownRenderer', async () => {
     expect(data.animation_url).to.contain('data:text/markdown;base64,')
 
     // Decode animation_url to verify original markdown
-    const markdown = Buffer.from(data.animation_url.substring(27), 'base64').toString()
+    const markdown = Buffer.from(data.animation_url.substring(26), 'base64').toString()
     expect(markdown).to.equal(MARKDOWN)
   })
 
@@ -100,7 +100,7 @@ describe('MarkdownRenderer', async () => {
     const animationUri = await renderer.read.animationURI([2n, token])
     expect(animationUri).to.contain('data:text/markdown;base64,')
 
-    const markdown = Buffer.from(animationUri.substring(27), 'base64').toString()
+    const markdown = Buffer.from(animationUri.substring(26), 'base64').toString()
     expect(markdown).to.equal(MARKDOWN)
   })
 
@@ -135,7 +135,7 @@ describe('MarkdownRenderer', async () => {
 
     // Raw markdown in animation_url should be unescaped
     const animationUri = await renderer.read.animationURI([2n, token])
-    const markdown = Buffer.from(animationUri.substring(27), 'base64').toString()
+    const markdown = Buffer.from(animationUri.substring(26), 'base64').toString()
     expect(markdown).to.equal(MARKDOWN_WITH_SPECIAL_CHARS)
   })
 
