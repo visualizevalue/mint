@@ -9,7 +9,7 @@ import { Token          } from "./../types/Token.sol";
 
 contract MarkdownRenderer is IRenderer {
 
-    uint constant MAX_PREVIEW_LENGTH = 200;
+    uint constant MAX_PREVIEW_LENGTH = 800;
 
     /// @notice Expose the name of this renderer for easy registration in UIs.
     function name () external pure returns (string memory) {
@@ -83,6 +83,7 @@ contract MarkdownRenderer is IRenderer {
                 '<foreignObject x="20" y="60" width="360" height="320">'
                     '<div xmlns="http://www.w3.org/1999/xhtml" style="'
                         'font-family:monospace;font-size:12px;color:#999;'
+                        'white-space:pre-wrap;word-break:break-word;'
                         'overflow:hidden;height:320px;'
                         'mask-image:linear-gradient(to bottom,black 60%,transparent 100%);'
                         '-webkit-mask-image:linear-gradient(to bottom,black 60%,transparent 100%)'
