@@ -9,6 +9,13 @@ npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Factory.ts --network localhost
 ```
 
+P5 renderer tests require a mainnet fork since they depend on onchain contracts (scripty.sol, ethfs):
+
+```shell
+FORK_MAINNET=true npx hardhat test test/P5Renderer.ts
+FORK_MAINNET=true npx hardhat test test/P5RendererV2.ts
+```
+
 ## Recursive Artifacts
 
 Recursion will be enabled via a new HTML/canvas based renderer.
