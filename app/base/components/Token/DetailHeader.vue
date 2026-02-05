@@ -43,6 +43,7 @@ header {
 
   h1 {
     font-size: var(--font-lg);
+    overflow-wrap: break-word;
 
     small {
       color: var(--muted);
