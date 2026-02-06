@@ -15,10 +15,22 @@ npx hardhat compile                              # Compile contracts
 npx hardhat test                                 # Run all tests
 npx hardhat test test/Mint.ts                    # Run one test file
 npx hardhat test --grep "pattern"                # Run tests matching pattern
+npx tsc --noEmit                                 # Type check
 REPORT_GAS=true npx hardhat test                 # Tests with gas reporting
 npx hardhat coverage                             # Solidity coverage
 npx hardhat ignition deploy ./ignition/modules/Factory.ts --network localhost  # Deploy
 ```
+
+### Mainnet Fork
+
+P5Renderer and P5RendererV2 tests depend on scripty.sol contracts deployed on mainnet. They are skipped by default and require a mainnet fork:
+
+```bash
+npx hardhat test test/P5Renderer.ts --network mainnetFork
+npx hardhat test test/P5RendererV2.ts --network mainnetFork
+```
+
+Requires `MAINNET_URL` set in your environment (see `.env.example`).
 
 ## Architecture
 
