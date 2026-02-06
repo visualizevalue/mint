@@ -1,0 +1,45 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_24-b30c277e8db7a6942ab867a6d052262498f5e637",
+  "solcVersion": "0.8.24",
+  "solcLongVersion": "0.8.24+commit.e11b9ed9",
+  "userSourceNameMap": {
+    "contracts/libraries/ArtifactReader.sol": "project/contracts/libraries/ArtifactReader.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "shanghai",
+      "optimizer": {
+        "enabled": true,
+        "runs": 100000
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/libraries/ArtifactReader.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nimport { Token   } from \"./../types/Token.sol\";\nimport { SSTORE2 } from \"./SSTORE2.sol\";\n\nlibrary ArtifactReader {\n\n    function get (Token memory token) public view returns (bytes memory content) {\n        for (uint8 i = 0; i < token.artifact.length; i++) {\n            content = abi.encodePacked(content, SSTORE2.read(token.artifact[i]));\n        }\n    }\n\n}\n\n"
+      },
+      "project/contracts/libraries/SSTORE2.sol": {
+        "content": "// SPDX-License-Identifier: AGPL-3.0-only\npragma solidity >=0.8.0;\n\n/// @notice Read and write to persistent storage at a fraction of the cost.\n/// @author Solmate (https://github.com/transmissions11/solmate/blob/main/src/utils/SSTORE2.sol)\n/// @author Modified from 0xSequence (https://github.com/0xSequence/sstore2/blob/master/contracts/SSTORE2.sol)\nlibrary SSTORE2 {\n    uint256 internal constant DATA_OFFSET = 1; // We skip the first byte as it's a STOP opcode to ensure the contract can't be called.\n\n    /*//////////////////////////////////////////////////////////////\n                               WRITE LOGIC\n    //////////////////////////////////////////////////////////////*/\n\n    function write(bytes memory data) internal returns (address pointer) {\n        // Prefix the bytecode with a STOP opcode to ensure it cannot be called.\n        bytes memory runtimeCode = abi.encodePacked(hex\"00\", data);\n\n        bytes memory creationCode = abi.encodePacked(\n            //---------------------------------------------------------------------------------------------------------------//\n            // Opcode  | Opcode + Arguments  | Description  | Stack View                                                     //\n            //---------------------------------------------------------------------------------------------------------------//\n            // 0x60    |  0x600B             | PUSH1 11     | codeOffset                                                     //\n            // 0x59    |  0x59               | MSIZE        | 0 codeOffset                                                   //\n            // 0x81    |  0x81               | DUP2         | codeOffset 0 codeOffset                                        //\n            // 0x38    |  0x38               | CODESIZE     | codeSize codeOffset 0 codeOffset                               //\n            // 0x03    |  0x03               | SUB          | (codeSize - codeOffset) 0 codeOffset                           //\n            // 0x80    |  0x80               | DUP          | (codeSize - codeOffset) (codeSize - codeOffset) 0 codeOffset   //\n            // 0x92    |  0x92               | SWAP3        | codeOffset (codeSize - codeOffset) 0 (codeSize - codeOffset)   //\n            // 0x59    |  0x59               | MSIZE        | 0 codeOffset (codeSize - codeOffset) 0 (codeSize - codeOffset) //\n            // 0x39    |  0x39               | CODECOPY     | 0 (codeSize - codeOffset)                                      //\n            // 0xf3    |  0xf3               | RETURN       |                                                                //\n            //---------------------------------------------------------------------------------------------------------------//\n            hex\"60_0B_59_81_38_03_80_92_59_39_F3\", // Returns all code in the contract except for the first 11 (0B in hex) bytes.\n            runtimeCode // The bytecode we want the contract to have after deployment. Capped at 1 byte less than the code size limit.\n        );\n\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Deploy a new contract with the generated creation code.\n            // We start 32 bytes into the code to avoid copying the byte length.\n            pointer := create(0, add(creationCode, 32), mload(creationCode))\n        }\n\n        require(pointer != address(0), \"DEPLOYMENT_FAILED\");\n    }\n\n    /*//////////////////////////////////////////////////////////////\n                               READ LOGIC\n    //////////////////////////////////////////////////////////////*/\n\n    function read(address pointer) internal view returns (bytes memory) {\n        return readBytecode(pointer, DATA_OFFSET, pointer.code.length - DATA_OFFSET);\n    }\n\n    function read(address pointer, uint256 start) internal view returns (bytes memory) {\n        start += DATA_OFFSET;\n\n        return readBytecode(pointer, start, pointer.code.length - start);\n    }\n\n    function read(\n        address pointer,\n        uint256 start,\n        uint256 end\n    ) internal view returns (bytes memory) {\n        start += DATA_OFFSET;\n        end += DATA_OFFSET;\n\n        require(pointer.code.length >= end, \"OUT_OF_BOUNDS\");\n\n        return readBytecode(pointer, start, end - start);\n    }\n\n    /*//////////////////////////////////////////////////////////////\n                          INTERNAL HELPER LOGIC\n    //////////////////////////////////////////////////////////////*/\n\n    function readBytecode(\n        address pointer,\n        uint256 start,\n        uint256 size\n    ) private view returns (bytes memory data) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            // Get a pointer to some free memory.\n            data := mload(0x40)\n\n            // Update the free memory pointer to prevent overriding our data.\n            // We use and(x, not(31)) as a cheaper equivalent to sub(x, mod(x, 32)).\n            // Adding 31 to size and running the result through the logic above ensures\n            // the memory pointer remains word-aligned, following the Solidity convention.\n            mstore(0x40, add(data, and(add(add(size, 32), 31), not(31))))\n\n            // Store the size of the data in the first 32 byte chunk of free memory.\n            mstore(data, size)\n\n            // Copy the code into memory right after the 32 bytes we used to store the size.\n            extcodecopy(pointer, add(data, 32), start, size)\n        }\n    }\n}\n"
+      },
+      "project/contracts/types/Token.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\nstruct Token {\n    string  name;            // token name\n    string  description;    // token description\n    address[] artifact;    // artifact pointers (image/artwork) data\n    uint32  renderer;     // index of renderer contract address\n    uint32  mintedBlock; // creation block height of the token\n    uint64  closeAt;    // timestamp of mint completion\n    uint128 data;      // optional data for renderers\n}\n"
+      }
+    }
+  }
+}
