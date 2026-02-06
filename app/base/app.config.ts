@@ -42,6 +42,13 @@ export default defineAppConfig({
         description: 'The default renderer',
       },
       {
+        component: 'Markdown',
+        name: 'Markdown Renderer',
+        version: 1n,
+        address: '0x31e819f6a2fdf77af11648b6d571416aa48eb650',
+        description: 'Renders markdown content as onchain text artifacts',
+      },
+      {
         component: 'P5',
         name: 'P5 Renderer (Sepolia)',
         version: 2n,

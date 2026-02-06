@@ -17,6 +17,7 @@ import CodeMirror from 'codemirror-editor-vue3'
 import 'codemirror/addon/display/placeholder.js'
 import 'codemirror/mode/htmlmixed/htmlmixed.js'
 import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/mode/markdown/markdown.js'
 
 const props = defineProps({
   modelValue: String,

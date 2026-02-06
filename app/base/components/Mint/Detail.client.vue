@@ -2,12 +2,14 @@
 import Animation from './Renderer/Animation.client.vue'
 import Base from './Renderer/Base.client.vue'
 import Code from './Renderer/Code.client.vue'
+import Markdown from './Renderer/Markdown.client.vue'
 import P5 from './Renderer/P5.client.vue'
 
 const components = {
   Animation,
   Base,
   Code,
+  Markdown,
   P5,
 }
 

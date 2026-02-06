@@ -54,6 +54,9 @@
             "static": "Static",
             "script": "Script"
         },
+        "markdown": {
+            "placeholder": "Write your markdown here..."
+        },
         "p5": {
             "static": "Static",
             "script": "P5 Script"
