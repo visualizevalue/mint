@@ -56,6 +56,14 @@ const config: HardhatUserConfig = {
       blockGasLimit: 1_000_000_000,
       allowUnlimitedContractSize: true,
     },
+    mainnetFork: {
+      type: "edr-simulated",
+      chainType: "l1",
+      blockGasLimit: 1_000_000_000,
+      forking: {
+        url: configVariable("MAINNET_URL"),
+      }
+    },
     mainnet: {
       type: "http",
       chainType: "l1",
