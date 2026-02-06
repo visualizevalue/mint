@@ -18,7 +18,8 @@ const load = async () => {
   try {
     await store.fetchToken(collection.value.address, route.params.tokenId)
   } catch (e) {
-    navigateTo({ name: 'id-collection' }, { replace: true })
+    console.debug(`Error`, e, `Redirecting to collection`)
+    return navigateTo({ name: 'id-collection' }, { replace: true })
   }
 
   loading.value = false

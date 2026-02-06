@@ -22,7 +22,7 @@ const load = async () => {
       throw new Error('Invalid owner')
     }
   } catch (e) {
-    navigateTo({ name: 'id' }, { replace: true })
+    return navigateTo({ name: 'id' }, { replace: true })
   }
 
   loading.value = false
