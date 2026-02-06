@@ -1,7 +1,12 @@
 {
-    "$global": {
-    },
+    "$global": {},
     "AnimationRenderer": {
-        "artifactReader": ""
+        "artifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd"
+    },
+    "P5RendererV2": {
+        "artifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd"
+    },
+    "MarkdownRenderer": {
+        "artifactReader": "0xda5fe26191e202e53c6b3e824509508d5e1be8cd"
     }
 }
