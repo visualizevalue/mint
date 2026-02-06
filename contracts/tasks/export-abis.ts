@@ -1,41 +1,13 @@
-import { formatAbi } from 'abitype'
-import { task } from 'hardhat/config'
+import { task } from "hardhat/config";
 
-task('export:abi:factory:v1', 'Exports an abi in its human readable form')
-  .setAction(async (_, hre) => {
-    const contractMetadata = await hre.viem.deployContract('ContractMetadata', [])
+export const exportAbiFactoryTask = task("export:abi:factory:v1", "Exports the FactoryV1 ABI")
+  .setAction(() => import("./actions/export-abi-factory.js"))
+  .build();
 
-    const factory = await hre.viem.deployContract('FactoryV1', [], {
-      libraries: {
-        ContractMetadata: contractMetadata.address,
-      }
-    })
+export const exportAbiMintTask = task("export:abi:mint", "Exports the Mint ABI")
+  .setAction(() => import("./actions/export-abi-mint.js"))
+  .build();
 
-    console.log(formatAbi(factory.abi))
-  })
-
-task('export:abi:mint', 'Exports an abi in its human readable form')
-  .setAction(async (_, hre) => {
-    const contractMetadata = await hre.viem.deployContract('ContractMetadata', [])
-
-    const mint = await hre.viem.deployContract('Mint', [], {
-      libraries: {
-        ContractMetadata: contractMetadata.address
-      }
-    })
-
-    console.log(formatAbi(mint.abi))
-  })
-
-task('export:abi:renderer', 'Exports an abi in its human readable form')
-  .setAction(async (_, hre) => {
-    const artifactReader = await hre.viem.deployContract('ArtifactReader', [])
-
-    const mint = await hre.viem.deployContract('Renderer', [], {
-      libraries: {
-        ArtifactReader: artifactReader.address
-      }
-    })
-
-    console.log(formatAbi(mint.abi))
-  })
+export const exportAbiRendererTask = task("export:abi:renderer", "Exports the Renderer ABI")
+  .setAction(() => import("./actions/export-abi-renderer.js"))
+  .build();

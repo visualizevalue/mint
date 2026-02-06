@@ -1,5 +1,5 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
-import FactoryModule from './Factory'
+import FactoryModule from './Factory.js'
 
 const P5RendererV2Module = buildModule('P5RendererV2', (m) => {
   const artifactReader = m.contractAt('ArtifactReader', m.getParameter('artifactReader'))

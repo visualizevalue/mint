@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Visualize Value "Mint" — an ERC-1155 NFT minting platform. Artists deploy collections via a factory, create tokens with onchain artifacts, and collectors mint during 24-hour windows at basefee-linked pricing.
 
-**Solidity 0.8.24 · Hardhat 2.22.7 · Viem (not ethers.js) · TypeScript**
+**Solidity 0.8.24 · Hardhat 3 · Viem (not ethers.js) · TypeScript (ESM)**
 
 ## Commands
 
@@ -17,7 +17,6 @@ npx hardhat test test/Mint.ts                    # Run one test file
 npx hardhat test --grep "pattern"                # Run tests matching pattern
 REPORT_GAS=true npx hardhat test                 # Tests with gas reporting
 npx hardhat coverage                             # Solidity coverage
-npx hardhat size-contracts                       # Contract size report
 npx hardhat ignition deploy ./ignition/modules/Factory.ts --network localhost  # Deploy
 ```
 
@@ -55,17 +54,31 @@ Artifacts (SVG, images, scripts) are stored onchain via SSTORE2. Large artifacts
 
 ## Testing
 
-Tests use **Mocha + Chai + Viem** with a fixture chain pattern:
+Tests use **node:test + node:assert/strict + Viem** with a fixture chain pattern:
 
 `baseFixture` → `factoryFixture` → `collectionFixture` → `itemMintedFixture` → `itemPreparedFixture`
 
 Each fixture builds on the previous. Fixtures are in `test/fixtures.ts`, constants (addresses, SVG data) in `test/constants.ts`. Uses `@visualizevalue/mint-utils` (workspace dependency at `../utils`) for `toByteArray()` and `chunkArray()`.
 
+### Hardhat 3 Testing Notes
+
+- Tests use `node:test` (not Mocha) and `node:assert/strict` (not Chai)
+- Assertions use `viem.assertions.emit()`, `viem.assertions.emitWithArgs()`, `viem.assertions.revertWithCustomError()`, `viem.assertions.balancesHaveChanged()`
+- Network connection: `await network.connect("hardhat")` — must specify `"hardhat"` to use the configured `blockGasLimit`
+- Fixtures use `networkHelpers.loadFixture()` for snapshot/restore
+- Tasks use the Hardhat 3 task builder API: `task("name", "desc").addOption({...}).setAction(() => import("./actions/file.js")).build()`
+- Task actions are in separate files under `tasks/actions/` with lazy dynamic imports
+
+### EDR Limitations
+
+- The Hardhat 3 EDR has an internal gas cap (~16M) for `eth_call` when gas is explicitly specified — do NOT pass `{ gas: ... }` overrides to `read` calls
+- Large calldata (>~25KB per transaction) can cause EDR failures — when calling `prepareArtifact()` with multiple byte arrays, use `chunkArray(..., 1)` to send one SSTORE2 write per transaction
+
 ## Deployment
 
-Uses **Hardhat Ignition** with CREATE2 strategy for deterministic addresses. Salt is composed of `DEPLOY_AUTH + REDEPLOY_PROTECTION + ENTROPY` from env vars. Deployment modules are in `ignition/modules/`, parameters per network in `ignition/parameters.*.json`.
+Uses **Hardhat Ignition** with CREATE2 strategy for deterministic addresses. Deployment modules are in `ignition/modules/`, parameters per network in `ignition/parameters.*.json`.
 
-Networks: mainnet, sepolia, holesky, localhost. Ledger hardware wallet signing supported.
+Networks: mainnet, sepolia, holesky, localhost.
 
 ## Key Types
 

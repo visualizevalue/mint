@@ -1,6 +1,7 @@
 {
     "name": "@visualizevalue/mint-utils",
     "version": "0.0.4",
+    "type": "module",
     "main": "index.ts",
     "dependencies": {
         "viem": "2.x"
