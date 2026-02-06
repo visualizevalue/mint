@@ -1,21 +1,18 @@
-import { task } from 'hardhat/config'
-import { decodeAbiParameters, encodeAbiParameters } from 'viem'
-import { P5_HELLO_WORLD_IMG, P5_HELLO_WORLD_SCRIPT } from '../test/constants'
+import { task } from "hardhat/config";
+import { ArgumentType } from "hardhat/types/arguments";
 
-task('interact:mint:uri', 'Exports an abi in its human readable form')
-  .addParam('address', 'The mint contract address')
-  .addParam('tokenId', 'The token id to query')
-  .setAction(async ({ address, tokenId }, hre) => {
-    const mint = await hre.viem.getContractAt('Mint', address)
-
-    // @ts-ignore
-    const dataURI = await mint.read.uri([BigInt(tokenId)], { gas: 1_000_000_000 })
-
-    console.log(dataURI)
-
-    const json = Buffer.from(dataURI.substring(29), `base64`).toString()
-    const data = JSON.parse(json)
-
-    console.log(data)
+export const interactMintUriTask = task("interact:mint:uri", "Query a token URI")
+  .addOption({
+    name: "address",
+    description: "The mint contract address",
+    type: ArgumentType.STRING,
+    defaultValue: "",
   })
-
+  .addOption({
+    name: "tokenId",
+    description: "The token id to query",
+    type: ArgumentType.STRING,
+    defaultValue: "",
+  })
+  .setAction(() => import("./actions/interact-mint-uri.js"))
+  .build();

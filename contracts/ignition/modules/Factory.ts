@@ -1,6 +1,6 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import { toByteArray } from '@visualizevalue/mint-utils'
-import { LOGO, VV } from '../../test/constants'
+import { LOGO, VV } from '../../test/constants.js'
 
 const FactoryModule = buildModule('Factory', (m) => {
   // Prepare base contracts

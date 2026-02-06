@@ -1,36 +1,29 @@
 {
     "name": "@visualizevalue/mint-contracts",
     "version": "0.0.1",
+    "type": "module",
     "author": "jalil <jalil@vv.xyz>",
     "devDependencies": {
-        "@nomicfoundation/hardhat-chai-matchers": "^2.0.7",
-        "@nomicfoundation/hardhat-ledger": "^1.0.3",
-        "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+        "@nomicfoundation/hardhat-ignition": "^3.0.7",
+        "@nomicfoundation/hardhat-ignition-viem": "^3.0.7",
+        "@nomicfoundation/hardhat-keystore": "^3.0.0",
+        "@nomicfoundation/hardhat-network-helpers": "^3.0.0",
+        "@nomicfoundation/hardhat-node-test-runner": "^3.0.0",
+        "@nomicfoundation/hardhat-toolbox-viem": "^5.0.0",
+        "@nomicfoundation/hardhat-verify": "^3.0.0",
+        "@nomicfoundation/hardhat-viem": "^3.0.2",
+        "@nomicfoundation/hardhat-viem-assertions": "^3.0.5",
+        "@nomicfoundation/ignition-core": "^3.0.7",
+        "@types/node": "^22.18.10",
         "abitype": "^1.0.6",
-        "dotenv": "^16.4.5",
-        "hardhat": "^2.22.7",
-        "hardhat-contract-sizer": "^2.10.0",
-        "scripty.sol": "^2.1.1",
-        "viem": "2.x"
+        "hardhat": "^3.0.7",
+        "typescript": "~5.8.3",
+        "viem": "^2.43.0"
     },
     "dependencies": {
-        "@nomicfoundation/hardhat-ignition": "^0.15.5",
-        "@nomicfoundation/hardhat-ignition-viem": "^0.15.0",
-        "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
-        "@nomicfoundation/hardhat-verify": "^2.0.0",
-        "@nomicfoundation/hardhat-viem": "^2.0.0",
-        "@nomicfoundation/ignition-core": "^0.15.5",
         "@openzeppelin/contracts": "^5.0.2",
         "@openzeppelin/contracts-upgradeable": "^5.0.2",
-        "@types/chai": "^4.2.0",
-        "@types/chai-as-promised": "^7.1.6",
-        "@types/mocha": ">=9.1.0",
         "@visualizevalue/mint-utils": "workspace:../utils",
-        "chai": "^4.2.0",
-        "hardhat-chai-matchers-viem": "^2.0.8",
-        "hardhat-gas-reporter": "^2.2.0",
-        "solidity-coverage": "^0.8.1",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.5.4"
+        "scripty.sol": "^2.1.1"
     }
 }
