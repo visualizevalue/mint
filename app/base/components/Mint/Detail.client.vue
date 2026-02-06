@@ -4,6 +4,7 @@ import Base from './Renderer/Base.client.vue'
 import Code from './Renderer/Code.client.vue'
 import Markdown from './Renderer/Markdown.client.vue'
 import P5 from './Renderer/P5.client.vue'
+import Tone from './Renderer/Tone.client.vue'
 
 const components = {
   Animation,
@@ -11,6 +12,7 @@ const components = {
   Code,
   Markdown,
   P5,
+  Tone,
 }
 
 const props = defineProps(['collection'])

@@ -9,6 +9,13 @@ export default defineAppConfig({
         address: '0xe5d2da253c7d4b7609afce15332bb1a1fb461d09',
         description: 'The default renderer',
       },
+      // {
+      //   component: 'Markdown',
+      //   name: 'Markdown Renderer',
+      //   version: 1n,
+      //   address: '0x0000000000000000000000000000000000000000',
+      //   description: 'Renders markdown content as onchain text artifacts',
+      // },
       {
         component: 'P5',
         name: 'P5 Renderer',
@@ -23,6 +30,13 @@ export default defineAppConfig({
         address: '0xcb681409046e45e6187ec2205498e4adbe19749c',
         description: 'Allows linking to both an image and an animation url',
       },
+      // {
+      //   component: 'Tone',
+      //   name: 'Tone Renderer',
+      //   version: 1n,
+      //   address: '0x0000000000000000000000000000000000000000',
+      //   description: 'Allows using Tone.js scripts for generative audio',
+      // },
       {
         component: 'P5',
         name: 'P5 Renderer',
@@ -61,6 +75,13 @@ export default defineAppConfig({
         version: 1n,
         address: '0xeeaf428251c477002d52c69e022b357a91f36517',
         description: 'Allows linking to both an image and an animation url',
+      },
+      {
+        component: 'Tone',
+        name: 'Tone Renderer',
+        version: 1n,
+        address: '0x0000000000000000000000000000000000000000',
+        description: 'Allows using Tone.js scripts for generative audio',
       },
       {
         component: 'P5',
