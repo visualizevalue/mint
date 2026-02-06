@@ -5,8 +5,8 @@ import { toByteArray } from "@visualizevalue/mint-utils";
 import { P5_HELLO_WORLD_HTML_URL, P5_HELLO_WORLD_IMG, P5_HELLO_WORLD_SCRIPT, P5_HELLO_WORLD_SCRIPT_URL } from "./constants.js";
 import { viem, networkHelpers, baseFixture, itemMintedFixture } from "./fixtures.js";
 
-// Need to test on mainnet fork for this to work...
-// `FORK_MAINNET=true hh test test/P5Renderer.ts`
+// Requires mainnet fork (scripty.sol contracts must be available).
+// Set MAINNET_URL in env, then: `npx hardhat test test/P5Renderer.ts --network mainnetFork`
 describe("P5Renderer", { skip: true }, () => {
   it("should expose the name of a version", async () => {
     await networkHelpers.loadFixture(baseFixture);
