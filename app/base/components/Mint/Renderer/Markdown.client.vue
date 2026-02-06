@@ -5,54 +5,30 @@
       <FormInput v-model="description" :placeholder="$t('mint.base.description_placeholder')" />
     </div>
 
-    <CodeEditor
-      v-model="markdown"
-      mode="text/x-markdown"
-      :placeholder="$t('mint.markdown.placeholder')"
-      class="full"
-    />
+    <CodeEditor v-model="markdown" mode="text/x-markdown" :placeholder="$t('mint.markdown.placeholder')" class="full" />
   </div>
 </template>
 
 <script setup>
 import { watchDebounced } from '@vueuse/core'
+import { getMarkdownSvgUri, getMarkdownHtmlUri } from '~/utils/markdown'
 
-const { artifact, animationUrl, name, description } = useCreateMintData()
+const { artifact, image, animationUrl, name, description } = useCreateMintData()
 
 const markdown = ref('')
 
-// Generate a preview HTML data URI for the markdown content.
 const updatePreview = () => {
-  if (! markdown.value) {
+  if (!markdown.value) {
+    image.value = ''
     animationUrl.value = ''
     return
   }
 
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: monospace;
-    font-size: 14px;
-    color: #999;
-    background: #111;
-    padding: 2rem;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-</style>
-</head>
-<body>${markdown.value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</body>
-</html>`
-
-  animationUrl.value = `data:text/html;base64,${btoa(unescape(encodeURIComponent(html)))}`
+  image.value = getMarkdownSvgUri(name.value || '', markdown.value)
+  animationUrl.value = getMarkdownHtmlUri(markdown.value)
 }
-watchDebounced(markdown, updatePreview, { debounce: 500, maxWait: 3000 })
+watchDebounced([markdown, name], updatePreview, { debounce: 500, maxWait: 3000 })
 
-// Set the artifact to the raw markdown text.
 // The MarkdownRenderer contract stores raw markdown bytes (not ABI-encoded).
 watchEffect(() => {
   artifact.value = markdown.value
@@ -69,7 +45,7 @@ watchEffect(() => {
   overflow: hidden;
   width: 100%;
 
-  > .fields {
+  >.fields {
     display: flex;
     flex-direction: column;
     gap: var(--spacer);
@@ -78,8 +54,9 @@ watchEffect(() => {
     border-radius: var(--card-border-radius);
   }
 
-  > .code-editor {
+  >.code-editor {
     border: var(--border);
+    border-top: none;
     border-radius: var(--card-border-radius);
     overflow: hidden;
     min-height: 24rem;
