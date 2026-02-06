@@ -25,5 +25,5 @@ const load = async () => {
 }
 
 onMounted(() => load())
-watch(route, () => load())
+watch(() => route.params.tokenId, () => load())
 </script>
