@@ -5,6 +5,7 @@
       type="number"
       v-model="mintCount"
       min="1"
+      :step="step"
       required
       class="amount"
     />
@@ -40,11 +41,13 @@ const props = defineProps({
   mintRequest: Function,
   transactionFlowConfig: Object,
   minted: Function,
+  step: { type: Number, default: 1 },
+  defaultAmount: { type: Number, default: 1 },
 })
 
 const mintCount = defineModel('mintCount', { default: '1' })
 const onMinted = () => {
-  mintCount.value = '1'
+  mintCount.value = String(props.defaultAmount)
   props.minted()
 }
 </script>
