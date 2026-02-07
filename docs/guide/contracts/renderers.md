@@ -146,6 +146,87 @@ function uri (
 }
 ```
 
+### Markdown Renderer
+
+The Markdown Renderer is designed for text-based artifacts. The artifact is stored as raw markdown bytes.
+
+Check out the [`MarkdownRenderer.sol`](https://github.com/visualizevalue/mint/blob/main/contracts/contracts/renderers/MarkdownRenderer.sol) on Github.
+
+For the `image`, the renderer generates an on-chain SVG preview — a dark 400×400 card
+showing the token name as a heading and a truncated, sanitized snippet of the markdown
+content that fades out via a CSS mask gradient.
+
+The full markdown content is exposed as a base64-encoded `data:text/markdown` data URI
+via the `animation_url`.
+
+```solidity
+function uri (uint tokenId, Token calldata token) external view returns (string memory) {
+    bytes memory artifact = ArtifactReader.get(token);
+
+    bytes memory dataURI = abi.encodePacked(
+        '{',
+            '"id": "', Strings.toString(tokenId), '",',
+            '"name": "', token.name, '",',
+            '"description": "', token.description, '",',
+            '"type": "markdown",',
+            '"image": "', _generateSVGDataURI(token.name, artifact), '",',
+            '"animation_url": "', _markdownDataURI(artifact), '"',
+        '}'
+    );
+
+    return string(
+        abi.encodePacked(
+            "data:application/json;base64,",
+            Base64.encode(dataURI)
+        )
+    );
+}
+```
+
+To safely embed user content in SVG, the renderer sanitizes XML entities (`&`, `<`, `>`, `"`, `'`)
+and truncates the preview to 800 bytes.
+
+### Tone Renderer
+
+The Tone Renderer powers audio-based artifacts using [Tone.js](https://tonejs.github.io/).
+Like the P5 Renderer, the artifact is an ABI-encoded `(string image, string script)` tuple
+containing a static preview image and a Tone.js script.
+
+Check out the [`ToneRenderer.sol`](https://github.com/visualizevalue/mint/blob/main/contracts/contracts/renderers/ToneRenderer.sol) on Github.
+
+The renderer assembles a self-contained HTML page via [scripty.sol](https://github.com/intartnft/scripty.sol)
+that loads Tone.js (gzipped) from [EthFS](https://ethfs.xyz/) and runs the token's script.
+The HTML is built using ScriptyBuilderV2 with the following structure:
+
+- **Head:** `<title>` tag + `fullSizeCanvas.css` from EthFS
+- **Body:** gzipped Tone.js from EthFS, a gunzip loader script, and the token's audio script
+
+```solidity {2}
+function uri (uint tokenId, Token calldata token) external view returns (string memory) {
+    (string memory image, string memory script) = abi.decode(ArtifactReader.get(token), (string, string));
+
+    bytes memory dataURI = abi.encodePacked(
+        '{',
+            '"id": "', Strings.toString(tokenId), '",',
+            '"name": "', token.name, '",',
+            '"description": "', token.description, '",',
+            '"image": "', image, '",',
+            '"animation_url": "', generateHtml(token.name, script), '"',
+        '}'
+    );
+
+    return string(
+        abi.encodePacked(
+            "data:application/json;base64,",
+            Base64.encode(dataURI)
+        )
+    );
+}
+```
+
+The renderer also exposes a `scriptURI()` method that returns just the Tone.js script
+as a `data:text/javascript` data URI.
+
 ### Community Renderers
 
 Developers are invited to get creative and contribute their own to the ecosystem.
