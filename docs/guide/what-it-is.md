@@ -21,7 +21,8 @@ can use to showcase their work.
 Mint allows collecting digital art as "networked artifacts".
 Each piece is owned by a network of supporters.
 
-Most importantly: Mint is a gift.
+Mint is open source. Have a feature idea? We'd love your contribution.
+[Open an issue](https://github.com/visualizevalue/mint/issues) or submit a pull request.
 
 ## What It Is Not
 
@@ -38,6 +39,3 @@ digital artifacts to individuals. Mints are owned by their
 networks of supporters. The truly scarce characteristic
 is the time and place artifacts are distributed, not
 how often, or for whatever consensus on price.
-
-Mint is not an invitation for you to tell us what to do for you.
-Have a feature idea? Build it.
