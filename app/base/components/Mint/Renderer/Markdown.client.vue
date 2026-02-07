@@ -11,7 +11,7 @@
 
 <script setup>
 import { watchDebounced } from '@vueuse/core'
-import { getMarkdownSvgUri, getMarkdownHtmlUri } from '~/utils/markdown'
+import { getMarkdownSvgUri, getMarkdownUri } from '~/utils/markdown'
 
 const { artifact, image, animationUrl, name, description } = useCreateMintData()
 
@@ -25,7 +25,7 @@ const updatePreview = () => {
   }
 
   image.value = getMarkdownSvgUri(name.value || '', markdown.value)
-  animationUrl.value = getMarkdownHtmlUri(markdown.value)
+  animationUrl.value = getMarkdownUri(markdown.value)
 }
 watchDebounced([markdown, name], updatePreview, { debounce: 500, maxWait: 3000 })
 

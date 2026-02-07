@@ -38,13 +38,7 @@ export const getMarkdownSvgUri = (title: string, content: string) =>
   toBase64DataUri('image/svg+xml', getMarkdownSvg(title, content))
 
 /**
- * Generate a simple HTML preview for the markdown content.
+ * Generate a markdown data URI matching the on-chain MarkdownRenderer output.
  */
-export const getMarkdownHtml = (content: string) =>
-  `<!DOCTYPE html><html><head><meta charset="utf-8"><style>` +
-  `*{margin:0;padding:0;box-sizing:border-box}` +
-  `body{font-family:monospace;font-size:14px;color:#999;background:#111;padding:2rem;white-space:pre-wrap;word-break:break-word}` +
-  `</style></head><body>${escapeXml(content)}</body></html>`
-
-export const getMarkdownHtmlUri = (content: string) =>
-  toBase64DataUri('text/html', getMarkdownHtml(content))
+export const getMarkdownUri = (content: string) =>
+  toBase64DataUri('text/markdown', content)
