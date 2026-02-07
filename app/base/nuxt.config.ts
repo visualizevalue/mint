@@ -25,7 +25,6 @@ export default defineNuxtConfig({
       ipfsGateway: 'https://ipfs.io/ipfs/',
       arweaveGateway: 'https://arweave.net/',
       mintAmount: 1,
-      mintStep: 1,
       mintValue: 0,
       title: 'Mint',
       walletConnectProjectId: '',

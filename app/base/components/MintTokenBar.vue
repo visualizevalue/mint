@@ -5,7 +5,7 @@
       type="number"
       v-model="mintCount"
       min="1"
-      :step="step"
+      step="1"
       required
       class="amount"
     />
@@ -41,7 +41,6 @@ const props = defineProps({
   mintRequest: Function,
   transactionFlowConfig: Object,
   minted: Function,
-  step: { type: Number, default: 1 },
   defaultAmount: { type: Number, default: 1 },
 })
 

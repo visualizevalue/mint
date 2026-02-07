@@ -40,12 +40,11 @@ This can also be set via URL subdomains (e.g. `artist.mint.example.com`).
 
 ## Mint Defaults {#mint-defaults}
 
-Configure the default mint amount, step size, and target value for the mint input.
+Configure the default mint amount and target value for the mint input.
 
 | Variable | Query Param | Default | Description |
 |----------|-------------|---------|-------------|
 | `NUXT_PUBLIC_MINT_AMOUNT` | `?amount=N` | `1` | Default number of tokens to mint |
-| `NUXT_PUBLIC_MINT_STEP` | `?step=N` | `1` | Increment/decrement step size |
 | `NUXT_PUBLIC_MINT_VALUE` | `?value=N` | `0` (off) | Target USD value for dynamic default amount |
 
 Query parameters take precedence over environment variables.
@@ -56,10 +55,9 @@ Set a fixed default mint amount:
 
 ```sh
 NUXT_PUBLIC_MINT_AMOUNT=10
-NUXT_PUBLIC_MINT_STEP=5
 ```
 
-This sets the mint input to `10` by default, with the up/down arrows adjusting by `5`.
+This sets the mint input to `10` by default.
 
 ### Dynamic Default (Target USD Value)
 
@@ -84,7 +82,7 @@ sharing links with pre-configured amounts:
 
 ```
 https://mint.example.com/artist/collection/1?amount=100
-https://mint.example.com/artist/collection/1?value=5&step=5
+https://mint.example.com/artist/collection/1?value=5
 ```
 
 ## Services

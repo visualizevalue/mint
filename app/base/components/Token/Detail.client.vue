@@ -41,7 +41,6 @@
               mintRequest,
               transactionFlowConfig,
               minted,
-              step,
               defaultAmount,
             }"
           />
@@ -74,7 +73,7 @@ const { token } = defineProps<{
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
 
-const { defaultAmount, mintCount, step } = useMintDefault()
+const { defaultAmount, mintCount } = useMintDefault()
 const ownedBalance = computed(
   () => collection.value && store.tokenBalance(collection.value.address, token.tokenId),
 )

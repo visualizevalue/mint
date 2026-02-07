@@ -54,6 +54,7 @@
               mintRequest,
               transactionFlowConfig,
               minted,
+              defaultAmount,
             }"
           />
           <p class="muted" v-if="ownedBalance">
@@ -73,7 +74,7 @@ const { token } = defineProps<{
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection)) as ComputedRef<Collection>
 
-const mintCount = ref('1')
+const { defaultAmount, mintCount } = useMintDefault()
 const ownedBalance = computed(() => store.tokenBalance(collection.value.address, token.tokenId))
 </script>
 

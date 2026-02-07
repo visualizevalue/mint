@@ -1,5 +1,5 @@
 export const useMintDefault = () => {
-  const { amount, step, value } = useMintConfig()
+  const { amount, value } = useMintConfig()
   const gasPrice = useGasPrice()
   const priceFeed = usePriceFeedStore()
 
@@ -30,5 +30,5 @@ export const useMintDefault = () => {
 
   watch(defaultAmount, (v) => { mintCount.value = String(v) })
 
-  return { defaultAmount, mintCount, step }
+  return { defaultAmount, mintCount }
 }
