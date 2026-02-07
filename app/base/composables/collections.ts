@@ -376,6 +376,11 @@ export const useOnchainStore = () => {
           }
 
           this.collections[address].tokens[`${token.tokenId}`] = token
+
+          // Update latestTokenId if this token is newer than what's cached
+          if (tokenId > this.collections[address].latestTokenId) {
+            this.collections[address].latestTokenId = tokenId
+          }
         } catch (e) {
           // Retry 3 times
           if (tries < 3) {

@@ -25,14 +25,7 @@ const maybeCheckBalance = async (force = false) => {
 }
 watch(isConnected, () => maybeCheckBalance(true))
 
-// Navigation guards
 onMounted(async () => {
-  if (collection.value.latestTokenId < tokenId.value) {
-    return navigateTo({ name: 'id-collection', params: { id: id.value, collection: collection.value.address }}, {
-      replace: true
-    })
-  }
-
   await maybeCheckBalance()
 })
 

@@ -22,6 +22,10 @@ const load = async () => {
     return navigateTo({ name: 'id-collection' }, { replace: true })
   }
 
+  if (!token.value) {
+    return navigateTo({ name: 'id-collection' }, { replace: true })
+  }
+
   loading.value = false
 }
 
