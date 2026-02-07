@@ -61,6 +61,10 @@
             "static": "Static",
             "script": "P5 Script"
         },
+        "tone": {
+            "static": "Static",
+            "script": "Tone.js Script"
+        },
         "preview": {
             "title": "Preview",
             "no_description": "No description"

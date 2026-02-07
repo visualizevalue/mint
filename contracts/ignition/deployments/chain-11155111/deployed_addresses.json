@@ -1,4 +1,6 @@
 {
   "MarkdownRenderer#ArtifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4",
-  "MarkdownRenderer#MarkdownRenderer": "0x31E819F6A2fdF77aF11648b6D571416Aa48eb650"
+  "MarkdownRenderer#MarkdownRenderer": "0x31E819F6A2fdF77aF11648b6D571416Aa48eb650",
+  "ToneRenderer#ArtifactReader": "0x281a75aa1b2b513f2b10c8e58a74ccc5bbe39ff4",
+  "ToneRenderer#ToneRenderer": "0xcc95b3cbBeFA6Ef3A657f1Fb7848115B79bfEf24"
 }
