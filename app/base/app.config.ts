@@ -80,7 +80,7 @@ export default defineAppConfig({
         component: 'Tone',
         name: 'Tone Renderer',
         version: 1n,
-        address: '0x0000000000000000000000000000000000000000',
+        address: '0xcc95b3cbbefa6ef3a657f1fb7848115b79bfef24',
         description: 'Allows using Tone.js scripts for generative audio',
       },
       {
