@@ -1,6 +1,6 @@
 {
     "name": "@visualizevalue/mint-app-base",
-    "version": "0.1.120",
+    "version": "0.1.121",
     "type": "module",
     "main": "./nuxt.config.ts",
     "scripts": {
