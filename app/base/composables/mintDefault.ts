@@ -14,15 +14,15 @@ export const useMintDefault = () => {
     // Unit price in wei: basefee * 60_000
     const unitPriceWei = gasPriceWei * 60_000n
 
-    // Convert target USD to cents, compute unit price in cents
-    // ethUSDRaw has 8 decimals from Chainlink
-    // unitPriceCents = (unitPriceWei * ethUSDRaw) / 1e18 / 1e6
+    // targetCents / unitPriceCents, but computed as a single division
+    // to avoid BigInt truncation on the intermediate unitPriceCents:
+    // (targetCents * 1e24) / (unitPriceWei * ethUSDRaw)
     const targetCents = BigInt(Math.round(value.value * 100))
-    const unitPriceCents = (unitPriceWei * ethUSDRaw) / (10n ** 18n) / (10n ** 6n)
+    const denominator = unitPriceWei * ethUSDRaw
 
-    if (! unitPriceCents) return amount.value
+    if (! denominator) return amount.value
 
-    return Math.max(1, Number(targetCents / unitPriceCents))
+    return Math.max(1, Number(targetCents * (10n ** 24n) / denominator))
   })
 
   // Persist across navigations so the value survives remounts
