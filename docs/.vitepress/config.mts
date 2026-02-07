@@ -51,6 +51,7 @@ export default defineConfig({
           collapsed: false,
           items: [
             { text: 'Base Application', link: '/guide/app/' },
+            { text: 'Configuration', link: '/guide/app/configuration' },
             { text: 'Extend Base App', link: '/guide/app/extend' },
             { text: 'App Development', link: '/guide/app/app-development' },
           ],
