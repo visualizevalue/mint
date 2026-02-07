@@ -74,9 +74,7 @@ const { token } = defineProps<{
 const store = useOnchainStore()
 const collection = computed(() => store.collection(token.collection))
 
-const { defaultAmount, step } = useMintDefault()
-const mintCount = ref(String(defaultAmount.value))
-watch(defaultAmount, (v) => { mintCount.value = String(v) })
+const { defaultAmount, mintCount, step } = useMintDefault()
 const ownedBalance = computed(
   () => collection.value && store.tokenBalance(collection.value.address, token.tokenId),
 )

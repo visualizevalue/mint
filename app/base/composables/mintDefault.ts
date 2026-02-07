@@ -25,5 +25,10 @@ export const useMintDefault = () => {
     return Math.max(1, Number(targetCents / unitPriceCents))
   })
 
-  return { defaultAmount, step }
+  // Persist across navigations so the value survives remounts
+  const mintCount = useState('mint-count', () => String(defaultAmount.value))
+
+  watch(defaultAmount, (v) => { mintCount.value = String(v) })
+
+  return { defaultAmount, mintCount, step }
 }
