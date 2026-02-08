@@ -16,11 +16,10 @@ The cost to store and secure the object on the network is mirrored
 as compensation to the artist, creating a direct link
 between network value and creator reward.
 
-## 1. [Check out the documentation ↗︎](https://mint.vv.xyz/guide/)
+## 1. [Check out the documentation ↗︎](https://docs.mint.vv.xyz/guide/)
 
 ## 2. Browse the code
 
 ---
 
 - [Terms and Conditions](./docs/terms-and-conditions.md)
-
