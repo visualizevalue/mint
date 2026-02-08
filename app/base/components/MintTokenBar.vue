@@ -4,6 +4,7 @@
     <FormInput
       type="number"
       v-model="mintCount"
+      @input="userEdited = true"
       min="1"
       step="1"
       required
@@ -45,7 +46,14 @@ const props = defineProps({
 })
 
 const mintCount = defineModel('mintCount', { default: '1' })
+const userEdited = ref(false)
+
+watch(() => props.defaultAmount, (v) => {
+  if (! userEdited.value) mintCount.value = String(v)
+}, { immediate: true })
+
 const onMinted = () => {
+  userEdited.value = false
   mintCount.value = String(props.defaultAmount)
   props.minted()
 }

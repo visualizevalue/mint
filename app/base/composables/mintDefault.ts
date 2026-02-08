@@ -28,7 +28,5 @@ export const useMintDefault = () => {
   // Persist across navigations so the value survives remounts
   const mintCount = useState('mint-count', () => String(defaultAmount.value))
 
-  watch(defaultAmount, (v) => { mintCount.value = String(v) })
-
   return { defaultAmount, mintCount }
 }
