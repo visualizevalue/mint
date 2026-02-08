@@ -1,11 +1,18 @@
 <template>
   <section class="token-mint-timeline">
-    <slot :mints="mints" :loading="loading">
-      <h1>{{ $t('token.mint_timeline') }}</h1>
+    <slot :mints="sortedMints" :loading="loading">
+      <header class="timeline-header">
+        <h1>{{ $t('token.mint_timeline') }}</h1>
+
+        <menu class="sort-options">
+          <button :class="{ active: sortBy === 'recent' }" @click="sortBy = 'recent'">{{ $t('token.sort_recent') }}</button>
+          <button :class="{ active: sortBy === 'amount' }" @click="sortBy = 'amount'">{{ $t('token.sort_amount') }}</button>
+        </menu>
+      </header>
 
       <template v-if="currentBlock">
       <TokenMintTimelineVirtualScroller
-        :mints="mints"
+        :mints="sortedMints"
         :block="currentBlock"
       >
         <template #after>
@@ -52,6 +59,17 @@ const state = useOnchainStore()
 
 const mints = computed(() => state.tokenMints(token.collection, token.tokenId))
 const backfillComplete = computed(() => token.mintsBackfilledUntilBlock <= token.mintedBlock)
+
+const sortBy = ref('recent')
+const sortedMints = computed(() => {
+  if (!mints.value) return []
+  if (sortBy.value === 'recent') return mints.value
+  const sorted = [...mints.value]
+  if (sortBy.value === 'amount') {
+    sorted.sort((a, b) => (a.amount > b.amount ? -1 : a.amount < b.amount ? 1 : 0))
+  }
+  return sorted
+})
 
 const loading = ref(true)
 const loadMore = ref()
@@ -113,12 +131,44 @@ watch(currentBlock, () => {
   }
 }
 
-h1 {
-  margin-bottom: var(--spacer);
-  font-size: var(--font-base);
+.timeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacer);
   border-bottom: var(--border);
   padding: 0 0 var(--spacer);
   margin: 0 0 var(--spacer);
+
+  h1 {
+    font-size: var(--font-base);
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.sort-options {
+  display: flex;
+  gap: var(--spacer-sm);
+  padding: 0;
+  margin: 0;
+
+  button {
+    font-size: var(--font-sm);
+    color: var(--muted);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    &.active {
+      color: var(--color);
+    }
+
+    &:--highlight {
+      color: var(--color);
+    }
+  }
 }
 
 

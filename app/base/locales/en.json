@@ -86,7 +86,10 @@
         "closed_ago": "Closed {time} ago",
         "closed_at_block": "Closed at block {block}",
         "you_own": "You own {ownedBalance} {tokens}",
-        "mint_timeline": "Mint Timeline",
+        "mint_timeline": "Mints",
+        "sort_recent": "Recent",
+        "sort_amount": "Amount",
+
         "artist_mint": "Artist Mint",
         "load_more": "Load more",
         "blocks_ago": "just now | one block ago | {blocks} blocks ago",
