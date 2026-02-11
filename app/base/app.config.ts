@@ -9,13 +9,13 @@ export default defineAppConfig({
         address: '0xe5d2da253c7d4b7609afce15332bb1a1fb461d09',
         description: 'The default renderer',
       },
-      // {
-      //   component: 'Markdown',
-      //   name: 'Markdown Renderer',
-      //   version: 1n,
-      //   address: '0x0000000000000000000000000000000000000000',
-      //   description: 'Renders markdown content as onchain text artifacts',
-      // },
+      {
+        component: 'Markdown',
+        name: 'Markdown Renderer',
+        version: 1n,
+        address: '0x6a517e2432b43b6c7db589059f4e5ef10fd3a90e',
+        description: 'Renders markdown content as onchain text artifacts',
+      },
       {
         component: 'P5',
         name: 'P5 Renderer',
