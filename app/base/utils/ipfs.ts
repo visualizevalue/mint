@@ -18,10 +18,12 @@ export const getValidIpfsURI = (cid: string): string => {
   return validated ? `ipfs://${validated}` : ''
 }
 
+const DEFAULT_IPFS_GATEWAY = 'https://ipfs.io/ipfs/'
+
 export const ipfsToHttpURI = (
   url: string,
-  gateway: string = 'https://ipfs.io/ipfs/'
+  gateway?: string,
 ) => url
-  .replace('https://ipfs.io/ipfs/', gateway)
-  .replace('ipfs://', gateway)
+  .replace('https://ipfs.io/ipfs/', gateway || DEFAULT_IPFS_GATEWAY)
+  .replace('ipfs://', gateway || DEFAULT_IPFS_GATEWAY)
 
