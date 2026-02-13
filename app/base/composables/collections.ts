@@ -6,6 +6,15 @@ import type { MintEvent } from '~/utils/types'
 export const CURRENT_STATE_VERSION = 9
 export const MAX_BLOCK_RANGE = 1800n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
+export const MAX_RENDERERS = 20
+
+const inflightRequests = new Map<string, Promise<any>>()
+function dedupe<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  if (!inflightRequests.has(key)) {
+    inflightRequests.set(key, fn().finally(() => inflightRequests.delete(key)))
+  }
+  return inflightRequests.get(key)!
+}
 
 export const useOnchainStore = () => {
   const { $wagmi } = useNuxtApp()
@@ -44,8 +53,8 @@ export const useOnchainStore = () => {
 
           return this.artist(address).collections
             .map(c => state.collections[c])
-            .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1)
             .filter(c => !!c)
+            .sort((a, b) => a.initBlock > b.initBlock ? -1 : 1)
         }
       },
       forArtistOnlyMinted () {
@@ -54,10 +63,12 @@ export const useOnchainStore = () => {
       hasCollection: (state) => (address: `0x${string}`) => state.collections[address] !== undefined,
       collection: (state) => (address: `0x${string}`) => state.collections[address],
       tokens: (state) => (address: `0x${string}`) =>
-        Object.values(state.collections[address].tokens)
-          .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1),
+        state.collections[address]
+          ? Object.values(state.collections[address].tokens)
+              .sort((a: Token, b: Token) => a.tokenId > b.tokenId ? -1 : 1)
+          : [],
       tokenMints: (state) => (address: `0x${string}`, tokenId: bigint): MintEvent[] =>
-        state.collections[address].tokens[tokenId.toString()].mints,
+        state.collections[address]?.tokens[tokenId.toString()]?.mints ?? [],
       tokenBalance: (state) => (address: `0x${string}`, tokenId: bigint): bigint | null =>
         (state.tokenBalances[address] && (state.tokenBalances[address][`${tokenId}`] !== undefined))
           ? state.tokenBalances[address][`${tokenId}`]
@@ -166,6 +177,10 @@ export const useOnchainStore = () => {
       },
 
       async fetchCollection (address: `0x${string}`): Promise<Collection> {
+        return dedupe(`collection:${address}`, () => this._fetchCollection(address))
+      },
+
+      async _fetchCollection (address: `0x${string}`): Promise<Collection> {
         this.ensureStoreVersion()
 
         if (this.hasCollection(address) && this.collection(address).latestTokenId > 0n) {
@@ -243,7 +258,7 @@ export const useOnchainStore = () => {
         const renderers = this.collections[address].renderers
 
         let index = renderers.length
-        while (true) {
+        while (index < MAX_RENDERERS) {
           try {
             const rendererAddress = (await readContract($wagmi, {
               abi: MINT_ABI,
@@ -297,22 +312,29 @@ export const useOnchainStore = () => {
         // If we have all tokens we don't need to do anything
         if (BigInt(existingTokenIds.size) === collection.latestTokenId) return this.tokens(address)
 
-        // Go over each token
+        // Collect missing token IDs
+        const missingIds: bigint[] = []
         let id = collection.latestTokenId
         while (id > 0n) {
-          if (! existingTokenIds.has(id)) {
-            await this.fetchToken(address, id)
-          } else {
-            console.info(`Skipping token #${id} since we already have it.`)
+          if (!existingTokenIds.has(id)) {
+            missingIds.push(id)
           }
+          id--
+        }
 
-          id --
+        // Fetch in parallel chunks of 5
+        for (const chunk of chunkArray(missingIds, 5)) {
+          await Promise.all(chunk.map(tokenId => this.fetchToken(address, tokenId)))
         }
 
         return this.tokens(address)
       },
 
-      async fetchToken (address: `0x${string}`, id: number | string | bigint, tries?: number = 0) {
+      async fetchToken (address: `0x${string}`, id: number | string | bigint, tries: number = 0): Promise<void> {
+        return dedupe(`token:${address}:${id}`, () => this._fetchToken(address, id, tries))
+      },
+
+      async _fetchToken (address: `0x${string}`, id: number | string | bigint, tries: number = 0): Promise<void> {
         const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const mintContract = getContract({
           address,
@@ -327,9 +349,6 @@ export const useOnchainStore = () => {
 
         // Normalize token ID
         const tokenId = BigInt(id)
-
-        // Default (empty) metadata
-        let metadata = {}
 
         try {
           console.info(`Fetching token #${tokenId}`)
@@ -385,7 +404,7 @@ export const useOnchainStore = () => {
           // Retry 3 times
           if (tries < 3) {
             console.info(`Retrying fetching data ${tries + 1}`)
-            return await this.fetchToken(address, id, tries + 1)
+            return await this._fetchToken(address, id, tries + 1)
           } else {
             // TODO: Handle impossible to load token
           }
@@ -499,7 +518,7 @@ export const useOnchainStore = () => {
         }) as MintEvent).reverse()
       },
 
-      async addTokenMints (token: Token, mints: MintEvent[], location: 'prepend'|'append' = 'prepend') {
+      addTokenMints (token: Token, mints: MintEvent[], location: 'prepend'|'append' = 'prepend') {
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
         storedToken.mints = location === 'prepend'
@@ -516,7 +535,7 @@ export const useOnchainStore = () => {
 
         if (! this.hasArtist(collection.owner)) {
           this.initializeArtist(collection.owner)
-          this.fetchArtistProfile(collection.owner)
+          this.fetchArtistProfile(collection.owner).catch(e => console.warn(`Failed to fetch artist profile`, e))
         }
 
         this.artists[collection.owner].collections = Array.from(new Set([
