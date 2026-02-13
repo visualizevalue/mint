@@ -9,7 +9,6 @@ export const validateURI = (url: string, config: UrlValidationConfig = {}) => {
   let validated = url.trim()
 
   // Normalize protocol
-  // if (validated.startsWith('ipfs://') || validated.contains('ipfs')) {
   if (validated.indexOf('ipfs') > -1) {
     validated = ipfsToHttpURI(validated, config.ipfsGateway)
   }
