@@ -1,10 +1,10 @@
 import { Hono } from 'hono'
 import { db } from 'ponder:api'
-import { getProtocolStats, getActivity, getArtifactCreations, getCollectionCreations, getTopSpenders, getTopEarners } from '../services/protocol'
-import { getCollectionStats } from '../services/collection'
-import { getArtifactStats } from '../services/artifact'
-import { getAddressStats } from '../services/address'
-import { search } from '../services/search'
+import { getProtocolStats, getActivity, getArtifactCreations, getCollectionCreations, getTopSpenders, getTopEarners } from '../services/stats/protocol'
+import { getCollectionStats } from '../services/stats/collection'
+import { getArtifactStats } from '../services/stats/artifact'
+import { getAddressStats } from '../services/stats/address'
+import { search } from '../services/stats/search'
 
 const stats = new Hono()
 
