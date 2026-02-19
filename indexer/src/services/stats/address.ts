@@ -53,6 +53,7 @@ export async function getAddressStats(
     db.select({
       totalEarned: sum(mint.price),
       mintCount: sum(mint.amount),
+      uniqueCollectors: countDistinct(mint.account),
     })
       .from(mint)
       .innerJoin(collection, eq(mint.collection, collection.address))
@@ -125,6 +126,7 @@ export async function getAddressStats(
     artist: {
       totalEarned: Number(artistMintAgg[0].totalEarned || 0) / 1e18,
       mintCount: Number(artistMintAgg[0].mintCount || 0),
+      uniqueCollectors: artistMintAgg[0].uniqueCollectors,
       collectionsCount: artistCollAgg[0].collectionsCount,
       totalSupply: Number(artistCollAgg[0].totalSupply || 0),
       topCollectors: topCollectors.map((r: any) => ({
