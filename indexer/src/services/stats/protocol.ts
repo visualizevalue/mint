@@ -136,6 +136,7 @@ export async function getTopEarners(
     address: collection.artist,
     earned: sum(mint.price),
     mintCount: sum(mint.amount),
+    uniqueCollectors: countDistinct(mint.account),
   })
     .from(mint)
     .innerJoin(collection, eq(mint.collection, collection.address))
@@ -148,5 +149,6 @@ export async function getTopEarners(
     address: r.address,
     earned: Number(r.earned || 0) / 1e18,
     mintCount: Number(r.mintCount || 0),
+    uniqueCollectors: r.uniqueCollectors,
   }))
 }
