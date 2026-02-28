@@ -20,6 +20,7 @@
       @complete="onMinted"
       skip-confirmation
       auto-close-success
+      toast
     >
       <template #start="{ start }">
         <Button @click="start" class="mint">
