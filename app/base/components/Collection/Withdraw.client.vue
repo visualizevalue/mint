@@ -17,7 +17,7 @@
       error: 'Retry',
       complete: 'OK',
     },
-  }" skip-confirmation auto-close-success @complete="onComplete">
+  }" skip-confirmation auto-close-success toast @complete="onComplete">
     <template #start="{ start }">
       <Button @click="start">
         <Icon type="withdraw" />
