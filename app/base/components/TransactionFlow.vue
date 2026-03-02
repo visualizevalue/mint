@@ -35,10 +35,12 @@
 
 <script setup>
 import { waitForTransactionReceipt, watchChainId } from '@wagmi/core'
+
 const checkChain = useEnsureChainIdCheck()
 
 const { $wagmi } = useNuxtApp()
 const config = useRuntimeConfig()
+const txStore = useTransactionStore()
 const props = defineProps({
   text: {
     type: Object,
@@ -65,9 +67,11 @@ const props = defineProps({
   },
   skipConfirmation: Boolean,
   autoCloseSuccess: Boolean,
+  toast: Boolean,
 })
 
 const emit = defineEmits(['complete', 'cancel'])
+
 
 const open = ref(false)
 
@@ -147,14 +151,30 @@ const initializeRequest = async (request = cachedRequest.value) => {
     requesting.value = true
     tx.value = await request()
     requesting.value = false
-    waiting.value = true
-    const [receiptObject] = await Promise.all([
-      waitForTransactionReceipt($wagmi, { hash: tx.value }),
-    ])
-    await delay(props.delayAfter)
-    receipt.value = receiptObject
-    emit('complete', receiptObject)
-    complete.value = true
+
+    if (!props.toast) {
+      // Blocking mode: wait for receipt in the modal (used for multi-step flows)
+      waiting.value = true
+      const [receiptObject] = await Promise.all([
+        waitForTransactionReceipt($wagmi, { hash: tx.value }),
+      ])
+      await delay(props.delayAfter)
+      receipt.value = receiptObject
+      emit('complete', receiptObject)
+      complete.value = true
+    } else {
+      // Toast mode: close modal and track in background
+      open.value = false
+      txStore.track(
+        tx.value,
+        props.text.lead?.waiting || 'Transaction submitted...',
+        props.text.lead?.complete || 'Transaction confirmed.',
+        (receiptObject) => {
+          receipt.value = receiptObject
+          emit('complete', receiptObject)
+        },
+      )
+    }
   } catch (e) {
     if (e?.cause?.code === 4001) {
       open.value = false
@@ -167,7 +187,7 @@ const initializeRequest = async (request = cachedRequest.value) => {
   requesting.value = false
   waiting.value = false
 
-  if (props.autoCloseSuccess && step.value === 'complete') {
+  if (!props.toast && props.autoCloseSuccess && step.value === 'complete') {
     await delay(props.delayAutoclose)
     open.value = false
     await delay(300) // Animations...
