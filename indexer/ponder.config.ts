@@ -4,6 +4,9 @@ import { createConfig, factory } from 'ponder'
 import { FactoryAbi } from './abis/FactoryAbi'
 import { MintAbi } from './abis/MintAbi'
 
+const FACTORY_ADDRESS = '0xd717fe677072807057b03705227ec3e3b467b670' as const
+const FACTORY_START_BLOCK = 21167599
+
 export default createConfig({
   chains: {
     mainnet: {
@@ -19,19 +22,19 @@ export default createConfig({
     Factory: {
       chain: 'mainnet',
       abi: FactoryAbi,
-      address: '0xd717Fe677072807057B03705227EC3E3b467b670',
-      startBlock: 21167599,
+      address: FACTORY_ADDRESS,
+      startBlock: FACTORY_START_BLOCK,
     },
     Mint: {
       chain: 'mainnet',
       abi: MintAbi,
       address: factory({
-        address: '0xd717Fe677072807057B03705227EC3E3b467b670',
+        address: FACTORY_ADDRESS,
         event: parseAbiItem('event Created(address indexed owner, address contract)'),
         parameter: 'contract',
       }),
       includeTransactionReceipts: true,
-      startBlock: 21167599,
+      startBlock: FACTORY_START_BLOCK,
     },
   },
 })

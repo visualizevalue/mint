@@ -1,10 +1,7 @@
 import { count, countDistinct, eq, sql, sum } from 'drizzle-orm'
 import { collection, mint, ownership } from 'ponder:schema'
 
-export async function getAddressStats(
-  db: any,
-  { address }: { address: string },
-) {
+export async function getAddressStats(db: any, { address }: { address: string }) {
   const addr = address.toLowerCase() as `0x${string}`
 
   const [
@@ -16,33 +13,37 @@ export async function getAddressStats(
     topCollectors,
     artistCollections,
   ] = await Promise.all([
-    db.select({
-      totalSpent: sum(mint.price),
-      totalGas: sum(mint.gas_fee),
-      mintCount: sum(mint.amount),
-      collectionsCount: countDistinct(mint.collection),
-    })
+    db
+      .select({
+        totalSpent: sum(mint.price),
+        totalGas: sum(mint.gas_fee),
+        mintCount: sum(mint.amount),
+        collectionsCount: countDistinct(mint.collection),
+      })
       .from(mint)
       .where(eq(mint.account, addr)),
 
-    db.select({
-      tokens: sum(ownership.balance),
-    })
+    db
+      .select({
+        tokens: sum(ownership.balance),
+      })
       .from(ownership)
       .where(eq(ownership.account, addr)),
 
-    db.select({
-      collectionsCount: count(),
-      totalSupply: sum(collection.total_supply),
-    })
+    db
+      .select({
+        collectionsCount: count(),
+        totalSupply: sum(collection.total_supply),
+      })
       .from(collection)
       .where(eq(collection.artist, addr)),
 
-    db.select({
-      address: collection.artist,
-      spent: sum(mint.price),
-      mintCount: sum(mint.amount),
-    })
+    db
+      .select({
+        address: collection.artist,
+        spent: sum(mint.price),
+        mintCount: sum(mint.amount),
+      })
       .from(mint)
       .innerJoin(collection, eq(mint.collection, collection.address))
       .where(eq(mint.account, addr))
@@ -50,20 +51,22 @@ export async function getAddressStats(
       .orderBy(sql`sum(${mint.price}) desc`)
       .limit(10),
 
-    db.select({
-      totalEarned: sum(mint.price),
-      mintCount: sum(mint.amount),
-      uniqueCollectors: countDistinct(mint.account),
-    })
+    db
+      .select({
+        totalEarned: sum(mint.price),
+        mintCount: sum(mint.amount),
+        uniqueCollectors: countDistinct(mint.account),
+      })
       .from(mint)
       .innerJoin(collection, eq(mint.collection, collection.address))
       .where(eq(collection.artist, addr)),
 
-    db.select({
-      address: mint.account,
-      spent: sum(mint.price),
-      mintCount: sum(mint.amount),
-    })
+    db
+      .select({
+        address: mint.account,
+        spent: sum(mint.price),
+        mintCount: sum(mint.amount),
+      })
       .from(mint)
       .innerJoin(collection, eq(mint.collection, collection.address))
       .where(eq(collection.artist, addr))
@@ -71,13 +74,14 @@ export async function getAddressStats(
       .orderBy(sql`sum(${mint.price}) desc`)
       .limit(10),
 
-    db.select({
-      address: collection.address,
-      name: collection.name,
-      symbol: collection.symbol,
-      totalSupply: collection.total_supply,
-      latestTokenId: collection.latest_token_id,
-    })
+    db
+      .select({
+        address: collection.address,
+        name: collection.name,
+        symbol: collection.symbol,
+        totalSupply: collection.total_supply,
+        latestTokenId: collection.latest_token_id,
+      })
       .from(collection)
       .where(eq(collection.artist, addr))
       .orderBy(sql`${collection.total_supply} desc`),
@@ -89,20 +93,32 @@ export async function getAddressStats(
 
   if (collectionAddresses.length) {
     const [volumes, holders] = await Promise.all([
-      db.select({
-        collection: mint.collection,
-        volume: sum(mint.price),
-      })
+      db
+        .select({
+          collection: mint.collection,
+          volume: sum(mint.price),
+        })
         .from(mint)
-        .where(sql`${mint.collection} in (${sql.join(collectionAddresses.map((a: string) => sql`${a}`), sql`, `)})`)
+        .where(
+          sql`${mint.collection} in (${sql.join(
+            collectionAddresses.map((a: string) => sql`${a}`),
+            sql`, `,
+          )})`,
+        )
         .groupBy(mint.collection),
 
-      db.select({
-        collection: ownership.collection,
-        holders: countDistinct(ownership.account),
-      })
+      db
+        .select({
+          collection: ownership.collection,
+          holders: countDistinct(ownership.account),
+        })
         .from(ownership)
-        .where(sql`${ownership.collection} in (${sql.join(collectionAddresses.map((a: string) => sql`${a}`), sql`, `)}) and ${ownership.balance} > 0`)
+        .where(
+          sql`${ownership.collection} in (${sql.join(
+            collectionAddresses.map((a: string) => sql`${a}`),
+            sql`, `,
+          )}) and ${ownership.balance} > 0`,
+        )
         .groupBy(ownership.collection),
     ])
 

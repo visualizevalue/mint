@@ -5,18 +5,23 @@ export async function getProtocolStats(db: any, { since }: { since?: number }) {
   const whereClause = since ? gte(mint.timestamp, BigInt(since)) : undefined
 
   const [mintStats, artistStats] = await Promise.all([
-    db.select({
-      totalCollections: countDistinct(mint.collection),
-      totalArtifacts: sql<number>`count(distinct (${mint.collection}, ${mint.artifact}))`,
-      totalMints: sum(mint.amount),
-      totalVolume: sum(mint.price),
-      totalGas: sum(mint.gas_fee),
-      uniqueCollectors: countDistinct(mint.account),
-    }).from(mint).where(whereClause),
+    db
+      .select({
+        totalCollections: countDistinct(mint.collection),
+        totalArtifacts: sql<number>`count(distinct (${mint.collection}, ${mint.artifact}))`,
+        totalMints: sum(mint.amount),
+        totalVolume: sum(mint.price),
+        totalGas: sum(mint.gas_fee),
+        uniqueCollectors: countDistinct(mint.account),
+      })
+      .from(mint)
+      .where(whereClause),
 
-    db.select({
-      uniqueArtists: countDistinct(collection.artist),
-    }).from(mint)
+    db
+      .select({
+        uniqueArtists: countDistinct(collection.artist),
+      })
+      .from(mint)
       .innerJoin(collection, eq(mint.collection, collection.address))
       .where(whereClause),
   ])
@@ -39,13 +44,14 @@ export async function getActivity(
   const interval = granularity === 'weekly' ? 'week' : 'day'
   const bucket = sql`date_trunc(${sql.raw(`'${interval}'`)}, to_timestamp(${mint.timestamp}::double precision))`
 
-  const rows = await db.select({
-    date: sql<string>`to_char(${bucket}, 'YYYY-MM-DD')`,
-    count: sum(mint.amount),
-    volume: sum(mint.price),
-    avgGas: sql<string>`avg(${mint.gas_price})`,
-    avgUnitPrice: sql<string>`avg(${mint.unit_price})`,
-  })
+  const rows = await db
+    .select({
+      date: sql<string>`to_char(${bucket}, 'YYYY-MM-DD')`,
+      count: sum(mint.amount),
+      volume: sum(mint.price),
+      avgGas: sql<string>`avg(${mint.gas_price})`,
+      avgUnitPrice: sql<string>`avg(${mint.unit_price})`,
+    })
     .from(mint)
     .where(since ? gte(mint.timestamp, BigInt(since)) : undefined)
     .groupBy(bucket)
@@ -67,10 +73,11 @@ export async function getArtifactCreations(
   const interval = granularity === 'weekly' ? 'week' : 'day'
   const bucket = sql`date_trunc(${sql.raw(`'${interval}'`)}, to_timestamp(${artifact.created_at}::double precision))`
 
-  const rows = await db.select({
-    date: sql<string>`to_char(${bucket}, 'YYYY-MM-DD')`,
-    count: sql<number>`count(*)`,
-  })
+  const rows = await db
+    .select({
+      date: sql<string>`to_char(${bucket}, 'YYYY-MM-DD')`,
+      count: sql<number>`count(*)`,
+    })
     .from(artifact)
     .where(since ? gte(artifact.created_at, BigInt(since)) : undefined)
     .groupBy(bucket)
@@ -89,10 +96,11 @@ export async function getCollectionCreations(
   const interval = granularity === 'weekly' ? 'week' : 'day'
   const bucket = sql`date_trunc(${sql.raw(`'${interval}'`)}, to_timestamp(${collection.created_at}::double precision))`
 
-  const rows = await db.select({
-    date: sql<string>`to_char(${bucket}, 'YYYY-MM-DD')`,
-    count: sql<number>`count(*)`,
-  })
+  const rows = await db
+    .select({
+      date: sql<string>`to_char(${bucket}, 'YYYY-MM-DD')`,
+      count: sql<number>`count(*)`,
+    })
     .from(collection)
     .where(since ? gte(collection.created_at, BigInt(since)) : undefined)
     .groupBy(bucket)
@@ -108,12 +116,13 @@ export async function getTopSpenders(
   db: any,
   { since, limit = 500 }: { since?: number; limit?: number },
 ) {
-  const rows = await db.select({
-    address: mint.account,
-    spent: sum(mint.price),
-    gasSpent: sum(mint.gas_fee),
-    mintCount: sum(mint.amount),
-  })
+  const rows = await db
+    .select({
+      address: mint.account,
+      spent: sum(mint.price),
+      gasSpent: sum(mint.gas_fee),
+      mintCount: sum(mint.amount),
+    })
     .from(mint)
     .where(since ? gte(mint.timestamp, BigInt(since)) : undefined)
     .groupBy(mint.account)
@@ -132,12 +141,13 @@ export async function getTopEarners(
   db: any,
   { since, limit = 500 }: { since?: number; limit?: number },
 ) {
-  const rows = await db.select({
-    address: collection.artist,
-    earned: sum(mint.price),
-    mintCount: sum(mint.amount),
-    uniqueCollectors: countDistinct(mint.account),
-  })
+  const rows = await db
+    .select({
+      address: collection.artist,
+      earned: sum(mint.price),
+      mintCount: sum(mint.amount),
+      uniqueCollectors: countDistinct(mint.account),
+    })
     .from(mint)
     .innerJoin(collection, eq(mint.collection, collection.address))
     .where(since ? gte(mint.timestamp, BigInt(since)) : undefined)
