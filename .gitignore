@@ -13,3 +13,5 @@ coverage
 dist
 tmp
 
+mint_indexer_backup_*
+
