@@ -4,8 +4,17 @@
   "version": "0.0.17",
   "license": "MIT",
   "main": "./nuxt.config.ts",
-  "files": ["app", "assets", "components", "layouts", "nuxt.config.ts", "public"],
-  "publishConfig": { "access": "public" },
+  "files": [
+    "app",
+    "assets",
+    "components",
+    "layouts",
+    "nuxt.config.ts",
+    "public"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "nuxi dev .playground",
     "dev:prepare": "nuxt prepare .playground",
