@@ -119,8 +119,9 @@ export function transformCollections (data: { collections: { items: PonderCollec
   return data.collections.items.map(toCollection)
 }
 
-export function transformCollection (data: { collection: PonderCollection | null }): Collection | null {
-  return data.collection ? toCollection(data.collection) : null
+export function transformCollection (data: { collection: PonderCollection | null }): Collection {
+  if (!data.collection) throw new Error('Collection not found in indexer')
+  return toCollection(data.collection)
 }
 
 export function transformArtifacts (data: { artifacts: { items: PonderArtifact[] } }): Token[] {

@@ -15,7 +15,7 @@ import {
 export interface MintQueries {
   artistProfile: QueryDefinition<Partial<Artist>, [`0x${string}`]>
   artistCollections: QueryDefinition<Collection[], [`0x${string}`]>
-  collection: QueryDefinition<Collection | null, [`0x${string}`]>
+  collection: QueryDefinition<Collection, [`0x${string}`]>
   collectionTokens: QueryDefinition<Token[], [`0x${string}`]>
   tokenMints: QueryDefinition<MintEvent[], [`0x${string}`, bigint]>
 }
@@ -86,15 +86,19 @@ export function createQueries (config: CreateQueriesConfig): MintQueries {
       key: (address) => `collection:${address}`,
       staleTime: 5 * 60 * 1000,
       sources: [
-        ...(hasIndexer ? [graphqlSource<Collection | null>({
+        ...(hasIndexer ? [graphqlSource<Collection>({
           endpoints,
           query: COLLECTION_BY_ADDRESS,
           variables: (address: unknown) => ({ address: (address as string).toLowerCase() }),
           transform: transformCollection,
         })] : []),
-        customSource<Collection | null>({
+        customSource<Collection>({
           id: 'collection-rpc',
-          fetch: (address: unknown) => rpcFetchCollection(wagmi, chainId, address as `0x${string}`),
+          fetch: async (address: unknown) => {
+            const collection = await rpcFetchCollection(wagmi, chainId, address as `0x${string}`)
+            if (!collection) throw new Error('Collection not found via RPC')
+            return collection
+          },
         }),
       ],
     },

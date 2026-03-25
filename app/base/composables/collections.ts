@@ -129,11 +129,9 @@ export const useOnchainStore = () => {
           return this.collection(address)
         }
 
-        const collection = await $queryClient.fetch($queries.collection, address)
-        if (collection) return await this.addCollection(collection)
-
-        // If both sources returned null, the collection doesn't exist
-        throw new Error(`Collection ${address} not found`)
+        return await this.addCollection(
+          await $queryClient.fetch($queries.collection, address)
+        )
       },
 
       async fetchCollectionBalance (address: `0x${string}`) {
