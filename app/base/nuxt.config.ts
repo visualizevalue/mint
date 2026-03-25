@@ -27,6 +27,7 @@ export default defineNuxtConfig({
       mintAmount: 1,
       mintValue: 0,
       title: 'Mint',
+      indexerEndpoints: '',
       walletConnectProjectId: '',
     },
   },

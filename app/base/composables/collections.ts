@@ -2,22 +2,15 @@ import { getBalance, getPublicClient, readContract } from '@wagmi/core'
 import { type GetBalanceReturnType } from '@wagmi/core'
 import { parseAbiItem, type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
+import { INDEXER_SYNCED } from '~/queries/sources'
 
-export const CURRENT_STATE_VERSION = 9
-export const MAX_BLOCK_RANGE = 1800n
+export const CURRENT_STATE_VERSION = 10
+export const MAX_BLOCK_RANGE = 5000n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 export const MAX_RENDERERS = 20
 
-const inflightRequests = new Map<string, Promise<any>>()
-function dedupe<T>(key: string, fn: () => Promise<T>): Promise<T> {
-  if (!inflightRequests.has(key)) {
-    inflightRequests.set(key, fn().finally(() => inflightRequests.delete(key)))
-  }
-  return inflightRequests.get(key)!
-}
-
 export const useOnchainStore = () => {
-  const { $wagmi } = useNuxtApp()
+  const { $wagmi, $queryClient, $queries } = useNuxtApp()
   const appConfig = useAppConfig()
   const chainId = useMainChainId()
 
@@ -103,54 +96,17 @@ export const useOnchainStore = () => {
 
         if (!this.hasArtist(address)) this.initializeArtist(address)
 
-        await this.fetchArtistProfile(address)
-
-        await this.fetchCollections(address, factory)
+        await Promise.all([
+          this.fetchArtistProfile(address),
+          this.fetchCollections(address, factory),
+        ])
       },
 
       async fetchArtistProfile (address: `0x${string}`): Promise<Artist> {
-        const client = getPublicClient($wagmi, { chainId: 1 }) as PublicClient
-        const block = await client.getBlockNumber()
+        if (!this.hasArtist(address)) this.initializeArtist(address)
 
-        // Only update once per hour
-        if (
-          this.hasArtist(address) &&
-          this.artist(address).profileUpdatedAtBlock > 0n &&
-          (block - this.artist(address).profileUpdatedAtBlock) < BLOCKS_PER_CACHE
-        ) {
-          console.info(`Artist profile already fetched...`)
-          return this.artist(address)
-        }
-
-        console.info(`Updating artist profile...`)
-
-        let ens, avatar, description,
-          url, email, twitter, github
-
-        try {
-          ens = await client.getEnsName({ address })
-
-          if (ens) {
-            [avatar, description, url, email, twitter, github] = await Promise.all([
-              client.getEnsAvatar({ name: ens }),
-              client.getEnsText({ name: ens, key: 'description' }),
-              client.getEnsText({ name: ens, key: 'url' }),
-              client.getEnsText({ name: ens, key: 'email' }),
-              client.getEnsText({ name: ens, key: 'com.twitter' }),
-              client.getEnsText({ name: ens, key: 'com.github' }),
-            ])
-          }
-        } catch (e) { }
-
-        this.artists[address].ens = ens
-        this.artists[address].avatar = avatar
-        this.artists[address].description = description
-        this.artists[address].url = url
-        this.artists[address].email = email
-        this.artists[address].twitter = twitter
-        this.artists[address].github = github
-        this.artists[address].profileUpdatedAtBlock = block
-
+        const profile = await $queryClient.fetch($queries.artistProfile, address)
+        Object.assign(this.artists[address], profile)
         return this.artist(address)
       },
 
@@ -158,95 +114,28 @@ export const useOnchainStore = () => {
         artist: `0x${string}`,
         factory: `0x${string}`
       ) {
-        const collectionAddresses: `0x${string}`[] = (await readContract($wagmi, {
-          abi: FACTORY_ABI,
-          address: factory,
-          functionName: 'getCreatorCollections',
-          args: [artist],
-          chainId,
-        })).map((a: `0x${string}`) => a.toLowerCase() as `0x${string}`)
-           .filter((a: `0x${string}`) => !this.artists[artist].collections.includes(a))
+        const collections = await $queryClient.fetch($queries.artistCollections, artist)
+        const newCollections = collections.filter(c => !this.hasCollection(c.address))
+        await Promise.all(newCollections.map(c => this.addCollection(c)))
 
-        try {
-          await Promise.all(collectionAddresses.map(address => this.fetchCollection(address)))
-
-          this.artists[artist].collections = Array.from(new Set([...this.artists[artist].collections, ...collectionAddresses]))
-        } catch (e) {
-          console.error(e)
-        }
+        this.artists[artist].collections = Array.from(new Set([
+          ...this.artists[artist].collections,
+          ...collections.map(c => c.address),
+        ]))
       },
 
       async fetchCollection (address: `0x${string}`): Promise<Collection> {
-        return dedupe(`collection:${address}`, () => this._fetchCollection(address))
-      },
-
-      async _fetchCollection (address: `0x${string}`): Promise<Collection> {
         this.ensureStoreVersion()
 
         if (this.hasCollection(address) && this.collection(address).latestTokenId > 0n) {
           return this.collection(address)
         }
 
-        const [data, version, initBlock, latestTokenId, owner, balance] = await Promise.all([
-          readContract($wagmi, {
-            abi: MINT_ABI,
-            address,
-            functionName: 'contractURI',
-            chainId,
-          }) as Promise<string>,
-          readContract($wagmi, {
-            abi: MINT_ABI,
-            address,
-            functionName: 'version',
-            chainId,
-          }) as Promise<bigint>,
-          readContract($wagmi, {
-            abi: MINT_ABI,
-            address,
-            functionName: 'initBlock',
-            chainId,
-          }) as Promise<bigint>,
-          readContract($wagmi, {
-            abi: MINT_ABI,
-            address,
-            functionName: 'latestTokenId',
-            chainId,
-          }) as Promise<bigint>,
-          readContract($wagmi, {
-            abi: MINT_ABI,
-            address,
-            functionName: 'owner',
-            chainId,
-          }) as Promise<`0x${string}`>,
-          getBalance($wagmi, {
-            address,
-          }) as Promise<GetBalanceReturnType>,
-        ])
+        const collection = await $queryClient.fetch($queries.collection, address)
+        if (collection) return await this.addCollection(collection)
 
-        const artist = owner.toLowerCase() as `0x${string}`
-        const json = Buffer.from(data.substring(29), `base64`).toString()
-
-        try {
-          const metadata = JSON.parse(json)
-
-          return await this.addCollection({
-            image: metadata.image,
-            name: metadata.name,
-            symbol: metadata.symbol,
-            version,
-            description: metadata.description,
-            address,
-            initBlock,
-            latestTokenId,
-            owner: artist,
-            tokens: {},
-            balance: balance.value,
-            renderers: [],
-          })
-        } catch (e) {
-          console.warn(`Error parsing collection`, e)
-          this.artists[artist].collections = this.artists[artist].collections.filter(c => c !== address)
-        }
+        // If both sources returned null, the collection doesn't exist
+        throw new Error(`Collection ${address} not found`)
       },
 
       async fetchCollectionBalance (address: `0x${string}`) {
@@ -271,11 +160,11 @@ export const useOnchainStore = () => {
             const rendererArgs = { abi: RENDERER_ABI, address: rendererAddress, chainId }
 
             const [name, version] = await Promise.all([
-              await readContract($wagmi, {
+              readContract($wagmi, {
                 ...rendererArgs,
                 functionName: 'name',
               }),
-              await readContract($wagmi, {
+              readContract($wagmi, {
                 ...rendererArgs,
                 functionName: 'version',
               }),
@@ -298,43 +187,25 @@ export const useOnchainStore = () => {
       },
 
       async fetchCollectionTokens (address: `0x${string}`): Promise<Token[]> {
-        this.collections[address].latestTokenId = await readContract($wagmi, {
-          abi: MINT_ABI,
-          address,
-          functionName: 'latestTokenId',
-          chainId,
-        }) as Promise<bigint>
+        const tokens = await $queryClient.fetch($queries.collectionTokens, address)
 
-        const collection = this.collection(address)
-
-        const existingTokenIds = new Set(Object.keys(collection.tokens).map(id => BigInt(id)))
-
-        // If we have all tokens we don't need to do anything
-        if (BigInt(existingTokenIds.size) === collection.latestTokenId) return this.tokens(address)
-
-        // Collect missing token IDs
-        const missingIds: bigint[] = []
-        let id = collection.latestTokenId
-        while (id > 0n) {
-          if (!existingTokenIds.has(id)) {
-            missingIds.push(id)
+        for (const token of tokens) {
+          if (!this.collections[address].tokens[`${token.tokenId}`]) {
+            this.collections[address].tokens[`${token.tokenId}`] = token
           }
-          id--
         }
 
-        // Fetch in parallel chunks of 5
-        for (const chunk of chunkArray(missingIds, 5)) {
-          await Promise.all(chunk.map(tokenId => this.fetchToken(address, tokenId)))
+        if (tokens.length > 0) {
+          const maxId = tokens.reduce((max, t) => t.tokenId > max ? t.tokenId : max, 0n)
+          if (maxId > this.collections[address].latestTokenId) {
+            this.collections[address].latestTokenId = maxId
+          }
         }
 
         return this.tokens(address)
       },
 
       async fetchToken (address: `0x${string}`, id: number | string | bigint, tries: number = 0): Promise<void> {
-        return dedupe(`token:${address}:${id}`, () => this._fetchToken(address, id, tries))
-      },
-
-      async _fetchToken (address: `0x${string}`, id: number | string | bigint, tries: number = 0): Promise<void> {
         const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const mintContract = getContract({
           address,
@@ -342,16 +213,13 @@ export const useOnchainStore = () => {
           client,
         })
 
-        if (this.collection(address).tokens[`${id}`]) {
-          console.info(`Token cached #${id}`)
+        if (this.collection(address)?.tokens[`${id}`]) {
           return
         }
 
-        // Normalize token ID
         const tokenId = BigInt(id)
 
         try {
-          console.info(`Fetching token #${tokenId}`)
           const currentBlock = await client.getBlock()
 
           const [data, dataUri] = await Promise.all([
@@ -369,12 +237,7 @@ export const useOnchainStore = () => {
             const json = Buffer.from(dataUri.substring(29), `base64`).toString()
             metadata = JSON.parse(json)
           } catch (e) {
-            metadata = {
-              name: '',
-              description: '',
-              image: '',
-              animationUrl: '',
-            }
+            metadata = { name: '', description: '', image: '', animationUrl: '' }
             console.warn(`Parsing data uri failed`, e)
           }
 
@@ -385,10 +248,8 @@ export const useOnchainStore = () => {
             description: metadata.description,
             image: metadata.image,
             animationUrl: metadata.animation_url,
-
-            mintedBlock: BigInt(`${mintedBlock}`), // Force bigint
+            mintedBlock: BigInt(`${mintedBlock}`),
             closeAt,
-
             mintsBackfilledUntilBlock: 0n,
             mintsFetchedUntilBlock: 0n,
             mints: []
@@ -396,17 +257,12 @@ export const useOnchainStore = () => {
 
           this.collections[address].tokens[`${token.tokenId}`] = token
 
-          // Update latestTokenId if this token is newer than what's cached
           if (tokenId > this.collections[address].latestTokenId) {
             this.collections[address].latestTokenId = tokenId
           }
         } catch (e) {
-          // Retry 3 times
           if (tries < 3) {
-            console.info(`Retrying fetching data ${tries + 1}`)
-            return await this._fetchToken(address, id, tries + 1)
-          } else {
-            // TODO: Handle impossible to load token
+            return await this.fetchToken(address, id, tries + 1)
           }
         }
       },
@@ -439,33 +295,41 @@ export const useOnchainStore = () => {
 
       async fetchTokenMints (token: Token) {
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
+
+        // If the indexer query has sources, use dapp-query
+        if ($queries.tokenMints.sources.length) {
+          try {
+            storedToken.mints = await $queryClient.fetch($queries.tokenMints, token.collection as `0x${string}`, token.tokenId)
+            storedToken.mintsFetchedUntilBlock = INDEXER_SYNCED
+            storedToken.mintsBackfilledUntilBlock = 0n
+            return
+          } catch (e) {
+            console.warn('Indexer mints fetch failed, falling back to incremental RPC', e)
+          }
+        }
+
+        // Incremental RPC fallback for mint events
         const client = getPublicClient($wagmi, { chainId }) as PublicClient
         const currentBlock = await client.getBlockNumber()
         const untilBlock = token.mintedBlock + BLOCKS_PER_DAY
 
-        // We want to sync until now, or when the mint closed
         const toBlock = currentBlock > untilBlock ? untilBlock : currentBlock
 
         if (token.mintsFetchedUntilBlock >= toBlock) {
           return console.info(`mints for #${token.tokenId} already fetched`)
         }
 
-        // Initially, we want to sync backwards,
-        // but at most 5000 blocks (the general max range for an event query)
         const maxRangeBlock = toBlock - MAX_BLOCK_RANGE
-        const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock // If we've already fetched
-          ? token.mintsFetchedUntilBlock + 1n // we want to continue where we left off
-          : maxRangeBlock > token.mintedBlock // Otherwise we'll go back as far as possible
-            ? maxRangeBlock // (to our max range)
-            : token.mintedBlock // (or all the way to when the token minted)
+        const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock
+          ? token.mintsFetchedUntilBlock + 1n
+          : maxRangeBlock > token.mintedBlock
+            ? maxRangeBlock
+            : token.mintedBlock
 
-        // Load mints in range
         this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock))
 
-        // Set sync status
         storedToken.mintsFetchedUntilBlock = toBlock
 
-        // If this is our first fetch, mark until when we have backfilled
         if (! token.mintsBackfilledUntilBlock) {
           storedToken.mintsBackfilledUntilBlock = fromBlock
         }
@@ -474,48 +338,56 @@ export const useOnchainStore = () => {
       async backfillTokenMints (token: Token) {
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
 
-        // If we've backfilled all the way;
         if (storedToken.mintsBackfilledUntilBlock <= token.mintedBlock) return
 
-        // We want to fetch the tokens up until where we stopped backfilling (excluding the last block)
         const toBlock = storedToken.mintsBackfilledUntilBlock - 1n
 
-        // We want to fetch until our max range (5000), or until when the token minted
         const fromBlock = toBlock - MAX_BLOCK_RANGE > token.mintedBlock ? toBlock - MAX_BLOCK_RANGE : token.mintedBlock
         console.info(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
 
-        // Finally, we update our database
         this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock), 'append')
 
-        // And save until when we have backfilled our tokens.
         storedToken.mintsBackfilledUntilBlock = fromBlock
       },
 
       async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint): Promise<MintEvent[]> {
         const client = getPublicClient($wagmi, { chainId }) as PublicClient
 
-        const logs = await client.getLogs({
-          address: token.collection,
-          event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)'),
-          args: {
-            tokenId: BigInt(token.tokenId),
-          },
-          fromBlock,
-          toBlock,
-        })
+        try {
+          const logs = await client.getLogs({
+            address: token.collection,
+            event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)'),
+            args: {
+              tokenId: BigInt(token.tokenId),
+            },
+            fromBlock,
+            toBlock,
+          })
 
-        console.info(`Token mints fetched from ${fromBlock}-${toBlock}`)
+          console.info(`Token mints fetched from ${fromBlock}-${toBlock}`)
 
-        return logs.map(l => ({
-          tokenId: token.tokenId,
-          address: l.args.minter,
-          block: l.blockNumber,
-          logIndex: l.logIndex,
-          tx: l.transactionHash,
-          unitPrice: l.args.unitPrice,
-          amount: l.args.amount,
-          price: ( l.args.amount || 0n ) * ( l.args.unitPrice || 0n ),
-        }) as MintEvent).reverse()
+          return logs.map(l => ({
+            tokenId: token.tokenId,
+            address: l.args.minter,
+            block: l.blockNumber,
+            logIndex: l.logIndex,
+            tx: l.transactionHash,
+            unitPrice: l.args.unitPrice,
+            amount: l.args.amount,
+            price: ( l.args.amount || 0n ) * ( l.args.unitPrice || 0n ),
+          }) as MintEvent).reverse()
+        } catch (e) {
+          // Adaptive range reduction: split in half and retry
+          if (toBlock - fromBlock > 100n) {
+            const mid = fromBlock + (toBlock - fromBlock) / 2n
+            const [a, b] = await Promise.all([
+              this.loadMintEvents(token, fromBlock, mid),
+              this.loadMintEvents(token, mid + 1n, toBlock),
+            ])
+            return [...a, ...b]
+          }
+          throw e
+        }
       },
 
       addTokenMints (token: Token, mints: MintEvent[], location: 'prepend'|'append' = 'prepend') {

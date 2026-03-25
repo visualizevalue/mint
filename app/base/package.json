@@ -11,6 +11,8 @@
         "postinstall": "nuxt prepare"
     },
     "dependencies": {
+        "@1001-digital/dapp-query-core": "^1.1.0",
+        "@1001-digital/dapp-query-vue": "^1.1.0",
         "@csstools/postcss-global-data": "^2.1.1",
         "@nuxtjs/i18n": "^9.5.2",
         "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
