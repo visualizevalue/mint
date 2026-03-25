@@ -1,5 +1,6 @@
 {
     "name": "@visualizevalue/mint",
+    "private": true,
     "version": "0.0.1",
     "license": "MIT",
     "author": "jalil <jalil@vv.xyz>",
