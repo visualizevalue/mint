@@ -1,8 +1,11 @@
 {
     "name": "@visualizevalue/mint-utils",
     "version": "0.0.4",
+    "license": "MIT",
     "type": "module",
     "main": "index.ts",
+    "files": ["*.ts", "*.js"],
+    "publishConfig": { "access": "public" },
     "dependencies": {
         "viem": "2.x"
     }
