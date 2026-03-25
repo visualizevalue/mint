@@ -9,6 +9,7 @@ import {
   transformArtifacts, transformMints, transformProfile,
   rpcFetchProfile, rpcFetchCollections,
   rpcFetchCollection, rpcFetchCollectionTokens,
+  rpcFetchTokenMints,
 } from './sources'
 
 export interface MintQueries {
@@ -137,7 +138,6 @@ export function createQueries (config: CreateQueriesConfig): MintQueries {
       key: (collection, tokenId) => `mints:${collection}:${tokenId}`,
       staleTime: 60 * 1000, // 1 min — mints change frequently during live mint
       sources: [
-        // Indexer only — RPC mint fetching is incremental (handled in store)
         ...(hasIndexer ? [graphqlSource<MintEvent[]>({
           endpoints,
           query: MINTS_BY_ARTIFACT,
@@ -147,6 +147,11 @@ export function createQueries (config: CreateQueriesConfig): MintQueries {
           }),
           transform: transformMints,
         })] : []),
+        customSource<MintEvent[]>({
+          id: 'mints-rpc',
+          fetch: (collection: unknown, tokenId: unknown) =>
+            rpcFetchTokenMints(wagmi, chainId, collection as `0x${string}`, BigInt(tokenId as string | bigint)),
+        }),
       ],
     },
   }

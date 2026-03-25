@@ -1,11 +1,9 @@
 import { getBalance, getPublicClient, readContract } from '@wagmi/core'
-import { type GetBalanceReturnType } from '@wagmi/core'
-import { parseAbiItem, type PublicClient } from 'viem'
+import { type PublicClient } from 'viem'
 import type { MintEvent } from '~/utils/types'
 import { INDEXER_SYNCED } from '~/queries/sources'
 
 export const CURRENT_STATE_VERSION = 10
-export const MAX_BLOCK_RANGE = 5000n
 export const MINT_BLOCKS = BLOCKS_PER_DAY
 export const MAX_RENDERERS = 20
 
@@ -295,107 +293,13 @@ export const useOnchainStore = () => {
 
       async fetchTokenMints (token: Token) {
         const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
-
-        // If the indexer query has sources, use dapp-query
-        if ($queries.tokenMints.sources.length) {
-          try {
-            storedToken.mints = await $queryClient.fetch($queries.tokenMints, token.collection as `0x${string}`, token.tokenId)
-            storedToken.mintsFetchedUntilBlock = INDEXER_SYNCED
-            storedToken.mintsBackfilledUntilBlock = 0n
-            return
-          } catch (e) {
-            console.warn('Indexer mints fetch failed, falling back to incremental RPC', e)
-          }
-        }
-
-        // Incremental RPC fallback for mint events
-        const client = getPublicClient($wagmi, { chainId }) as PublicClient
-        const currentBlock = await client.getBlockNumber()
-        const untilBlock = token.mintedBlock + BLOCKS_PER_DAY
-
-        const toBlock = currentBlock > untilBlock ? untilBlock : currentBlock
-
-        if (token.mintsFetchedUntilBlock >= toBlock) {
-          return console.info(`mints for #${token.tokenId} already fetched`)
-        }
-
-        const maxRangeBlock = toBlock - MAX_BLOCK_RANGE
-        const fromBlock = token.mintsFetchedUntilBlock > maxRangeBlock
-          ? token.mintsFetchedUntilBlock + 1n
-          : maxRangeBlock > token.mintedBlock
-            ? maxRangeBlock
-            : token.mintedBlock
-
-        this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock))
-
-        storedToken.mintsFetchedUntilBlock = toBlock
-
-        if (! token.mintsBackfilledUntilBlock) {
-          storedToken.mintsBackfilledUntilBlock = fromBlock
-        }
+        storedToken.mints = await $queryClient.fetch($queries.tokenMints, token.collection as `0x${string}`, token.tokenId)
+        storedToken.mintsFetchedUntilBlock = INDEXER_SYNCED
+        storedToken.mintsBackfilledUntilBlock = 0n
       },
 
-      async backfillTokenMints (token: Token) {
-        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
-
-        if (storedToken.mintsBackfilledUntilBlock <= token.mintedBlock) return
-
-        const toBlock = storedToken.mintsBackfilledUntilBlock - 1n
-
-        const fromBlock = toBlock - MAX_BLOCK_RANGE > token.mintedBlock ? toBlock - MAX_BLOCK_RANGE : token.mintedBlock
-        console.info(`Backfilling token mints blocks ${fromBlock}-${toBlock}`)
-
-        this.addTokenMints(token, await this.loadMintEvents(token, fromBlock, toBlock), 'append')
-
-        storedToken.mintsBackfilledUntilBlock = fromBlock
-      },
-
-      async loadMintEvents (token: Token, fromBlock: bigint, toBlock: bigint): Promise<MintEvent[]> {
-        const client = getPublicClient($wagmi, { chainId }) as PublicClient
-
-        try {
-          const logs = await client.getLogs({
-            address: token.collection,
-            event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)'),
-            args: {
-              tokenId: BigInt(token.tokenId),
-            },
-            fromBlock,
-            toBlock,
-          })
-
-          console.info(`Token mints fetched from ${fromBlock}-${toBlock}`)
-
-          return logs.map(l => ({
-            tokenId: token.tokenId,
-            address: l.args.minter,
-            block: l.blockNumber,
-            logIndex: l.logIndex,
-            tx: l.transactionHash,
-            unitPrice: l.args.unitPrice,
-            amount: l.args.amount,
-            price: ( l.args.amount || 0n ) * ( l.args.unitPrice || 0n ),
-          }) as MintEvent).reverse()
-        } catch (e) {
-          // Adaptive range reduction: split in half and retry
-          if (toBlock - fromBlock > 100n) {
-            const mid = fromBlock + (toBlock - fromBlock) / 2n
-            const [a, b] = await Promise.all([
-              this.loadMintEvents(token, fromBlock, mid),
-              this.loadMintEvents(token, mid + 1n, toBlock),
-            ])
-            return [...a, ...b]
-          }
-          throw e
-        }
-      },
-
-      addTokenMints (token: Token, mints: MintEvent[], location: 'prepend'|'append' = 'prepend') {
-        const storedToken = this.collections[token.collection].tokens[token.tokenId.toString()]
-
-        storedToken.mints = location === 'prepend'
-          ? [ ...mints, ...storedToken.mints ]
-          : [ ...storedToken.mints, ...mints ]
+      async backfillTokenMints (_token: Token) {
+        // Both indexer and RPC sources return all mints — nothing to backfill
       },
 
       async addCollection (collection: Collection) {

@@ -319,6 +319,68 @@ async function rpcFetchSingleToken (
   }
 }
 
+const MAX_BLOCK_RANGE = 5000n
+
+export async function rpcFetchTokenMints (
+  wagmi: Config,
+  chainId: number,
+  collection: `0x${string}`,
+  tokenId: bigint,
+): Promise<MintEvent[]> {
+  const client = getPublicClient(wagmi, { chainId }) as PublicClient
+  const currentBlock = await client.getBlockNumber()
+  const mintedBlock = await readContract(wagmi, {
+    abi: MINT_ABI,
+    address: collection,
+    functionName: 'initBlock',
+    chainId,
+  }) as bigint
+
+  const untilBlock = mintedBlock + BLOCKS_PER_DAY
+  const toBlock = currentBlock > untilBlock ? untilBlock : currentBlock
+
+  return loadMintEventsRange(client, collection, tokenId, mintedBlock, toBlock)
+}
+
+async function loadMintEventsRange (
+  client: PublicClient,
+  collection: `0x${string}`,
+  tokenId: bigint,
+  fromBlock: bigint,
+  toBlock: bigint,
+): Promise<MintEvent[]> {
+  try {
+    const logs = await client.getLogs({
+      address: collection,
+      event: parseAbiItem('event NewMint(uint256 indexed tokenId, uint256 unitPrice, uint256 amount, address minter)'),
+      args: { tokenId },
+      fromBlock,
+      toBlock,
+    })
+
+    return logs.map(l => ({
+      tokenId,
+      address: l.args.minter,
+      block: l.blockNumber,
+      logIndex: l.logIndex,
+      tx: l.transactionHash,
+      unitPrice: l.args.unitPrice,
+      amount: l.args.amount,
+      price: (l.args.amount || 0n) * (l.args.unitPrice || 0n),
+    }) as MintEvent).reverse()
+  } catch (e) {
+    if (toBlock - fromBlock > 100n) {
+      const mid = fromBlock + (toBlock - fromBlock) / 2n
+      const [a, b] = await Promise.all([
+        loadMintEventsRange(client, collection, tokenId, fromBlock, mid),
+        loadMintEventsRange(client, collection, tokenId, mid + 1n, toBlock),
+      ])
+      return [...a, ...b]
+    }
+    throw e
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Mappers (Ponder → app domain types)
 // ---------------------------------------------------------------------------
