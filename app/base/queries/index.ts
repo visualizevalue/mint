@@ -27,24 +27,6 @@ interface CreateQueriesConfig {
   endpoints: string[]
 }
 
-function makeSources<T> (
-  endpoints: string[],
-  id: string,
-  indexerSource: { source: ReturnType<typeof graphqlSource | typeof customSource> } | null,
-  rpcFetch: (...args: unknown[]) => Promise<T>,
-) {
-  const sources = []
-
-  if (indexerSource) sources.push(indexerSource.source)
-
-  sources.push(customSource<T>({
-    id: `${id}-rpc`,
-    fetch: rpcFetch,
-  }))
-
-  return sources
-}
-
 export function createQueries (config: CreateQueriesConfig): MintQueries {
   const { wagmi, chainId, factory, endpoints } = config
   const hasIndexer = endpoints.length > 0

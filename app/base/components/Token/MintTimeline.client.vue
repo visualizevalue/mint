@@ -16,7 +16,7 @@
         :block="currentBlock"
       >
         <template #after>
-          <TokenMintTimelineItem v-if="backfillComplete">
+          <TokenMintTimelineItem>
             <Account :address="collection.owner" class="account" />
 
             <span class="amount">1<span>×</span></span>
@@ -34,17 +34,12 @@
       </TokenMintTimelineVirtualScroller>
       </template>
 
-      <div v-if="! backfillComplete" v-show="! loading" ref="loadMore" class="load-more">
-        <Button @click="backfill">{{ $t('token.load_more')}}</Button>
-      </div>
-
       <Loading v-if="loading || ! currentBlock" :txt="$t('token.loading_mint_history')" />
     </slot>
   </section>
 </template>
 
 <script setup>
-import { useElementVisibility } from '@vueuse/core'
 import { useBlockNumber } from '@wagmi/vue'
 
 const config = useRuntimeConfig()
@@ -58,7 +53,6 @@ const { token, collection } = defineProps({
 const state = useOnchainStore()
 
 const mints = computed(() => state.tokenMints(token.collection, token.tokenId))
-const backfillComplete = computed(() => token.mintsBackfilledUntilBlock <= token.mintedBlock)
 
 const sortBy = ref('recent')
 const sortedMints = computed(() => {
@@ -72,44 +66,15 @@ const sortedMints = computed(() => {
 })
 
 const loading = ref(true)
-const loadMore = ref()
-const loadMoreVisible = useElementVisibility(loadMore)
-const backfill = async () => {
-  loading.value = true
-
-  try {
-    await state.backfillTokenMints(token)
-
-    // If we're not fully backfilled and we have less than 20 mints loaded,
-    // continue backfilling events.
-    while (! backfillComplete.value && mints.value?.length < 20) {
-      await delay(250)
-      await state.backfillTokenMints(token)
-    }
-  } catch (e) {
-    console.error(`Issue during backfill`, e)
-  }
-
-  loading.value = false
-}
 
 onMounted(async () => {
   loading.value = true
   try {
-    console.info(`Attempting to load + backfill token mints for #${token.tokenId}`)
     await state.fetchTokenMints(token)
-    await backfill()
   } catch (e) {
     console.error(e)
   }
   loading.value = false
-})
-
-watch(loadMoreVisible, () => {
-  // Skip if we have enough mints for the viewport or we're already loading
-  if (! loadMoreVisible.value || loading.value) return
-
-  backfill()
 })
 
 watch(currentBlock, () => {
@@ -171,11 +136,4 @@ watch(currentBlock, () => {
   }
 }
 
-
-.load-more {
-  .button {
-    display: block;
-    width: 100%;
-  }
-}
 </style>

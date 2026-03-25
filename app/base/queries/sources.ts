@@ -8,9 +8,7 @@ import { BLOCKS_PER_DAY } from '@visualizevalue/mint-utils/time'
 // Sentinel: marks data as fully synced from the indexer.
 export const INDEXER_SYNCED = BigInt(Number.MAX_SAFE_INTEGER)
 
-// ---------------------------------------------------------------------------
 // Ponder response types (bigints come as strings from GraphQL)
-// ---------------------------------------------------------------------------
 
 interface PonderCollection {
   address: string
@@ -59,9 +57,6 @@ interface PonderProfile {
   }
 }
 
-// ---------------------------------------------------------------------------
-// GraphQL queries
-// ---------------------------------------------------------------------------
 
 export const COLLECTIONS_BY_ARTIST = `
   query($artist: String!) {
@@ -119,9 +114,6 @@ export const MINTS_BY_ARTIFACT = `
   }
 `
 
-// ---------------------------------------------------------------------------
-// GraphQL transform functions (Ponder → app domain types)
-// ---------------------------------------------------------------------------
 
 export function transformCollections (data: { collections: { items: PonderCollection[] } }): Collection[] {
   return data.collections.items.map(toCollection)
@@ -139,9 +131,6 @@ export function transformMints (data: { mints: { items: PonderMint[] } }): MintE
   return data.mints.items.map(toMintEvent)
 }
 
-// ---------------------------------------------------------------------------
-// REST transform for profile
-// ---------------------------------------------------------------------------
 
 export function transformProfile (raw: PonderProfile): Partial<Artist> {
   return {
@@ -156,9 +145,6 @@ export function transformProfile (raw: PonderProfile): Partial<Artist> {
   }
 }
 
-// ---------------------------------------------------------------------------
-// RPC source implementations
-// ---------------------------------------------------------------------------
 
 export async function rpcFetchProfile (
   wagmi: Config,
@@ -249,20 +235,24 @@ export async function rpcFetchCollectionTokens (
   collection: `0x${string}`,
 ): Promise<Token[]> {
   const client = getPublicClient(wagmi, { chainId }) as PublicClient
-  const latestTokenId = await readContract(wagmi, {
-    abi: MINT_ABI,
-    address: collection,
-    functionName: 'latestTokenId',
-    chainId,
-  }) as bigint
+  const [latestTokenId, currentBlock] = await Promise.all([
+    readContract(wagmi, {
+      abi: MINT_ABI,
+      address: collection,
+      functionName: 'latestTokenId',
+      chainId,
+    }) as Promise<bigint>,
+    client.getBlock(),
+  ])
 
+  const mintContract = getContract({ address: collection, abi: MINT_ABI, client })
   const tokens: Token[] = []
   const ids: bigint[] = []
   for (let id = latestTokenId; id > 0n; id--) ids.push(id)
 
   for (const chunk of chunkArray(ids, 10)) {
     const results = await Promise.allSettled(
-      chunk.map(id => rpcFetchSingleToken(client, collection, id))
+      chunk.map(id => rpcFetchSingleToken(mintContract, collection, id, currentBlock))
     )
     for (const r of results) {
       if (r.status === 'fulfilled' && r.value) tokens.push(r.value)
@@ -273,15 +263,13 @@ export async function rpcFetchCollectionTokens (
 }
 
 async function rpcFetchSingleToken (
-  client: PublicClient,
+  mintContract: ReturnType<typeof getContract>,
   collection: `0x${string}`,
   tokenId: bigint,
+  currentBlock: Awaited<ReturnType<PublicClient['getBlock']>>,
   tries: number = 0,
 ): Promise<Token | null> {
-  const mintContract = getContract({ address: collection, abi: MINT_ABI, client })
-
   try {
-    const currentBlock = await client.getBlock()
     const [data, dataUri] = await Promise.all([
       mintContract.read.get([tokenId]) as Promise<[string, string, `0x${string}`[], bigint, bigint, bigint, bigint]>,
       mintContract.read.uri([tokenId], {
@@ -314,12 +302,10 @@ async function rpcFetchSingleToken (
       mints: [],
     }
   } catch (e) {
-    if (tries < 3) return rpcFetchSingleToken(client, collection, tokenId, tries + 1)
+    if (tries < 3) return rpcFetchSingleToken(mintContract, collection, tokenId, currentBlock, tries + 1)
     return null
   }
 }
-
-const MAX_BLOCK_RANGE = 5000n
 
 export async function rpcFetchTokenMints (
   wagmi: Config,
@@ -328,14 +314,14 @@ export async function rpcFetchTokenMints (
   tokenId: bigint,
 ): Promise<MintEvent[]> {
   const client = getPublicClient(wagmi, { chainId }) as PublicClient
-  const currentBlock = await client.getBlockNumber()
-  const mintedBlock = await readContract(wagmi, {
-    abi: MINT_ABI,
-    address: collection,
-    functionName: 'initBlock',
-    chainId,
-  }) as bigint
+  const mintContract = getContract({ address: collection, abi: MINT_ABI, client })
 
+  const [tokenData, currentBlock] = await Promise.all([
+    mintContract.read.get([tokenId]) as Promise<[string, string, `0x${string}`[], bigint, bigint, bigint, bigint]>,
+    client.getBlockNumber(),
+  ])
+
+  const mintedBlock = BigInt(`${tokenData[4]}`)
   const untilBlock = mintedBlock + BLOCKS_PER_DAY
   const toBlock = currentBlock > untilBlock ? untilBlock : currentBlock
 
@@ -381,9 +367,6 @@ async function loadMintEventsRange (
   }
 }
 
-// ---------------------------------------------------------------------------
-// Mappers (Ponder → app domain types)
-// ---------------------------------------------------------------------------
 
 function toCollection (raw: PonderCollection): Collection {
   return {
