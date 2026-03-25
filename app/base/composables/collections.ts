@@ -125,13 +125,30 @@ export const useOnchainStore = () => {
       async fetchCollection (address: `0x${string}`): Promise<Collection> {
         this.ensureStoreVersion()
 
-        if (this.hasCollection(address) && this.collection(address).latestTokenId > 0n) {
-          return this.collection(address)
+        const fresh = await $queryClient.fetch($queries.collection, address)
+
+        if (this.hasCollection(address)) {
+          const existing = this.collections[address]
+          const hadNewTokens = fresh.latestTokenId > existing.latestTokenId
+
+          // Update metadata without wiping tokens/renderers
+          existing.owner = fresh.owner
+          existing.name = fresh.name
+          existing.symbol = fresh.symbol
+          existing.description = fresh.description
+          existing.image = fresh.image
+          existing.latestTokenId = fresh.latestTokenId
+          existing.initBlock = fresh.initBlock
+
+          // Force token re-fetch when new tokens exist
+          if (hadNewTokens) {
+            await $queryClient.invalidate($queries.collectionTokens, address)
+          }
+
+          return existing
         }
 
-        return await this.addCollection(
-          await $queryClient.fetch($queries.collection, address)
-        )
+        return await this.addCollection(fresh)
       },
 
       async fetchCollectionBalance (address: `0x${string}`) {
