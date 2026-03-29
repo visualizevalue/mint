@@ -14,7 +14,7 @@ export default createConfig({
     mainnet: {
       id: 1,
       rpc: loadBalance(
-        (process.env.PONDER_RPC_URLS_1 ?? '').split(' ').filter(Boolean).map(url => http(url)),
+        (process.env.PONDER_RPC_URLS_1 ?? '').split(' ').filter(Boolean).map(url => http(url, { timeout: 60_000 })),
       ),
       ws: process.env.PONDER_WS_URL_1,
     },
