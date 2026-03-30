@@ -182,10 +182,10 @@ useIntersectionObserver(
 // In single-artist mode, wait for scoped collections to resolve before fetching.
 // Otherwise, fetch immediately.
 if (artistScope) {
-  const stop = watch(scopedCollections, (collections) => {
+  const unwatch = watch(scopedCollections, (collections) => {
     if (collections && collections.length > 0) {
       loadInitial()
-      stop()
+      nextTick(() => unwatch())
     }
   }, { immediate: true })
 } else {

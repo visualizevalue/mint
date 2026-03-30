@@ -10,21 +10,13 @@
       </template>
     </ProfileHeader>
 
-    <section v-if="artistScope">
-      <p>Collected art from <Account :address="artistScope" /> will be indexed on profiles soon...</p>
-      <p v-if="isMyArtistScope">
-        Manage Your collections <NuxtLink :to="{ name: 'id', params: { id: address } }">here</NuxtLink>.
-      </p>
-      <p v-else>
-        You can mint your own art on
-        <NuxtLink :to="config.public.platformUrl" target="_blank">
-          {{ getMainDomain(config.public.platformUrl) }}
-        </NuxtLink>.
-      </p>
-    </section>
-    <section v-else>
-      <p>Collected art and curation options for your profile will come soon...</p>
-    </section>
+    <CollectedItems v-if="hasIndexer" :id="address" :key="`collected-${address}`">
+      <template #before>
+        <HeaderSection>
+          <h1>{{ $t('collected.title') }}</h1>
+        </HeaderSection>
+      </template>
+    </CollectedItems>
   </PageFrame>
 </template>
 
@@ -34,8 +26,7 @@ const route = useRoute()
 const address = computed(() => route.params.address)
 const store = useOnchainStore()
 const isMe = useIsMeCheck(address.value)
-const artistScope = useArtistScope()
-const isMyArtistScope = useIsMeCheck(artistScope)
+const hasIndexer = useHasIndexer()
 
 const artist = ref(null)
 
