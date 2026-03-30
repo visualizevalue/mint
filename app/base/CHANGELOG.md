@@ -1,5 +1,13 @@
 # @visualizevalue/mint-app-base
 
+## 0.2.1
+
+### Patch Changes
+
+- [`293c2cb`](https://github.com/visualizevalue/mint/commit/293c2cb3904818d1102aa0a44337290b7b394281) Thanks [@jwahdatehagh](https://github.com/jwahdatehagh)! - Fix configuration without indexer set
+
+- [`293c2cb`](https://github.com/visualizevalue/mint/commit/293c2cb3904818d1102aa0a44337290b7b394281) Thanks [@jwahdatehagh](https://github.com/jwahdatehagh)! - Gracefully degrade ens resolution in sepolia mode
+
 ## 0.2.0
 
 ### Minor Changes
