@@ -1,5 +1,11 @@
 # @visualizevalue/mint-app-base
 
+## 0.3.0
+
+### Minor Changes
+
+- [`0c258d3`](https://github.com/visualizevalue/mint/commit/0c258d3b4edd4ceb6ccab03eacf7df45879653be) Thanks [@jwahdatehagh](https://github.com/jwahdatehagh)! - Add indexer mode (collector profiles)
+
 ## 0.2.1
 
 ### Patch Changes
