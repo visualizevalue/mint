@@ -72,3 +72,21 @@ export interface Renderer {
   component?: string
   version: bigint
 }
+
+export interface OwnershipArtifact {
+  id: string
+  name: string
+  image: string
+  collection: {
+    address: string
+    owner: string
+    name: string
+  }
+}
+
+export interface Ownership {
+  artifact: OwnershipArtifact
+  balance: string
+  created_at: string
+  updated_at: string
+}
