@@ -151,7 +151,9 @@ export async function rpcFetchProfile (
   wagmi: Config,
   address: `0x${string}`,
 ): Promise<Partial<Artist>> {
-  const client = getPublicClient(wagmi, { chainId: 1 }) as PublicClient
+  const client = getPublicClient(wagmi, { chainId: 1 })
+  if (!client) return {}
+
   const block = await client.getBlockNumber()
 
   let ens, avatar, description, url, email, twitter, github
